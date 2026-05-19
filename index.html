@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- ─── SEO / AEO ─────────────────────────────────────────────── -->
   <title>Phillip Souza · Planejador e Psicoterapeuta Financeiro</title>
-  <meta name="description" content="Você ganha bem, mas o patrimônio não cresce. Phillip Souza é planejador e psicoterapeuta financeiro especializado em médicos, empresários e dentistas de alta renda." />
-  <meta name="keywords" content="planejador financeiro, psicoterapeuta financeiro, mentoria financeira, organização patrimonial, médicos dentistas empresários" />
+  <meta name="description"
+    content="Você ganha bem, mas o patrimônio não cresce. Phillip Souza é planejador e psicoterapeuta financeiro especializado em médicos, empresários e dentistas de alta renda." />
+  <meta name="keywords"
+    content="planejador financeiro, psicoterapeuta financeiro, mentoria financeira, organização patrimonial, médicos dentistas empresários" />
   <link rel="canonical" href="https://www.phillipsouza.com/" />
 
   <!-- Open Graph -->
@@ -112,7 +115,9 @@
   <!-- ─── FONTS ──────────────────────────────────────────────────── -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
 
   <!-- ─── TAILWIND CDN ───────────────────────────────────────────── -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -121,27 +126,27 @@
       theme: {
         extend: {
           colors: {
-            gold:    '#D4AF37',
+            gold: '#D4AF37',
             'gold-light': '#E8C94A',
-            'gold-dark':  '#A88A1A',
-            navy:    '#0A0F1A',
+            'gold-dark': '#A88A1A',
+            navy: '#0A0F1A',
             'navy-light': '#111827',
           },
           fontFamily: {
             heading: ['Montserrat', 'sans-serif'],
-            body:    ['Inter', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
           },
           animation: {
-            'fade-up':   'fadeUp .7s ease forwards',
-            'fade-in':   'fadeIn .5s ease forwards',
-            'shimmer':   'shimmer 2.5s infinite linear',
-            'pulse-gold':'pulseGold 2s ease-in-out infinite',
+            'fade-up': 'fadeUp .7s ease forwards',
+            'fade-in': 'fadeIn .5s ease forwards',
+            'shimmer': 'shimmer 2.5s infinite linear',
+            'pulse-gold': 'pulseGold 2s ease-in-out infinite',
           },
           keyframes: {
-            fadeUp:  { '0%':{ opacity:'0', transform:'translateY(28px)' }, '100%':{ opacity:'1', transform:'translateY(0)' } },
-            fadeIn:  { '0%':{ opacity:'0' }, '100%':{ opacity:'1' } },
-            shimmer: { '0%':{ backgroundPosition:'200% center' }, '100%':{ backgroundPosition:'-200% center' } },
-            pulseGold: { '0%,100%':{ boxShadow:'0 0 0 0 rgba(212,175,55,.35)' }, '50%':{ boxShadow:'0 0 0 12px rgba(212,175,55,0)' } },
+            fadeUp: { '0%': { opacity: '0', transform: 'translateY(28px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+            fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+            shimmer: { '0%': { backgroundPosition: '200% center' }, '100%': { backgroundPosition: '-200% center' } },
+            pulseGold: { '0%,100%': { boxShadow: '0 0 0 0 rgba(212,175,55,.35)' }, '50%': { boxShadow: '0 0 0 12px rgba(212,175,55,0)' } },
           }
         }
       }
@@ -151,8 +156,16 @@
   <!-- ─── GLOBAL CUSTOM CSS ─────────────────────────────────────── -->
   <style>
     /* Base */
-    *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       background-color: #000;
@@ -183,10 +196,19 @@
     }
 
     /* All content above noise */
-    header, main, footer, #modal-overlay, #carta-overlay { position: relative; z-index: 2; }
+    header,
+    main,
+    footer,
+    #modal-overlay,
+    #carta-overlay {
+      position: relative;
+      z-index: 2;
+    }
 
     /* Gold border glow */
-    .gold-glow { box-shadow: 0 0 30px rgba(212,175,55,.15), 0 0 1px rgba(212,175,55,.4); }
+    .gold-glow {
+      box-shadow: 0 0 30px rgba(212, 175, 55, .15), 0 0 1px rgba(212, 175, 55, .4);
+    }
 
     /* Decorative divider */
     .divider-gold {
@@ -204,6 +226,7 @@
       color: #D4AF37;
       opacity: .35;
     }
+
     .ornament-rule::before,
     .ornament-rule::after {
       content: '';
@@ -211,14 +234,17 @@
       height: 1px;
       background: linear-gradient(90deg, transparent, #D4AF37);
     }
-    .ornament-rule::after { background: linear-gradient(90deg, #D4AF37, transparent); }
+
+    .ornament-rule::after {
+      background: linear-gradient(90deg, #D4AF37, transparent);
+    }
 
     /* Floating nav blur */
     .nav-blur {
       backdrop-filter: blur(20px) saturate(140%);
       -webkit-backdrop-filter: blur(20px) saturate(140%);
-      background: rgba(0,0,0,.82);
-      border-bottom: 1px solid rgba(212,175,55,.12);
+      background: rgba(0, 0, 0, .82);
+      border-bottom: 1px solid rgba(212, 175, 55, .12);
     }
 
     /* Buttons */
@@ -239,13 +265,17 @@
       transition: background-position .4s ease, transform .2s ease, box-shadow .3s ease;
       animation: pulseGold 2.5s ease-in-out infinite;
     }
+
     .btn-gold:hover {
       background-position: right center;
       transform: translateY(-2px);
-      box-shadow: 0 12px 36px rgba(212,175,55,.4);
+      box-shadow: 0 12px 36px rgba(212, 175, 55, .4);
       animation: none;
     }
-    .btn-gold:active { transform: translateY(0); }
+
+    .btn-gold:active {
+      transform: translateY(0);
+    }
 
     .btn-outline {
       display: inline-flex;
@@ -258,12 +288,13 @@
       font-weight: 600;
       letter-spacing: .04em;
       text-transform: uppercase;
-      border: 1px solid rgba(212,175,55,.5);
+      border: 1px solid rgba(212, 175, 55, .5);
       cursor: pointer;
       transition: background .3s, border-color .3s, transform .2s;
     }
+
     .btn-outline:hover {
-      background: rgba(212,175,55,.06);
+      background: rgba(212, 175, 55, .06);
       border-color: #D4AF37;
       transform: translateY(-2px);
     }
@@ -279,35 +310,49 @@
 
     /* Card surface */
     .card-dark {
-      background: rgba(10,15,26,.7);
-      border: 1px solid rgba(212,175,55,.12);
+      background: rgba(10, 15, 26, .7);
+      border: 1px solid rgba(212, 175, 55, .12);
       backdrop-filter: blur(8px);
     }
 
     /* Scroll reveal — elements start hidden */
-    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .7s ease, transform .7s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     /* Modal */
     #modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.88);
+      background: rgba(0, 0, 0, .88);
       backdrop-filter: blur(6px);
       z-index: 9999;
       align-items: center;
       justify-content: center;
       padding: 1rem;
     }
-    #modal-overlay.open { display: flex; }
-    #modal-box { animation: fadeUp .4s ease forwards; }
+
+    #modal-overlay.open {
+      display: flex;
+    }
+
+    #modal-box {
+      animation: fadeUp .4s ease forwards;
+    }
 
     /* Form inputs */
     .form-input {
       width: 100%;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(212,175,55,.2);
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(212, 175, 55, .2);
       color: #F0EDE8;
       font-family: 'Inter', sans-serif;
       font-size: .9rem;
@@ -316,17 +361,37 @@
       outline: none;
       transition: border-color .3s;
     }
-    .form-input:focus { border-color: #D4AF37; }
-    .form-input::placeholder { color: rgba(240,237,232,.3); }
+
+    .form-input:focus {
+      border-color: #D4AF37;
+    }
+
+    .form-input::placeholder {
+      color: rgba(240, 237, 232, .3);
+    }
 
     /* Scrollbar */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: #000; }
-    ::-webkit-scrollbar-thumb { background: rgba(212,175,55,.35); border-radius: 4px; }
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #000;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(212, 175, 55, .35);
+      border-radius: 4px;
+    }
 
     /* Mobile nav */
-    #nav-menu { display: none; }
-    #nav-menu.open { display: flex; }
+    #nav-menu {
+      display: none;
+    }
+
+    #nav-menu.open {
+      display: flex;
+    }
 
     /* Hero gradient blob */
     .hero-glow {
@@ -341,7 +406,7 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.95);
+      background: rgba(0, 0, 0, .95);
       backdrop-filter: blur(8px);
       z-index: 9998;
       align-items: flex-start;
@@ -349,18 +414,27 @@
       padding: 1rem;
       overflow-y: auto;
     }
-    #carta-overlay.open { display: flex; }
-    #carta-box { animation: fadeUp .45s ease forwards; }
+
+    #carta-overlay.open {
+      display: flex;
+    }
+
+    #carta-box {
+      animation: fadeUp .45s ease forwards;
+    }
 
     /* Scroll fade hint on carta */
-    .carta-body { scrollbar-width: thin; scrollbar-color: rgba(212,175,55,.3) transparent; }
+    .carta-body {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(212, 175, 55, .3) transparent;
+    }
 
     /* ── USP PSICOTERAPIA — seção de destaque visual ─────────── */
     .usp-pill {
       display: inline-flex;
       align-items: center;
       gap: .5rem;
-      border: 1px solid rgba(212,175,55,.35);
+      border: 1px solid rgba(212, 175, 55, .35);
       border-radius: 999px;
       padding: .35rem 1rem;
       font-family: 'Montserrat', sans-serif;
@@ -370,24 +444,27 @@
       text-transform: uppercase;
       color: #D4AF37;
     }
+
     .usp-card {
-      background: rgba(10,15,26,.9);
-      border: 1px solid rgba(212,175,55,.18);
+      background: rgba(10, 15, 26, .9);
+      border: 1px solid rgba(212, 175, 55, .18);
       border-top: 3px solid #D4AF37;
       border-radius: 12px;
       padding: 2rem;
       transition: border-color .3s, transform .3s;
     }
+
     .usp-card:hover {
-      border-color: rgba(212,175,55,.45);
+      border-color: rgba(212, 175, 55, .45);
       transform: translateY(-4px);
     }
+
     .usp-large-number {
       font-family: 'Montserrat', sans-serif;
       font-size: clamp(5rem, 15vw, 11rem);
       font-weight: 900;
       line-height: 1;
-      background: linear-gradient(180deg, rgba(212,175,55,.15) 0%, rgba(212,175,55,0) 100%);
+      background: linear-gradient(180deg, rgba(212, 175, 55, .15) 0%, rgba(212, 175, 55, 0) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -397,981 +474,1016 @@
 
     /* ── LGPD checkbox custom style ──────────────────────────── */
     .lgpd-box {
-      background: rgba(212,175,55,.04);
-      border: 1px solid rgba(212,175,55,.18);
+      background: rgba(212, 175, 55, .04);
+      border: 1px solid rgba(212, 175, 55, .18);
       border-radius: 8px;
       padding: 1rem;
     }
 
     /* ── Modal de formulário — sem overflow para não sobrepor carta */
-    #modal-overlay { z-index: 9999; }
-    #carta-overlay { z-index: 9998; }
+    #modal-overlay {
+      z-index: 9999;
+    }
+
+    #carta-overlay {
+      z-index: 9998;
+    }
   </style>
 </head>
 
 <body class="font-body">
 
-<!-- ══════════════════════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════════════════════════
      NAVIGATION — Fixed, blurred, premium
 ════════════════════════════════════════════════════════════════ -->
-<header class="nav-blur fixed top-0 left-0 right-0 z-50">
-  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" role="navigation" aria-label="Navegação principal">
+  <header class="nav-blur fixed top-0 left-0 right-0 z-50">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" role="navigation"
+      aria-label="Navegação principal">
 
-    <!-- Logo -->
-    <a href="#inicio" class="flex items-center gap-2 no-underline group" aria-label="Phillip Souza — Página inicial">
-      <span class="font-heading font-700 text-lg tracking-widest text-white group-hover:text-gold transition-colors duration-300">
-        PHILLIP <span class="text-gold">SOUZA</span>
-      </span>
-    </a>
-
-    <!-- Desktop Links -->
-    <ul class="hidden md:flex items-center gap-8 list-none m-0 p-0">
-      <li><a href="#metodo"    class="font-heading text-xs font-600 tracking-widest uppercase text-gray-400 hover:text-gold transition-colors duration-300 no-underline">Método</a></li>
-      <li><a href="#cursos"    class="font-heading text-xs font-600 tracking-widest uppercase text-gray-400 hover:text-gold transition-colors duration-300 no-underline">Cursos</a></li>
-      <li><a href="#livro"     class="font-heading text-xs font-600 tracking-widest uppercase text-gray-400 hover:text-gold transition-colors duration-300 no-underline">Livro</a></li>
-      <li>
-        <button
-          onclick="openCarta()"
-          class="btn-gold text-xs px-5 py-2.5 rounded"
-          aria-label="Aplicar para Mentoria Premium"
-        >Aplicar</button>
-      </li>
-    </ul>
-
-    <!-- Mobile hamburger -->
-    <button id="hamburger" class="md:hidden flex flex-col gap-1.5 p-2" aria-label="Abrir menu" aria-expanded="false" onclick="toggleNav()">
-      <span class="w-5 h-px bg-gold block transition-all duration-300" id="h1"></span>
-      <span class="w-5 h-px bg-gold block transition-all duration-300" id="h2"></span>
-      <span class="w-5 h-px bg-gold block transition-all duration-300" id="h3"></span>
-    </button>
-  </nav>
-
-  <!-- Mobile dropdown menu -->
-  <div id="nav-menu" class="md:hidden flex-col border-t border-gold border-opacity-10 px-6 pb-6 pt-4 gap-5">
-    <a href="#metodo"    onclick="toggleNav()" class="font-heading text-xs font-600 tracking-widest uppercase text-gray-400 hover:text-gold transition-colors no-underline block">Método</a>
-    <a href="#cursos"    onclick="toggleNav()" class="font-heading text-xs font-600 tracking-widest uppercase text-gray-400 hover:text-gold transition-colors no-underline block">Cursos</a>
-    <a href="#livro"     onclick="toggleNav()" class="font-heading text-xs font-600 tracking-widest uppercase text-gray-400 hover:text-gold transition-colors no-underline block">Livro</a>
-    <button onclick="openCarta(); toggleNav();" class="btn-gold text-xs px-6 py-3 rounded w-full">Aplicar para Mentoria</button>
-  </div>
-</header>
-
-
-<!-- ══════════════════════════════════════════════════════════════
-     HERO SECTION
-════════════════════════════════════════════════════════════════ -->
-<section id="inicio" class="relative min-h-screen flex items-center overflow-hidden pt-16">
-
-  <!-- Background glow blobs -->
-  <div class="hero-glow w-[600px] h-[600px] bg-yellow-900 opacity-10 top-[-100px] right-[-150px]"></div>
-  <div class="hero-glow w-[400px] h-[400px] bg-blue-900 opacity-10 bottom-[-80px] left-[-100px]"></div>
-
-  <!-- Subtle grid pattern -->
-  <div class="absolute inset-0 opacity-[.03]"
-    style="background-image: linear-gradient(rgba(212,175,55,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,.5) 1px, transparent 1px); background-size: 60px 60px;"></div>
-
-  <div class="max-w-5xl mx-auto px-6 py-32 text-center relative">
-
-    <!-- Eyebrow -->
-    <p class="font-heading text-xs tracking-[.35em] uppercase text-gold opacity-70 mb-8 animate-fade-in">
-      Planejamento · Psicoterapia Financeira · Patrimônio
-    </p>
-
-    <!-- Main headline -->
-    <h1 class="font-heading font-900 leading-[1.08] text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-8 animate-fade-up"
-        style="animation-delay:.1s">
-      O seu problema não é<br />
-      <span class="text-shimmer">falta de dinheiro.</span><br />
-      <span class="text-white">É a tomada de decisão</span><br />
-      <span class="text-white italic">no escuro.</span>
-    </h1>
-
-    <!-- Subheadline -->
-    <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-12 animate-fade-up"
-       style="animation-delay:.25s">
-      Você fatura <strong class="text-gray-200 font-500">mais de R$&nbsp;20&nbsp;mil por mês</strong>, trabalha incansavelmente — mas o patrimônio não cresce, os investimentos estão espalhados e, no final do mês, o saldo não reflete o seu esforço. O problema não está no quanto você ganha. Está em como você <em>decide</em>.
-    </p>
-
-    <!-- CTA Button -->
-    <div class="animate-fade-up" style="animation-delay:.4s">
-      <button
-        onclick="openCarta()"
-        class="btn-gold text-sm px-10 py-4 rounded-md"
-        aria-label="Abrir Carta ao Cliente antes do formulário de aplicação"
-      >
-        ◆ &nbsp;Aplicar para Mentoria Premium
-      </button>
-      <p class="text-xs text-gray-600 mt-4 font-light tracking-wide">Vagas extremamente limitadas · Processo seletivo</p>
-    </div>
-
-    <!-- Scroll indicator -->
-    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30">
-      <span class="text-xs text-gold tracking-widest uppercase font-heading">Rolar</span>
-      <div class="w-px h-10 bg-gradient-to-b from-gold to-transparent"></div>
-    </div>
-
-  </div>
-</section>
-
-
-<!-- ══════════════════════════════════════════════════════════════
-     DIAGNÓSTICO / DOR
-════════════════════════════════════════════════════════════════ -->
-<section id="metodo" class="py-28 bg-navy relative overflow-hidden">
-
-  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-20"></div>
-
-  <div class="max-w-4xl mx-auto px-6">
-
-    <div class="text-center mb-16 reveal">
-      <p class="text-xs font-heading tracking-[.3em] uppercase text-gold opacity-60 mb-4">O Diagnóstico</p>
-      <div class="divider-gold mb-8"></div>
-      <h2 class="font-heading font-800 text-3xl md:text-4xl text-white leading-tight">
-        Ganhar bem não é o mesmo<br /> que <span class="text-gold">construir patrimônio.</span>
-      </h2>
-    </div>
-
-    <!-- Pain points grid -->
-    <div class="grid md:grid-cols-2 gap-6 mb-16">
-
-      <!-- Pain card -->
-      <article class="card-dark rounded-xl p-7 reveal" style="transition-delay:.05s">
-        <div class="text-3xl text-gold mb-4 font-heading font-800">01</div>
-        <h3 class="font-heading font-700 text-white text-lg mb-3">O dinheiro some, mas você não sabe como</h3>
-        <p class="text-gray-400 text-sm leading-relaxed">A renda entra e se dissolve em contas, consumo e escolhas não planejadas. Você sabe que poderia estar acumulando mais, mas não consegue identificar o vazamento.</p>
-      </article>
-
-      <article class="card-dark rounded-xl p-7 reveal" style="transition-delay:.1s">
-        <div class="text-3xl text-gold mb-4 font-heading font-800">02</div>
-        <h3 class="font-heading font-700 text-white text-lg mb-3">Decisões financeiras tomadas no impulso</h3>
-        <p class="text-gray-400 text-sm leading-relaxed">Investimento aqui, imóvel ali, parceria acolá — sem estratégia, sem visão de longo prazo, sem conexão com um propósito real. Cada decisão parece boa isoladamente; juntas, não formam patrimônio.</p>
-      </article>
-
-      <article class="card-dark rounded-xl p-7 reveal" style="transition-delay:.15s">
-        <div class="text-3xl text-gold mb-4 font-heading font-800">03</div>
-        <h3 class="font-heading font-700 text-white text-lg mb-3">Emoção governa onde a razão deveria liderar</h3>
-        <p class="text-gray-400 text-sm leading-relaxed">A psicologia do dinheiro é real. Medos, crenças herdadas e padrões inconscientes sabotam até quem tem acesso ao melhor conteúdo financeiro do mercado.</p>
-      </article>
-
-      <article class="card-dark rounded-xl p-7 reveal" style="transition-delay:.2s">
-        <div class="text-3xl text-gold mb-4 font-heading font-800">04</div>
-        <h3 class="font-heading font-700 text-white text-lg mb-3">Patrimônio invisível, futuro incerto</h3>
-        <p class="text-gray-400 text-sm leading-relaxed">Você trabalha 60 horas por semana, mas não sabe o que aconteceria com a sua família se tudo parasse amanhã. Sem organização patrimonial, renda alta vira fragilidade alta.</p>
-      </article>
-
-    </div>
-
-    <!-- Strong statement -->
-    <blockquote class="border-l-2 border-gold pl-8 reveal" style="transition-delay:.25s">
-      <p class="font-heading font-600 text-xl md:text-2xl text-gray-200 leading-relaxed italic">
-        "Profissionais de alta renda raramente têm um problema financeiro. Eles têm um problema de <span class="text-gold not-italic">decisão, comportamento e organização</span> — e ninguém foi treinado para isso na faculdade."
-      </p>
-      <footer class="mt-4 text-xs text-gray-500 tracking-widest uppercase not-italic">— Phillip Souza</footer>
-    </blockquote>
-
-  </div>
-
-  <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-20"></div>
-</section>
-
-
-<!-- ══════════════════════════════════════════════════════════════
-     APRESENTAÇÃO DO ESPECIALISTA
-════════════════════════════════════════════════════════════════ -->
-<section id="especialista" class="py-28 bg-black relative">
-
-  <div class="max-w-5xl mx-auto px-6">
-
-    <div class="flex flex-col md:flex-row items-center gap-16">
-
-      <!-- Photo placeholder -->
-      <div class="flex-shrink-0 flex flex-col items-center gap-5 reveal">
-        <div class="relative">
-          <!-- Gold ring -->
-          <div class="absolute inset-[-6px] rounded-full border border-gold opacity-30 animate-pulse-gold"></div>
-          <div class="absolute inset-[-14px] rounded-full border border-gold opacity-10"></div>
-          <img
-            src="https://placehold.co/280x280/0A0F1A/D4AF37?text=Phillip+Souza"
-            alt="Phillip Souza — Planejador e Psicoterapeuta Financeiro"
-            width="280"
-            height="280"
-            loading="lazy"
-            class="rounded-full object-cover gold-glow"
-            style="border: 2px solid rgba(212,175,55,.5);"
-          />
-        </div>
-        <!-- Social proof badge -->
-        <div class="card-dark rounded-full px-5 py-2 flex items-center gap-2">
-          <span class="w-2 h-2 bg-gold rounded-full inline-block"></span>
-          <span class="text-xs text-gray-300 font-heading tracking-widest uppercase">Psicoterapeuta Financeiro</span>
-        </div>
-      </div>
-
-      <!-- Bio -->
-      <div class="flex-1 reveal" style="transition-delay:.1s">
-        <p class="text-xs font-heading tracking-[.3em] uppercase text-gold opacity-60 mb-4">O Especialista</p>
-        <h2 class="font-heading font-800 text-3xl md:text-4xl text-white mb-6 leading-tight">
-          Phillip Souza
-        </h2>
-
-        <p class="text-gray-400 leading-relaxed mb-4">
-          Phillip Souza é <strong class="text-gray-200 font-500">Planejador Financeiro e Psicoterapeuta Financeiro</strong> — uma combinação rara que une a análise técnica do patrimônio com a compreensão profunda dos padrões psicológicos que governam as decisões de quem ganha bem, mas não acumula.
-        </p>
-        <p class="text-gray-400 leading-relaxed mb-4">
-          Especializado em atender <strong class="text-gray-200 font-500">médicos, dentistas e empresários</strong>, Phillip desenvolveu um método que vai além de planilhas e carteiras diversificadas: ele trabalha a relação que o cliente tem com o dinheiro — o que ele representa, o que ele provoca e o que ele impede.
-        </p>
-        <p class="text-gray-400 leading-relaxed mb-8">
-          Autor de conteúdo sobre psicologia financeira e finanças de alta renda, com presença no YouTube e Instagram, Phillip acredita que organização patrimonial começa dentro, não fora.
-        </p>
-
-        <!-- Credentials -->
-        <ul class="space-y-2 text-sm text-gray-400">
-          <li class="check-item">Formação em Psicoterapia Financeira</li>
-          <li class="check-item">Planejamento patrimonial para alta renda</li>
-          <li class="check-item">Mais de 10 anos atuando com finanças comportamentais</li>
-          <li class="check-item">Criador de conteúdo no YouTube <span class="text-gold">@phillipsouzabr</span></li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- ══════════════════════════════════════════════════════════════
-     USP — PSICOTERAPIA FINANCEIRA (grande diferencial)
-════════════════════════════════════════════════════════════════ -->
-<section id="psicoterapia" class="py-0 relative overflow-hidden bg-black">
-
-  <!-- Top edge gold line -->
-  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-30"></div>
-
-  <!-- Decorative large ghost number -->
-  <div class="absolute right-0 top-1/2 -translate-y-1/2 select-none pointer-events-none overflow-hidden hidden lg:block" aria-hidden="true">
-    <span class="usp-large-number" style="-webkit-text-fill-color:transparent; opacity:.07;">$</span>
-  </div>
-
-  <!-- Full-width dark band with diagonal cut -->
-  <div class="relative"
-       style="background: linear-gradient(160deg, #000 0%, #0A0F1A 40%, #060B14 100%); padding: 6rem 0;">
-
-    <div class="max-w-6xl mx-auto px-6">
-
-      <!-- Section header -->
-      <div class="text-center mb-16 reveal">
-        <span class="usp-pill mb-6 inline-flex">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="#D4AF37" aria-hidden="true"><circle cx="5" cy="5" r="5"/></svg>
-          O Diferencial Exclusivo
+      <!-- Logo -->
+      <a href="#inicio" class="flex items-center gap-2 no-underline group" aria-label="Phillip Souza — Página inicial">
+        <span
+          class="font-heading font-700 text-lg tracking-widest text-white group-hover:text-gold transition-colors duration-300">
+          PHILLIP <span class="text-gold">SOUZA</span>
         </span>
-        <h2 class="font-heading font-900 text-4xl md:text-5xl lg:text-6xl text-white leading-[1.06] mt-6 mb-6">
-          Onde a <span class="text-shimmer">terapia encontra</span><br />
-          o planejamento financeiro.
-        </h2>
-        <p class="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
-          Nenhum consultor financeiro trabalha a sua mente. Nenhum terapeuta entende o seu patrimônio. <strong class="text-gray-200 font-500">Phillip Souza faz os dois — ao mesmo tempo.</strong>
-        </p>
-      </div>
-
-      <!-- 3-column USP cards -->
-      <div class="grid md:grid-cols-3 gap-6 mb-16">
-
-        <article class="usp-card reveal" style="transition-delay:.05s">
-          <div class="text-gold mb-4" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
-              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
-            </svg>
-          </div>
-          <h3 class="font-heading font-700 text-white text-xl mb-3">Diagnóstico das Crenças Financeiras</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">
-            Identificamos os padrões inconscientes herdados — sobre dinheiro, risco, abundância e merecimento — que operam silenciosamente por trás de cada decisão financeira que você toma.
-          </p>
-          <div class="mt-5 pt-5 border-t border-gold border-opacity-10 text-xs text-gold font-heading tracking-widest uppercase">
-            Psicologia · Comportamento
-          </div>
-        </article>
-
-        <article class="usp-card reveal" style="transition-delay:.12s; border-top-color: #E8C94A;">
-          <div class="text-gold mb-4" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
-            </svg>
-          </div>
-          <h3 class="font-heading font-700 text-white text-xl mb-3">Arquitetura Patrimonial de Alta Renda</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">
-            Estruturamos o seu patrimônio com inteligência técnica: holding familiar, investimentos alinhados ao perfil real, proteção de ativos e sucessão — tudo integrado em um plano único.
-          </p>
-          <div class="mt-5 pt-5 border-t border-gold border-opacity-10 text-xs text-gold font-heading tracking-widest uppercase">
-            Planejamento · Patrimônio
-          </div>
-        </article>
-
-        <article class="usp-card reveal" style="transition-delay:.2s">
-          <div class="text-gold mb-4" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-            </svg>
-          </div>
-          <h3 class="font-heading font-700 text-white text-xl mb-3">Acompanhamento Contínuo de Decisões</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">
-            Não é uma consultoria de pontapé inicial. É um processo contínuo onde cada decisão financeira relevante — investimento, compra, parceria — é analisada antes de ser executada.
-          </p>
-          <div class="mt-5 pt-5 border-t border-gold border-opacity-10 text-xs text-gold font-heading tracking-widest uppercase">
-            Mentoria · Decisão
-          </div>
-        </article>
-
-      </div>
-
-      <!-- Central manifesto quote -->
-      <div class="reveal max-w-3xl mx-auto text-center">
-        <div class="ornament-rule mb-8"><span class="text-xs font-heading tracking-widest text-gold">A Verdade</span></div>
-        <p class="font-heading font-700 text-2xl md:text-3xl text-white leading-relaxed mb-3">
-          "Você não precisa de mais informação financeira.<br />
-          Você precisa entender <span class="text-gold">por que não age</span><br />
-          com a informação que já tem."
-        </p>
-        <p class="text-xs text-gray-500 tracking-widest uppercase font-heading">— Phillip Souza · Psicoterapia Financeira</p>
-      </div>
-
-      <!-- CTA dentro da seção -->
-      <div class="text-center mt-12 reveal" style="transition-delay:.1s">
-        <button
-          onclick="openCarta()"
-          class="btn-gold text-sm px-10 py-4 rounded-md"
-          aria-label="Iniciar processo de aplicação à Mentoria Premium"
-        >
-          ◆ &nbsp;Quero Transformar Minha Relação com o Dinheiro
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-30"></div>
-</section>
-
-
-<!-- ══════════════════════════════════════════════════════════════
-     FILTRO NEGATIVO (Quem NÃO é para)
-════════════════════════════════════════════════════════════════ -->
-<section id="cursos" class="py-20 relative overflow-hidden">
-
-  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-20"></div>
-
-  <div class="max-w-3xl mx-auto px-6">
-
-    <!-- Warning card -->
-    <div class="card-dark rounded-2xl p-8 md:p-12 border-gold border-opacity-20 text-center reveal"
-         style="border-color: rgba(212,175,55,.2);">
-
-      <div class="inline-flex items-center justify-center w-14 h-14 rounded-full mb-6"
-           style="background:rgba(212,175,55,.08); border:1px solid rgba(212,175,55,.25);">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
-          <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
-        </svg>
-      </div>
-
-      <h2 class="font-heading font-800 text-2xl md:text-3xl text-white mb-6 leading-tight">
-        Esta mentoria <span class="text-gold">não é para você</span> se…
-      </h2>
-
-      <div class="text-left space-y-4 mb-8">
-        <div class="flex items-start gap-3 text-gray-400 text-sm">
-          <span class="text-red-400 mt-0.5 flex-shrink-0">✕</span>
-          <p>Sua renda mensal é <strong class="text-gray-300">inferior a R$&nbsp;10.000</strong></p>
-        </div>
-        <div class="flex items-start gap-3 text-gray-400 text-sm">
-          <span class="text-red-400 mt-0.5 flex-shrink-0">✕</span>
-          <p>Você possui <strong class="text-gray-300">dívidas simples de consumo</strong> ainda não resolvidas</p>
-        </div>
-        <div class="flex items-start gap-3 text-gray-400 text-sm">
-          <span class="text-red-400 mt-0.5 flex-shrink-0">✕</span>
-          <p>Está buscando uma <strong class="text-gray-300">solução rápida ou mágica</strong> para organizar as finanças</p>
-        </div>
-        <div class="flex items-start gap-3 text-gray-400 text-sm">
-          <span class="text-red-400 mt-0.5 flex-shrink-0">✕</span>
-          <p>Não está disposto a <strong class="text-gray-300">olhar honestamente</strong> para os próprios padrões financeiros e emocionais</p>
-        </div>
-      </div>
-
-      <div class="ornament-rule mb-8"><span class="text-xs font-heading tracking-widest">MAS</span></div>
-
-      <p class="text-gray-400 text-sm leading-relaxed mb-8">
-        Se você está neste momento da vida, temos conteúdo gratuito e denso esperando por você. Comece pelo YouTube e construa a base.
-      </p>
-
-      <a
-        href="https://www.youtube.com/@phillipsouzabr"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn-outline text-xs px-8 py-3.5 rounded"
-        aria-label="Acessar cursos abertos no YouTube de Phillip Souza"
-      >
-        ▶ &nbsp;Acessar Conteúdo Gratuito no YouTube
       </a>
 
+      <!-- Desktop Links -->
+      <ul class="hidden md:flex items-center gap-8 list-none m-0 p-0">
+        <li><a href="#metodo"
+            class="font-heading text-xs font-600 tracking-widest uppercase text-gray-400 hover:text-gold transition-colors duration-300 no-underline">Método</a>
+        </li>
+        <li><a href="#cursos"
+            class="font-heading text-xs font-600 tracking-widest uppercase text-gray-400 hover:text-gold transition-colors duration-300 no-underline">Cursos</a>
+        </li>
+        <li><a href="#livro"
+            class="font-heading text-xs font-600 tracking-widest uppercase text-gray-400 hover:text-gold transition-colors duration-300 no-underline">Livro</a>
+        </li>
+        <li>
+          <button onclick="openCarta()" class="btn-gold text-xs px-5 py-2.5 rounded"
+            aria-label="Aplicar para Mentoria Premium">Aplicar</button>
+        </li>
+      </ul>
+
+      <!-- Mobile hamburger -->
+      <button id="hamburger" class="md:hidden flex flex-col gap-1.5 p-2" aria-label="Abrir menu" aria-expanded="false"
+        onclick="toggleNav()">
+        <span class="w-5 h-px bg-gold block transition-all duration-300" id="h1"></span>
+        <span class="w-5 h-px bg-gold block transition-all duration-300" id="h2"></span>
+        <span class="w-5 h-px bg-gold block transition-all duration-300" id="h3"></span>
+      </button>
+    </nav>
+
+    <!-- Mobile dropdown menu -->
+    <div id="nav-menu" class="md:hidden flex-col border-t border-gold border-opacity-10 px-6 pb-6 pt-4 gap-5">
+      <a href="#metodo" onclick="toggleNav()"
+        class="font-heading text-xs font-600 tracking-widest uppercase text-gray-400 hover:text-gold transition-colors no-underline block">Método</a>
+      <a href="#cursos" onclick="toggleNav()"
+        class="font-heading text-xs font-600 tracking-widest uppercase text-gray-400 hover:text-gold transition-colors no-underline block">Cursos</a>
+      <a href="#livro" onclick="toggleNav()"
+        class="font-heading text-xs font-600 tracking-widest uppercase text-gray-400 hover:text-gold transition-colors no-underline block">Livro</a>
+      <button onclick="openCarta(); toggleNav();" class="btn-gold text-xs px-6 py-3 rounded w-full">Aplicar para
+        Mentoria</button>
+    </div>
+  </header>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+     HERO SECTION
+════════════════════════════════════════════════════════════════ -->
+  <section id="inicio" class="relative min-h-screen flex items-center overflow-hidden pt-16">
+
+    <!-- Background glow blobs -->
+    <div class="hero-glow w-[600px] h-[600px] bg-yellow-900 opacity-10 top-[-100px] right-[-150px]"></div>
+    <div class="hero-glow w-[400px] h-[400px] bg-blue-900 opacity-10 bottom-[-80px] left-[-100px]"></div>
+
+    <!-- Subtle grid pattern -->
+    <div class="absolute inset-0 opacity-[.03]"
+      style="background-image: linear-gradient(rgba(212,175,55,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,.5) 1px, transparent 1px); background-size: 60px 60px;">
     </div>
 
-  </div>
+    <div class="max-w-5xl mx-auto px-6 py-32 text-center relative">
 
-  <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-20"></div>
-</section>
+      <!-- Eyebrow -->
+      <p class="font-heading text-xs tracking-[.35em] uppercase text-gold opacity-70 mb-8 animate-fade-in">
+        Planejamento · Psicoterapia Financeira · Patrimônio
+      </p>
+
+      <!-- Main headline -->
+      <h1 class="font-heading font-900 leading-[1.08] text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-8 animate-fade-up"
+        style="animation-delay:.1s">
+        O seu problema não é<br />
+        <span class="text-shimmer">falta de dinheiro.</span><br />
+        <span class="text-white">É a tomada de decisão</span><br />
+        <span class="text-white italic">no escuro.</span>
+      </h1>
+
+      <!-- Subheadline -->
+      <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-12 animate-fade-up"
+        style="animation-delay:.25s">
+        Você fatura <strong class="text-gray-200 font-500">mais de R$&nbsp;20&nbsp;mil por mês</strong>, trabalha
+        incansavelmente — mas o patrimônio não cresce, os investimentos estão espalhados e, no final do mês, o saldo não
+        reflete o seu esforço. O problema não está no quanto você ganha. Está em como você <em>decide</em>.
+      </p>
+
+      <!-- CTA Button -->
+      <div class="animate-fade-up" style="animation-delay:.4s">
+        <button onclick="openCarta()" class="btn-gold text-sm px-10 py-4 rounded-md"
+          aria-label="Abrir Carta ao Cliente antes do formulário de aplicação">
+          ◆ &nbsp;Aplicar para Mentoria Premium
+        </button>
+        <p class="text-xs text-gray-600 mt-4 font-light tracking-wide">Vagas extremamente limitadas · Processo seletivo
+        </p>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30">
+        <span class="text-xs text-gold tracking-widest uppercase font-heading">Rolar</span>
+        <div class="w-px h-10 bg-gradient-to-b from-gold to-transparent"></div>
+      </div>
+
+    </div>
+  </section>
 
 
-<!-- ══════════════════════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════════════════════════
+     DIAGNÓSTICO / DOR
+════════════════════════════════════════════════════════════════ -->
+  <section id="metodo" class="py-28 bg-navy relative overflow-hidden">
+
+    <div
+      class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-20">
+    </div>
+
+    <div class="max-w-4xl mx-auto px-6">
+
+      <div class="text-center mb-16 reveal">
+        <p class="text-xs font-heading tracking-[.3em] uppercase text-gold opacity-60 mb-4">O Diagnóstico</p>
+        <div class="divider-gold mb-8"></div>
+        <h2 class="font-heading font-800 text-3xl md:text-4xl text-white leading-tight">
+          Ganhar bem não é o mesmo<br /> que <span class="text-gold">construir patrimônio.</span>
+        </h2>
+      </div>
+
+      <!-- Pain points grid -->
+      <div class="grid md:grid-cols-2 gap-6 mb-16">
+
+        <!-- Pain card -->
+        <article class="card-dark rounded-xl p-7 reveal" style="transition-delay:.05s">
+          <div class="text-3xl text-gold mb-4 font-heading font-800">01</div>
+          <h3 class="font-heading font-700 text-white text-lg mb-3">O dinheiro some, mas você não sabe como</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">A renda entra e se dissolve em contas, consumo e escolhas não
+            planejadas. Você sabe que poderia estar acumulando mais, mas não consegue identificar o vazamento.</p>
+        </article>
+
+        <article class="card-dark rounded-xl p-7 reveal" style="transition-delay:.1s">
+          <div class="text-3xl text-gold mb-4 font-heading font-800">02</div>
+          <h3 class="font-heading font-700 text-white text-lg mb-3">Decisões financeiras tomadas no impulso</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Investimento aqui, imóvel ali, parceria acolá — sem
+            estratégia, sem visão de longo prazo, sem conexão com um propósito real. Cada decisão parece boa
+            isoladamente; juntas, não formam patrimônio.</p>
+        </article>
+
+        <article class="card-dark rounded-xl p-7 reveal" style="transition-delay:.15s">
+          <div class="text-3xl text-gold mb-4 font-heading font-800">03</div>
+          <h3 class="font-heading font-700 text-white text-lg mb-3">Emoção governa onde a razão deveria liderar</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">A psicologia do dinheiro é real. Medos, crenças herdadas e
+            padrões inconscientes sabotam até quem tem acesso ao melhor conteúdo financeiro do mercado.</p>
+        </article>
+
+        <article class="card-dark rounded-xl p-7 reveal" style="transition-delay:.2s">
+          <div class="text-3xl text-gold mb-4 font-heading font-800">04</div>
+          <h3 class="font-heading font-700 text-white text-lg mb-3">Patrimônio invisível, futuro incerto</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Você trabalha 60 horas por semana, mas não sabe o que
+            aconteceria com a sua família se tudo parasse amanhã. Sem organização patrimonial, renda alta vira
+            fragilidade alta.</p>
+        </article>
+
+      </div>
+
+      <!-- Strong statement -->
+      <blockquote class="border-l-2 border-gold pl-8 reveal" style="transition-delay:.25s">
+        <p class="font-heading font-600 text-xl md:text-2xl text-gray-200 leading-relaxed italic">
+          "Profissionais de alta renda raramente têm um problema financeiro. Eles têm um problema de <span
+            class="text-gold not-italic">decisão, comportamento e organização</span> — e ninguém foi treinado para isso
+          na faculdade."
+        </p>
+        <footer class="mt-4 text-xs text-gray-500 tracking-widest uppercase not-italic">— Phillip Souza</footer>
+      </blockquote>
+
+    </div>
+
+    <div
+      class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-20">
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+     APRESENTAÇÃO DO ESPECIALISTA
+════════════════════════════════════════════════════════════════ -->
+  <section id="especialista" class="py-28 bg-black relative">
+
+    <div class="max-w-5xl mx-auto px-6">
+
+      <div class="flex flex-col md:flex-row items-center gap-16">
+
+        <!-- Photo placeholder -->
+        <div class="flex-shrink-0 flex flex-col items-center gap-5 reveal">
+          <div class="relative">
+            <!-- Gold ring -->
+            <div class="absolute inset-[-6px] rounded-full border border-gold opacity-30 animate-pulse-gold"></div>
+            <div class="absolute inset-[-14px] rounded-full border border-gold opacity-10"></div>
+            <img src="profile.jpg" alt="Phillip Souza — Planejador e Psicoterapeuta Financeiro" width="280" height="280"
+              loading="lazy" class="rounded-full object-cover gold-glow"
+              style="border: 2px solid rgba(212,175,55,.5);" />
+          </div>
+          <!-- Social proof badge -->
+          <div class="card-dark rounded-full px-5 py-2 flex items-center gap-2">
+            <span class="w-2 h-2 bg-gold rounded-full inline-block"></span>
+            <span class="text-xs text-gray-300 font-heading tracking-widest uppercase">Psicoterapeuta Financeiro</span>
+          </div>
+        </div>
+
+        <!-- Bio -->
+        <div class="flex-1 reveal" style="transition-delay:.1s">
+          <p class="text-xs font-heading tracking-[.3em] uppercase text-gold opacity-60 mb-4">O Especialista</p>
+          <h2 class="font-heading font-800 text-3xl md:text-4xl text-white mb-6 leading-tight">
+            Phillip Souza
+          </h2>
+
+          <p class="text-gray-400 leading-relaxed mb-4">
+            Phillip Souza é <strong class="text-gray-200 font-500">Planejador Financeiro e Psicoterapeuta
+              Financeiro</strong> — uma combinação rara que une a análise técnica do patrimônio com a compreensão
+            profunda dos padrões psicológicos que governam as decisões de quem ganha bem, mas não acumula.
+          </p>
+          <p class="text-gray-400 leading-relaxed mb-4">
+            Especializado em atender <strong class="text-gray-200 font-500">médicos, dentistas e empresários</strong>,
+            Phillip desenvolveu um método que vai além de planilhas e carteiras diversificadas: ele trabalha a relação
+            que o cliente tem com o dinheiro — o que ele representa, o que ele provoca e o que ele impede.
+          </p>
+          <p class="text-gray-400 leading-relaxed mb-8">
+            Autor de conteúdo sobre psicologia financeira e finanças de alta renda, com presença no YouTube e Instagram,
+            Phillip acredita que organização patrimonial começa dentro, não fora.
+          </p>
+
+          <!-- Credentials -->
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li class="check-item">Formação em Psicoterapia Financeira</li>
+            <li class="check-item">Planejamento patrimonial para alta renda</li>
+            <li class="check-item">Mais de 10 anos atuando com finanças comportamentais</li>
+            <li class="check-item">Criador de conteúdo no YouTube <span class="text-gold">@phillipsouzabr</span></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+     USP — PSICOTERAPIA FINANCEIRA (grande diferencial)
+════════════════════════════════════════════════════════════════ -->
+  <section id="psicoterapia" class="py-0 relative overflow-hidden bg-black">
+
+    <!-- Top edge gold line -->
+    <div
+      class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-30">
+    </div>
+
+    <!-- Decorative large ghost number -->
+    <div
+      class="absolute right-0 top-1/2 -translate-y-1/2 select-none pointer-events-none overflow-hidden hidden lg:block"
+      aria-hidden="true">
+      <span class="usp-large-number" style="-webkit-text-fill-color:transparent; opacity:.07;">$</span>
+    </div>
+
+    <!-- Full-width dark band with diagonal cut -->
+    <div class="relative"
+      style="background: linear-gradient(160deg, #000 0%, #0A0F1A 40%, #060B14 100%); padding: 6rem 0;">
+
+      <div class="max-w-6xl mx-auto px-6">
+
+        <!-- Section header -->
+        <div class="text-center mb-16 reveal">
+          <span class="usp-pill mb-6 inline-flex">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="#D4AF37" aria-hidden="true">
+              <circle cx="5" cy="5" r="5" />
+            </svg>
+            O Diferencial Exclusivo
+          </span>
+          <h2 class="font-heading font-900 text-4xl md:text-5xl lg:text-6xl text-white leading-[1.06] mt-6 mb-6">
+            Onde a <span class="text-shimmer">terapia encontra</span><br />
+            o planejamento financeiro.
+          </h2>
+          <p class="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
+            Nenhum consultor financeiro trabalha a sua mente. Nenhum terapeuta entende o seu patrimônio. <strong
+              class="text-gray-200 font-500">Phillip Souza faz os dois — ao mesmo tempo.</strong>
+          </p>
+        </div>
+
+        <!-- 3-column USP cards -->
+        <div class="grid md:grid-cols-3 gap-6 mb-16">
+
+          <article class="usp-card reveal" style="transition-delay:.05s">
+            <div class="text-gold mb-4" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" />
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                <line x1="12" y1="22.08" x2="12" y2="12" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-700 text-white text-xl mb-3">Diagnóstico das Crenças Financeiras</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Identificamos os padrões inconscientes herdados — sobre dinheiro, risco, abundância e merecimento — que
+              operam silenciosamente por trás de cada decisão financeira que você toma.
+            </p>
+            <div
+              class="mt-5 pt-5 border-t border-gold border-opacity-10 text-xs text-gold font-heading tracking-widest uppercase">
+              Psicologia · Comportamento
+            </div>
+          </article>
+
+          <article class="usp-card reveal" style="transition-delay:.12s; border-top-color: #E8C94A;">
+            <div class="text-gold mb-4" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23" />
+                <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-700 text-white text-xl mb-3">Arquitetura Patrimonial de Alta Renda</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Estruturamos o seu patrimônio com inteligência técnica: holding familiar, investimentos alinhados ao
+              perfil real, proteção de ativos e sucessão — tudo integrado em um plano único.
+            </p>
+            <div
+              class="mt-5 pt-5 border-t border-gold border-opacity-10 text-xs text-gold font-heading tracking-widest uppercase">
+              Planejamento · Patrimônio
+            </div>
+          </article>
+
+          <article class="usp-card reveal" style="transition-delay:.2s">
+            <div class="text-gold mb-4" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-700 text-white text-xl mb-3">Acompanhamento Contínuo de Decisões</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Não é uma consultoria de pontapé inicial. É um processo contínuo onde cada decisão financeira relevante —
+              investimento, compra, parceria — é analisada antes de ser executada.
+            </p>
+            <div
+              class="mt-5 pt-5 border-t border-gold border-opacity-10 text-xs text-gold font-heading tracking-widest uppercase">
+              Mentoria · Decisão
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Central manifesto quote -->
+        <div class="reveal max-w-3xl mx-auto text-center">
+          <div class="ornament-rule mb-8"><span class="text-xs font-heading tracking-widest text-gold">A Verdade</span>
+          </div>
+          <p class="font-heading font-700 text-2xl md:text-3xl text-white leading-relaxed mb-3">
+            "Você não precisa de mais informação financeira.<br />
+            Você precisa entender <span class="text-gold">por que não age</span><br />
+            com a informação que já tem."
+          </p>
+          <p class="text-xs text-gray-500 tracking-widest uppercase font-heading">— Phillip Souza · Psicoterapia
+            Financeira</p>
+        </div>
+
+        <!-- CTA dentro da seção -->
+        <div class="text-center mt-12 reveal" style="transition-delay:.1s">
+          <button onclick="openCarta()" class="btn-gold text-sm px-10 py-4 rounded-md"
+            aria-label="Iniciar processo de aplicação à Mentoria Premium">
+            ◆ &nbsp;Quero Transformar Minha Relação com o Dinheiro
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <div
+      class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-30">
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+     FILTRO NEGATIVO (Quem NÃO é para)
+════════════════════════════════════════════════════════════════ -->
+  <section id="cursos" class="py-20 relative overflow-hidden">
+
+    <div
+      class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-20">
+    </div>
+
+    <div class="max-w-3xl mx-auto px-6">
+
+      <!-- Warning card -->
+      <div class="card-dark rounded-2xl p-8 md:p-12 border-gold border-opacity-20 text-center reveal"
+        style="border-color: rgba(212,175,55,.2);">
+
+        <div class="inline-flex items-center justify-center w-14 h-14 rounded-full mb-6"
+          style="background:rgba(212,175,55,.08); border:1px solid rgba(212,175,55,.25);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+            <line x1="12" y1="9" x2="12" y2="13" />
+            <line x1="12" y1="17" x2="12.01" y2="17" />
+          </svg>
+        </div>
+
+        <h2 class="font-heading font-800 text-2xl md:text-3xl text-white mb-6 leading-tight">
+          Esta mentoria <span class="text-gold">não é para você</span> se…
+        </h2>
+
+        <div class="text-left space-y-4 mb-8">
+          <div class="flex items-start gap-3 text-gray-400 text-sm">
+            <span class="text-red-400 mt-0.5 flex-shrink-0">✕</span>
+            <p>Sua renda mensal é <strong class="text-gray-300">inferior a R$&nbsp;10.000</strong></p>
+          </div>
+          <div class="flex items-start gap-3 text-gray-400 text-sm">
+            <span class="text-red-400 mt-0.5 flex-shrink-0">✕</span>
+            <p>Você possui <strong class="text-gray-300">dívidas simples de consumo</strong> ainda não resolvidas</p>
+          </div>
+          <div class="flex items-start gap-3 text-gray-400 text-sm">
+            <span class="text-red-400 mt-0.5 flex-shrink-0">✕</span>
+            <p>Está buscando uma <strong class="text-gray-300">solução rápida ou mágica</strong> para organizar as
+              finanças</p>
+          </div>
+          <div class="flex items-start gap-3 text-gray-400 text-sm">
+            <span class="text-red-400 mt-0.5 flex-shrink-0">✕</span>
+            <p>Não está disposto a <strong class="text-gray-300">olhar honestamente</strong> para os próprios padrões
+              financeiros e emocionais</p>
+          </div>
+        </div>
+
+        <div class="ornament-rule mb-8"><span class="text-xs font-heading tracking-widest">MAS</span></div>
+
+        <p class="text-gray-400 text-sm leading-relaxed mb-8">
+          Se você está neste momento da vida, temos conteúdo gratuito e denso esperando por você. Comece pelo YouTube e
+          construa a base.
+        </p>
+
+        <a href="https://www.youtube.com/@phillipsouzabr" target="_blank" rel="noopener noreferrer"
+          class="btn-outline text-xs px-8 py-3.5 rounded"
+          aria-label="Acessar cursos abertos no YouTube de Phillip Souza">
+          ▶ &nbsp;Acessar Conteúdo Gratuito no YouTube
+        </a>
+
+      </div>
+
+    </div>
+
+    <div
+      class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-20">
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
      LIVRO — Captura de Lead Frio
 ════════════════════════════════════════════════════════════════ -->
-<section id="livro" class="py-28 bg-navy relative overflow-hidden">
+  <section id="livro" class="py-28 bg-navy relative overflow-hidden">
 
-  <!-- Decorative lines -->
-  <div class="absolute inset-0 opacity-[.025]"
-    style="background-image: repeating-linear-gradient(45deg, #D4AF37 0, #D4AF37 1px, transparent 0, transparent 50%); background-size: 30px 30px;"></div>
+    <!-- Decorative lines -->
+    <div class="absolute inset-0 opacity-[.025]"
+      style="background-image: repeating-linear-gradient(45deg, #D4AF37 0, #D4AF37 1px, transparent 0, transparent 50%); background-size: 30px 30px;">
+    </div>
 
-  <div class="max-w-4xl mx-auto px-6">
+    <div class="max-w-4xl mx-auto px-6">
 
-    <div class="flex flex-col md:flex-row items-center gap-12">
+      <div class="flex flex-col md:flex-row items-center gap-12">
 
-      <!-- Book mockup -->
-      <div class="flex-shrink-0 reveal">
-        <div class="relative w-48 md:w-56">
-          <!-- Book spine -->
-          <div class="absolute left-0 top-2 w-5 h-full bg-gold opacity-80 rounded-l-sm" style="transform:perspective(400px) rotateY(20deg);"></div>
-          <div class="card-dark rounded-r-sm rounded-bl-sm p-8 relative gold-glow flex flex-col justify-between"
-               style="min-height:280px; border-color:rgba(212,175,55,.3);">
-            <div>
-              <div class="divider-gold mb-4" style="width:32px; margin:0;"></div>
-              <p class="font-heading font-900 text-white text-lg leading-tight mb-3">Decisões no Escuro</p>
-              <p class="text-xs text-gray-400 leading-relaxed">A psicologia das escolhas financeiras de alta renda</p>
+        <!-- Book mockup -->
+        <div class="flex-shrink-0 reveal">
+          <div class="relative w-48 md:w-56">
+            <!-- Book spine -->
+            <div class="absolute left-0 top-2 w-5 h-full bg-gold opacity-80 rounded-l-sm"
+              style="transform:perspective(400px) rotateY(20deg);"></div>
+            <div class="card-dark rounded-r-sm rounded-bl-sm p-8 relative gold-glow flex flex-col justify-between"
+              style="min-height:280px; border-color:rgba(212,175,55,.3);">
+              <div>
+                <div class="divider-gold mb-4" style="width:32px; margin:0;"></div>
+                <p class="font-heading font-900 text-white text-lg leading-tight mb-3">Decisões no Escuro</p>
+                <p class="text-xs text-gray-400 leading-relaxed">A psicologia das escolhas financeiras de alta renda</p>
+              </div>
+              <div>
+                <div class="w-full h-px bg-gold opacity-20 mb-3"></div>
+                <p class="font-heading text-xs text-gold tracking-widest uppercase">Phillip Souza</p>
+              </div>
             </div>
-            <div>
-              <div class="w-full h-px bg-gold opacity-20 mb-3"></div>
-              <p class="font-heading text-xs text-gold tracking-widest uppercase">Phillip Souza</p>
+            <!-- "Em breve" badge -->
+            <div
+              class="absolute -top-3 -right-3 bg-gold text-black text-xs font-heading font-800 px-3 py-1 rounded-full tracking-widest uppercase">
+              Em breve
             </div>
           </div>
-          <!-- "Em breve" badge -->
-          <div class="absolute -top-3 -right-3 bg-gold text-black text-xs font-heading font-800 px-3 py-1 rounded-full tracking-widest uppercase">
-            Em breve
-          </div>
+        </div>
+
+        <!-- Form area -->
+        <div class="flex-1 reveal" style="transition-delay:.1s">
+          <p class="text-xs font-heading tracking-[.3em] uppercase text-gold opacity-60 mb-4">Próximo Lançamento</p>
+          <h2 class="font-heading font-800 text-2xl md:text-3xl text-white mb-4 leading-tight">
+            Seja o primeiro a saber<br />quando o livro chegar.
+          </h2>
+          <p class="text-gray-400 text-sm leading-relaxed mb-8">
+            "Decisões no Escuro" vai revelar os padrões psicológicos que impedem profissionais de alta renda de
+            construir o patrimônio que merecem — com casos reais, método e profundidade que o mercado financeiro nunca
+            teve coragem de publicar.
+          </p>
+
+          <!-- Formspree Lead Capture Form -->
+          <form action="https://formspree.io/f/xaqknwbq" method="POST" class="flex flex-col sm:flex-row gap-3"
+            aria-label="Formulário de aviso de lançamento do livro">
+            <input type="hidden" name="form_source" value="lead-livro" />
+            <label for="email-livro" class="sr-only">Seu melhor e-mail</label>
+            <input type="email" id="email-livro" name="email" required placeholder="Seu melhor e-mail"
+              class="form-input flex-1" autocomplete="email" />
+            <button type="submit" class="btn-gold text-xs px-6 py-3 rounded whitespace-nowrap">
+              Avisar Lançamento
+            </button>
+          </form>
+
+          <p class="text-xs text-gray-600 mt-3">Sem spam. Você será notificado apenas no lançamento.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════════ -->
+  <footer class="bg-black border-t border-gold border-opacity-10 py-12">
+    <div class="max-w-5xl mx-auto px-6">
+
+      <div class="flex flex-col md:flex-row items-center md:items-start justify-between gap-8 mb-10">
+
+        <!-- Brand -->
+        <div class="text-center md:text-left">
+          <p class="font-heading font-700 text-lg tracking-widest text-white mb-1">
+            PHILLIP <span class="text-gold">SOUZA</span>
+          </p>
+          <p class="text-xs text-gray-500 leading-relaxed max-w-xs">
+            Planejador e Psicoterapeuta Financeiro.<br />
+            Especialista em alta renda.
+          </p>
+        </div>
+
+        <!-- Links -->
+        <nav aria-label="Rodapé — Links rápidos">
+          <ul class="flex flex-col md:flex-row gap-4 md:gap-8 list-none m-0 p-0 text-center md:text-left">
+            <li><a href="#metodo"
+                class="text-xs font-heading tracking-widest uppercase text-gray-500 hover:text-gold transition-colors no-underline">Método</a>
+            </li>
+            <li><a href="#cursos"
+                class="text-xs font-heading tracking-widest uppercase text-gray-500 hover:text-gold transition-colors no-underline">Cursos</a>
+            </li>
+            <li><a href="#livro"
+                class="text-xs font-heading tracking-widest uppercase text-gray-500 hover:text-gold transition-colors no-underline">Livro</a>
+            </li>
+            <li>
+              <button onclick="openCarta()"
+                class="text-xs font-heading tracking-widest uppercase text-gold hover:text-gold-light transition-colors bg-transparent border-none cursor-pointer p-0">
+                Aplicar
+              </button>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Contact & Social -->
+        <div class="text-center md:text-right space-y-2">
+          <a href="mailto:contato@phillipsouza.com"
+            class="block text-xs text-gray-400 hover:text-gold transition-colors no-underline">
+            contato@phillipsouza.com
+          </a>
+          <a href="https://wa.me/5531980260779" target="_blank" rel="noopener noreferrer"
+            class="block text-xs text-gray-400 hover:text-gold transition-colors no-underline">
+            WhatsApp: +55 31 98026-0779
+          </a>
+          <a href="https://instagram.com/phillipsouzabr" target="_blank" rel="noopener noreferrer"
+            class="block text-xs text-gray-400 hover:text-gold transition-colors no-underline">
+            @phillipsouzabr
+          </a>
+          <!-- Endereço físico semântico para Google Meu Negócio / SEO Local -->
+          <address class="not-italic mt-3 pt-3 border-t border-gold border-opacity-10">
+            <p class="text-xs text-gray-600 leading-relaxed">
+              Rua Capanema, 541 — Coqueiros<br />
+              Belo Horizonte — MG, 30880-450<br />
+              <a href="https://maps.google.com/?q=Rua+Capanema,+541,+Coqueiros,+Belo+Horizonte,+MG" target="_blank"
+                rel="noopener noreferrer" class="text-gold hover:underline transition-colors no-underline text-xs">
+                Ver no mapa →
+              </a>
+            </p>
+          </address>
         </div>
       </div>
 
-      <!-- Form area -->
-      <div class="flex-1 reveal" style="transition-delay:.1s">
-        <p class="text-xs font-heading tracking-[.3em] uppercase text-gold opacity-60 mb-4">Próximo Lançamento</p>
-        <h2 class="font-heading font-800 text-2xl md:text-3xl text-white mb-4 leading-tight">
-          Seja o primeiro a saber<br />quando o livro chegar.
-        </h2>
-        <p class="text-gray-400 text-sm leading-relaxed mb-8">
-          "Decisões no Escuro" vai revelar os padrões psicológicos que impedem profissionais de alta renda de construir o patrimônio que merecem — com casos reais, método e profundidade que o mercado financeiro nunca teve coragem de publicar.
+      <!-- Bottom bar -->
+      <div
+        class="border-t border-gold border-opacity-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center">
+        <p class="text-xs text-gray-600">
+          © 2026 Phillip Souza · Todos os direitos reservados
         </p>
-
-        <!-- Formspree Lead Capture Form -->
-        <form
-          action="https://formspree.io/f/xaqknwbq"
-          method="POST"
-          class="flex flex-col sm:flex-row gap-3"
-          aria-label="Formulário de aviso de lançamento do livro"
-        >
-          <input type="hidden" name="form_source" value="lead-livro" />
-          <label for="email-livro" class="sr-only">Seu melhor e-mail</label>
-          <input
-            type="email"
-            id="email-livro"
-            name="email"
-            required
-            placeholder="Seu melhor e-mail"
-            class="form-input flex-1"
-            autocomplete="email"
-          />
-          <button type="submit" class="btn-gold text-xs px-6 py-3 rounded whitespace-nowrap">
-            Avisar Lançamento
-          </button>
-        </form>
-
-        <p class="text-xs text-gray-600 mt-3">Sem spam. Você será notificado apenas no lançamento.</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- ══════════════════════════════════════════════════════════════
-     FOOTER
-════════════════════════════════════════════════════════════════ -->
-<footer class="bg-black border-t border-gold border-opacity-10 py-12">
-  <div class="max-w-5xl mx-auto px-6">
-
-    <div class="flex flex-col md:flex-row items-center md:items-start justify-between gap-8 mb-10">
-
-      <!-- Brand -->
-      <div class="text-center md:text-left">
-        <p class="font-heading font-700 text-lg tracking-widest text-white mb-1">
-          PHILLIP <span class="text-gold">SOUZA</span>
-        </p>
-        <p class="text-xs text-gray-500 leading-relaxed max-w-xs">
-          Planejador e Psicoterapeuta Financeiro.<br />
-          Especialista em alta renda.
+        <p class="text-xs text-gray-700">
+          <a href="privacidade.html" class="hover:text-gold transition-colors no-underline">Política de Privacidade</a>
+          &nbsp;·&nbsp;
+          <a href="termos.html" class="hover:text-gold transition-colors no-underline">Termos de Uso</a>
         </p>
       </div>
 
-      <!-- Links -->
-      <nav aria-label="Rodapé — Links rápidos">
-        <ul class="flex flex-col md:flex-row gap-4 md:gap-8 list-none m-0 p-0 text-center md:text-left">
-          <li><a href="#metodo" class="text-xs font-heading tracking-widest uppercase text-gray-500 hover:text-gold transition-colors no-underline">Método</a></li>
-          <li><a href="#cursos" class="text-xs font-heading tracking-widest uppercase text-gray-500 hover:text-gold transition-colors no-underline">Cursos</a></li>
-          <li><a href="#livro"  class="text-xs font-heading tracking-widest uppercase text-gray-500 hover:text-gold transition-colors no-underline">Livro</a></li>
-          <li>
-            <button onclick="openCarta()" class="text-xs font-heading tracking-widest uppercase text-gold hover:text-gold-light transition-colors bg-transparent border-none cursor-pointer p-0">
-              Aplicar
-            </button>
-          </li>
-        </ul>
-      </nav>
-
-      <!-- Contact & Social -->
-      <div class="text-center md:text-right space-y-2">
-        <a href="mailto:contato@phillipsouza.com"
-           class="block text-xs text-gray-400 hover:text-gold transition-colors no-underline">
-          contato@phillipsouza.com
-        </a>
-        <a href="https://wa.me/5531980260779"
-           target="_blank" rel="noopener noreferrer"
-           class="block text-xs text-gray-400 hover:text-gold transition-colors no-underline">
-          WhatsApp: +55 31 98026-0779
-        </a>
-        <a href="https://instagram.com/phillipsouzabr"
-           target="_blank" rel="noopener noreferrer"
-           class="block text-xs text-gray-400 hover:text-gold transition-colors no-underline">
-          @phillipsouzabr
-        </a>
-        <!-- Endereço físico semântico para Google Meu Negócio / SEO Local -->
-        <address class="not-italic mt-3 pt-3 border-t border-gold border-opacity-10">
-          <p class="text-xs text-gray-600 leading-relaxed">
-            Rua Capanema, 541 — Coqueiros<br />
-            Belo Horizonte — MG, 30880-450<br />
-            <a href="https://maps.google.com/?q=Rua+Capanema,+541,+Coqueiros,+Belo+Horizonte,+MG"
-               target="_blank" rel="noopener noreferrer"
-               class="text-gold hover:underline transition-colors no-underline text-xs">
-              Ver no mapa →
-            </a>
-          </p>
-        </address>
-      </div>
     </div>
-
-    <!-- Bottom bar -->
-    <div class="border-t border-gold border-opacity-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center">
-      <p class="text-xs text-gray-600">
-        © 2026 Phillip Souza · Todos os direitos reservados
-      </p>
-      <p class="text-xs text-gray-700">
-        <a href="privacidade.html" class="hover:text-gold transition-colors no-underline">Política de Privacidade</a>
-        &nbsp;·&nbsp;
-        <a href="termos.html" class="hover:text-gold transition-colors no-underline">Termos de Uso</a>
-      </p>
-    </div>
-
-  </div>
-</footer>
+  </footer>
 
 
-<!-- ══════════════════════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════════════════════════
      MODAL 1 — CARTA AO CLIENTE (funil de fundo obrigatório)
      Abre PRIMEIRO ao clicar em "Aplicar". O formulário só abre
      depois que o prospecto clica no CTA ao final da carta.
 ════════════════════════════════════════════════════════════════ -->
-<div id="carta-overlay" role="dialog" aria-modal="true" aria-labelledby="carta-title" onclick="handleCartaClick(event)">
+  <div id="carta-overlay" role="dialog" aria-modal="true" aria-labelledby="carta-title"
+    onclick="handleCartaClick(event)">
 
-  <div id="carta-box" class="w-full max-w-2xl my-8" style="animation: fadeUp .45s ease forwards;">
+    <div id="carta-box" class="w-full max-w-2xl my-8" style="animation: fadeUp .45s ease forwards;">
 
-    <!-- Card -->
-    <div class="card-dark rounded-2xl relative overflow-hidden" style="border-color: rgba(212,175,55,.25);">
+      <!-- Card -->
+      <div class="card-dark rounded-2xl relative overflow-hidden" style="border-color: rgba(212,175,55,.25);">
 
-      <!-- Gold top band -->
-      <div class="h-1 w-full" style="background: linear-gradient(90deg, transparent, #D4AF37, transparent);"></div>
+        <!-- Gold top band -->
+        <div class="h-1 w-full" style="background: linear-gradient(90deg, transparent, #D4AF37, transparent);"></div>
 
-      <!-- Close -->
-      <button
-        onclick="closeCarta()"
-        class="absolute top-5 right-5 text-gray-500 hover:text-gold transition-colors bg-transparent border-none cursor-pointer p-1 z-10"
-        aria-label="Fechar carta"
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
-          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        <!-- Close -->
+        <button onclick="closeCarta()"
+          class="absolute top-5 right-5 text-gray-500 hover:text-gold transition-colors bg-transparent border-none cursor-pointer p-1 z-10"
+          aria-label="Fechar carta">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+            stroke-linecap="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+
+        <!-- Header da carta -->
+        <div class="px-8 pt-8 pb-6 border-b border-gold border-opacity-10 text-center">
+          <p class="text-xs font-heading tracking-[.35em] uppercase text-gold opacity-60 mb-3">Leia antes de prosseguir
+          </p>
+          <h2 id="carta-title" class="font-heading font-900 text-2xl md:text-3xl text-white leading-tight">
+            Uma carta honesta<br />para quem quer aplicar.
+          </h2>
+        </div>
+
+        <!-- Corpo da carta — scrollável -->
+        <div class="carta-body px-8 py-7 overflow-y-auto" style="max-height: 62vh;">
+
+          <p class="text-gray-300 text-sm leading-loose mb-6 font-300 italic">
+            Se você está lendo isso, provavelmente já sentiu — de alguma forma — que algo está errado. Você ganha bem.
+            Trabalha muito. Mas o patrimônio não avança na velocidade que deveria. E você não consegue identificar
+            exatamente por quê.
+          </p>
+
+          <p class="text-gray-400 text-sm leading-loose mb-6">
+            Quero ser direto com você antes de qualquer coisa: <strong class="text-gray-200 font-500">esta mentoria não
+              é um curso. Não é uma consultoria padrão. E definitivamente não é para quem busca uma solução
+              rápida.</strong>
+          </p>
+
+          <p class="text-gray-400 text-sm leading-loose mb-6">
+            O trabalho que fazemos juntos é profundo. Ele começa onde todos os outros param — na sua relação com o
+            dinheiro, nas crenças que você carrega desde a infância, nos padrões de comportamento que sabotam
+            silenciosamente cada plano bem-intencionado. Não adianta ter a melhor carteira de investimentos do Brasil se
+            a sua mente ainda opera com a mentalidade de escassez que você herdou.
+          </p>
+
+          <!-- Bloco decorativo com borda dourada -->
+          <div class="border-l-2 border-gold pl-6 my-8">
+            <p class="font-heading font-700 text-white text-lg leading-snug">
+              "Eu não vendo resultado financeiro. Eu entrego clareza para que você tome as decisões certas com o que
+              você já tem."
+            </p>
+            <p class="text-xs text-gray-500 mt-3 tracking-widest uppercase">— Phillip Souza</p>
+          </div>
+
+          <p class="text-gray-400 text-sm leading-loose mb-6">
+            <strong class="text-gray-200 font-500">O processo de aplicação existe por uma razão:</strong> não aceito
+            qualquer pessoa. Não por arrogância — mas porque o resultado desta mentoria depende diretamente do nível de
+            comprometimento e abertura do cliente. Se você não está pronto para olhar honestamente para os seus padrões
+            financeiros e emocionais, não vou conseguir ajudá-lo.
+          </p>
+
+          <p class="text-gray-400 text-sm leading-loose mb-6">
+            <strong class="text-gray-200 font-500">Esta mentoria é para médicos, dentistas e empresários</strong> com
+            renda mensal acima de R$&nbsp;10.000, que já superaram as dívidas básicas e agora se deparam com uma questão
+            mais complexa: por que o patrimônio não cresce na proporção do esforço?
+          </p>
+
+          <!-- O que está incluso -->
+          <div class="card-dark rounded-xl p-6 my-7" style="border-color:rgba(212,175,55,.15);">
+            <p class="font-heading font-700 text-gold text-xs tracking-widest uppercase mb-4">O que o processo oferece
+            </p>
+            <ul class="space-y-3 text-sm text-gray-400">
+              <li class="check-item">Diagnóstico completo das suas crenças e padrões financeiros</li>
+              <li class="check-item">Mapeamento patrimonial e criação de uma estratégia personalizada</li>
+              <li class="check-item">Sessões individuais de psicoterapia financeira com acompanhamento contínuo</li>
+              <li class="check-item">Análise e suporte nas decisões financeiras relevantes antes de serem tomadas</li>
+              <li class="check-item">Estruturação de holding, sucessão e proteção de ativos (quando aplicável)</li>
+            </ul>
+          </div>
+
+          <!-- Sobre o investimento -->
+          <p class="text-gray-400 text-sm leading-loose mb-4">
+            <strong class="text-gray-200 font-500">Sobre o investimento:</strong> este é um serviço premium, com valor
+            condizente com a transformação que proporciona. Se o seu critério de decisão for apenas o custo, esta
+            mentoria provavelmente não é para você. Se o seu critério for o retorno — em organização, clareza e
+            crescimento patrimonial — a conversa faz todo sentido.
+          </p>
+
+          <p class="text-gray-400 text-sm leading-loose mb-8">
+            Se chegou até aqui e se identificou com o que leu, o próximo passo é simples: preencha o formulário de
+            aplicação. Analisarei pessoalmente cada aplicação e entrarei em contato com quem tiver perfil para o
+            processo.
+          </p>
+
+          <p class="text-gray-300 text-sm font-300 italic">
+            Com respeito e clareza,<br />
+            <strong class="text-white not-italic font-600">Phillip Souza</strong><br />
+            <span class="text-xs text-gray-500">Planejador e Psicoterapeuta Financeiro</span>
+          </p>
+
+        </div>
+
+        <!-- CTA final da carta — abre o formulário -->
+        <div class="px-8 py-6 border-t border-gold border-opacity-10 text-center">
+          <p class="text-xs text-gray-500 mb-4">Ao continuar, você declara ter lido e compreendido os termos desta
+            mentoria.</p>
+          <button onclick="closeCarta(); openModal();" class="btn-gold text-sm px-10 py-4 rounded-md w-full md:w-auto"
+            aria-label="Abrir formulário de aplicação para Mentoria Premium">
+            ◆ &nbsp;Estou Pronto — Quero Aplicar
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+     MODAL 2 — FORMULÁRIO DE APLICAÇÃO PREMIUM
+════════════════════════════════════════════════════════════════ -->
+  <div id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title"
+    onclick="handleOverlayClick(event)">
+
+    <div id="modal-box" class="card-dark rounded-2xl w-full max-w-lg relative"
+      style="border-color: rgba(212,175,55,.25);">
+      <!-- Close button -->
+      <button onclick="closeModal()"
+        class="absolute top-4 right-4 text-gray-500 hover:text-gold transition-colors bg-transparent border-none cursor-pointer p-1"
+        aria-label="Fechar modal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+          stroke-linecap="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
         </svg>
       </button>
 
-      <!-- Header da carta -->
-      <div class="px-8 pt-8 pb-6 border-b border-gold border-opacity-10 text-center">
-        <p class="text-xs font-heading tracking-[.35em] uppercase text-gold opacity-60 mb-3">Leia antes de prosseguir</p>
-        <h2 id="carta-title" class="font-heading font-900 text-2xl md:text-3xl text-white leading-tight">
-          Uma carta honesta<br />para quem quer aplicar.
+      <!-- Modal header -->
+      <div class="p-8 pb-6 border-b border-gold border-opacity-10">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-1 h-8 bg-gold rounded-full"></div>
+          <p class="text-xs font-heading tracking-[.3em] uppercase text-gold opacity-70">Processo Exclusivo</p>
+        </div>
+        <h2 id="modal-title" class="font-heading font-800 text-2xl text-white leading-tight mb-3">
+          Iniciando Aplicação Premium
         </h2>
+        <p class="text-gray-400 text-sm leading-relaxed">
+          Preencha os campos abaixo com atenção. As vagas são extremamente limitadas e cada aplicação é analisada
+          individualmente por Phillip Souza antes do contato.
+        </p>
       </div>
 
-      <!-- Corpo da carta — scrollável -->
-      <div class="carta-body px-8 py-7 overflow-y-auto" style="max-height: 62vh;">
-
-        <p class="text-gray-300 text-sm leading-loose mb-6 font-300 italic">
-          Se você está lendo isso, provavelmente já sentiu — de alguma forma — que algo está errado. Você ganha bem. Trabalha muito. Mas o patrimônio não avança na velocidade que deveria. E você não consegue identificar exatamente por quê.
-        </p>
-
-        <p class="text-gray-400 text-sm leading-loose mb-6">
-          Quero ser direto com você antes de qualquer coisa: <strong class="text-gray-200 font-500">esta mentoria não é um curso. Não é uma consultoria padrão. E definitivamente não é para quem busca uma solução rápida.</strong>
-        </p>
-
-        <p class="text-gray-400 text-sm leading-loose mb-6">
-          O trabalho que fazemos juntos é profundo. Ele começa onde todos os outros param — na sua relação com o dinheiro, nas crenças que você carrega desde a infância, nos padrões de comportamento que sabotam silenciosamente cada plano bem-intencionado. Não adianta ter a melhor carteira de investimentos do Brasil se a sua mente ainda opera com a mentalidade de escassez que você herdou.
-        </p>
-
-        <!-- Bloco decorativo com borda dourada -->
-        <div class="border-l-2 border-gold pl-6 my-8">
-          <p class="font-heading font-700 text-white text-lg leading-snug">
-            "Eu não vendo resultado financeiro. Eu entrego clareza para que você tome as decisões certas com o que você já tem."
-          </p>
-          <p class="text-xs text-gray-500 mt-3 tracking-widest uppercase">— Phillip Souza</p>
-        </div>
-
-        <p class="text-gray-400 text-sm leading-loose mb-6">
-          <strong class="text-gray-200 font-500">O processo de aplicação existe por uma razão:</strong> não aceito qualquer pessoa. Não por arrogância — mas porque o resultado desta mentoria depende diretamente do nível de comprometimento e abertura do cliente. Se você não está pronto para olhar honestamente para os seus padrões financeiros e emocionais, não vou conseguir ajudá-lo.
-        </p>
-
-        <p class="text-gray-400 text-sm leading-loose mb-6">
-          <strong class="text-gray-200 font-500">Esta mentoria é para médicos, dentistas e empresários</strong> com renda mensal acima de R$&nbsp;10.000, que já superaram as dívidas básicas e agora se deparam com uma questão mais complexa: por que o patrimônio não cresce na proporção do esforço?
-        </p>
-
-        <!-- O que está incluso -->
-        <div class="card-dark rounded-xl p-6 my-7" style="border-color:rgba(212,175,55,.15);">
-          <p class="font-heading font-700 text-gold text-xs tracking-widest uppercase mb-4">O que o processo oferece</p>
-          <ul class="space-y-3 text-sm text-gray-400">
-            <li class="check-item">Diagnóstico completo das suas crenças e padrões financeiros</li>
-            <li class="check-item">Mapeamento patrimonial e criação de uma estratégia personalizada</li>
-            <li class="check-item">Sessões individuais de psicoterapia financeira com acompanhamento contínuo</li>
-            <li class="check-item">Análise e suporte nas decisões financeiras relevantes antes de serem tomadas</li>
-            <li class="check-item">Estruturação de holding, sucessão e proteção de ativos (quando aplicável)</li>
-          </ul>
-        </div>
-
-        <!-- Sobre o investimento -->
-        <p class="text-gray-400 text-sm leading-loose mb-4">
-          <strong class="text-gray-200 font-500">Sobre o investimento:</strong> este é um serviço premium, com valor condizente com a transformação que proporciona. Se o seu critério de decisão for apenas o custo, esta mentoria provavelmente não é para você. Se o seu critério for o retorno — em organização, clareza e crescimento patrimonial — a conversa faz todo sentido.
-        </p>
-
-        <p class="text-gray-400 text-sm leading-loose mb-8">
-          Se chegou até aqui e se identificou com o que leu, o próximo passo é simples: preencha o formulário de aplicação. Analisarei pessoalmente cada aplicação e entrarei em contato com quem tiver perfil para o processo.
-        </p>
-
-        <p class="text-gray-300 text-sm font-300 italic">
-          Com respeito e clareza,<br />
-          <strong class="text-white not-italic font-600">Phillip Souza</strong><br />
-          <span class="text-xs text-gray-500">Planejador e Psicoterapeuta Financeiro</span>
-        </p>
-
-      </div>
-
-      <!-- CTA final da carta — abre o formulário -->
-      <div class="px-8 py-6 border-t border-gold border-opacity-10 text-center">
-        <p class="text-xs text-gray-500 mb-4">Ao continuar, você declara ter lido e compreendido os termos desta mentoria.</p>
-        <button
-          onclick="closeCarta(); openModal();"
-          class="btn-gold text-sm px-10 py-4 rounded-md w-full md:w-auto"
-          aria-label="Abrir formulário de aplicação para Mentoria Premium"
-        >
-          ◆ &nbsp;Estou Pronto — Quero Aplicar
-        </button>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
-<!-- ══════════════════════════════════════════════════════════════
-     MODAL 2 — FORMULÁRIO DE APLICAÇÃO PREMIUM
-════════════════════════════════════════════════════════════════ -->
-<div id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="handleOverlayClick(event)">
-
-  <div
-    id="modal-box"
-    class="card-dark rounded-2xl w-full max-w-lg relative"
-    style="border-color: rgba(212,175,55,.25);"
-  >
-    <!-- Close button -->
-    <button
-      onclick="closeModal()"
-      class="absolute top-4 right-4 text-gray-500 hover:text-gold transition-colors bg-transparent border-none cursor-pointer p-1"
-      aria-label="Fechar modal"
-    >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
-        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-      </svg>
-    </button>
-
-    <!-- Modal header -->
-    <div class="p-8 pb-6 border-b border-gold border-opacity-10">
-      <div class="flex items-center gap-3 mb-4">
-        <div class="w-1 h-8 bg-gold rounded-full"></div>
-        <p class="text-xs font-heading tracking-[.3em] uppercase text-gold opacity-70">Processo Exclusivo</p>
-      </div>
-      <h2 id="modal-title" class="font-heading font-800 text-2xl text-white leading-tight mb-3">
-        Iniciando Aplicação Premium
-      </h2>
-      <p class="text-gray-400 text-sm leading-relaxed">
-        Preencha os campos abaixo com atenção. As vagas são extremamente limitadas e cada aplicação é analisada individualmente por Phillip Souza antes do contato.
-      </p>
-    </div>
-
-    <!-- ─── APPLICATION FORM ───────────────────────────────────────
+      <!-- ─── APPLICATION FORM ───────────────────────────────────────
          Action → Formspree (processa o form e envia e-mail)
          _next  → Tally (redireciona o usuário após o submit)
     ──────────────────────────────────────────────────────────────── -->
-    <form
-      action="https://formspree.io/f/xaqknwbq"
-      method="POST"
-      class="p-8 space-y-5"
-      aria-label="Formulário de aplicação para Mentoria Premium"
-      id="application-form"
-    >
-      <!-- ── Campos ocultos de rastreamento/roteamento ── -->
-      <input type="hidden" name="_next"        value="https://tally.so/r/lbYzjN" />
-      <!-- CORREÇÃO 3: identificar origem como Aplicação Premium para segmentação no CRM -->
-      <input type="hidden" name="form_source"  value="aplicacao-premium" />
-      <input type="hidden" name="utm_source"   value="site-phillipsouza" />
-      <input type="hidden" name="utm_medium"   value="landing-page" />
-      <input type="hidden" name="utm_campaign" value="mentoria-premium-2026" />
-      <input type="hidden" name="lead_tipo"    value="bottom-of-funnel" />
+      <form action="https://formspree.io/f/xaqknwbq" method="POST" class="p-8 space-y-5"
+        aria-label="Formulário de aplicação para Mentoria Premium" id="application-form">
+        <!-- ── Campos ocultos de rastreamento/roteamento ── -->
+        <input type="hidden" name="_next" value="https://tally.so/r/lbYzjN" />
+        <!-- CORREÇÃO 3: identificar origem como Aplicação Premium para segmentação no CRM -->
+        <input type="hidden" name="form_source" value="aplicacao-premium" />
+        <input type="hidden" name="utm_source" value="site-phillipsouza" />
+        <input type="hidden" name="utm_medium" value="landing-page" />
+        <input type="hidden" name="utm_campaign" value="mentoria-premium-2026" />
+        <input type="hidden" name="lead_tipo" value="bottom-of-funnel" />
 
-      <!-- Nome -->
-      <div>
-        <label for="app-nome" class="block text-xs text-gray-400 font-500 mb-2 tracking-wider uppercase">
-          Nome Completo <span class="text-gold" aria-hidden="true">*</span>
-        </label>
-        <input
-          type="text"
-          id="app-nome"
-          name="nome"
-          required
-          autocomplete="name"
-          placeholder="Seu nome completo"
-          class="form-input"
-        />
-      </div>
-
-      <!-- Email -->
-      <div>
-        <label for="app-email" class="block text-xs text-gray-400 font-500 mb-2 tracking-wider uppercase">
-          E-mail Profissional <span class="text-gold" aria-hidden="true">*</span>
-        </label>
-        <input
-          type="email"
-          id="app-email"
-          name="email"
-          required
-          autocomplete="email"
-          placeholder="seu@email.com"
-          class="form-input"
-        />
-      </div>
-
-      <!-- WhatsApp -->
-      <div>
-        <label for="app-whatsapp" class="block text-xs text-gray-400 font-500 mb-2 tracking-wider uppercase">
-          WhatsApp com DDD <span class="text-gold" aria-hidden="true">*</span>
-        </label>
-        <input
-          type="tel"
-          id="app-whatsapp"
-          name="whatsapp"
-          required
-          autocomplete="tel"
-          placeholder="+55 (00) 00000-0000"
-          class="form-input"
-        />
-      </div>
-
-      <!-- CORREÇÃO 3: LGPD explícita e detalhada -->
-      <div class="lgpd-box">
-        <p class="text-xs text-gray-400 font-heading tracking-wider uppercase mb-3 font-600">
-          Declaração de Consentimento (LGPD) <span class="text-gold">*</span>
-        </p>
-
-        <!-- Checkbox 1: privacidade e termos -->
-        <div class="flex items-start gap-3 mb-3">
-          <input
-            type="checkbox"
-            id="app-lgpd-privacidade"
-            name="lgpd_privacidade"
-            required
-            value="concordo-politica-privacidade-termos-uso"
-            class="mt-0.5 flex-shrink-0 accent-yellow-500"
-            style="width:16px; height:16px; cursor:pointer;"
-          />
-          <label for="app-lgpd-privacidade" class="text-xs text-gray-400 leading-relaxed cursor-pointer">
-            Li e concordo com a
-            <a href="privacidade.html" target="_blank" rel="noopener noreferrer" class="text-gold hover:underline">Política de Privacidade</a>
-            e os
-            <a href="termos.html" target="_blank" rel="noopener noreferrer" class="text-gold hover:underline">Termos de Uso</a>
-            do site phillipsouza.com, incluindo a coleta e armazenamento dos dados fornecidos neste formulário.
+        <!-- Nome -->
+        <div>
+          <label for="app-nome" class="block text-xs text-gray-400 font-500 mb-2 tracking-wider uppercase">
+            Nome Completo <span class="text-gold" aria-hidden="true">*</span>
           </label>
+          <input type="text" id="app-nome" name="nome" required autocomplete="name" placeholder="Seu nome completo"
+            class="form-input" />
         </div>
 
-        <!-- Checkbox 2: contato comercial -->
-        <div class="flex items-start gap-3">
-          <input
-            type="checkbox"
-            id="app-lgpd-contato"
-            name="lgpd_contato"
-            required
-            value="autorizo-contato-whatsapp-email"
-            class="mt-0.5 flex-shrink-0 accent-yellow-500"
-            style="width:16px; height:16px; cursor:pointer;"
-          />
-          <label for="app-lgpd-contato" class="text-xs text-gray-400 leading-relaxed cursor-pointer">
-            Autorizo Phillip Souza e sua equipe a me contatarem, de forma exclusiva e não-invasiva, pelo
-            <strong class="text-gray-300">WhatsApp</strong> e
-            <strong class="text-gray-300">e-mail</strong>
-            informados acima, para avaliação desta aplicação.
-            Meus dados <strong class="text-gray-300">não serão compartilhados com terceiros</strong>
-            e posso revogar este consentimento a qualquer momento.
+        <!-- Email -->
+        <div>
+          <label for="app-email" class="block text-xs text-gray-400 font-500 mb-2 tracking-wider uppercase">
+            E-mail Profissional <span class="text-gold" aria-hidden="true">*</span>
           </label>
+          <input type="email" id="app-email" name="email" required autocomplete="email" placeholder="seu@email.com"
+            class="form-input" />
         </div>
 
-        <p class="text-xs text-gray-600 mt-3 leading-relaxed">
-          Proteção garantida pela Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018).
+        <!-- WhatsApp -->
+        <div>
+          <label for="app-whatsapp" class="block text-xs text-gray-400 font-500 mb-2 tracking-wider uppercase">
+            WhatsApp com DDD <span class="text-gold" aria-hidden="true">*</span>
+          </label>
+          <input type="tel" id="app-whatsapp" name="whatsapp" required autocomplete="tel"
+            placeholder="+55 (00) 00000-0000" class="form-input" />
+        </div>
+
+        <!-- CORREÇÃO 3: LGPD explícita e detalhada -->
+        <div class="lgpd-box">
+          <p class="text-xs text-gray-400 font-heading tracking-wider uppercase mb-3 font-600">
+            Declaração de Consentimento (LGPD) <span class="text-gold">*</span>
+          </p>
+
+          <!-- Checkbox 1: privacidade e termos -->
+          <div class="flex items-start gap-3 mb-3">
+            <input type="checkbox" id="app-lgpd-privacidade" name="lgpd_privacidade" required
+              value="concordo-politica-privacidade-termos-uso" class="mt-0.5 flex-shrink-0 accent-yellow-500"
+              style="width:16px; height:16px; cursor:pointer;" />
+            <label for="app-lgpd-privacidade" class="text-xs text-gray-400 leading-relaxed cursor-pointer">
+              Li e concordo com a
+              <a href="privacidade.html" target="_blank" rel="noopener noreferrer"
+                class="text-gold hover:underline">Política de Privacidade</a>
+              e os
+              <a href="termos.html" target="_blank" rel="noopener noreferrer" class="text-gold hover:underline">Termos
+                de Uso</a>
+              do site phillipsouza.com, incluindo a coleta e armazenamento dos dados fornecidos neste formulário.
+            </label>
+          </div>
+
+          <!-- Checkbox 2: contato comercial -->
+          <div class="flex items-start gap-3">
+            <input type="checkbox" id="app-lgpd-contato" name="lgpd_contato" required
+              value="autorizo-contato-whatsapp-email" class="mt-0.5 flex-shrink-0 accent-yellow-500"
+              style="width:16px; height:16px; cursor:pointer;" />
+            <label for="app-lgpd-contato" class="text-xs text-gray-400 leading-relaxed cursor-pointer">
+              Autorizo Phillip Souza e sua equipe a me contatarem, de forma exclusiva e não-invasiva, pelo
+              <strong class="text-gray-300">WhatsApp</strong> e
+              <strong class="text-gray-300">e-mail</strong>
+              informados acima, para avaliação desta aplicação.
+              Meus dados <strong class="text-gray-300">não serão compartilhados com terceiros</strong>
+              e posso revogar este consentimento a qualquer momento.
+            </label>
+          </div>
+
+          <p class="text-xs text-gray-600 mt-3 leading-relaxed">
+            Proteção garantida pela Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018).
+          </p>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn-gold w-full text-sm py-4 rounded-md mt-2">
+          ◆ &nbsp;Iniciar Qualificação
+        </button>
+
+        <p class="text-center text-xs text-gray-600 pt-1">
+          Seus dados são protegidos pela LGPD · Processo 100% confidencial
         </p>
-      </div>
 
-      <!-- Submit -->
-      <button type="submit" class="btn-gold w-full text-sm py-4 rounded-md mt-2">
-        ◆ &nbsp;Iniciar Qualificação
-      </button>
+      </form>
+    </div>
 
-      <p class="text-center text-xs text-gray-600 pt-1">
-        Seus dados são protegidos pela LGPD · Processo 100% confidencial
-      </p>
-
-    </form>
   </div>
 
-</div>
 
-
-<!-- ══════════════════════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════════════════════════
      JAVASCRIPT — Carta + Modal + Scroll Reveal + Nav
 ════════════════════════════════════════════════════════════════ -->
-<script>
-  /* ── Referências ──────────────────────────────────────────── */
-  const overlay    = document.getElementById('modal-overlay');
-  const modalBox   = document.getElementById('modal-box');
-  const cartaOv    = document.getElementById('carta-overlay');
-  const cartaBox   = document.getElementById('carta-box');
+  <script>
+    /* ── Referências ──────────────────────────────────────────── */
+    const overlay = document.getElementById('modal-overlay');
+    const modalBox = document.getElementById('modal-box');
+    const cartaOv = document.getElementById('carta-overlay');
+    const cartaBox = document.getElementById('carta-box');
 
-  /* ── MODAL DE APLICAÇÃO (abre depois da carta) ────────────── */
-  function openModal() {
-    overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    setTimeout(() => {
-      const first = modalBox.querySelector('input');
-      if (first) first.focus();
-    }, 120);
-  }
-
-  function closeModal() {
-    overlay.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  function handleOverlayClick(e) {
-    if (e.target === overlay) closeModal();
-  }
-
-  /* ── CARTA AO CLIENTE (abre primeiro) ────────────────────── */
-  function openCarta() {
-    cartaOv.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    // Rolar carta até o topo cada vez que abre
-    const body = cartaOv.querySelector('.carta-body');
-    if (body) body.scrollTop = 0;
-    setTimeout(() => {
-      const closeBtn = cartaBox.querySelector('button[aria-label="Fechar carta"]');
-      if (closeBtn) closeBtn.focus();
-    }, 120);
-  }
-
-  function closeCarta() {
-    cartaOv.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  function handleCartaClick(e) {
-    if (e.target === cartaOv) closeCarta();
-  }
-
-  /* ── Tecla Escape — fecha qualquer modal aberto ──────────── */
-  document.addEventListener('keydown', (e) => {
-    if (e.key !== 'Escape') return;
-    if (overlay.classList.contains('open'))  closeModal();
-    if (cartaOv.classList.contains('open'))  closeCarta();
-  });
-
-
-  /* ── Mobile Nav ──────────────────────────────────────────── */
-  const navMenu = document.getElementById('nav-menu');
-  const h1 = document.getElementById('h1');
-  const h2 = document.getElementById('h2');
-  const h3 = document.getElementById('h3');
-  let navOpen = false;
-
-  function toggleNav() {
-    navOpen = !navOpen;
-    navMenu.classList.toggle('open', navOpen);
-    document.getElementById('hamburger').setAttribute('aria-expanded', navOpen);
-    if (navOpen) {
-      h1.style.transform = 'translateY(6px) rotate(45deg)';
-      h2.style.opacity   = '0';
-      h3.style.transform = 'translateY(-6px) rotate(-45deg)';
-    } else {
-      h1.style.transform = '';
-      h2.style.opacity   = '1';
-      h3.style.transform = '';
+    /* ── MODAL DE APLICAÇÃO (abre depois da carta) ────────────── */
+    function openModal() {
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        const first = modalBox.querySelector('input');
+        if (first) first.focus();
+      }, 120);
     }
-  }
+
+    function closeModal() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target === overlay) closeModal();
+    }
+
+    /* ── CARTA AO CLIENTE (abre primeiro) ────────────────────── */
+    function openCarta() {
+      cartaOv.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      // Rolar carta até o topo cada vez que abre
+      const body = cartaOv.querySelector('.carta-body');
+      if (body) body.scrollTop = 0;
+      setTimeout(() => {
+        const closeBtn = cartaBox.querySelector('button[aria-label="Fechar carta"]');
+        if (closeBtn) closeBtn.focus();
+      }, 120);
+    }
+
+    function closeCarta() {
+      cartaOv.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function handleCartaClick(e) {
+      if (e.target === cartaOv) closeCarta();
+    }
+
+    /* ── Tecla Escape — fecha qualquer modal aberto ──────────── */
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (overlay.classList.contains('open')) closeModal();
+      if (cartaOv.classList.contains('open')) closeCarta();
+    });
 
 
-  /* ── Scroll Reveal ───────────────────────────────────────── */
-  (function initReveal() {
-    const items = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    items.forEach(el => observer.observe(el));
-  })();
+    /* ── Mobile Nav ──────────────────────────────────────────── */
+    const navMenu = document.getElementById('nav-menu');
+    const h1 = document.getElementById('h1');
+    const h2 = document.getElementById('h2');
+    const h3 = document.getElementById('h3');
+    let navOpen = false;
+
+    function toggleNav() {
+      navOpen = !navOpen;
+      navMenu.classList.toggle('open', navOpen);
+      document.getElementById('hamburger').setAttribute('aria-expanded', navOpen);
+      if (navOpen) {
+        h1.style.transform = 'translateY(6px) rotate(45deg)';
+        h2.style.opacity = '0';
+        h3.style.transform = 'translateY(-6px) rotate(-45deg)';
+      } else {
+        h1.style.transform = '';
+        h2.style.opacity = '1';
+        h3.style.transform = '';
+      }
+    }
 
 
-  /* ── Active nav link highlight on scroll ─────────────────── */
-  (function initNavHighlight() {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('header a[href^="#"]');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          navLinks.forEach(link => {
-            link.style.color = link.getAttribute('href') === `#${id}` ? '#D4AF37' : '';
-          });
-        }
-      });
-    }, { threshold: 0.35 });
-    sections.forEach(s => observer.observe(s));
-  })();
-</script>
+    /* ── Scroll Reveal ───────────────────────────────────────── */
+    (function initReveal() {
+      const items = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      items.forEach(el => observer.observe(el));
+    })();
+
+
+    /* ── Active nav link highlight on scroll ─────────────────── */
+    (function initNavHighlight() {
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('header a[href^="#"]');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            navLinks.forEach(link => {
+              link.style.color = link.getAttribute('href') === `#${id}` ? '#D4AF37' : '';
+            });
+          }
+        });
+      }, { threshold: 0.35 });
+      sections.forEach(s => observer.observe(s));
+    })();
+  </script>
 
 </body>
+
 </html>
