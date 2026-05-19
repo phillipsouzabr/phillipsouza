@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Termos de Uso · Phillip Souza</title>
+  <meta name="description" content="Termos de Uso do site phillipsouza.com — condições para acesso, uso dos formulários e contratação de serviços de Planejamento e Psicoterapia Financeira." />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://www.phillipsouza.com/termos.html" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: '#D4AF37',
+            navy: '#0A0F1A',
+          },
+          fontFamily: {
+            heading: ['Montserrat', 'sans-serif'],
+            body:    ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #D1CEC9;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.8;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: rgba(212,175,55,.35); border-radius: 4px; }
+
+    /* Nav blur */
+    .nav-blur {
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(0,0,0,.85);
+      border-bottom: 1px solid rgba(212,175,55,.12);
+    }
+
+    /* Gold shimmer */
+    .text-shimmer {
+      background: linear-gradient(90deg, #D4AF37 0%, #F9E97B 40%, #D4AF37 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Prose */
+    .prose h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: #F0EDE8;
+      margin: 2.5rem 0 .75rem;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid rgba(212,175,55,.15);
+      letter-spacing: .01em;
+    }
+    .prose h2:first-of-type { margin-top: 0; }
+    .prose p { margin: 0 0 1rem; font-size: .925rem; color: #B0ADA8; }
+    .prose strong { color: #D1CEC9; font-weight: 500; }
+    .prose ul { margin: 0 0 1rem 0; padding-left: 0; list-style: none; }
+    .prose ul li {
+      font-size: .925rem;
+      color: #B0ADA8;
+      padding: .3rem 0 .3rem 1.4rem;
+      position: relative;
+    }
+    .prose ul li::before {
+      content: '◆';
+      color: #D4AF37;
+      font-size: .55rem;
+      position: absolute;
+      left: 0;
+      top: .55rem;
+    }
+    .prose a { color: #D4AF37; text-decoration: none; }
+    .prose a:hover { text-decoration: underline; }
+
+    /* Info / warning box */
+    .info-box {
+      background: rgba(10,15,26,.8);
+      border: 1px solid rgba(212,175,55,.18);
+      border-left: 3px solid #D4AF37;
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+      font-size: .875rem;
+      color: #A0A09A;
+    }
+    .info-box strong { color: #D4AF37; }
+
+    .warn-box {
+      background: rgba(180,40,40,.06);
+      border: 1px solid rgba(200,60,60,.2);
+      border-left: 3px solid #C03030;
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+      font-size: .875rem;
+      color: #A89898;
+    }
+    .warn-box strong { color: #E08080; }
+
+    .divider {
+      width: 48px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+      margin: 0;
+    }
+
+    .tag {
+      display: inline-block;
+      background: rgba(212,175,55,.08);
+      border: 1px solid rgba(212,175,55,.25);
+      color: #D4AF37;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      padding: .25rem .75rem;
+      border-radius: 999px;
+    }
+  </style>
+</head>
+
+<body class="font-body">
+
+<!-- ── Navegação ───────────────────────────────────────────────── -->
+<header class="nav-blur fixed top-0 left-0 right-0 z-50">
+  <nav class="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
+    <a href="index.html" class="font-heading font-700 text-sm tracking-widest text-white no-underline hover:text-gold transition-colors">
+      PHILLIP <span class="text-gold">SOUZA</span>
+    </a>
+    <a href="index.html" class="text-xs text-gray-500 hover:text-gold transition-colors no-underline flex items-center gap-1">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      Voltar ao site
+    </a>
+  </nav>
+</header>
+
+<!-- ── Conteúdo principal ──────────────────────────────────────── -->
+<main class="max-w-3xl mx-auto px-6 pt-28 pb-20">
+
+  <!-- Cabeçalho da página -->
+  <header class="mb-12">
+    <span class="tag mb-4 inline-block">Documento legal · Atualizado em 2026</span>
+    <h1 class="font-heading font-800 text-3xl md:text-4xl text-white mt-4 mb-3 leading-tight">
+      Termos de <span class="text-shimmer">Uso</span>
+    </h1>
+    <div class="divider mb-4"></div>
+    <p class="text-sm text-gray-500">
+      Última atualização: <time datetime="2026-05-01">01 de maio de 2026</time>
+      &nbsp;·&nbsp; Versão 1.0
+    </p>
+
+    <div class="info-box mt-6">
+      <strong>Resumo:</strong> Ao usar este site e preencher qualquer formulário, você concorda com estes termos. O site é informativo — não substitui consultoria jurídica, médica ou de investimentos regulada. A mentoria é um serviço premium com processo seletivo e vagas limitadas.
+    </div>
+  </header>
+
+  <!-- Corpo do documento -->
+  <article class="prose">
+
+    <h2>1. Identificação e Aceitação</h2>
+    <p>
+      Estes Termos de Uso regulam o acesso e o uso do site <strong>www.phillipsouza.com</strong> e de todos os formulários, conteúdos e serviços disponibilizados por <strong>Phillip Souza</strong>, Planejador e Psicoterapeuta Financeiro, com sede em Rua Capanema, 541 — Coqueiros, Belo Horizonte — MG, CEP 30880-450.
+    </p>
+    <p>
+      Ao acessar o site, preencher um formulário ou clicar em qualquer botão de aplicação, você declara ter lido, compreendido e <strong>concordado integralmente</strong> com estes Termos. Se não concordar, por favor, não utilize o site nem submeta seus dados.
+    </p>
+
+    <h2>2. Natureza dos Serviços</h2>
+    <p>
+      Phillip Souza oferece serviços de <strong>planejamento patrimonial e psicoterapia financeira</strong> de natureza educacional e de consultoria comportamental, com foco em alta renda. Os serviços oferecidos são:
+    </p>
+    <ul>
+      <li><strong>Mentoria Premium Individual</strong> — processo seletivo, vagas limitadas, por contrato específico firmado após qualificação</li>
+      <li><strong>Conteúdo gratuito no YouTube</strong> — disponível publicamente, sem vínculo contratual</li>
+      <li><strong>Lista de espera para o livro</strong> — cadastro informativo sem custo ou obrigação de compra</li>
+    </ul>
+    <div class="warn-box">
+      <strong>Aviso importante:</strong> O conteúdo deste site e a mentoria oferecida <strong>não constituem consultoria de investimentos nos termos da Resolução CVM 178/2023</strong>, nem serviço regulado pelo Banco Central do Brasil ou por qualquer outra autarquia financeira. Não nos responsabilizamos por decisões de investimento tomadas com base exclusiva no conteúdo publicado neste site.
+    </div>
+
+    <h2>3. Processo de Aplicação à Mentoria</h2>
+    <p>
+      O preenchimento do formulário de aplicação <strong>não representa contratação, reserva de vaga ou compromisso financeiro</strong> de nenhuma das partes. Trata-se de uma manifestação de interesse sujeita a análise e aprovação individuais.
+    </p>
+    <ul>
+      <li>Phillip Souza reserva-se o direito de <strong>recusar qualquer aplicação</strong>, sem obrigação de justificar a decisão.</li>
+      <li>O aceite da mentoria e os valores envolvidos são formalizados exclusivamente por meio de <strong>contrato escrito</strong> firmado separadamente.</li>
+      <li>O contato após a aplicação será feito pelo WhatsApp ou e-mail informados no formulário, em prazo não determinado.</li>
+    </ul>
+
+    <h2>4. Uso do Site e Conteúdo</h2>
+    <p>
+      Todo o conteúdo deste site — textos, layout, imagens, marca e metodologia — é de propriedade exclusiva de Phillip Souza ou de seus licenciantes, protegido pelas leis de direitos autorais (Lei nº 9.610/1998) e de propriedade intelectual.
+    </p>
+    <p>É <strong>permitido</strong>:</p>
+    <ul>
+      <li>Acessar e navegar pelo site para fins pessoais e informativos</li>
+      <li>Compartilhar o link do site em redes sociais e mensagens</li>
+    </ul>
+    <p>É <strong>proibido</strong>:</p>
+    <ul>
+      <li>Reproduzir, copiar ou distribuir conteúdo do site sem autorização prévia e escrita</li>
+      <li>Utilizar robôs, scrapers ou qualquer automatização para coletar dados do site</li>
+      <li>Preencher formulários com dados falsos, incompletos ou de terceiros sem autorização</li>
+      <li>Realizar qualquer ato que comprometa a segurança, disponibilidade ou integridade do site</li>
+    </ul>
+
+    <h2>5. Responsabilidades e Limitações</h2>
+    <p>
+      Phillip Souza emprega todos os esforços razoáveis para manter o site disponível e o conteúdo atualizado, mas <strong>não garante disponibilidade ininterrupta</strong> nem a completude das informações publicadas.
+    </p>
+    <p>
+      <strong>Não nos responsabilizamos por</strong>:
+    </p>
+    <ul>
+      <li>Resultados financeiros específicos decorrentes da aplicação de qualquer conteúdo do site</li>
+      <li>Falhas em provedores de internet, plataformas terceiras (Formspree, Tally, WhatsApp) ou interrupções fora do nosso controle</li>
+      <li>Informações inseridas incorretamente pelo próprio usuário nos formulários</li>
+      <li>Danos indiretos, lucros cessantes ou danos morais não diretamente causados por nossa conduta</li>
+    </ul>
+
+    <h2>6. Links para Sites de Terceiros</h2>
+    <p>
+      Este site pode conter links para sites externos (YouTube, Instagram, WhatsApp). Esses links são fornecidos por conveniência e <strong>não implicam endosso nem responsabilidade</strong> pelo conteúdo, privacidade ou práticas desses terceiros. Recomendamos a leitura dos termos e políticas de privacidade de cada plataforma.
+    </p>
+
+    <h2>7. Privacidade e Proteção de Dados</h2>
+    <p>
+      O tratamento dos dados pessoais coletados neste site é regido pela nossa <a href="privacidade.html">Política de Privacidade</a>, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018 — LGPD). A Política de Privacidade é parte integrante destes Termos.
+    </p>
+
+    <h2>8. Alterações nos Termos</h2>
+    <p>
+      Podemos atualizar estes Termos de Uso a qualquer momento. A versão vigente sempre estará disponível nesta página com a data de atualização. O uso continuado do site após a publicação de alterações caracteriza a aceitação dos novos termos.
+    </p>
+
+    <h2>9. Lei Aplicável e Foro</h2>
+    <p>
+      Estes Termos são regidos pelas leis da República Federativa do Brasil. Para dirimir quaisquer controvérsias decorrentes deste documento, as partes elegem o <strong>Foro da Comarca de Belo Horizonte — MG</strong>, com renúncia expressa a qualquer outro, por mais privilegiado que seja.
+    </p>
+
+    <h2>10. Contato</h2>
+    <p>
+      Para dúvidas sobre estes Termos de Uso:
+    </p>
+    <ul>
+      <li>E-mail: <a href="mailto:contato@phillipsouza.com">contato@phillipsouza.com</a></li>
+      <li>WhatsApp: <a href="https://wa.me/5531980260779" target="_blank" rel="noopener noreferrer">+55 31 98026-0779</a></li>
+      <li>Endereço: Rua Capanema, 541 — Coqueiros, Belo Horizonte — MG, 30880-450</li>
+    </ul>
+
+  </article>
+</main>
+
+<!-- ── Rodapé ──────────────────────────────────────────────────── -->
+<footer class="border-t border-gold border-opacity-10 py-8 text-center">
+  <p class="text-xs text-gray-600">
+    © 2026 Phillip Souza · Todos os direitos reservados
+    &nbsp;·&nbsp;
+    <a href="privacidade.html" class="text-gray-500 hover:text-gold transition-colors no-underline">Política de Privacidade</a>
+    &nbsp;·&nbsp;
+    <a href="index.html" class="text-gray-500 hover:text-gold transition-colors no-underline">Voltar ao site</a>
+  </p>
+</footer>
+
+</body>
+</html>

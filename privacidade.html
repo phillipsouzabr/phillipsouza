@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Política de Privacidade · Phillip Souza</title>
+  <meta name="description" content="Política de Privacidade de Phillip Souza — Planejador e Psicoterapeuta Financeiro. Saiba como coletamos, usamos e protegemos seus dados pessoais conforme a LGPD." />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://www.phillipsouza.com/privacidade.html" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: '#D4AF37',
+            navy: '#0A0F1A',
+          },
+          fontFamily: {
+            heading: ['Montserrat', 'sans-serif'],
+            body:    ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #D1CEC9;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.8;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: rgba(212,175,55,.35); border-radius: 4px; }
+
+    /* Nav blur */
+    .nav-blur {
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(0,0,0,.85);
+      border-bottom: 1px solid rgba(212,175,55,.12);
+    }
+
+    /* Gold shimmer text */
+    .text-shimmer {
+      background: linear-gradient(90deg, #D4AF37 0%, #F9E97B 40%, #D4AF37 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Article typography */
+    .prose h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: #F0EDE8;
+      margin: 2.5rem 0 .75rem;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid rgba(212,175,55,.15);
+      letter-spacing: .01em;
+    }
+    .prose h2:first-of-type { margin-top: 0; }
+
+    .prose p { margin: 0 0 1rem; font-size: .925rem; color: #B0ADA8; }
+    .prose strong { color: #D1CEC9; font-weight: 500; }
+
+    .prose ul {
+      margin: 0 0 1rem 0;
+      padding-left: 0;
+      list-style: none;
+    }
+    .prose ul li {
+      font-size: .925rem;
+      color: #B0ADA8;
+      padding: .3rem 0 .3rem 1.4rem;
+      position: relative;
+    }
+    .prose ul li::before {
+      content: '◆';
+      color: #D4AF37;
+      font-size: .55rem;
+      position: absolute;
+      left: 0;
+      top: .55rem;
+    }
+
+    .prose a { color: #D4AF37; text-decoration: none; }
+    .prose a:hover { text-decoration: underline; }
+
+    /* Info box */
+    .info-box {
+      background: rgba(10,15,26,.8);
+      border: 1px solid rgba(212,175,55,.18);
+      border-left: 3px solid #D4AF37;
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+      font-size: .875rem;
+      color: #A0A09A;
+    }
+    .info-box strong { color: #D4AF37; }
+
+    /* Divider */
+    .divider {
+      width: 48px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+      margin: 0;
+    }
+
+    /* Tag pill */
+    .tag {
+      display: inline-block;
+      background: rgba(212,175,55,.08);
+      border: 1px solid rgba(212,175,55,.25);
+      color: #D4AF37;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      padding: .25rem .75rem;
+      border-radius: 999px;
+    }
+  </style>
+</head>
+
+<body class="font-body">
+
+<!-- ── Navegação ───────────────────────────────────────────────── -->
+<header class="nav-blur fixed top-0 left-0 right-0 z-50">
+  <nav class="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
+    <a href="index.html" class="font-heading font-700 text-sm tracking-widest text-white no-underline hover:text-gold transition-colors">
+      PHILLIP <span class="text-gold">SOUZA</span>
+    </a>
+    <a href="index.html" class="text-xs text-gray-500 hover:text-gold transition-colors no-underline flex items-center gap-1">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      Voltar ao site
+    </a>
+  </nav>
+</header>
+
+<!-- ── Conteúdo principal ──────────────────────────────────────── -->
+<main class="max-w-3xl mx-auto px-6 pt-28 pb-20">
+
+  <!-- Cabeçalho da página -->
+  <header class="mb-12">
+    <span class="tag mb-4 inline-block">LGPD · Lei nº 13.709/2018</span>
+    <h1 class="font-heading font-800 text-3xl md:text-4xl text-white mt-4 mb-3 leading-tight">
+      Política de <span class="text-shimmer">Privacidade</span>
+    </h1>
+    <div class="divider mb-4"></div>
+    <p class="text-sm text-gray-500">
+      Última atualização: <time datetime="2026-05-01">01 de maio de 2026</time>
+      &nbsp;·&nbsp; Versão 1.0
+    </p>
+
+    <div class="info-box mt-6">
+      <strong>Leitura rápida:</strong> Coletamos apenas Nome, E-mail e WhatsApp para entrar em contato sobre a qualificação para nossa mentoria. Não vendemos seus dados. Você pode pedir exclusão a qualquer momento enviando e-mail para <a href="mailto:contato@phillipsouza.com">contato@phillipsouza.com</a>.
+    </div>
+  </header>
+
+  <!-- Corpo do documento -->
+  <article class="prose">
+
+    <h2>1. Quem é o responsável pelo tratamento dos seus dados</h2>
+    <p>
+      O controlador dos seus dados pessoais é <strong>Phillip Souza</strong>, Planejador e Psicoterapeuta Financeiro, com sede em <strong>Rua Capanema, 541 — Coqueiros, Belo Horizonte — MG, CEP 30880-450</strong>, Brasil.
+    </p>
+    <p>
+      Para dúvidas, solicitações ou exercício dos seus direitos, entre em contato pelo e-mail
+      <a href="mailto:contato@phillipsouza.com">contato@phillipsouza.com</a> ou pelo WhatsApp
+      <a href="https://wa.me/5531980260779" target="_blank" rel="noopener noreferrer">+55 31 98026-0779</a>.
+    </p>
+
+    <h2>2. Quais dados pessoais coletamos</h2>
+    <p>Coletamos apenas os dados estritamente necessários para a finalidade descrita nesta política:</p>
+    <ul>
+      <li><strong>Nome completo</strong> — para identificação do titular</li>
+      <li><strong>Endereço de e-mail</strong> — para envio de comunicações relacionadas ao processo de qualificação e, se autorizado, ao lançamento do livro</li>
+      <li><strong>Número de WhatsApp</strong> — para contato individual e personalizado sobre a aplicação à mentoria</li>
+    </ul>
+    <p>
+      Não coletamos dados financeiros, documentos de identificação, dados de saúde ou qualquer dado sensível nos termos do art. 5º, II, da LGPD.
+    </p>
+
+    <h2>3. Para que usamos seus dados (finalidade e base legal)</h2>
+    <p>Seus dados são tratados com base nas seguintes finalidades e bases legais previstas no art. 7º da LGPD:</p>
+    <ul>
+      <li>
+        <strong>Qualificação comercial e contato sobre a mentoria premium</strong> — com base no seu <strong>consentimento</strong> (art. 7º, I) expresso no formulário de aplicação, e no <strong>legítimo interesse</strong> (art. 7º, IX) de dar continuidade ao processo que você iniciou voluntariamente.
+      </li>
+      <li>
+        <strong>Aviso de lançamento do livro</strong> (somente para quem preencheu o formulário de notificação) — com base no seu <strong>consentimento</strong> (art. 7º, I).
+      </li>
+      <li>
+        <strong>Cumprimento de obrigações legais</strong> — quando exigido por lei, regulação ou ordem judicial (art. 7º, II).
+      </li>
+    </ul>
+    <p>
+      <strong>Não utilizamos seus dados para publicidade de terceiros, criação de perfis para revenda, análise de crédito ou qualquer finalidade além das descritas acima.</strong>
+    </p>
+
+    <h2>4. Com quem compartilhamos seus dados</h2>
+    <p>
+      Seus dados podem ser acessados pelos seguintes operadores, que atuam sob nossas instruções e estão sujeitos a obrigações de confidencialidade:
+    </p>
+    <ul>
+      <li><strong>Formspree Inc.</strong> — plataforma de processamento de formulários, com sede nos EUA. Os dados transmitidos estão sujeitos à <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Política de Privacidade da Formspree</a>.</li>
+      <li><strong>Tally.so</strong> — plataforma de formulários complementares. Sujeito à <a href="https://tally.so/privacy-policy" target="_blank" rel="noopener noreferrer">Política de Privacidade da Tally</a>.</li>
+    </ul>
+    <p>
+      Não vendemos, alugamos ou cedemos seus dados a terceiros para fins comerciais próprios desses terceiros. Em caso de transferência internacional de dados (para operadores com sede fora do Brasil), adotamos as garantias previstas no art. 33 da LGPD.
+    </p>
+
+    <h2>5. Por quanto tempo mantemos seus dados</h2>
+    <ul>
+      <li>Dados de aplicação à mentoria: mantidos por até <strong>24 meses</strong> após o último contato ou encerramento do relacionamento comercial, para fins de histórico e cumprimento de eventuais obrigações legais.</li>
+      <li>Dados de notificação do livro: mantidos até a data do lançamento ou até que você solicite a exclusão.</li>
+      <li>Após o prazo, os dados são excluídos ou anonimizados de forma segura.</li>
+    </ul>
+
+    <h2>6. Seus direitos como titular</h2>
+    <p>
+      A LGPD garante a você, em qualquer momento, os seguintes direitos (art. 18):
+    </p>
+    <ul>
+      <li><strong>Confirmação e acesso</strong> — saber se tratamos seus dados e obter uma cópia deles</li>
+      <li><strong>Correção</strong> — solicitar a atualização de dados incompletos, inexatos ou desatualizados</li>
+      <li><strong>Anonimização, bloqueio ou eliminação</strong> — de dados desnecessários, excessivos ou tratados em desconformidade com a lei</li>
+      <li><strong>Portabilidade</strong> — receber seus dados em formato estruturado para transferência a outro fornecedor</li>
+      <li><strong>Revogação do consentimento</strong> — retirar o consentimento dado a qualquer momento, sem prejuízo do tratamento realizado anteriormente</li>
+      <li><strong>Oposição</strong> — opor-se ao tratamento realizado com base em legítimo interesse</li>
+      <li><strong>Informação sobre compartilhamento</strong> — saber com quais entidades públicas ou privadas seus dados foram compartilhados</li>
+      <li><strong>Petição à ANPD</strong> — peticionar perante a Autoridade Nacional de Proteção de Dados</li>
+    </ul>
+    <p>
+      Para exercer qualquer um desses direitos, envie uma solicitação para <a href="mailto:contato@phillipsouza.com">contato@phillipsouza.com</a> com o assunto <strong>"LGPD — [seu direito]"</strong>. Responderemos em até <strong>15 dias úteis</strong>.
+    </p>
+
+    <h2>7. Segurança dos dados</h2>
+    <p>
+      Adotamos medidas técnicas e organizacionais adequadas para proteger seus dados contra acesso não autorizado, perda, destruição, alteração ou divulgação indevida, incluindo transmissão via HTTPS, acesso restrito por função e uso de plataformas com certificações de segurança reconhecidas.
+    </p>
+    <p>
+      Em caso de incidente de segurança que possa acarretar risco relevante aos titulares, comunicaremos o fato à ANPD e aos titulares afetados no prazo legal.
+    </p>
+
+    <h2>8. Cookies e rastreamento</h2>
+    <p>
+      Este site pode utilizar cookies técnicos essenciais para seu funcionamento. Não utilizamos cookies de rastreamento comportamental de terceiros para publicidade. Caso isso venha a mudar, esta política será atualizada e o consentimento será solicitado novamente.
+    </p>
+
+    <h2>9. Alterações nesta política</h2>
+    <p>
+      Esta política pode ser atualizada periodicamente para refletir mudanças nas nossas práticas ou na legislação aplicável. A versão vigente sempre estará disponível nesta página, com a data de atualização indicada no topo. Alterações substanciais serão comunicadas pelos canais disponíveis.
+    </p>
+
+    <h2>10. Contato e Encarregado de Dados (DPO)</h2>
+    <p>
+      Sendo uma operação de pequeno porte, o próprio controlador exerce as funções de encarregado de dados. Para qualquer questão relacionada a esta política ou ao tratamento dos seus dados:
+    </p>
+    <ul>
+      <li>E-mail: <a href="mailto:contato@phillipsouza.com">contato@phillipsouza.com</a></li>
+      <li>WhatsApp: <a href="https://wa.me/5531980260779" target="_blank" rel="noopener noreferrer">+55 31 98026-0779</a></li>
+      <li>Endereço: Rua Capanema, 541 — Coqueiros, Belo Horizonte — MG, 30880-450</li>
+    </ul>
+
+  </article>
+</main>
+
+<!-- ── Rodapé ──────────────────────────────────────────────────── -->
+<footer class="border-t border-gold border-opacity-10 py-8 text-center">
+  <p class="text-xs text-gray-600">
+    © 2026 Phillip Souza · Todos os direitos reservados
+    &nbsp;·&nbsp;
+    <a href="termos.html" class="text-gray-500 hover:text-gold transition-colors no-underline">Termos de Uso</a>
+    &nbsp;·&nbsp;
+    <a href="index.html" class="text-gray-500 hover:text-gold transition-colors no-underline">Voltar ao site</a>
+  </p>
+</footer>
+
+</body>
+</html>
