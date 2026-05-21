@@ -536,26 +536,40 @@
       background: rgba(255,255,255,.04) !important;
       border-right: 1px solid rgba(212,175,55,.2);
       padding: 0 10px;
+      border-radius: 6px 0 0 6px;
     }
     .iti__selected-flag:hover,
     .iti__selected-flag:focus { background: rgba(212,175,55,.08) !important; }
     .iti__country-list {
       background: #0A0F1A !important;
-      border: 1px solid rgba(212,175,55,.2) !important;
+      border: 1px solid rgba(212,175,55,.25) !important;
       color: #F0EDE8 !important;
-      box-shadow: 0 8px 32px rgba(0,0,0,.6) !important;
+      box-shadow: 0 8px 32px rgba(0,0,0,.8) !important;
+      max-height: 200px !important;
+      overflow-y: auto !important;
+      z-index: 99999 !important;
+      width: 300px !important;
+      border-radius: 8px !important;
     }
+    .iti__country { padding: 8px 12px !important; }
+    .iti__country-name { color: #D1CEC9 !important; }
     .iti__country:hover,
     .iti__country.iti__highlight { background: rgba(212,175,55,.1) !important; }
     .iti__dial-code { color: #D4AF37 !important; }
+    .iti__divider { border-bottom: 1px solid rgba(212,175,55,.15) !important; }
     .iti__search-input {
       background: #0D1420 !important;
+      border: none !important;
       border-bottom: 1px solid rgba(212,175,55,.2) !important;
       color: #F0EDE8 !important;
       padding: 8px 12px !important;
+      width: 100% !important;
+      outline: none !important;
     }
     .iti__search-input::placeholder { color: rgba(240,237,232,.3) !important; }
-    #app-whatsapp { padding-left: 52px !important; }
+    /* Input com espaço para a bandeira */
+    .iti--separate-dial-code .iti__selected-flag { min-width: 80px; }
+    #app-whatsapp { padding-left: 90px !important; }
 
     /* ── Modal de formulário — sem overflow para não sobrepor carta */
     #modal-overlay { z-index: 9999; }
@@ -1671,14 +1685,13 @@
   let itiInstance = null;
 
   function initPhoneField() {
-    if (itiInstance) return; // já inicializado
+    if (itiInstance) return;
     const input = document.getElementById('app-whatsapp');
     if (!input) return;
     itiInstance = window.intlTelInput(input, {
       initialCountry: 'br',
-      preferredCountries: ['br'],
+      onlyCountries: ['br'],       // só Brasil — sem dropdown de outros países
       separateDialCode: true,
-      utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.min.js',
       customPlaceholder: function() { return '(00) 00000-0000'; }
     });
   }
