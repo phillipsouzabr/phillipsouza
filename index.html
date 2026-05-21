@@ -245,6 +245,8 @@
   }
   </script>
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.min.css" />
+
   <!-- ─── FONTS — preload + non-blocking load ──────────────────── -->
   <!-- Preconnect para reduzir latência DNS -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -415,9 +417,17 @@
       align-items: center;
       justify-content: center;
       padding: 1rem;
+      overflow-y: auto;
     }
     #modal-overlay.open { display: flex; }
-    #modal-box { animation: fadeUp .4s ease forwards; }
+    #modal-box {
+      animation: fadeUp .4s ease forwards;
+      max-height: calc(100vh - 2rem);
+      overflow-y: auto;
+      width: 100%;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(212,175,55,.3) transparent;
+    }
 
     /* Form inputs */
     .form-input {
@@ -518,6 +528,34 @@
       border-radius: 8px;
       padding: 1rem;
     }
+
+    /* ── intl-tel-input dark theme ───────────────────────────── */
+    .iti { width: 100%; }
+    .iti__flag-container { z-index: 10; }
+    .iti__selected-flag {
+      background: rgba(255,255,255,.04) !important;
+      border-right: 1px solid rgba(212,175,55,.2);
+      padding: 0 10px;
+    }
+    .iti__selected-flag:hover,
+    .iti__selected-flag:focus { background: rgba(212,175,55,.08) !important; }
+    .iti__country-list {
+      background: #0A0F1A !important;
+      border: 1px solid rgba(212,175,55,.2) !important;
+      color: #F0EDE8 !important;
+      box-shadow: 0 8px 32px rgba(0,0,0,.6) !important;
+    }
+    .iti__country:hover,
+    .iti__country.iti__highlight { background: rgba(212,175,55,.1) !important; }
+    .iti__dial-code { color: #D4AF37 !important; }
+    .iti__search-input {
+      background: #0D1420 !important;
+      border-bottom: 1px solid rgba(212,175,55,.2) !important;
+      color: #F0EDE8 !important;
+      padding: 8px 12px !important;
+    }
+    .iti__search-input::placeholder { color: rgba(240,237,232,.3) !important; }
+    #app-whatsapp { padding-left: 52px !important; }
 
     /* ── Modal de formulário — sem overflow para não sobrepor carta */
     #modal-overlay { z-index: 9999; }
@@ -1275,7 +1313,7 @@
         </p>
 
         <p class="text-gray-400 text-sm leading-loose mb-6">
-          O trabalho que fazemos juntos é profundo. Ele começa onde todos os outros param — na sua relação com o dinheiro, nas crenças que você carrega desde a infância, nos padrões de comportamento que sabotam silenciosamente cada plano bem-intencionado. Não adianta ter a melhor carteira de investimentos do Brasil se a sua mente ainda opera com a mentalidade de escassez que você herdou.
+          O trabalho que fazemos juntos começa onde todos os outros param — no diagnóstico real da sua situação financeira, nos padrões de comportamento que aparecem quando olhamos para os números com honestidade. Em alguns casos, esse processo revela algo mais profundo: crenças, bloqueios e histórias que nenhuma planilha consegue resolver. Quando isso acontece, existe um caminho separado — a Psicoterapia Financeira — que pode ser o próximo passo. Mas isso é uma decisão que tomamos juntos, no momento certo, não uma promessa antecipada.
         </p>
 
         <!-- Bloco decorativo com borda dourada -->
@@ -1300,9 +1338,9 @@
           <ul class="space-y-3 text-sm text-gray-400">
             <li class="check-item">Diagnóstico completo das suas crenças e padrões financeiros</li>
             <li class="check-item">Mapeamento do fluxo de caixa e construção de um plano personalizado</li>
-            <li class="check-item">Sessões individuais de psicoterapia financeira com acompanhamento contínuo</li>
-            <li class="check-item">Análise e suporte nas decisões financeiras relevantes antes de serem tomadas</li>
+            <li class="check-item">Acompanhamento contínuo das decisões financeiras relevantes antes de serem tomadas</li>
             <li class="check-item">Carteira de investimentos alinhada ao seu perfil e objetivos reais</li>
+            <li class="check-item">Quando necessário, encaminhamento para o processo de Psicoterapia Financeira — uma jornada separada e mais profunda, focada na raiz emocional dos padrões que o dinheiro revela</li>
           </ul>
         </div>
 
@@ -1427,10 +1465,10 @@
         />
       </div>
 
-      <!-- WhatsApp -->
+      <!-- WhatsApp com seletor de país -->
       <div>
         <label for="app-whatsapp" class="block text-xs text-gray-400 font-500 mb-2 tracking-wider uppercase">
-          WhatsApp com DDD <span class="text-gold" aria-hidden="true">*</span>
+          WhatsApp <span class="text-gold" aria-hidden="true">*</span>
         </label>
         <input
           type="tel"
@@ -1438,9 +1476,10 @@
           name="whatsapp"
           required
           autocomplete="tel"
-          placeholder="+55 (00) 00000-0000"
+          placeholder="(00) 00000-0000"
           class="form-input"
         />
+        <p class="text-xs text-gray-600 mt-1">Ex: (31) 98026-0779 — inclua o DDD</p>
       </div>
 
       <!-- CORREÇÃO 3: LGPD explícita e detalhada -->
@@ -1623,6 +1662,33 @@
     }, { threshold: 0.35 });
     sections.forEach(s => observer.observe(s));
   })();
+</script>
+
+<!-- intl-tel-input — seletor de país com Brasil pré-selecionado -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+<script>
+  // Inicializa o campo de telefone quando o modal abre
+  let itiInstance = null;
+
+  function initPhoneField() {
+    if (itiInstance) return; // já inicializado
+    const input = document.getElementById('app-whatsapp');
+    if (!input) return;
+    itiInstance = window.intlTelInput(input, {
+      initialCountry: 'br',
+      preferredCountries: ['br'],
+      separateDialCode: true,
+      utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.min.js',
+      customPlaceholder: function() { return '(00) 00000-0000'; }
+    });
+  }
+
+  // Chama a inicialização quando o modal de formulário abre
+  const _origOpenModal = openModal;
+  openModal = function() {
+    _origOpenModal();
+    setTimeout(initPhoneField, 150);
+  };
 </script>
 
 </body>
