@@ -1429,20 +1429,16 @@
       </p>
     </div>
 
-    <!-- ─── APPLICATION FORM ───────────────────────────────────────
-         Action → Formspree (processa o form e envia e-mail)
-         _next  → Tally (redireciona o usuário após o submit)
-    ──────────────────────────────────────────────────────────────── -->
     <form
       action="https://formspree.io/f/xaqknwbq"
       method="POST"
       class="p-8 space-y-5"
       aria-label="Formulário de aplicação para Mentoria Premium"
       id="application-form"
+      novalidate
     >
       <!-- ── Campos ocultos de rastreamento/roteamento ── -->
       <input type="hidden" name="_next"        value="https://tally.so/r/lbYzjN" />
-      <!-- CORREÇÃO 3: identificar origem como Aplicação Premium para segmentação no CRM -->
       <input type="hidden" name="form_source"  value="aplicacao-premium" />
       <input type="hidden" name="utm_source"   value="site-phillipsouza" />
       <input type="hidden" name="utm_medium"   value="landing-page" />
@@ -1458,11 +1454,11 @@
           type="text"
           id="app-nome"
           name="nome"
-          required
           autocomplete="name"
           placeholder="Seu nome completo"
           class="form-input"
         />
+        <span class="field-error hidden text-xs text-red-400 mt-1 block" data-for="app-nome">Por favor, informe seu nome completo.</span>
       </div>
 
       <!-- Email -->
@@ -1474,11 +1470,11 @@
           type="email"
           id="app-email"
           name="email"
-          required
           autocomplete="email"
           placeholder="seu@email.com"
           class="form-input"
         />
+        <span class="field-error hidden text-xs text-red-400 mt-1 block" data-for="app-email">Por favor, informe um e-mail válido.</span>
       </div>
 
       <!-- WhatsApp com DDI -->
@@ -1487,12 +1483,7 @@
           WhatsApp <span class="text-gold" aria-hidden="true">*</span>
         </label>
         <div class="phone-wrapper">
-          <select
-            id="app-ddi"
-            name="ddi"
-            class="phone-ddi"
-            aria-label="Código do país"
-          >
+          <select id="app-ddi" name="ddi" class="phone-ddi" aria-label="Código do país">
             <option value="+55" selected>🇧🇷 +55</option>
             <option value="+1">🇺🇸 +1</option>
             <option value="+1-CA">🇨🇦 +1</option>
@@ -1526,28 +1517,26 @@
             type="tel"
             id="app-whatsapp"
             name="whatsapp"
-            required
             autocomplete="tel"
             placeholder="(00) 00000-0000"
             class="phone-number"
           />
         </div>
+        <span class="field-error hidden text-xs text-red-400 mt-1 block" data-for="app-whatsapp">Por favor, informe seu WhatsApp com DDD.</span>
         <p class="text-xs text-gray-600 mt-1">Selecione o país e digite com DDD</p>
       </div>
 
-      <!-- CORREÇÃO 3: LGPD explícita e detalhada -->
+      <!-- LGPD -->
       <div class="lgpd-box">
         <p class="text-xs text-gray-400 font-heading tracking-wider uppercase mb-3 font-600">
           Declaração de Consentimento (LGPD) <span class="text-gold">*</span>
         </p>
 
-        <!-- Checkbox 1: privacidade e termos -->
         <div class="flex items-start gap-3 mb-3">
           <input
             type="checkbox"
             id="app-lgpd-privacidade"
             name="lgpd_privacidade"
-            required
             value="concordo-politica-privacidade-termos-uso"
             class="mt-0.5 flex-shrink-0 accent-yellow-500"
             style="width:16px; height:16px; cursor:pointer;"
@@ -1561,26 +1550,24 @@
           </label>
         </div>
 
-        <!-- Checkbox 2: contato comercial -->
         <div class="flex items-start gap-3">
           <input
             type="checkbox"
             id="app-lgpd-contato"
             name="lgpd_contato"
-            required
             value="autorizo-contato-whatsapp-email"
             class="mt-0.5 flex-shrink-0 accent-yellow-500"
             style="width:16px; height:16px; cursor:pointer;"
           />
           <label for="app-lgpd-contato" class="text-xs text-gray-400 leading-relaxed cursor-pointer">
-            Autorizo Phillip Souza e sua equipe a me contatarem, de forma exclusiva e não-invasiva, pelo
+            Autorizo Phillip Souza e sua equipe a me contatarem pelo
             <strong class="text-gray-300">WhatsApp</strong> e
             <strong class="text-gray-300">e-mail</strong>
-            informados acima, para avaliação desta aplicação.
-            Meus dados <strong class="text-gray-300">não serão compartilhados com terceiros</strong>
-            e posso revogar este consentimento a qualquer momento.
+            informados acima. Meus dados <strong class="text-gray-300">não serão compartilhados com terceiros</strong>.
           </label>
         </div>
+
+        <span class="field-error hidden text-xs text-red-400 mt-2 block" id="lgpd-error">Marque as duas opções de consentimento para continuar.</span>
 
         <p class="text-xs text-gray-600 mt-3 leading-relaxed">
           Proteção garantida pela Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018).
@@ -1588,7 +1575,7 @@
       </div>
 
       <!-- Submit -->
-      <button type="submit" class="btn-gold w-full text-sm py-4 rounded-md mt-2">
+      <button type="button" onclick="submitForm()" class="btn-gold w-full text-sm py-4 rounded-md mt-2" id="btn-submit">
         ◆ &nbsp;Iniciar Qualificação
       </button>
 
@@ -1606,6 +1593,68 @@
      JAVASCRIPT — Carta + Modal + Scroll Reveal + Nav
 ════════════════════════════════════════════════════════════════ -->
 <script>
+  /* ── Validação e submit do formulário (cross-browser/mobile) ── */
+  function submitForm() {
+    const form    = document.getElementById('application-form');
+    const nome    = document.getElementById('app-nome');
+    const email   = document.getElementById('app-email');
+    const tel     = document.getElementById('app-whatsapp');
+    const lgpd1   = document.getElementById('app-lgpd-privacidade');
+    const lgpd2   = document.getElementById('app-lgpd-contato');
+    const btn     = document.getElementById('btn-submit');
+
+    // Limpa erros anteriores
+    document.querySelectorAll('.field-error').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('.form-input, .phone-number').forEach(el =>
+      el.style.borderColor = ''
+    );
+
+    let valid = true;
+
+    function showError(inputId, errorSelector) {
+      const input = document.getElementById(inputId);
+      const err   = errorSelector
+        ? document.querySelector(errorSelector)
+        : document.querySelector(`[data-for="${inputId}"]`);
+      if (input)  input.style.borderColor = 'rgba(248,113,113,.6)';
+      if (err)    err.classList.remove('hidden');
+      if (valid && input) {
+        // Scroll até o primeiro erro dentro do modal
+        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      valid = false;
+    }
+
+    // Validar nome
+    if (!nome.value.trim() || nome.value.trim().length < 2) showError('app-nome');
+
+    // Validar email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.value.trim() || !emailRegex.test(email.value.trim())) showError('app-email');
+
+    // Validar telefone
+    if (!tel.value.trim() || tel.value.trim().length < 6) showError('app-whatsapp');
+
+    // Validar LGPD
+    if (!lgpd1.checked || !lgpd2.checked) {
+      document.getElementById('lgpd-error').classList.remove('hidden');
+      document.querySelector('.lgpd-box').style.borderColor = 'rgba(248,113,113,.4)';
+      if (valid) document.querySelector('.lgpd-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    // Tudo válido — desabilita botão e submete
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+    btn.style.opacity = '.7';
+    btn.style.animation = 'none';
+
+    form.submit();
+  }
+
+
   /* ── Referências ──────────────────────────────────────────── */
   const overlay    = document.getElementById('modal-overlay');
   const modalBox   = document.getElementById('modal-box');
