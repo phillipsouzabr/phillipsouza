@@ -245,8 +245,6 @@
   }
   </script>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.min.css" />
-
   <!-- ─── FONTS — preload + non-blocking load ──────────────────── -->
   <!-- Preconnect para reduzir latência DNS -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -529,47 +527,51 @@
       padding: 1rem;
     }
 
-    /* ── intl-tel-input dark theme ───────────────────────────── */
-    .iti { width: 100%; }
-    .iti__flag-container { z-index: 10; }
-    .iti__selected-flag {
-      background: rgba(255,255,255,.04) !important;
-      border-right: 1px solid rgba(212,175,55,.2);
-      padding: 0 10px;
+    /* ── Phone field com DDI customizado ─────────────────────── */
+    .phone-wrapper {
+      display: flex;
+      gap: 0;
+      width: 100%;
+    }
+    .phone-ddi {
+      flex-shrink: 0;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(212,175,55,.2);
+      border-right: none;
       border-radius: 6px 0 0 6px;
+      color: #F0EDE8;
+      font-family: 'Inter', sans-serif;
+      font-size: .9rem;
+      padding: .75rem .6rem;
+      cursor: pointer;
+      outline: none;
+      transition: border-color .3s;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23D4AF37'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 6px center;
+      padding-right: 22px;
     }
-    .iti__selected-flag:hover,
-    .iti__selected-flag:focus { background: rgba(212,175,55,.08) !important; }
-    .iti__country-list {
-      background: #0A0F1A !important;
-      border: 1px solid rgba(212,175,55,.25) !important;
-      color: #F0EDE8 !important;
-      box-shadow: 0 8px 32px rgba(0,0,0,.8) !important;
-      max-height: 200px !important;
-      overflow-y: auto !important;
-      z-index: 99999 !important;
-      width: 300px !important;
-      border-radius: 8px !important;
+    .phone-ddi:focus { border-color: #D4AF37; }
+    .phone-ddi option {
+      background: #0A0F1A;
+      color: #F0EDE8;
     }
-    .iti__country { padding: 8px 12px !important; }
-    .iti__country-name { color: #D1CEC9 !important; }
-    .iti__country:hover,
-    .iti__country.iti__highlight { background: rgba(212,175,55,.1) !important; }
-    .iti__dial-code { color: #D4AF37 !important; }
-    .iti__divider { border-bottom: 1px solid rgba(212,175,55,.15) !important; }
-    .iti__search-input {
-      background: #0D1420 !important;
-      border: none !important;
-      border-bottom: 1px solid rgba(212,175,55,.2) !important;
-      color: #F0EDE8 !important;
-      padding: 8px 12px !important;
-      width: 100% !important;
-      outline: none !important;
+    .phone-number {
+      flex: 1;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(212,175,55,.2);
+      border-radius: 0 6px 6px 0;
+      color: #F0EDE8;
+      font-family: 'Inter', sans-serif;
+      font-size: .9rem;
+      padding: .75rem 1rem;
+      outline: none;
+      transition: border-color .3s;
     }
-    .iti__search-input::placeholder { color: rgba(240,237,232,.3) !important; }
-    /* Input com espaço para a bandeira */
-    .iti--separate-dial-code .iti__selected-flag { min-width: 80px; }
-    #app-whatsapp { padding-left: 90px !important; }
+    .phone-number:focus { border-color: #D4AF37; }
+    .phone-number::placeholder { color: rgba(240,237,232,.3); }
 
     /* ── Modal de formulário — sem overflow para não sobrepor carta */
     #modal-overlay { z-index: 9999; }
@@ -1479,21 +1481,58 @@
         />
       </div>
 
-      <!-- WhatsApp com seletor de país -->
+      <!-- WhatsApp com DDI -->
       <div>
-        <label for="app-whatsapp" class="block text-xs text-gray-400 font-500 mb-2 tracking-wider uppercase">
+        <label class="block text-xs text-gray-400 font-500 mb-2 tracking-wider uppercase">
           WhatsApp <span class="text-gold" aria-hidden="true">*</span>
         </label>
-        <input
-          type="tel"
-          id="app-whatsapp"
-          name="whatsapp"
-          required
-          autocomplete="tel"
-          placeholder="(00) 00000-0000"
-          class="form-input"
-        />
-        <p class="text-xs text-gray-600 mt-1">Ex: (31) 98026-0779 — inclua o DDD</p>
+        <div class="phone-wrapper">
+          <select
+            id="app-ddi"
+            name="ddi"
+            class="phone-ddi"
+            aria-label="Código do país"
+          >
+            <option value="+55" selected>🇧🇷 +55</option>
+            <option value="+1">🇺🇸 +1</option>
+            <option value="+1-CA">🇨🇦 +1</option>
+            <option value="+351">🇵🇹 +351</option>
+            <option value="+244">🇦🇴 +244</option>
+            <option value="+258">🇲🇿 +258</option>
+            <option value="+238">🇨🇻 +238</option>
+            <option value="+239">🇸🇹 +239</option>
+            <option value="+245">🇬🇼 +245</option>
+            <option value="+240">🇬🇶 +240</option>
+            <option value="+34">🇪🇸 +34</option>
+            <option value="+44">🇬🇧 +44</option>
+            <option value="+49">🇩🇪 +49</option>
+            <option value="+33">🇫🇷 +33</option>
+            <option value="+39">🇮🇹 +39</option>
+            <option value="+41">🇨🇭 +41</option>
+            <option value="+54">🇦🇷 +54</option>
+            <option value="+56">🇨🇱 +56</option>
+            <option value="+57">🇨🇴 +57</option>
+            <option value="+598">🇺🇾 +598</option>
+            <option value="+595">🇵🇾 +595</option>
+            <option value="+591">🇧🇴 +591</option>
+            <option value="+51">🇵🇪 +51</option>
+            <option value="+58">🇻🇪 +58</option>
+            <option value="+52">🇲🇽 +52</option>
+            <option value="+81">🇯🇵 +81</option>
+            <option value="+61">🇦🇺 +61</option>
+            <option value="+64">🇳🇿 +64</option>
+          </select>
+          <input
+            type="tel"
+            id="app-whatsapp"
+            name="whatsapp"
+            required
+            autocomplete="tel"
+            placeholder="(00) 00000-0000"
+            class="phone-number"
+          />
+        </div>
+        <p class="text-xs text-gray-600 mt-1">Selecione o país e digite com DDD</p>
       </div>
 
       <!-- CORREÇÃO 3: LGPD explícita e detalhada -->
@@ -1676,32 +1715,6 @@
     }, { threshold: 0.35 });
     sections.forEach(s => observer.observe(s));
   })();
-</script>
-
-<!-- intl-tel-input — seletor de país com Brasil pré-selecionado -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
-<script>
-  // Inicializa o campo de telefone quando o modal abre
-  let itiInstance = null;
-
-  function initPhoneField() {
-    if (itiInstance) return;
-    const input = document.getElementById('app-whatsapp');
-    if (!input) return;
-    itiInstance = window.intlTelInput(input, {
-      initialCountry: 'br',
-      onlyCountries: ['br'],       // só Brasil — sem dropdown de outros países
-      separateDialCode: true,
-      customPlaceholder: function() { return '(00) 00000-0000'; }
-    });
-  }
-
-  // Chama a inicialização quando o modal de formulário abre
-  const _origOpenModal = openModal;
-  openModal = function() {
-    _origOpenModal();
-    setTimeout(initPhoneField, 150);
-  };
 </script>
 
 </body>
