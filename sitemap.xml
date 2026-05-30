@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Página principal — prioridade máxima -->
   <url>
     <loc>https://www.phillipsouza.com/</loc>
-    <lastmod>2026-05-19</lastmod>
+    <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- Política de Privacidade -->
+  <url>
+    <loc>https://www.phillipsouza.com/palestras.html</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
   <url>
     <loc>https://www.phillipsouza.com/privacidade.html</loc>
-    <lastmod>2026-05-19</lastmod>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
-  <!-- Termos de Uso -->
   <url>
     <loc>https://www.phillipsouza.com/termos.html</loc>
-    <lastmod>2026-05-19</lastmod>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
