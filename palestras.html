@@ -322,22 +322,60 @@
     .marquee-track { display: flex; align-items: center; }
     .marquee-item {
       font-family: 'Montserrat', sans-serif;
-      font-size: .75rem; font-weight: 700;
-      letter-spacing: .18em; text-transform: uppercase;
-      color: rgba(240,237,232,.35);
-      padding: 0 1.5rem;
+      font-size: .8rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase;
+      color: rgba(240,237,232,.4);
+      padding: 0 2rem;
       white-space: nowrap;
       transition: color .3s;
       cursor: default;
     }
-    .marquee-item:hover { color: rgba(212,175,55,.7); }
+    .marquee-item:hover { color: rgba(212,175,55,.75); }
     .marquee-dot {
-      color: rgba(212,175,55,.2);
-      font-size: .6rem;
+      color: rgba(212,175,55,.25);
+      font-size: .7rem;
       flex-shrink: 0;
     }
+    /* Fade lateral suave — apenas 32px para não cortar nomes */
+    .marquee-fade-left {
+      pointer-events: none; position: absolute;
+      left: 0; top: 0; bottom: 0; width: 48px; z-index: 10;
+      background: linear-gradient(90deg, #0A0F1A 0%, transparent 100%);
+    }
+    .marquee-fade-right {
+      pointer-events: none; position: absolute;
+      right: 0; top: 0; bottom: 0; width: 48px; z-index: 10;
+      background: linear-gradient(270deg, #0A0F1A 0%, transparent 100%);
+    }
 
-    /* Number badge */
+    /* Imagem O Consultório Rico — aspect ratio fixo, nunca cortado */
+    .talk-img-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 7;
+      overflow: hidden;
+    }
+    .talk-img-container img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 25%;
+    }
+    .talk-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(0deg, rgba(10,15,26,1) 0%, rgba(10,15,26,.2) 55%, transparent 100%);
+    }
+    .talk-img-badge {
+      position: absolute; bottom: 1rem; left: 1.5rem;
+    }
+
+    /* Hero heading — tamanho responsivo mobile-first */
+    .hero-h1 {
+      font-size: clamp(2rem, 8vw, 3.75rem);
+      line-height: 1.08;
+    }
     .num-badge {
       width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
@@ -412,7 +450,7 @@
           Palestrante · Psicologia Financeira
         </span>
 
-        <h1 class="font-heading font-900 text-4xl md:text-5xl lg:text-6xl leading-[1.06] mt-5 mb-6"
+        <h1 class="hero-h1 font-heading font-900 mt-5 mb-6"
             style="animation: fadeUp .7s ease forwards;">
           O que acontece quando<br />
           uma plateia descobre que<br />
@@ -473,12 +511,8 @@
 
   <!-- Marquee wrapper — fade nas bordas -->
   <div class="marquee-wrapper relative">
-    <!-- fade left -->
-    <div class="pointer-events-none absolute left-0 top-0 bottom-0 w-24 z-10"
-         style="background:linear-gradient(90deg,#0A0F1A,transparent);"></div>
-    <!-- fade right -->
-    <div class="pointer-events-none absolute right-0 top-0 bottom-0 w-24 z-10"
-         style="background:linear-gradient(270deg,#0A0F1A,transparent);"></div>
+    <div class="marquee-fade-left"></div>
+    <div class="marquee-fade-right"></div>
 
     <div class="marquee-belt flex">
       <!-- Track 1 (original) -->
@@ -593,19 +627,18 @@
 
     <!-- ── PALESTRA 1: O Consultório Rico ── -->
     <article class="talk-card mb-8 reveal">
-      <!-- Image -->
-      <div class="relative overflow-hidden" style="max-height: 320px;">
+      <!-- Image — aspect-ratio 16:7 garante visibilidade completa em qualquer tela -->
+      <div class="talk-img-container">
         <picture>
           <source srcset="consultorio-rico.webp" type="image/webp" />
           <img src="consultorio-rico.jpg"
-               alt="O Consultório Rico — Palestra de Phillip Souza sobre psicologia financeira para profissionais de saúde e empresários"
+               alt="O Consultório Rico — Palestra de Phillip Souza sobre psicologia financeira"
                width="1200" height="675"
-               loading="lazy" decoding="async"
-               class="w-full object-cover" style="object-position: center 30%;" />
+               loading="lazy" decoding="async" />
         </picture>
-        <div class="absolute inset-0" style="background:linear-gradient(0deg, rgba(10,15,26,1) 0%, rgba(10,15,26,.3) 60%, transparent 100%);"></div>
-        <div class="absolute bottom-4 left-6">
-          <span class="pill text-xs">Palestra Validada · 90 min</span>
+        <div class="talk-img-overlay"></div>
+        <div class="talk-img-badge">
+          <span class="pill">Palestra Validada · 90 min</span>
         </div>
       </div>
 
