@@ -1060,14 +1060,17 @@
           <strong class="text-gray-200 font-500">Os 12 Bloqueios Emocionais Financeiros</strong> revela as origens e libertações dos impedimentos e autoboicotes inconscientes que impedem profissionais de alta renda de construir a vida rica e próspera que merecem — com profundidade que o mercado financeiro convencional nunca teve coragem de publicar.
         </p>
 
-        <!-- Formspree Lead Capture Form -->
+        <!-- Web3Forms — Lead Capture Livro -->
         <form
-          action="https://formspree.io/f/xaqknwbq"
+          action="https://api.web3forms.com/submit"
           method="POST"
           class="flex flex-col sm:flex-row gap-3"
           aria-label="Formulário de aviso de lançamento do livro"
         >
+          <input type="hidden" name="access_key"  value="e7988d0d-acd6-4909-8478-928e364cc49d" />
+          <input type="hidden" name="subject"     value="Novo lead — Aviso de lançamento do livro" />
           <input type="hidden" name="form_source" value="lead-livro" />
+          <input type="hidden" name="botcheck"    value="" style="display:none;" />
           <label for="email-livro" class="sr-only">Seu melhor e-mail</label>
           <input
             type="email"
@@ -1517,15 +1520,19 @@
     </div>
 
     <form
-      action="https://formspree.io/f/xaqknwbq"
+      action="https://api.web3forms.com/submit"
       method="POST"
       class="p-8 space-y-5"
       aria-label="Formulário de aplicação para Mentoria Premium"
       id="application-form"
       novalidate
     >
-      <!-- ── Campos ocultos de rastreamento/roteamento ── -->
-      <input type="hidden" name="_next"        value="https://tally.so/r/lbYzjN" />
+      <!-- ── Web3Forms — campos obrigatórios ── -->
+      <input type="hidden" name="access_key"  value="e7988d0d-acd6-4909-8478-928e364cc49d" />
+      <input type="hidden" name="redirect"    value="https://tally.so/r/lbYzjN" />
+      <input type="hidden" name="subject"     value="Nova Aplicação Premium — Mentoria Phillip Souza" />
+      <input type="hidden" name="botcheck"    value="" style="display:none;" />
+      <!-- ── Rastreamento / segmentação ── -->
       <input type="hidden" name="form_source"  value="aplicacao-premium" />
       <input type="hidden" name="utm_source"   value="site-phillipsouza" />
       <input type="hidden" name="utm_medium"   value="landing-page" />
