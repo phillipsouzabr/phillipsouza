@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Você está na lista · Phillip Souza</title>
+  <meta name="description" content="Você será avisado assim que o livro Os 12 Bloqueios Emocionais Financeiros estiver disponível." />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" /></noscript>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #000;
+      color: #F0EDE8;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Noise */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: .5;
+    }
+
+    /* Nav */
+    header {
+      position: relative; z-index: 1;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid rgba(212,175,55,.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #fff;
+    }
+    .logo span { color: #D4AF37; }
+
+    /* Main */
+    main {
+      flex: 1;
+      position: relative; z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+    }
+
+    .card {
+      background: rgba(10,15,26,.8);
+      border: 1px solid rgba(212,175,55,.2);
+      border-top: 3px solid #D4AF37;
+      border-radius: 20px;
+      padding: 3rem 2.5rem;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 60px rgba(212,175,55,.06);
+      animation: fadeUp .6s ease forwards;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Check icon */
+    .check-circle {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(212,175,55,.1);
+      border: 1px solid rgba(212,175,55,.3);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.75rem;
+    }
+
+    /* Divider */
+    .divider {
+      width: 48px; height: 2px;
+      background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+      margin: 1.5rem auto;
+    }
+
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: #fff;
+      line-height: 1.2;
+      margin: 0 0 1rem;
+    }
+
+    .subtitle {
+      font-size: .95rem;
+      color: #9CA3AF;
+      line-height: 1.75;
+      margin: 0 0 2rem;
+    }
+    .subtitle strong { color: #D4AF37; font-weight: 500; }
+
+    /* Book mockup pill */
+    .book-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      background: rgba(212,175,55,.06);
+      border: 1px solid rgba(212,175,55,.2);
+      border-radius: 999px;
+      padding: .5rem 1.25rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #D4AF37;
+      margin-bottom: 2rem;
+    }
+
+    /* Buttons */
+    .btn-gold {
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+      background: linear-gradient(135deg, #D4AF37, #F0CD58, #D4AF37);
+      background-size: 200% auto;
+      color: #0A0000;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700; font-size: .8rem;
+      letter-spacing: .06em; text-transform: uppercase;
+      border: none; border-radius: 6px;
+      padding: .9rem 2rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .3s;
+      width: 100%;
+    }
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(212,175,55,.35);
+    }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+      background: transparent;
+      color: #6B7280;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600; font-size: .75rem;
+      letter-spacing: .06em; text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 6px;
+      padding: .75rem 2rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .3s, color .3s;
+      width: 100%;
+      margin-top: .75rem;
+    }
+    .btn-outline:hover { border-color: rgba(212,175,55,.3); color: #D4AF37; }
+
+    /* Social row */
+    .social-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .social-link {
+      font-size: .7rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #4B5563;
+      text-decoration: none;
+      transition: color .3s;
+    }
+    .social-link:hover { color: #D4AF37; }
+    .social-dot { color: rgba(212,175,55,.2); font-size: .5rem; }
+
+    /* Footer */
+    footer {
+      position: relative; z-index: 1;
+      padding: 1.25rem 1.5rem;
+      border-top: 1px solid rgba(212,175,55,.08);
+      text-align: center;
+    }
+    footer p {
+      font-size: .7rem;
+      color: #374151;
+      margin: 0;
+    }
+    footer a { color: #4B5563; text-decoration: none; }
+    footer a:hover { color: #D4AF37; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: rgba(212,175,55,.3); border-radius: 4px; }
+  </style>
+</head>
+
+<body>
+
+<!-- Nav -->
+<header>
+  <a href="index.html" class="logo">PHILLIP <span>SOUZA</span></a>
+  <a href="index.html" style="font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:#4B5563;text-decoration:none;transition:color .3s;"
+     onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#4B5563'">
+    ← Voltar ao site
+  </a>
+</header>
+
+<!-- Main -->
+<main>
+  <div class="card">
+
+    <!-- Check icon -->
+    <div class="check-circle" aria-hidden="true">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+           stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+
+    <!-- Book pill -->
+    <div class="book-pill">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="#D4AF37" aria-hidden="true"><circle cx="5" cy="5" r="5"/></svg>
+      Os 12 Bloqueios Emocionais Financeiros
+    </div>
+
+    <!-- Heading -->
+    <h1>Você está na lista.</h1>
+
+    <div class="divider"></div>
+
+    <!-- Body text -->
+    <p class="subtitle">
+      Assim que <strong>Os 12 Bloqueios Emocionais Financeiros</strong> estiver disponível,
+      você será o primeiro a saber — com condições especiais de pré-lançamento,
+      antes de qualquer anúncio público.
+    </p>
+
+    <p class="subtitle" style="font-size:.85rem; margin-bottom:0;">
+      Enquanto isso, acompanhe o conteúdo gratuito sobre psicologia financeira
+      no YouTube e no Instagram.
+    </p>
+
+    <div class="divider"></div>
+
+    <!-- CTAs -->
+    <a href="https://www.youtube.com/@phillipsouzabr"
+       target="_blank" rel="noopener noreferrer"
+       class="btn-gold"
+       aria-label="Acessar canal do YouTube de Phillip Souza">
+      ▶ &nbsp;Ver conteúdo no YouTube
+    </a>
+
+    <a href="index.html" class="btn-outline">
+      ← Voltar ao site
+    </a>
+
+    <!-- Social -->
+    <div class="social-row">
+      <a href="https://instagram.com/phillipsouzabr"
+         target="_blank" rel="noopener noreferrer"
+         class="social-link">@phillipsouzabr</a>
+      <span class="social-dot">◆</span>
+      <a href="https://www.youtube.com/@phillipsouzabr"
+         target="_blank" rel="noopener noreferrer"
+         class="social-link">YouTube</a>
+      <span class="social-dot">◆</span>
+      <a href="mailto:contato@phillipsouza.com" class="social-link">Contato</a>
+    </div>
+
+  </div>
+</main>
+
+<!-- Footer -->
+<footer>
+  <p>
+    © 2026 Phillip Souza · Todos os direitos reservados
+    &nbsp;·&nbsp;
+    <a href="privacidade.html">Política de Privacidade</a>
+    &nbsp;·&nbsp;
+    <a href="termos.html">Termos de Uso</a>
+  </p>
+</footer>
+
+</body>
+</html>

@@ -1,8 +1,9 @@
 User-agent: *
 Allow: /
 
-# Não indexar documentos legais
+# Não indexar páginas legais e de confirmação
 Disallow: /privacidade.html
 Disallow: /termos.html
+Disallow: /obrigado.html
 
 Sitemap: https://www.phillipsouza.com/sitemap.xml
