@@ -8,6 +8,9 @@
   <meta name="robots" content="noindex, follow" />
   <link rel="canonical" href="https://www.phillipsouza.com/privacidade.html" />
 
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -183,7 +186,7 @@
 
     <h2>1. Quem é o responsável pelo tratamento dos seus dados</h2>
     <p>
-      O controlador dos seus dados pessoais é <strong>Phillip Souza</strong>, Planejador e Psicoterapeuta Financeiro, com sede em <strong>Rua Capanema, 541 — Coqueiros, Belo Horizonte — MG, CEP 30880-450</strong>, Brasil.
+      O controlador dos seus dados pessoais é <strong>Phillip Souza</strong>, Planejador e Psicoterapeuta Financeiro, inscrito no CNPJ sob o nº <strong>33.577.542/0001-80</strong>, com sede em <strong>Rua Capanema, 541 — Coqueiros, Belo Horizonte — MG, CEP 30880-450</strong>, Brasil.
     </p>
     <p>
       Para dúvidas, solicitações ou exercício dos seus direitos, entre em contato pelo e-mail
@@ -288,15 +291,18 @@
 </main>
 
 <!-- ── Rodapé ──────────────────────────────────────────────────── -->
-<footer class="border-t border-gold border-opacity-10 py-8 text-center">
-  <p class="text-xs text-gray-600">
-    © 2026 Phillip Souza · Todos os direitos reservados
+<footer class="border-t border-gold border-opacity-10 py-8 text-center" style="line-height:1.9;">
+  <p class="text-xs text-gray-400 m-0">© <span class="copy-year">2026</span> Phillip Souza</p>
+  <p class="text-xs m-0" style="color:#4B5563;">Todos os direitos reservados</p>
+  <p class="text-xs m-0" style="color:#374151;">CNPJ 33.577.542/0001-80</p>
+  <p class="text-xs m-0" style="margin-top:.5rem;">
+    <a href="termos.html" class="no-underline" style="color:#4B5563;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#4B5563'">Termos de Uso</a>
     &nbsp;·&nbsp;
-    <a href="termos.html" class="text-gray-500 hover:text-gold transition-colors no-underline">Termos de Uso</a>
-    &nbsp;·&nbsp;
-    <a href="index.html" class="text-gray-500 hover:text-gold transition-colors no-underline">Voltar ao site</a>
+    <a href="index.html" class="no-underline" style="color:#4B5563;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#4B5563'">Voltar ao site</a>
   </p>
 </footer>
 
+
+<script>document.querySelectorAll('.copy-year').forEach(function(e){e.textContent=new Date().getFullYear();});</script>
 </body>
 </html>

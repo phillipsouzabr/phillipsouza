@@ -1357,15 +1357,15 @@
       </div>
     </div>
 
-    <!-- Bottom bar -->
-    <div class="border-t border-gold border-opacity-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center">
-      <p class="text-xs text-gray-500">
-        © 2026 Phillip Souza · Todos os direitos reservados
-      </p>
-      <p class="text-xs text-gray-500">
-        <a href="privacidade.html" class="hover:text-gold transition-colors no-underline">Política de Privacidade</a>
+    <!-- Bottom bar — 5 linhas centradas -->
+    <div class="border-t border-gold border-opacity-10 pt-6 text-center" style="line-height:1.9;">
+      <p class="text-xs text-gray-400 m-0">© <span class="copy-year">2026</span> Phillip Souza</p>
+      <p class="text-xs m-0" style="color:#4B5563;">Todos os direitos reservados</p>
+      <p class="text-xs m-0" style="color:#374151;">CNPJ 33.577.542/0001-80</p>
+      <p class="text-xs m-0" style="color:#374151; margin-top:.5rem;">
+        <a href="privacidade.html" class="hover:text-gold transition-colors no-underline" style="color:#4B5563;">Política de Privacidade</a>
         &nbsp;·&nbsp;
-        <a href="termos.html" class="hover:text-gold transition-colors no-underline">Termos de Uso</a>
+        <a href="termos.html" class="hover:text-gold transition-colors no-underline" style="color:#4B5563;">Termos de Uso</a>
       </p>
     </div>
 
@@ -1889,5 +1889,7 @@
   })();
 </script>
 
+
+<script>document.querySelectorAll('.copy-year').forEach(function(e){e.textContent=new Date().getFullYear();});</script>
 </body>
 </html>

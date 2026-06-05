@@ -8,6 +8,9 @@
   <meta name="robots" content="noindex, follow" />
   <link rel="canonical" href="https://www.phillipsouza.com/termos.html" />
 
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -186,7 +189,7 @@
 
     <h2>1. Identificação e Aceitação</h2>
     <p>
-      Estes Termos de Uso regulam o acesso e o uso do site <strong>www.phillipsouza.com</strong> e de todos os formulários, conteúdos e serviços disponibilizados por <strong>Phillip Souza</strong>, Planejador e Psicoterapeuta Financeiro, com sede em Rua Capanema, 541 — Coqueiros, Belo Horizonte — MG, CEP 30880-450.
+      Estes Termos de Uso regulam o acesso e o uso do site <strong>www.phillipsouza.com</strong> e de todos os formulários, conteúdos e serviços disponibilizados por <strong>Phillip Souza</strong>, Planejador e Psicoterapeuta Financeiro, inscrito no CNPJ sob o nº <strong>33.577.542/0001-80</strong>, com sede em Rua Capanema, 541 — Coqueiros, Belo Horizonte — MG, CEP 30880-450.
     </p>
     <p>
       Ao acessar o site, preencher um formulário ou clicar em qualquer botão de aplicação, você declara ter lido, compreendido e <strong>concordado integralmente</strong> com estes Termos. Se não concordar, por favor, não utilize o site nem submeta seus dados.
@@ -280,15 +283,18 @@
 </main>
 
 <!-- ── Rodapé ──────────────────────────────────────────────────── -->
-<footer class="border-t border-gold border-opacity-10 py-8 text-center">
-  <p class="text-xs text-gray-600">
-    © 2026 Phillip Souza · Todos os direitos reservados
+<footer class="border-t border-gold border-opacity-10 py-8 text-center" style="line-height:1.9;">
+  <p class="text-xs text-gray-400 m-0">© <span class="copy-year">2026</span> Phillip Souza</p>
+  <p class="text-xs m-0" style="color:#4B5563;">Todos os direitos reservados</p>
+  <p class="text-xs m-0" style="color:#374151;">CNPJ 33.577.542/0001-80</p>
+  <p class="text-xs m-0" style="margin-top:.5rem;">
+    <a href="privacidade.html" class="no-underline" style="color:#4B5563;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#4B5563'">Política de Privacidade</a>
     &nbsp;·&nbsp;
-    <a href="privacidade.html" class="text-gray-500 hover:text-gold transition-colors no-underline">Política de Privacidade</a>
-    &nbsp;·&nbsp;
-    <a href="index.html" class="text-gray-500 hover:text-gold transition-colors no-underline">Voltar ao site</a>
+    <a href="index.html" class="no-underline" style="color:#4B5563;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#4B5563'">Voltar ao site</a>
   </p>
 </footer>
 
+
+<script>document.querySelectorAll('.copy-year').forEach(function(e){e.textContent=new Date().getFullYear();});</script>
 </body>
 </html>

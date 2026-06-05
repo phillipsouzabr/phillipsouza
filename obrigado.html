@@ -300,15 +300,18 @@
 </main>
 
 <!-- Footer -->
-<footer>
-  <p>
-    © 2026 Phillip Souza · Todos os direitos reservados
+<footer style="position:relative;z-index:1;padding:1.5rem;border-top:1px solid rgba(212,175,55,.08);text-align:center;line-height:1.9;">
+  <p style="font-size:.7rem;color:#9CA3AF;margin:0;">© <span class="copy-year">2026</span> Phillip Souza</p>
+  <p style="font-size:.7rem;color:#4B5563;margin:0;">Todos os direitos reservados</p>
+  <p style="font-size:.7rem;color:#374151;margin:0;">CNPJ 33.577.542/0001-80</p>
+  <p style="font-size:.7rem;margin:.4rem 0 0;">
+    <a href="privacidade.html" style="color:#4B5563;text-decoration:none;">Política de Privacidade</a>
     &nbsp;·&nbsp;
-    <a href="privacidade.html">Política de Privacidade</a>
-    &nbsp;·&nbsp;
-    <a href="termos.html">Termos de Uso</a>
+    <a href="termos.html" style="color:#4B5563;text-decoration:none;">Termos de Uso</a>
   </p>
 </footer>
 
+
+<script>document.querySelectorAll('.copy-year').forEach(function(e){e.textContent=new Date().getFullYear();});</script>
 </body>
 </html>
