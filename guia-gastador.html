@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guia do Gastador | Phillip Souza</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  
+<style>
+/* ── SITE DESIGN SYSTEM ────────────────────────────────────── */
+:root {
+  --gold:        #D4AF37;
+  --gold-mid:    #F0CD58;
+  --gold-pale:   #FBF5DC;
+  --gold-border: rgba(212,175,55,0.20);
+  --navy:        #0A0F1A;
+  --body-bg:     #F8F6F0;   
+  --card-bg:     #FFFFFF;
+  --text-main:   #1A1A1A;
+  --text-mid:    #4A4A4A;
+  --text-light:  #777777;
+  --rule:        #E5E0D5;
+  --danger:      #D32F2F;
+  --page-w:      210mm;
+  --mg:          15mm;
+}
+
+/* ── RESET ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+
+body {
+  background: var(--body-bg);
+  font-family: 'Inter', sans-serif;
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1;
+}
+
+/* ── PAGE ──────────────────────────────────────────────────── */
+.page {
+  width: var(--page-w);
+  margin: 28px auto;
+  background: var(--card-bg);
+  box-shadow: 0 16px 64px rgba(0,0,0,0.16);
+  position: relative;
+  overflow: hidden;
+}
+.page::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: linear-gradient(180deg, var(--gold) 0%, var(--gold-mid) 50%, var(--gold) 100%);
+}
+
+/* ── HEADER ────────────────────────────────────────────────── */
+.header {
+  background: var(--navy);
+  padding: 36px var(--mg) 32px calc(var(--mg) + 8px);
+  position: relative;
+  overflow: hidden;
+}
+.header::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-mid) 50%, transparent);
+}
+.hring {
+  position: absolute; top: -40px; right: -40px;
+  width: 240px; height: 240px; border-radius: 50%;
+  border: 1px solid rgba(212,175,55,0.08); pointer-events: none;
+}
+.hring::before {
+  content: ''; position: absolute; inset: 30px;
+  border-radius: 50%; border: 1px solid rgba(212,175,55,0.05);
+}
+.series-label {
+  font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; opacity: 0.80;
+}
+.header-title {
+  font-family: 'Montserrat', sans-serif; font-size: 32px; font-weight: 900;
+  color: #FFFFFF; line-height: 1.12; margin-bottom: 8px; letter-spacing: -0.5px;
+}
+.header-title em { color: var(--gold); font-style: normal; }
+.header-sub { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.42); letter-spacing: 0.2px; }
+.profile-badge {
+  display: inline-flex; align-items: center; gap: 10px; margin-top: 20px;
+  background: rgba(212,175,55,0.10); border: 1px solid rgba(212,175,55,0.25);
+  border-radius: 3px; padding: 8px 16px;
+}
+.profile-badge-dot { width: 7px; height: 7px; background: var(--gold); border-radius: 50%; }
+.profile-badge-text { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+
+/* ── BODY ──────────────────────────────────────────────────── */
+.body { padding: 30px calc(var(--mg) + 8px) 38px; }
+.lead {
+  font-size: 14.5px; line-height: 1.78; color: var(--text-mid); font-style: italic;
+  border-left: 3px solid var(--gold); padding: 2px 0 2px 16px; margin-bottom: 32px;
+}
+.section { margin-bottom: 34px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.section-number {
+  width: 30px; height: 30px; flex-shrink: 0; background: var(--navy); color: var(--gold);
+  font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 800; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+}
+.section-title { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 800; color: var(--text-main); letter-spacing: -0.3px; }
+.section-title-gold { color: var(--gold); }
+.section-rule { height: 1px; margin-bottom: 18px; background: linear-gradient(90deg, var(--gold-border), transparent 75%); }
+p { font-size: 14px; line-height: 1.82; color: var(--text-mid); margin-bottom: 12px; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 600; color: var(--text-main); }
+
+/* ── KLONTZ BOX ────────────────────────────────────────────── */
+.klontz-box {
+  background: var(--navy); border-radius: 8px; padding: 20px 22px; margin: 24px 0; position: relative; overflow: hidden;
+}
+.klontz-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-mid), var(--gold)); }
+.klontz-label { font-family: 'Montserrat', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.klontz-title { font-family: 'Montserrat', sans-serif; font-size: 20px; font-weight: 900; color: #FFF; margin-bottom: 10px; letter-spacing: -0.3px; }
+.klontz-text { font-size: 13px; line-height: 1.78; color: rgba(255,255,255,0.58); margin-bottom: 0; }
+
+/* ── THREAT MATRIX (FERROADA TRIPLA) ───────────────────────── */
+.threat-box {
+  background: #FDFBF7; border-radius: 8px; padding: 22px; margin: 26px 0;
+  border: 1px solid var(--rule); border-left: 4px solid var(--danger);
+}
+.threat-label {
+  font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 800;
+  letter-spacing: 2.5px; text-transform: uppercase; color: var(--danger); margin-bottom: 18px;
+}
+.threat-row { margin-bottom: 15px; }
+.threat-row:last-child { margin-bottom: 0; }
+.threat-info { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 7px; }
+.threat-title { font-size: 11px; font-weight: 700; color: var(--text-main); text-transform: uppercase; letter-spacing: 1.5px; }
+.threat-desc { font-size: 12.5px; font-style: italic; color: var(--danger); font-weight: 600; }
+.threat-bar { height: 7px; background: #EAE6DB; border-radius: 3.5px; overflow: hidden; }
+.threat-fill { height: 100%; border-radius: 3.5px; background: linear-gradient(90deg, #F57C00, var(--danger)); }
+
+/* ── RADAR GRID ────────────────────────────────────────────── */
+.radar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+.radar-card { border-radius: 8px; padding: 18px; background: #F7F5F0; }
+.radar-card.rc-self  { border-top: 3px solid var(--gold); }
+.radar-card.rc-partner { border-top: 3px solid #888; }
+.radar-card-label { font-family: 'Montserrat', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+.rc-self .radar-card-label { color: var(--gold); }
+.rc-partner .radar-card-label { color: #888; }
+.attn-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
+.attn-item:last-child { margin-bottom: 0; }
+.attn-num {
+  width: 21px; height: 21px; flex-shrink: 0; margin-top: 2px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700;
+}
+.rc-self .attn-num { background: var(--gold); color: var(--navy); }
+.rc-partner .attn-num { background: #888; color: #FFF; }
+.attn-text { font-size: 13px; line-height: 1.72; color: var(--text-mid); }
+
+/* ── QUOTE ─────────────────────────────────────────────────── */
+.quote-block { text-align: center; padding: 24px 16px; margin: 30px 0; }
+.quote-block::before, .quote-block::after {
+  content: ''; display: block; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+}
+.quote-block::before { margin-bottom: 20px; }
+.quote-block::after  { margin-top: 20px; }
+.quote-mark { display: block; font-family: 'Montserrat', sans-serif; font-size: 64px; color: var(--gold); line-height: 0.55; margin-bottom: 18px; opacity: 0.30; }
+.quote-text { font-family: 'Montserrat', sans-serif; font-size: 16px; font-style: italic; font-weight: 500; color: var(--text-main); line-height: 1.62; }
+
+/* ── DIALOGUE ──────────────────────────────────────────────── */
+.dialogue-group { margin: 26px 0; }
+.dialogue-group + .dialogue-group { padding-top: 24px; border-top: 1px solid var(--rule); }
+.dialogue-group-title { font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 800; color: var(--text-main); margin-bottom: 5px; letter-spacing: -0.2px; }
+.dialogue-conflict { font-size: 13px; color: var(--text-light); font-style: italic; margin-bottom: 14px; padding-left: 14px; border-left: 2px solid var(--gold-border); }
+.dialogue-card { border-radius: 6px; padding: 15px 17px; margin-bottom: 10px; }
+.dialogue-card:last-child { margin-bottom: 0; }
+.dc-a { background: rgba(212,175,55,0.07); border-left: 3px solid var(--gold); }
+.dc-b { background: #F2EFE8; border-left: 3px solid #AAA; }
+.dc-role { font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; margin-bottom: 8px; }
+.dc-a .dc-role { color: var(--gold); }
+.dc-b .dc-role { color: #888; }
+.dialogue-card p { font-size: 13px; line-height: 1.72; color: var(--text-mid); margin-bottom: 0; }
+
+/* ── TOOL BOX / CBS / POTES ────────────────────────────────── */
+.tool-box { background: #F2EFE8; border-radius: 8px; padding: 22px; margin: 24px 0; border: 1px solid var(--rule); }
+.tool-box-label { font-family: 'Montserrat', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.tool-box-title { font-family: 'Montserrat', sans-serif; font-size: 17px; font-weight: 800; color: var(--text-main); margin-bottom: 16px; }
+.tool-question { background: var(--card-bg); border: 1px solid var(--gold-border); border-radius: 6px; padding: 14px 16px; font-family: 'Montserrat', sans-serif; font-size: 14px; font-style: italic; color: var(--text-main); line-height: 1.62; margin-bottom: 10px; }
+.cbs-step { display: flex; gap: 14px; align-items: flex-start; padding: 15px 0; border-bottom: 1px solid var(--rule); }
+.cbs-step:last-child { border-bottom: none; }
+.cbs-num { width: 36px; height: 36px; flex-shrink: 0; background: var(--gold); color: var(--navy); font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 900; border-radius: 7px; display: flex; align-items: center; justify-content: center; }
+.cbs-title { font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 3px; }
+.cbs-desc { font-size: 13px; line-height: 1.65; color: var(--text-mid); margin-bottom: 4px; }
+.cbs-phrase { font-size: 12.5px; font-style: italic; color: var(--gold); font-weight: 600; }
+.potes-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 18px 0; }
+.pote-card { background: var(--navy); border-radius: 8px; padding: 18px; text-align: center; position: relative; overflow: hidden; }
+.pote-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.pote-1::before { background: var(--gold); }
+.pote-2::before { background: #43A047; }
+.pote-3::before { background: #7C4DFF; }
+.pote-label { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 5px; }
+.pote-name { font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 800; color: #FFF; margin-bottom: 5px; }
+.pote-pct { display: block; font-size: 22px; font-weight: 900; margin-bottom: 10px; }
+.pote-1 .pote-pct { color: var(--gold); }
+.pote-2 .pote-pct { color: #66BB6A; }
+.pote-3 .pote-pct { color: #B39DDB; }
+.pote-desc { font-size: 11px; line-height: 1.6; color: rgba(255,255,255,0.48); }
+
+/* ── PROTOCOL BOX ──────────────────────────────────────────── */
+.protocol-box { background: var(--navy); border-radius: 8px; padding: 20px 22px; margin: 24px 0; position: relative; overflow: hidden; }
+.protocol-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-mid), var(--gold)); }
+.protocol-box-label { font-family: 'Montserrat', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+.protocol-step { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 14px; }
+.protocol-step:last-child { margin-bottom: 0; }
+.ps-num { width: 24px; height: 24px; flex-shrink: 0; background: rgba(212,175,55,0.15); border: 1px solid rgba(212,175,55,0.30); color: var(--gold); font-size: 11px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.ps-text { font-size: 13px; line-height: 1.72; color: rgba(255,255,255,0.62); }
+.ps-text strong { color: var(--gold); }
+
+/* ── FINAL MESSAGE ─────────────────────────────────────────── */
+.final-message { background: var(--gold-pale); border: 1px solid rgba(212,175,55,0.25); border-radius: 8px; padding: 22px; margin: 28px 0; }
+.final-message-label { font-family: 'Montserrat', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+.final-for { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
+.final-message p { font-size: 13.5px; line-height: 1.82; color: var(--text-mid); font-style: italic; margin-bottom: 16px; }
+.final-separator { height: 1px; background: rgba(212,175,55,0.20); margin: 18px 0; }
+
+/* ── CTA ───────────────────────────────────────────────────── */
+.cta-box { background: var(--navy); border-radius: 8px; padding: 24px; margin-top: 30px; text-align: center; }
+.cta-label { font-family: 'Montserrat', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.cta-title { font-family: 'Montserrat', sans-serif; font-size: 19px; font-weight: 900; color: #FFF; margin-bottom: 10px; }
+.cta-text { font-size: 13.5px; line-height: 1.75; color: rgba(255,255,255,0.48); margin-bottom: 16px; }
+.cta-link { display: inline-block; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-mid) 50%, var(--gold) 100%); background-size: 200% auto; color: var(--navy); font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 12px 26px; border-radius: 3px; text-decoration: none; }
+
+/* ── FOOTER ────────────────────────────────────────────────── */
+.footer { background: var(--navy); padding: 16px calc(var(--mg) + 8px); display: flex; justify-content: space-between; align-items: center; }
+.footer-brand { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 800; color: var(--gold); letter-spacing: 0.5px; }
+.footer-sub { font-size: 10px; color: rgba(255,255,255,0.70); margin-top: 2px; }
+.footer-right { text-align: right; }
+.footer-url { font-size: 10px; color: var(--gold); text-decoration: none; opacity: 1; }
+.footer-series { font-size: 9px; color: rgba(255,255,255,0.60); margin-top: 2px; }
+
+/* ── PRINT / PDF ───────────────────────────────────────────── */
+@media print {
+  body { background: white; }
+  /* Removida a margem da página web, pois o @page cuidará das margens do papel */
+  .page { width: 100%; margin: 0; box-shadow: none; border-radius: 0; }
+  
+  /* MARGENS CORRIGIDAS PARA IMPRESSÃO (FERROADA DUPLA: topo e base) */
+  @page { size: A4; margin: 15mm 0; }
+  
+  /* Força a não quebra de elementos críticos (apenas componentes atômicos) */
+  .klontz-box, .threat-box, .radar-card, .quote-block,
+  .dialogue-group, .tool-question, .cbs-step, .pote-card,
+  .protocol-step, .final-message, .cta-box {
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  
+  /* Mantém os cabeçalhos das seções IV e V colados ao seu conteúdo */
+  .section:has(.tool-box),
+  .section:has(.protocol-box),
+  .section:has(.potes-grid) {
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  
+  h1, h2, h3, .section-header, .threat-label, .klontz-label, .dialogue-group-title {
+    page-break-after: avoid; break-after: avoid;
+  }
+  
+  .header, .klontz-box, .protocol-box, .cta-box, .pote-card, .footer {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+}
+
+/* ── MOBILE ────────────────────────────────────────────────── */
+@media (max-width: 680px) {
+  html { font-size: 14px; }
+  .page { width: 100%; margin: 0; box-shadow: none; border-radius: 0; }
+  .radar-grid { grid-template-columns: 1fr; }
+  .potes-grid { grid-template-columns: 1fr; }
+  .header-title { font-size: 26px; }
+  .body { padding: 22px 16px 30px; }
+  .header { padding: 24px 16px 22px; }
+  .footer { padding: 14px 16px; flex-direction: column; gap: 8px; text-align: center; }
+  .footer-right { text-align: center; }
+}
+</style>
+
+</head>
+<body>
+<article class="page">
+    <header class="header">
+    <div class="hring"></div>
+    <p class="series-label">Guerra Fria Financeira — Série Completa</p>
+    <h1 class="header-title">📔 Guia de Navegação<br><em>O Palácio do Gastador</em></h1>
+    <p class="header-sub">Como quebrar o ciclo da dopamina e reencontrar o valor da presença</p>
+    <div class="profile-badge">
+      <div class="profile-badge-dot"></div>
+      <span class="profile-badge-text">Perfil: Gastador · Crença: Adoração / Status</span>
+    </div>
+  </header>
+
+  <div class="body">
+    <p class="lead">Este guia é uma expansão do "Protocolo de Pausa". Ele serve para que você e a pessoa ao seu lado entendam que o gasto raramente é sobre o objeto — mas sobre o alívio de uma dor emocional que a planilha não consegue curar.</p>
+
+    <div class="section">
+            <div class="section-header">
+        <div class="section-number">I</div>
+        <h2 class="section-title">O Perfil e a <span class="section-title-gold">Crença que Governa</span></h2>
+      </div>
+      <div class="section-rule"></div>
+      <p>O Gastador não gasta por irresponsabilidade — gasta por alívio. Para ele, dinheiro é energia em movimento. Guardar parece contra-intuitivo: dinheiro parado é desperdício de vida. Ele tem generosidade natural, gosta de proporcionar experiências e celebrar conquistas. O problema surge quando essa filosofia, sem limites, vira um ciclo: gastar → prazer imediato → culpa → nova compra para silenciar a culpa → ciclo repetido.</p>
+      <p>O que poucos percebem é que <strong>o gasto raramente é sobre o objeto comprado</strong>. É sobre o estado emocional que a compra produz: alívio, prazer, identidade, status — ou simplesmente a sensação de "eu mereço isso".</p>
+            <div class="threat-box">
+        <p class="threat-label">Diagnóstico de Gravidade Sistêmica</p>
+        <div class="threat-row">
+          <div class="threat-info">
+            <span class="threat-title">Risco Relacional</span>
+            <span class="threat-desc">Risco de Ruptura (Crítico)</span>
+          </div>
+          <div class="threat-bar"><div class="threat-fill" style="width: 85%;"></div></div>
+        </div>
+        <div class="threat-row">
+          <div class="threat-info">
+            <span class="threat-title">Intensidade da Crença Raiz</span>
+            <span class="threat-desc">Dependência de Dopamina</span>
+          </div>
+          <div class="threat-bar"><div class="threat-fill" style="width: 80%;"></div></div>
+        </div>
+        <div class="threat-row">
+          <div class="threat-info">
+            <span class="threat-title">Impacto no Parceiro(a)</span>
+            <span class="threat-desc">Gera Insegurança Crônica</span>
+          </div>
+          <div class="threat-bar"><div class="threat-fill" style="width: 90%;"></div></div>
+        </div>
+      </div>
+      <div class="klontz-box">
+        <p class="klontz-label">Money Script · Tipo Klontz</p>
+        <p class="klontz-title">Adoração / Status Financeiro</p>
+        <p class="klontz-text">Pessoas com crença de Adoração acreditam que dinheiro resolve problemas emocionais — e que mais dinheiro significa mais felicidade. Pessoas com crença de Status usam o consumo como prova de valor: o que você tem define quem você é. Para o Gastador, a compra é frequentemente uma linguagem de afeto e uma ferramenta de automedicação emocional.</p>
+      </div>
+    </div>
+
+    <div class="section">
+            <div class="section-header">
+        <div class="section-number">II</div>
+        <h2 class="section-title">Radar de <span class="section-title-gold">Autoconsciência</span></h2>
+      </div>
+      <div class="section-rule"></div>
+      <div class="radar-grid">
+        <div class="radar-card rc-self">
+          <p class="radar-card-label">💸 Para o Gastador</p>
+          <div class="attn-item"><div class="attn-num">1</div><p class="attn-text"><strong>A armadilha do "Eu Mereço":</strong> fique atento quando você usa cansaço ou frustração como "moeda de troca" para uma compra. Se o gasto é uma recompensa por um dia ruim, você não está comprando um produto — está comprando um analgésico.</p></div>
+          <div class="attn-item"><div class="attn-num">2</div><p class="attn-text"><strong>O barato da antecipação:</strong> observe se o prazer maior está no "clique" de comprar e desaparece quando o pacote chega. Isso indica dependência química de dopamina, não uma necessidade real.</p></div>
+          <div class="attn-item"><div class="attn-num">3</div><p class="attn-text"><strong>A generosidade como escudo:</strong> perceba se você usa presentes caros para compensar ausências ou evitar conversas difíceis. Dar algo para "comprar a paz" é manipulação emocional disfarçada de carinho.</p></div>
+          <div class="attn-item"><div class="attn-num">4</div><p class="attn-text"><strong>O esconderijo das faturas:</strong> vigie a tentação de omitir valores ou "arredondar para baixo" o preço das coisas. A mentira financeira é o primeiro passo para a erosão da confiança.</p></div>
+        </div>
+        <div class="radar-card rc-partner">
+          <p class="radar-card-label">💬 Para o Parceiro(a)</p>
+          <div class="attn-item"><div class="attn-num">1</div><p class="attn-text"><strong>O vazio por trás do sorriso:</strong> o impulso de gastar é, muitas vezes, um grito por validação ou conexão. Em vez de criticar o objeto, tente identificar qual carência ele está tentando preencher.</p></div>
+          <div class="attn-item"><div class="attn-num">2</div><p class="attn-text"><strong>O perigo da infantilização:</strong> cuidado para não assumir o papel de "pai/mãe" que controla a mesada. Quanto mais você restringe de forma autoritária, mais estimula a rebeldia e o gasto escondido.</p></div>
+          <div class="attn-item"><div class="attn-num">3</div><p class="attn-text"><strong>A validação da intenção:</strong> o Gastador quer genuinamente trazer alegria para a casa. Valide a intenção antes de questionar a viabilidade financeira do ato.</p></div>
+          <div class="attn-item"><div class="attn-num">4</div><p class="attn-text"><strong>A definição de "viver bem":</strong> a definição dele é diferente da sua. O objetivo é encontrar equilíbrio onde o prazer do presente não assassine a segurança do futuro.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <span class="quote-mark">"</span>
+      <p class="quote-text">A liberdade que você busca no ato de comprar é, na verdade, uma algema química.<br>A presença vale mais do que o presente.</p>
+    </div>
+
+    <div class="section">
+            <div class="section-header">
+        <div class="section-number">III</div>
+        <h2 class="section-title">Modelos de Diálogo — <span class="section-title-gold">O Gastador em Interação</span></h2>
+      </div>
+      <div class="section-rule"></div>
+      <p>Os roteiros de conversa para as cinco combinações possíveis com o perfil Gastador.</p>
+      <div class="dialogue-group">
+        <p class="dialogue-group-title">1. Gastador com Poupador — O Cabo de Guerra de Emoções</p>
+        <p class="dialogue-conflict">A luta entre o medo de faltar e o medo de não viver. Conflito: o Gastador quer jantar fora para celebrar; o Poupador só consegue pensar no custo do jantar como percentual da dívida.</p>
+        <div class="dialogue-card dc-a"><p class="dc-role">💸 Gastador</p><p>"Eu sei que para você a segurança é a prioridade, mas eu me sinto sufocado quando sinto que não podemos celebrar nossas vitórias. Eu não quero ser irresponsável — eu quero sentir que nosso esforço vale a pena hoje. Podemos definir um valor fixo mensal 'sagrado' para nossas experiências, para que eu possa planejar esses momentos sem que você se sinta ameaçado?"</p></div>
+        <div class="dialogue-card dc-b"><p class="dc-role">🛡 Poupador</p><p>"Eu entendo que eu acabo sendo o 'balde de água fria'. O meu medo me impede de ver a sua necessidade de alegria. Se esse valor estiver previsto e não tocar na nossa reserva de emergência, eu aceito. Eu preciso que você me ajude a ver o jantar como um investimento na nossa conexão — e não como uma perda de capital."</p></div>
+      </div>
+      <div class="dialogue-group">
+        <p class="dialogue-group-title">2. Gastador com Gastador — A Queda Livre em Dupla</p>
+        <p class="dialogue-conflict">O risco: uma vida glamourosa que termina em colapso repentino. Ambos se incentivam. A dívida cresce enquanto a euforia mascara o perigo.</p>
+        <div class="dialogue-card dc-a"><p class="dc-role">💸 Gastador 1</p><p>"Eu amo como nós sabemos aproveitar a vida, mas eu comecei a sentir um frio na barriga quando abri o aplicativo do banco hoje. Eu sinto que estamos em uma festa na beira de um abismo. Você topa a gente fazer um 'detox de dopamina' por 30 dias para vermos o que realmente é essencial para o nosso prazer?"</p></div>
+        <div class="dialogue-card dc-b"><p class="dc-role">💸 Gastador 2</p><p>"Eu também tive esse pensamento, mas tive vergonha de falar para não estragar o clima. Nós estamos usando o consumo para não encarar nossa falta de planejamento. Vamos estabelecer uma meta de construção de patrimônio tão excitante quanto uma viagem — para que a gente comece a vibrar com o que está construindo, não só com o que está comprando."</p></div>
+      </div>
+      <div class="dialogue-group">
+        <p class="dialogue-group-title">3. Gastador com Desligado — O Desastre Ignorado</p>
+        <p class="dialogue-conflict">O Gastador consome tudo que pode e o Desligado nem percebe o buraco aumentando — até que o cartão é recusado no supermercado.</p>
+        <div class="dialogue-card dc-a"><p class="dc-role">💸 Gastador</p><p>"Eu percebo que eu tomo todas as decisões de consumo e você nunca questiona. Isso me dá uma falsa sensação de que está tudo bem, mas a verdade é que eu estou perdendo o controle. Eu preciso que você acorde para a nossa realidade e me ajude a colocar limites. Eu não consigo ser o freio e o acelerador ao mesmo tempo."</p></div>
+        <div class="dialogue-card dc-b"><p class="dc-role">🌫 Desligado</p><p>"Eu confesso que me acomodei na sua energia de realizar coisas. Eu não queria ter o trabalho de planejar. Eu vejo agora que meu silêncio foi negligência. Vamos marcar uma reunião de 15 minutos toda semana para eu me situar. Eu preciso assumir minha parte na vigilância para que você não precise carregar a culpa sozinho."</p></div>
+      </div>
+      <div class="dialogue-group">
+        <p class="dialogue-group-title">4. Gastador com Descontrolado — O Incêndio com Gasolina</p>
+        <p class="dialogue-conflict">O Gastador compra por prazer; o Descontrolado perde dinheiro por desorganização. O caos é total.</p>
+        <div class="dialogue-card dc-a"><p class="dc-role">💸 Gastador</p><p>"Nós dois estamos falhando em pontos diferentes. Eu gasto por impulso emocional e você perde dinheiro por falta de método. Nós estamos sabotando o nosso império. Eu vou me comprometer a usar o Protocolo de Pausa antes de qualquer compra acima de R$200 — e eu preciso que você se comprometa com um sistema de lembretes para nossas contas fixas. Podemos criar esse pacto hoje?"</p></div>
+        <div class="dialogue-card dc-b"><p class="dc-role">🌀 Descontrolado</p><p>"Eu aceito. O meu caos potencializa o seu gasto. Vamos automatizar o que for possível para que a gente pare de gastar energia com erros bobos e possa focar em decidir, juntos, para onde o nosso dinheiro deve ir de verdade."</p></div>
+      </div>
+      <div class="dialogue-group">
+        <p class="dialogue-group-title">5. Gastador com Financista — A Auditoria do Prazer</p>
+        <p class="dialogue-conflict">O Gastador quer a experiência; o Financista quer a planilha de depreciação do bem. Conflito: o Gastador quer trocar de carro; o Financista prova, com dez gráficos, que é a pior decisão do ano.</p>
+        <div class="dialogue-card dc-a"><p class="dc-role">💸 Gastador</p><p>"Eu entendo os seus números e eles fazem sentido. Mas você está ignorando o custo da minha frustração. Eu passo três horas por dia dentro desse carro e isso afeta meu humor e minha produtividade. O seu cálculo de eficiência está matando o meu bem-estar. Como podemos ajustar o plano para que o 'conforto' entre como uma linha de investimento na sua planilha?"</p></div>
+        <div class="dialogue-card dc-b"><p class="dc-role">📊 Financista</p><p>"Para mim, é difícil quantificar o 'bem-estar', mas eu entendo que um sócio infeliz não produz. Vou incluir uma variável de 'valor de uso' na minha análise. Vamos definir um cronograma de troca que não destrua nossa rentabilidade, mas que atenda à sua necessidade de renovação."</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+            <div class="section-header">
+        <div class="section-number">IV</div>
+        <h2 class="section-title">O Ativo Tangível — <span class="section-title-gold">O Protocolo de Pausa</span></h2>
+      </div>
+      <div class="section-rule"></div>
+      <p>Antes de qualquer compra não planejada acima do seu "limite de pausa", execute este protocolo de 3 perguntas:</p>
+      <div class="tool-box">
+        <p class="tool-box-label">🛠 Protocolo de Pausa — 3 Perguntas Antes de Comprar</p>
+        <p class="tool-box-title">O filtro que separa o desejo da necessidade emocional</p>
+        <div class="tool-question">"O que eu estou sentindo agora — e o que a compra está prometendo curar?"</div>
+        <div class="tool-question">"Se eu esperar 48 horas, ainda vou querer isso?"</div>
+        <div class="tool-question">"Se meu parceiro(a) soubesse desta compra agora, como eu me sentiria?"</div>
+        <p style="font-size:12.5px;color:var(--text-light);margin-top:14px;font-style:italic">O Gastador não precisa parar de comprar — precisa aprender a comprar com intenção.</p>
+      </div>
+    </div>
+
+    <div class="final-message">
+      <p class="final-message-label">✉ Mensagem Final</p>
+      <p class="final-for">Ao Gastador:</p>
+      <p>Entenda que a liberdade que você busca no ato de comprar é, na verdade, uma algema química. O prazer imediato é um mestre cruel que te mantém refém da próxima fatura. A sua verdadeira generosidade florescerá quando você parar de comprar objetos para as pessoas e começar a entregar a elas a sua paz e a sua segurança. A presença vale mais do que o presente.</p>
+      <div class="final-separator"></div>
+      <p class="final-for">Ao Parceiro do Gastador:</p>
+      <p>Não trate o gasto dele(a) como uma afronta pessoal ou burrice. Para ele(a), o dinheiro é uma linguagem de afeto e uma ferramenta de alívio. Seja o porto seguro que ele(a) busca nas vitrines. Quando você valida os sentimentos sem julgamento, a necessidade de "anestesiar" a dor com compras diminui.</p>
+      <div class="final-separator"></div>
+      <p style="font-size:14px;font-style:italic;font-weight:700;text-align:center;color:var(--text-main);margin:0">Um casal próspero não é aquele que nunca gasta, mas aquele que gasta com a alma em paz, sabendo que cada centavo serve a um propósito maior que o impulso do momento.</p>
+    </div>
+          <div class="cta-box">
+        <p class="cta-label">Próximo Passo</p>
+        <p class="cta-title">Quer aplicar isso com acompanhamento?</p>
+        <p class="cta-text">A Sessão de Diagnóstico de Parceria Financeira é uma conversa de 90 minutos onde mapeamos a dinâmica financeira do casal e identificamos a raiz real do conflito. Não é um curso — é um diagnóstico.</p>
+        <a href="https://phillipsouza.com/sessao-diagnostico" class="cta-link">Solicitar Sessão de Diagnóstico →</a>
+      </div>
+  </div>
+    <footer class="footer">
+    <div>
+      <p class="footer-brand">Phillip Souza</p>
+      <p class="footer-sub">Psicoterapeuta Financeiro · Planejador Financeiro</p>
+    </div>
+    <div class="footer-right">
+      <a href="https://phillipsouza.com" class="footer-url">phillipsouza.com</a>
+      <p class="footer-series">Guerra Fria Financeira · Guia do Gastador</p>
+    </div>
+  </footer>
+</article>
+</body>
+</html>

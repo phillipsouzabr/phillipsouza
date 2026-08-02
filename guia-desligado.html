@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guia do Desligado | Phillip Souza</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  
+<style>
+/* ── SITE DESIGN SYSTEM ────────────────────────────────────── */
+:root {
+  --gold:        #D4AF37;
+  --gold-mid:    #F0CD58;
+  --gold-pale:   #FBF5DC;
+  --gold-border: rgba(212,175,55,0.20);
+  --navy:        #0A0F1A;
+  --body-bg:     #F8F6F0;   
+  --card-bg:     #FFFFFF;
+  --text-main:   #1A1A1A;
+  --text-mid:    #4A4A4A;
+  --text-light:  #777777;
+  --rule:        #E5E0D5;
+  --danger:      #D32F2F;
+  --page-w:      210mm;
+  --mg:          15mm;
+}
+
+/* ── RESET ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+
+body {
+  background: var(--body-bg);
+  font-family: 'Inter', sans-serif;
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1;
+}
+
+/* ── PAGE ──────────────────────────────────────────────────── */
+.page {
+  width: var(--page-w);
+  margin: 28px auto;
+  background: var(--card-bg);
+  box-shadow: 0 16px 64px rgba(0,0,0,0.16);
+  position: relative;
+  overflow: hidden;
+}
+.page::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: linear-gradient(180deg, var(--gold) 0%, var(--gold-mid) 50%, var(--gold) 100%);
+}
+
+/* ── HEADER ────────────────────────────────────────────────── */
+.header {
+  background: var(--navy);
+  padding: 36px var(--mg) 32px calc(var(--mg) + 8px);
+  position: relative;
+  overflow: hidden;
+}
+.header::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-mid) 50%, transparent);
+}
+.hring {
+  position: absolute; top: -40px; right: -40px;
+  width: 240px; height: 240px; border-radius: 50%;
+  border: 1px solid rgba(212,175,55,0.08); pointer-events: none;
+}
+.hring::before {
+  content: ''; position: absolute; inset: 30px;
+  border-radius: 50%; border: 1px solid rgba(212,175,55,0.05);
+}
+.series-label {
+  font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; opacity: 0.80;
+}
+.header-title {
+  font-family: 'Montserrat', sans-serif; font-size: 32px; font-weight: 900;
+  color: #FFFFFF; line-height: 1.12; margin-bottom: 8px; letter-spacing: -0.5px;
+}
+.header-title em { color: var(--gold); font-style: normal; }
+.header-sub { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.42); letter-spacing: 0.2px; }
+.profile-badge {
+  display: inline-flex; align-items: center; gap: 10px; margin-top: 20px;
+  background: rgba(212,175,55,0.10); border: 1px solid rgba(212,175,55,0.25);
+  border-radius: 3px; padding: 8px 16px;
+}
+.profile-badge-dot { width: 7px; height: 7px; background: var(--gold); border-radius: 50%; }
+.profile-badge-text { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+
+/* ── BODY ──────────────────────────────────────────────────── */
+.body { padding: 30px calc(var(--mg) + 8px) 38px; }
+.lead {
+  font-size: 14.5px; line-height: 1.78; color: var(--text-mid); font-style: italic;
+  border-left: 3px solid var(--gold); padding: 2px 0 2px 16px; margin-bottom: 32px;
+}
+.section { margin-bottom: 34px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.section-number {
+  width: 30px; height: 30px; flex-shrink: 0; background: var(--navy); color: var(--gold);
+  font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 800; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+}
+.section-title { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 800; color: var(--text-main); letter-spacing: -0.3px; }
+.section-title-gold { color: var(--gold); }
+.section-rule { height: 1px; margin-bottom: 18px; background: linear-gradient(90deg, var(--gold-border), transparent 75%); }
+p { font-size: 14px; line-height: 1.82; color: var(--text-mid); margin-bottom: 12px; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 600; color: var(--text-main); }
+
+/* ── KLONTZ BOX ────────────────────────────────────────────── */
+.klontz-box {
+  background: var(--navy); border-radius: 8px; padding: 20px 22px; margin: 24px 0; position: relative; overflow: hidden;
+}
+.klontz-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-mid), var(--gold)); }
+.klontz-label { font-family: 'Montserrat', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.klontz-title { font-family: 'Montserrat', sans-serif; font-size: 20px; font-weight: 900; color: #FFF; margin-bottom: 10px; letter-spacing: -0.3px; }
+.klontz-text { font-size: 13px; line-height: 1.78; color: rgba(255,255,255,0.58); margin-bottom: 0; }
+
+/* ── THREAT MATRIX (FERROADA TRIPLA) ───────────────────────── */
+.threat-box {
+  background: #FDFBF7; border-radius: 8px; padding: 22px; margin: 26px 0;
+  border: 1px solid var(--rule); border-left: 4px solid var(--danger);
+}
+.threat-label {
+  font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 800;
+  letter-spacing: 2.5px; text-transform: uppercase; color: var(--danger); margin-bottom: 18px;
+}
+.threat-row { margin-bottom: 15px; }
+.threat-row:last-child { margin-bottom: 0; }
+.threat-info { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 7px; }
+.threat-title { font-size: 11px; font-weight: 700; color: var(--text-main); text-transform: uppercase; letter-spacing: 1.5px; }
+.threat-desc { font-size: 12.5px; font-style: italic; color: var(--danger); font-weight: 600; }
+.threat-bar { height: 7px; background: #EAE6DB; border-radius: 3.5px; overflow: hidden; }
+.threat-fill { height: 100%; border-radius: 3.5px; background: linear-gradient(90deg, #F57C00, var(--danger)); }
+
+/* ── RADAR GRID ────────────────────────────────────────────── */
+.radar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+.radar-card { border-radius: 8px; padding: 18px; background: #F7F5F0; }
+.radar-card.rc-self  { border-top: 3px solid var(--gold); }
+.radar-card.rc-partner { border-top: 3px solid #888; }
+.radar-card-label { font-family: 'Montserrat', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+.rc-self .radar-card-label { color: var(--gold); }
+.rc-partner .radar-card-label { color: #888; }
+.attn-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
+.attn-item:last-child { margin-bottom: 0; }
+.attn-num {
+  width: 21px; height: 21px; flex-shrink: 0; margin-top: 2px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700;
+}
+.rc-self .attn-num { background: var(--gold); color: var(--navy); }
+.rc-partner .attn-num { background: #888; color: #FFF; }
+.attn-text { font-size: 13px; line-height: 1.72; color: var(--text-mid); }
+
+/* ── QUOTE ─────────────────────────────────────────────────── */
+.quote-block { text-align: center; padding: 24px 16px; margin: 30px 0; }
+.quote-block::before, .quote-block::after {
+  content: ''; display: block; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+}
+.quote-block::before { margin-bottom: 20px; }
+.quote-block::after  { margin-top: 20px; }
+.quote-mark { display: block; font-family: 'Montserrat', sans-serif; font-size: 64px; color: var(--gold); line-height: 0.55; margin-bottom: 18px; opacity: 0.30; }
+.quote-text { font-family: 'Montserrat', sans-serif; font-size: 16px; font-style: italic; font-weight: 500; color: var(--text-main); line-height: 1.62; }
+
+/* ── DIALOGUE ──────────────────────────────────────────────── */
+.dialogue-group { margin: 26px 0; }
+.dialogue-group + .dialogue-group { padding-top: 24px; border-top: 1px solid var(--rule); }
+.dialogue-group-title { font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 800; color: var(--text-main); margin-bottom: 5px; letter-spacing: -0.2px; }
+.dialogue-conflict { font-size: 13px; color: var(--text-light); font-style: italic; margin-bottom: 14px; padding-left: 14px; border-left: 2px solid var(--gold-border); }
+.dialogue-card { border-radius: 6px; padding: 15px 17px; margin-bottom: 10px; }
+.dialogue-card:last-child { margin-bottom: 0; }
+.dc-a { background: rgba(212,175,55,0.07); border-left: 3px solid var(--gold); }
+.dc-b { background: #F2EFE8; border-left: 3px solid #AAA; }
+.dc-role { font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; margin-bottom: 8px; }
+.dc-a .dc-role { color: var(--gold); }
+.dc-b .dc-role { color: #888; }
+.dialogue-card p { font-size: 13px; line-height: 1.72; color: var(--text-mid); margin-bottom: 0; }
+
+/* ── TOOL BOX / CBS / POTES ────────────────────────────────── */
+.tool-box { background: #F2EFE8; border-radius: 8px; padding: 22px; margin: 24px 0; border: 1px solid var(--rule); }
+.tool-box-label { font-family: 'Montserrat', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.tool-box-title { font-family: 'Montserrat', sans-serif; font-size: 17px; font-weight: 800; color: var(--text-main); margin-bottom: 16px; }
+.tool-question { background: var(--card-bg); border: 1px solid var(--gold-border); border-radius: 6px; padding: 14px 16px; font-family: 'Montserrat', sans-serif; font-size: 14px; font-style: italic; color: var(--text-main); line-height: 1.62; margin-bottom: 10px; }
+.cbs-step { display: flex; gap: 14px; align-items: flex-start; padding: 15px 0; border-bottom: 1px solid var(--rule); }
+.cbs-step:last-child { border-bottom: none; }
+.cbs-num { width: 36px; height: 36px; flex-shrink: 0; background: var(--gold); color: var(--navy); font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 900; border-radius: 7px; display: flex; align-items: center; justify-content: center; }
+.cbs-title { font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 3px; }
+.cbs-desc { font-size: 13px; line-height: 1.65; color: var(--text-mid); margin-bottom: 4px; }
+.cbs-phrase { font-size: 12.5px; font-style: italic; color: var(--gold); font-weight: 600; }
+.potes-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 18px 0; }
+.pote-card { background: var(--navy); border-radius: 8px; padding: 18px; text-align: center; position: relative; overflow: hidden; }
+.pote-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.pote-1::before { background: var(--gold); }
+.pote-2::before { background: #43A047; }
+.pote-3::before { background: #7C4DFF; }
+.pote-label { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 5px; }
+.pote-name { font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 800; color: #FFF; margin-bottom: 5px; }
+.pote-pct { display: block; font-size: 22px; font-weight: 900; margin-bottom: 10px; }
+.pote-1 .pote-pct { color: var(--gold); }
+.pote-2 .pote-pct { color: #66BB6A; }
+.pote-3 .pote-pct { color: #B39DDB; }
+.pote-desc { font-size: 11px; line-height: 1.6; color: rgba(255,255,255,0.48); }
+
+/* ── PROTOCOL BOX ──────────────────────────────────────────── */
+.protocol-box { background: var(--navy); border-radius: 8px; padding: 20px 22px; margin: 24px 0; position: relative; overflow: hidden; }
+.protocol-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-mid), var(--gold)); }
+.protocol-box-label { font-family: 'Montserrat', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+.protocol-step { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 14px; }
+.protocol-step:last-child { margin-bottom: 0; }
+.ps-num { width: 24px; height: 24px; flex-shrink: 0; background: rgba(212,175,55,0.15); border: 1px solid rgba(212,175,55,0.30); color: var(--gold); font-size: 11px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.ps-text { font-size: 13px; line-height: 1.72; color: rgba(255,255,255,0.62); }
+.ps-text strong { color: var(--gold); }
+
+/* ── FINAL MESSAGE ─────────────────────────────────────────── */
+.final-message { background: var(--gold-pale); border: 1px solid rgba(212,175,55,0.25); border-radius: 8px; padding: 22px; margin: 28px 0; }
+.final-message-label { font-family: 'Montserrat', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+.final-for { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
+.final-message p { font-size: 13.5px; line-height: 1.82; color: var(--text-mid); font-style: italic; margin-bottom: 16px; }
+.final-separator { height: 1px; background: rgba(212,175,55,0.20); margin: 18px 0; }
+
+/* ── CTA ───────────────────────────────────────────────────── */
+.cta-box { background: var(--navy); border-radius: 8px; padding: 24px; margin-top: 30px; text-align: center; }
+.cta-label { font-family: 'Montserrat', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.cta-title { font-family: 'Montserrat', sans-serif; font-size: 19px; font-weight: 900; color: #FFF; margin-bottom: 10px; }
+.cta-text { font-size: 13.5px; line-height: 1.75; color: rgba(255,255,255,0.48); margin-bottom: 16px; }
+.cta-link { display: inline-block; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-mid) 50%, var(--gold) 100%); background-size: 200% auto; color: var(--navy); font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 12px 26px; border-radius: 3px; text-decoration: none; }
+
+/* ── FOOTER ────────────────────────────────────────────────── */
+.footer { background: var(--navy); padding: 16px calc(var(--mg) + 8px); display: flex; justify-content: space-between; align-items: center; }
+.footer-brand { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 800; color: var(--gold); letter-spacing: 0.5px; }
+.footer-sub { font-size: 10px; color: rgba(255,255,255,0.70); margin-top: 2px; }
+.footer-right { text-align: right; }
+.footer-url { font-size: 10px; color: var(--gold); text-decoration: none; opacity: 1; }
+.footer-series { font-size: 9px; color: rgba(255,255,255,0.60); margin-top: 2px; }
+
+/* ── PRINT / PDF ───────────────────────────────────────────── */
+@media print {
+  body { background: white; }
+  /* Removida a margem da página web, pois o @page cuidará das margens do papel */
+  .page { width: 100%; margin: 0; box-shadow: none; border-radius: 0; }
+  
+  /* MARGENS CORRIGIDAS PARA IMPRESSÃO (FERROADA DUPLA: topo e base) */
+  @page { size: A4; margin: 15mm 0; }
+  
+  /* Força a não quebra de elementos críticos (apenas componentes atômicos) */
+  .klontz-box, .threat-box, .radar-card, .quote-block,
+  .dialogue-group, .tool-question, .cbs-step, .pote-card,
+  .protocol-step, .final-message, .cta-box {
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  
+  /* Mantém os cabeçalhos das seções IV e V colados ao seu conteúdo */
+  .section:has(.tool-box),
+  .section:has(.protocol-box),
+  .section:has(.potes-grid) {
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  
+  h1, h2, h3, .section-header, .threat-label, .klontz-label, .dialogue-group-title {
+    page-break-after: avoid; break-after: avoid;
+  }
+  
+  .header, .klontz-box, .protocol-box, .cta-box, .pote-card, .footer {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+}
+
+/* ── MOBILE ────────────────────────────────────────────────── */
+@media (max-width: 680px) {
+  html { font-size: 14px; }
+  .page { width: 100%; margin: 0; box-shadow: none; border-radius: 0; }
+  .radar-grid { grid-template-columns: 1fr; }
+  .potes-grid { grid-template-columns: 1fr; }
+  .header-title { font-size: 26px; }
+  .body { padding: 22px 16px 30px; }
+  .header { padding: 24px 16px 22px; }
+  .footer { padding: 14px 16px; flex-direction: column; gap: 8px; text-align: center; }
+  .footer-right { text-align: center; }
+}
+</style>
+
+</head>
+<body>
+<article class="page">
+    <header class="header">
+    <div class="hring"></div>
+    <p class="series-label">Guerra Fria Financeira — Série Completa</p>
+    <h1 class="header-title">📔 Guia de Navegação<br><em>O Mapa do Desligado</em></h1>
+    <p class="header-sub">Como quebrar o feitiço do abandono e restaurar a parceria de comando</p>
+    <div class="profile-badge">
+      <div class="profile-badge-dot"></div>
+      <span class="profile-badge-text">Perfil: Desligado · Crença: Evitação Financeira</span>
+    </div>
+  </header>
+
+  <div class="body">
+    <p class="lead">Este guia é uma expansão do "Guia da Primeira Conversa". Ele foi desenhado para que você entenda que o silêncio não é ausência de guerra — é a aceitação de uma derrota silenciosa.</p>
+
+    <div class="section">
+            <div class="section-header">
+        <div class="section-number">I</div>
+        <h2 class="section-title">O Perfil e a <span class="section-title-gold">Crença que Governa</span></h2>
+      </div>
+      <div class="section-rule"></div>
+      <p>O Desligado não odeia dinheiro — odeia o desconforto que o assunto traz. Lidar com finanças significa confrontar números que talvez mostrem algo ruim, ter conversas que podem virar conflito, e tomar decisões que parecem pesadas demais. Então ele escolhe — consciente ou inconscientemente — não lidar. Deixar para depois. Delegar para o parceiro(a). Ignorar as notificações.</p>
+      <p>O problema é que o silêncio tem um preço altíssimo: <strong>alguém no relacionamento carrega o peso total da gestão financeira</strong>, e o ressentimento cresce silenciosamente — até o colapso repentino.</p>
+            <div class="threat-box">
+        <p class="threat-label">Diagnóstico de Gravidade Sistêmica</p>
+        <div class="threat-row">
+          <div class="threat-info">
+            <span class="threat-title">Risco Relacional</span>
+            <span class="threat-desc">Colapso Iminente</span>
+          </div>
+          <div class="threat-bar"><div class="threat-fill" style="width: 90%;"></div></div>
+        </div>
+        <div class="threat-row">
+          <div class="threat-info">
+            <span class="threat-title">Intensidade da Crença Raiz</span>
+            <span class="threat-desc">Evitação por Inadequação</span>
+          </div>
+          <div class="threat-bar"><div class="threat-fill" style="width: 75%;"></div></div>
+        </div>
+        <div class="threat-row">
+          <div class="threat-info">
+            <span class="threat-title">Impacto no Parceiro(a)</span>
+            <span class="threat-desc">Gera Sobrecarga e Abandono</span>
+          </div>
+          <div class="threat-bar"><div class="threat-fill" style="width: 95%;"></div></div>
+        </div>
+      </div>
+      <div class="klontz-box">
+        <p class="klontz-label">Money Script · Tipo Klontz</p>
+        <p class="klontz-title">Evitação Financeira</p>
+        <p class="klontz-text">Pessoas com crença de Evitação acreditam que dinheiro é sujo, estressante ou indigno de atenção. Muitas vezes, essa crença vem de uma família onde dinheiro era tabu ou fonte de conflito — então a solução aprendida foi simplesmente não tocar no assunto. A evitação não é paz: é a aceitação passiva do pior cenário possível.</p>
+      </div>
+    </div>
+
+    <div class="section">
+            <div class="section-header">
+        <div class="section-number">II</div>
+        <h2 class="section-title">Radar de <span class="section-title-gold">Autoconsciência</span></h2>
+      </div>
+      <div class="section-rule"></div>
+      <div class="radar-grid">
+        <div class="radar-card rc-self">
+          <p class="radar-card-label">🌫 Para o Desligado</p>
+          <div class="attn-item"><div class="attn-num">1</div><p class="attn-text"><strong>A incompetência estratégica:</strong> observe se você diz "eu não entendo disso" apenas para evitar o esforço. Se a sua falta de habilidade é um escudo para não assumir sua parte no fardo, você está praticando uma agressão passiva contra quem ama.</p></div>
+          <div class="attn-item"><div class="attn-num">2</div><p class="attn-text"><strong>O transe da fadiga:</strong> fique atento quando você usa o cansaço do trabalho para "desligar" das finanças da casa. O gerenciamento da vida comum não é um "extra" — é o alicerce que permite que o seu trabalho tenha propósito.</p></div>
+          <div class="attn-item"><div class="attn-num">3</div><p class="attn-text"><strong>A mentira da confiança:</strong> não confunda "eu confio em você para cuidar de tudo" com parceria. Se a sua confiança impede o outro de descansar, essa confiança é, na verdade, negligência.</p></div>
+          <div class="attn-item"><div class="attn-num">4</div><p class="attn-text"><strong>A fuga da vergonha:</strong> identifique se você evita o assunto dinheiro porque se sente inadequado. Fugir do extrato não remove a inadequação — apenas a torna crônica.</p></div>
+        </div>
+        <div class="radar-card rc-partner">
+          <p class="radar-card-label">💬 Para o Parceiro(a)</p>
+          <div class="attn-item"><div class="attn-num">1</div><p class="attn-text"><strong>A sobrecarga do guardião:</strong> monitore o seu próprio ressentimento. Se você se sente o único adulto na sala, a sua raiva pode estar empurrando o Desligado ainda mais para o isolamento.</p></div>
+          <div class="attn-item"><div class="attn-num">2</div><p class="attn-text"><strong>A resposta de congelamento:</strong> para o Desligado, finanças podem acionar paralisia cerebral real (sequestro da amígdala). Ele(a) não está te ignorando — pode estar literalmente incapaz de processar a informação sob pressão.</p></div>
+          <div class="attn-item"><div class="attn-num">3</div><p class="attn-text"><strong>O custo da "paz":</strong> não aceite o silêncio como sinal de que "está tudo bem". A ausência de briga em um ambiente de evitação é o prelúdio de um colapso repentino.</p></div>
+          <div class="attn-item"><div class="attn-num">4</div><p class="attn-text"><strong>O convite vs. a intimação:</strong> se você chega com planilha aberta e lista de erros, está emitindo uma intimação judicial — não um convite para parceria.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <span class="quote-mark">"</span>
+      <p class="quote-text">A sua omissão não é um ato de confiança — é um ato de abandono.<br>Reivindique o seu lugar na mesa. Não porque você precisa ser um gênio dos números,<br>mas porque o seu parceiro precisa da sua alma presente.</p>
+    </div>
+
+    <div class="section">
+            <div class="section-header">
+        <div class="section-number">III</div>
+        <h2 class="section-title">Modelos de Diálogo — <span class="section-title-gold">O Desligado em Interação</span></h2>
+      </div>
+      <div class="section-rule"></div>
+      <p>Os modelos de conversa para as cinco combinações onde a evitação é o desafio central.</p>
+      <div class="dialogue-group">
+        <p class="dialogue-group-title">1. Desligado com Poupador — O Guardião e o Fantasma</p>
+        <p class="dialogue-conflict">O Poupador carrega a ansiedade por dois; o Desligado flutua na superfície. O Poupador está exausto de policiar cada centavo e o Desligado nem sabe quanto tem na conta reserva.</p>
+        <div class="dialogue-card dc-b"><p class="dc-role">🛡 Poupador</p><p>"Eu percebo que eu me tornei o vigia da nossa segurança sozinho. Eu não quero ser o seu auditor, eu quero ser o seu parceiro. Quando você se desliga, eu sinto que o peso do nosso futuro está só nas minhas costas. Podemos marcar 20 minutos no domingo apenas para você ver o mapa que eu construí? Eu preciso que você valide o meu esforço com a sua presença."</p></div>
+        <div class="dialogue-card dc-a"><p class="dc-role">🌫 Desligado</p><p>"Eu me afastei porque achava que a minha opinião só gerava conflito com a sua rigidez. Eu vejo agora que o meu silêncio te sobrecarrega. Eu aceito olhar o mapa. Não vou virar um especialista, mas vou estar na trincheira com você para que você não se sinta remando este barco sem companhia."</p></div>
+      </div>
+      <div class="dialogue-group">
+        <p class="dialogue-group-title">2. Desligado com Gastador — O Vazamento Invisível</p>
+        <p class="dialogue-conflict">O Gastador consome os recursos e o Desligado não percebe o naufrágio até ser tarde. O Gastador faz compras emocionais e o Desligado apenas assente, sem consciência do saldo real.</p>
+        <div class="dialogue-card dc-a"><p class="dc-role">🌫 Desligado</p><p>"Eu estive ausente das nossas contas e isso me deu uma falsa sensação de que podíamos tudo. Mas eu vi os números hoje e levei um susto. Eu não posso mais delegar a minha consciência financeira para você. Eu preciso que a gente estabeleça um limite de alerta visual — quando o saldo chegar em X reais, nós dois precisamos parar e conversar."</p></div>
+        <div class="dialogue-card dc-b"><p class="dc-role">💸 Gastador</p><p>"Eu confesso que a sua falta de limites me incentivou a gastar mais. Eu sentia que, se você não reclamava, era porque sobrava. Eu aceito esse alerta. Ter você presente nas decisões vai me ajudar a controlar o meu impulso, porque agora eu tenho alguém para quem prestar contas."</p></div>
+      </div>
+      <div class="dialogue-group">
+        <p class="dialogue-group-title">3. Desligado com Desligado — A Casa de Cartas</p>
+        <p class="dialogue-conflict">Dois indivíduos que se recusam a olhar para a realidade até que o oficial de justiça bata à porta. Ninguém abre as contas, ninguém sabe das dívidas.</p>
+        <div class="dialogue-card dc-a"><p class="dc-role">🌫 Desligado 1</p><p>"Nós estamos vivendo como se o amanhã não existisse. Eu sinto um medo constante, escondido atrás dessa nossa 'tranquilidade'. Algum de nós precisa ter a coragem de acender a luz desta sala. Você aceita que a gente abra todos os aplicativos do banco hoje à noite, sem julgamentos — apenas para saber onde estamos pisando?"</p></div>
+        <div class="dialogue-card dc-b"><p class="dc-role">🌫 Desligado 2</p><p>"Eu também estou apavorado, por isso eu não falava nada. Vamos acender a luz juntos. Vai doer ver a bagunça, mas é melhor do que esperar o teto cair sobre nós. Não importa o que encontremos — seremos um time."</p></div>
+      </div>
+      <div class="dialogue-group">
+        <p class="dialogue-group-title">4. Desligado com Descontrolado — O Caos e a Omissão</p>
+        <p class="dialogue-conflict">Um parceiro perde dinheiro por desorganização e o outro nem se dá ao trabalho de organizar. O Descontrolado esquece de pagar os impostos e o Desligado apenas lamenta quando o bloqueio judicial acontece.</p>
+        <div class="dialogue-card dc-a"><p class="dc-role">🌫 Desligado</p><p>"Eu percebi que a minha omissão está alimentando o seu caos. Eu deixo tudo na sua mão mesmo sabendo que você se atrapalha — e depois eu reclamo das consequências. Isso acaba hoje. Eu vou assumir a organização do calendário de pagamentos, e você assume a execução. Eu coloco a ordem, você mantém a ação."</p></div>
+        <div class="dialogue-card dc-b"><p class="dc-role">🌀 Descontrolado</p><p>"Eu me sinto um fracasso quando eu erro as datas, e a sua passividade me faz sentir que eu sou o único culpado. Eu aceito essa divisão. Se você me der a direção clara, eu prometo seguir o processo. Eu preciso da sua mente organizada para guiar a minha mão executora."</p></div>
+      </div>
+      <div class="dialogue-group">
+        <p class="dialogue-group-title">5. Desligado com Financista — A Inadequação Silenciosa</p>
+        <p class="dialogue-conflict">O Financista quer otimizar cada vírgula e o Desligado sente-se burro demais para participar. O Financista apresenta planilhas complexas e o Desligado diz "faz o que você quiser", sentindo-se excluído.</p>
+        <div class="dialogue-card dc-a"><p class="dc-role">🌫 Desligado</p><p>"As suas planilhas me fazem sentir que eu não pertenço a este assunto. Eu me sinto inadequado e, por isso, eu desligo. Eu quero participar, mas eu preciso que você traduza os números para a vida real. Podemos conversar sobre objetivos — e não sobre taxas? Eu preciso sentir que a nossa vida é mais do que uma linha de código."</p></div>
+        <div class="dialogue-card dc-b"><p class="dc-role">📊 Financista</p><p>"Eu não percebi que a minha busca por precisão estava te expulsando da parceria. A sua visão de futuro é mais importante para mim do que a perfeição da fórmula. Vou simplificar nosso painel de controle para que a gente decida o destino — e eu cuido da mecânica nos bastidores."</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+            <div class="section-header">
+        <div class="section-number">IV</div>
+        <h2 class="section-title">Protocolo de <span class="section-title-gold">Contingência</span></h2>
+      </div>
+      <div class="section-rule"></div>
+      <p>Se ao usar a Abordagem Suave o parceiro ainda assim se recusar, agir com agressividade ou fugir:</p>
+      <div class="protocol-box">
+        <p class="protocol-box-label">🕊 Se o Parceiro Disser "Não"</p>
+        <div class="protocol-step"><div class="ps-num">1</div><p class="ps-text"><strong>Valide o medo, não a esquiva:</strong> "Eu entendo que este assunto gera desconforto agora. Eu respeito o seu tempo." Ao validar a emoção, você retira o combustível da briga.</p></div>
+        <div class="protocol-step"><div class="ps-num">2</div><p class="ps-text"><strong>Reafirme a necessidade soberana:</strong> "No entanto, este assunto é vital para a nossa saúde. Eu não consigo e não vou continuar carregando este peso sozinho(a). Voltarei a este tema em [dia da semana que vem, horário]."</p></div>
+        <div class="protocol-step"><div class="ps-num">3</div><p class="ps-text"><strong>Mantenha a porta aberta e a bigorna no chão:</strong> não insista no momento da recusa. Ao dar espaço mas manter o compromisso futuro, você mostra que não aceita o abandono da parceria — sem escalar o conflito.</p></div>
+      </div>
+    </div>
+
+    <div class="final-message">
+      <p class="final-message-label">✉ Mensagem Final</p>
+      <p class="final-for">Ao Desligado:</p>
+      <p>A sua omissão não é um ato de confiança — é um ato de abandono. Cada vez que você se retira da conversa financeira, você deixa quem você ama em uma ilha deserta de preocupação. Reivindique o seu lugar na mesa. Não porque você precisa ser um gênio dos números, mas porque o seu parceiro precisa da sua alma presente para saber que não está lutando sozinho.</p>
+      <div class="final-separator"></div>
+      <p class="final-for">Ao Parceiro do Desligado:</p>
+      <p>Não confunda o silêncio dele(a) com falta de amor. Muitas vezes, é o som do medo de não ser bom o suficiente para você. Quando você simplifica o convite e reduz a pressão do julgamento, você permite que o Fantasma ganhe corpo e voz novamente.</p>
+      <div class="final-separator"></div>
+      <p style="font-size:14px;font-style:italic;font-weight:700;text-align:center;color:var(--text-main);margin:0">A prosperidade de um casal não é medida pelo que acumulam, mas pela coragem de olharem juntos para a verdade — por mais desconfortável que ela seja.</p>
+    </div>
+          <div class="cta-box">
+        <p class="cta-label">Próximo Passo</p>
+        <p class="cta-title">Quer aplicar isso com acompanhamento?</p>
+        <p class="cta-text">A Sessão de Diagnóstico de Parceria Financeira é uma conversa de 90 minutos onde mapeamos a dinâmica financeira do casal e identificamos a raiz real do conflito. Não é um curso — é um diagnóstico.</p>
+        <a href="https://phillipsouza.com/sessao-diagnostico" class="cta-link">Solicitar Sessão de Diagnóstico →</a>
+      </div>
+  </div>
+    <footer class="footer">
+    <div>
+      <p class="footer-brand">Phillip Souza</p>
+      <p class="footer-sub">Psicoterapeuta Financeiro · Planejador Financeiro</p>
+    </div>
+    <div class="footer-right">
+      <a href="https://phillipsouza.com" class="footer-url">phillipsouza.com</a>
+      <p class="footer-series">Guerra Fria Financeira · Guia do Desligado</p>
+    </div>
+  </footer>
+</article>
+</body>
+</html>
