@@ -80,7 +80,7 @@
   <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" /></noscript>
 
   <!-- Tally widget — popup do formulário de lista de espera -->
-  <script src="https://tally.so/widget/embed.js" defer></script>
+  <script src="https://tally.so/widgets/embed.js" defer></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; }
@@ -699,31 +699,42 @@
       });
     });
 
-    // Abre Tally via API oficial — passa hidden fields
+    // Abre Tally via API oficial — com fallback para URL direta
     function openTallyPopup() {
-      if (typeof Tally === 'undefined') return;
-      var hiddenFields = {};
-      if (selected.prioridade) hiddenFields.prioridade = selected.prioridade;
-      if (selected.perfil) hiddenFields.perfil = selected.perfil;
-      Tally.openPopup('jaA19R', {
-        layout: 'modal',
-        emoji: { text: '🧭', animation: 'wave' },
-        hiddenFields: hiddenFields
-      });
+      var params = [];
+      if (selected.prioridade) params.push('prioridade=' + encodeURIComponent(selected.prioridade));
+      if (selected.perfil) params.push('perfil=' + encodeURIComponent(selected.perfil));
+      var qs = params.length ? '?' + params.join('&') : '';
+
+      if (typeof Tally !== 'undefined' && typeof Tally.openPopup === 'function') {
+        var hf = {};
+        if (selected.prioridade) hf.prioridade = selected.prioridade;
+        if (selected.perfil) hf.perfil = selected.perfil;
+        Tally.openPopup('jaA19R', {
+          layout: 'modal',
+          emoji: { text: '\ud83e\udded', animation: 'wave' },
+          hiddenFields: hf
+        });
+      } else {
+        window.open('https://tally.so/r/jaA19R' + qs, '_blank');
+      }
     }
 
     // Hero button (com chips)
     var btn1 = document.getElementById('btn-lista-espera');
     if (btn1) btn1.addEventListener('click', openTallyPopup);
 
-    // Turma button (sem chips — abre sem hidden fields)
+    // Turma button (abre sem hidden fields)
     var btn2 = document.getElementById('btn-lista-espera-2');
     if (btn2) btn2.addEventListener('click', function() {
-      if (typeof Tally === 'undefined') return;
-      Tally.openPopup('jaA19R', {
-        layout: 'modal',
-        emoji: { text: '🧭', animation: 'wave' }
-      });
+      if (typeof Tally !== 'undefined' && typeof Tally.openPopup === 'function') {
+        Tally.openPopup('jaA19R', {
+          layout: 'modal',
+          emoji: { text: '\ud83e\udded', animation: 'wave' }
+        });
+      } else {
+        window.open('https://tally.so/r/jaA19R', '_blank');
+      }
     });
   })();
 </script>
