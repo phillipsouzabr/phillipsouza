@@ -292,6 +292,31 @@
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
+    /* Segmentation chips */
+    .seg-group { margin-bottom: 1.25rem; text-align: left; }
+    .seg-label {
+      display: block; font-size: .7rem; font-family: 'Montserrat', sans-serif;
+      font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      color: #6B7280; margin-bottom: .65rem;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .chip {
+      display: inline-flex; align-items: center; gap: .35rem;
+      padding: .45rem 1rem; border-radius: 999px; cursor: pointer;
+      font-family: 'Inter', sans-serif; font-size: .8rem; font-weight: 500;
+      border: 1px solid rgba(212,175,55,.25); color: #9CA3AF;
+      background: transparent;
+      transition: border-color .25s, color .25s, background .25s;
+      user-select: none;
+    }
+    .chip:hover { border-color: rgba(212,175,55,.55); color: #D1D5DB; }
+    .chip.selected {
+      border-color: #D4AF37; color: #0A0000;
+      background: #D4AF37;
+    }
+    .chip.selected svg { stroke: #0A0000; }
+    .seg-divider { border: none; border-top: 1px solid rgba(255,255,255,.06); margin: 1.25rem 0; }
+
     /* Footer */
     footer { border-top: 1px solid rgba(212,175,55,.1); padding: 2.5rem 1.5rem; text-align: center; line-height: 1.9; }
     footer p { margin: 0; font-size: .75rem; }
@@ -333,15 +358,60 @@
       </p>
 
       <div style="margin-top:2.25rem;">
+
+        <!-- ── Segmentação rápida ── -->
+        <div id="seg-box" style="background:rgba(10,15,26,.7);border:1px solid rgba(212,175,55,.15);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;text-align:left;">
+
+          <!-- Grupo 1: Prioridade -->
+          <div class="seg-group">
+            <span class="seg-label">Minha prioridade agora</span>
+            <div class="chips" id="chips-prioridade" role="group" aria-label="Selecione sua prioridade">
+              <button type="button" class="chip" data-group="prioridade" data-value="dividas" aria-pressed="false">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2"/></svg>
+                Sair das dívidas
+              </button>
+              <button type="button" class="chip" data-group="prioridade" data-value="organizacao" aria-pressed="false">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                Me organizar financeiramente
+              </button>
+              <button type="button" class="chip" data-group="prioridade" data-value="investimentos" aria-pressed="false">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                Começar a investir
+              </button>
+            </div>
+          </div>
+
+          <hr class="seg-divider" />
+
+          <!-- Grupo 2: Perfil -->
+          <div class="seg-group" style="margin-bottom:0;">
+            <span class="seg-label">Busco acompanhamento</span>
+            <div class="chips" id="chips-perfil" role="group" aria-label="Selecione seu perfil">
+              <button type="button" class="chip" data-group="perfil" data-value="individual" aria-pressed="false">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Individual
+              </button>
+              <button type="button" class="chip" data-group="perfil" data-value="casal" aria-pressed="false">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Casal / família
+              </button>
+            </div>
+          </div>
+
+        </div>
+        <!-- ── /Segmentação ── -->
+
         <!--
           TALLY POPUP — substitua SEU_FORM_ID pelo ID real assim que criar o formulário.
-          Encontre o ID na URL do formulário no painel do Tally: tally.so/r/SEU_FORM_ID
+          Os campos ocultos prioridade= e perfil= são preenchidos automaticamente pelo JS abaixo.
         -->
         <button
-          data-tally-open="SEU_FORM_ID"
+          id="btn-lista-espera"
+          data-tally-open="jaA19R"
           data-tally-layout="modal"
           data-tally-emoji-text="🧭"
           data-tally-emoji-animation="wave"
+          data-tally-hidden="prioridade=,perfil="
           class="btn-gold"
           aria-label="Entrar na lista de espera da Jornada de Navegação Financeira"
         >
@@ -532,7 +602,7 @@
         </p>
 
         <button
-          data-tally-open="SEU_FORM_ID"
+          data-tally-open="jaA19R"
           data-tally-layout="modal"
           data-tally-emoji-text="🧭"
           data-tally-emoji-animation="wave"
@@ -613,6 +683,44 @@
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     items.forEach(function(el) { obs.observe(el); });
+  })();
+
+  // Chips de segmentação
+  (function() {
+    var selected = { prioridade: '', perfil: '' };
+
+    document.querySelectorAll('.chip').forEach(function(chip) {
+      chip.addEventListener('click', function() {
+        var group = chip.dataset.group;
+        var val   = chip.dataset.value;
+
+        // Toggle: se já selecionado, deseleciona
+        if (selected[group] === val) {
+          selected[group] = '';
+          chip.classList.remove('selected');
+          chip.setAttribute('aria-pressed', 'false');
+        } else {
+          // Deseleciona os outros do mesmo grupo
+          document.querySelectorAll('.chip[data-group="' + group + '"]').forEach(function(c) {
+            c.classList.remove('selected');
+            c.setAttribute('aria-pressed', 'false');
+          });
+          selected[group] = val;
+          chip.classList.add('selected');
+          chip.setAttribute('aria-pressed', 'true');
+        }
+
+        // Atualiza data-tally-hidden no botão CTA
+        var btn = document.getElementById('btn-lista-espera');
+        if (btn) {
+          btn.setAttribute(
+            'data-tally-hidden',
+            'prioridade=' + encodeURIComponent(selected.prioridade) +
+            ',perfil='    + encodeURIComponent(selected.perfil)
+          );
+        }
+      });
+    });
   })();
 </script>
 
