@@ -383,15 +383,15 @@
 
           <hr class="seg-divider" />
 
-          <!-- Grupo 2: Perfil -->
+          <!-- Grupo 2: Acompanhamento -->
           <div class="seg-group" style="margin-bottom:0;">
             <span class="seg-label">Busco acompanhamento</span>
-            <div class="chips" id="chips-perfil" role="group" aria-label="Selecione seu perfil">
-              <button type="button" class="chip" data-group="perfil" data-value="individual" aria-pressed="false">
+            <div class="chips" id="chips-acompanhamento" role="group" aria-label="Selecione seu perfil">
+              <button type="button" class="chip" data-group="acompanhamento" data-value="individual" aria-pressed="false">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                 Individual
               </button>
-              <button type="button" class="chip" data-group="perfil" data-value="casal" aria-pressed="false">
+              <button type="button" class="chip" data-group="acompanhamento" data-value="casal" aria-pressed="false">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 Casal / família
               </button>
@@ -675,7 +675,7 @@
 
   // Chips de segmentação + Tally popup via API oficial
   (function() {
-    var selected = { prioridade: '', perfil: '' };
+    var selected = { prioridade: '', acompanhamento: '' };
 
     // Toggle chips
     document.querySelectorAll('.chip').forEach(function(chip) {
@@ -703,13 +703,13 @@
     function openTallyPopup() {
       var params = [];
       if (selected.prioridade) params.push('prioridade=' + encodeURIComponent(selected.prioridade));
-      if (selected.perfil) params.push('perfil=' + encodeURIComponent(selected.perfil));
+      if (selected.acompanhamento) params.push('acompanhamento=' + encodeURIComponent(selected.acompanhamento));
       var qs = params.length ? '?' + params.join('&') : '';
 
       if (typeof Tally !== 'undefined' && typeof Tally.openPopup === 'function') {
         var hf = {};
         if (selected.prioridade) hf.prioridade = selected.prioridade;
-        if (selected.perfil) hf.perfil = selected.perfil;
+        if (selected.acompanhamento) hf.acompanhamento = selected.acompanhamento;
         Tally.openPopup('jaA19R', {
           layout: 'modal',
           emoji: { text: '\ud83e\udded', animation: 'wave' },
