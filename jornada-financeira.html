@@ -401,17 +401,8 @@
         </div>
         <!-- ── /Segmentação ── -->
 
-        <!--
-          TALLY POPUP — substitua SEU_FORM_ID pelo ID real assim que criar o formulário.
-          Os campos ocultos prioridade= e perfil= são preenchidos automaticamente pelo JS abaixo.
-        -->
         <button
           id="btn-lista-espera"
-          data-tally-open="jaA19R"
-          data-tally-layout="modal"
-          data-tally-emoji-text="🧭"
-          data-tally-emoji-animation="wave"
-          data-tally-hidden="prioridade=,perfil="
           class="btn-gold"
           aria-label="Entrar na lista de espera da Jornada de Navegação Financeira"
         >
@@ -602,10 +593,7 @@
         </p>
 
         <button
-          data-tally-open="jaA19R"
-          data-tally-layout="modal"
-          data-tally-emoji-text="🧭"
-          data-tally-emoji-animation="wave"
+          id="btn-lista-espera-2"
           class="btn-gold"
         >
           ◆ &nbsp;Quero entrar na lista de espera
@@ -685,22 +673,21 @@
     items.forEach(function(el) { obs.observe(el); });
   })();
 
-  // Chips de segmentação
+  // Chips de segmentação + Tally popup via API oficial
   (function() {
     var selected = { prioridade: '', perfil: '' };
 
+    // Toggle chips
     document.querySelectorAll('.chip').forEach(function(chip) {
       chip.addEventListener('click', function() {
         var group = chip.dataset.group;
         var val   = chip.dataset.value;
 
-        // Toggle: se já selecionado, deseleciona
         if (selected[group] === val) {
           selected[group] = '';
           chip.classList.remove('selected');
           chip.setAttribute('aria-pressed', 'false');
         } else {
-          // Deseleciona os outros do mesmo grupo
           document.querySelectorAll('.chip[data-group="' + group + '"]').forEach(function(c) {
             c.classList.remove('selected');
             c.setAttribute('aria-pressed', 'false');
@@ -709,16 +696,33 @@
           chip.classList.add('selected');
           chip.setAttribute('aria-pressed', 'true');
         }
+      });
+    });
 
-        // Atualiza data-tally-hidden no botão CTA
-        var btn = document.getElementById('btn-lista-espera');
-        if (btn) {
-          btn.setAttribute(
-            'data-tally-hidden',
-            'prioridade=' + encodeURIComponent(selected.prioridade) +
-            ',perfil='    + encodeURIComponent(selected.perfil)
-          );
-        }
+    // Abre Tally via API oficial — passa hidden fields
+    function openTallyPopup() {
+      if (typeof Tally === 'undefined') return;
+      var hiddenFields = {};
+      if (selected.prioridade) hiddenFields.prioridade = selected.prioridade;
+      if (selected.perfil) hiddenFields.perfil = selected.perfil;
+      Tally.openPopup('jaA19R', {
+        layout: 'modal',
+        emoji: { text: '🧭', animation: 'wave' },
+        hiddenFields: hiddenFields
+      });
+    }
+
+    // Hero button (com chips)
+    var btn1 = document.getElementById('btn-lista-espera');
+    if (btn1) btn1.addEventListener('click', openTallyPopup);
+
+    // Turma button (sem chips — abre sem hidden fields)
+    var btn2 = document.getElementById('btn-lista-espera-2');
+    if (btn2) btn2.addEventListener('click', function() {
+      if (typeof Tally === 'undefined') return;
+      Tally.openPopup('jaA19R', {
+        layout: 'modal',
+        emoji: { text: '🧭', animation: 'wave' }
       });
     });
   })();
