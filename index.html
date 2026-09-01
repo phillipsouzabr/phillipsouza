@@ -1533,15 +1533,8 @@
       id="application-form"
       novalidate
     >
-      <!-- ── Web3Forms — campos obrigatórios ── -->
-      <input type="hidden" name="access_key"  value="e7988d0d-acd6-4909-8478-928e364cc49d" />
-      <input type="hidden" name="subject"     value="Nova Aplicação Premium — Mentoria Phillip Souza" />
-      <input type="hidden" name="botcheck"    value="" style="display:none;" />
       <!-- ── Rastreamento / segmentação ── -->
       <input type="hidden" name="form_source"  value="aplicacao-premium" />
-      <input type="hidden" name="utm_source"   value="site-phillipsouza" />
-      <input type="hidden" name="utm_medium"   value="landing-page" />
-      <input type="hidden" name="utm_campaign" value="mentoria-premium-2026" />
       <input type="hidden" name="lead_tipo"    value="bottom-of-funnel" />
 
       <!-- Nome -->
@@ -1744,13 +1737,12 @@
 
     if (!valid) return;
 
-    // Tudo válido — desabilita botão e envia via fetch
+    // Tudo válido — desabilita botão e envia via fetch para Apps Script
     btn.disabled = true;
     btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="animation:spin .8s linear infinite;margin-right:6px"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Enviando...';
     btn.style.opacity = '.75';
     btn.style.animation = 'none';
 
-    // Adicionar keyframe de spin se ainda não existe
     if (!document.getElementById('spin-style')) {
       const s = document.createElement('style');
       s.id = 'spin-style';
@@ -1758,29 +1750,34 @@
       document.head.appendChild(s);
     }
 
-    const formData = new FormData(form);
+    var APLICACAO_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyMF068TLx5VXT2NPKT2-pk7IZVv0sB6mp3Can4g_3hjPzKCTe3hgireK2tWPwXoqpZHg/exec';
 
-    fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      body: formData
-    })
-    .then(function(res) { return res.json(); })
-    .then(function(data) {
-      if (data.success) {
-        // Redireciona para o Tally — totalmente independente do Web3Forms
-        window.location.href = 'https://tally.so/r/lbYzjN';
-      } else {
-        // Erro retornado pela API
-        btn.disabled = false;
-        btn.innerHTML = '◆ &nbsp;Iniciar Qualificação';
-        btn.style.opacity = '1';
-        alert('Ocorreu um erro ao enviar. Por favor, tente novamente.');
-      }
-    })
-    .catch(function() {
-      // Erro de rede — redireciona mesmo assim para não perder o lead
-      window.location.href = 'https://tally.so/r/lbYzjN';
-    });
+    var ddi = document.getElementById('app-ddi').value.replace('+','');
+    var phoneNum = tel.value.trim().replace(/\D/g, '');
+
+    var payload = {
+      nome: nome.value.trim(),
+      email: email.value.trim(),
+      whatsapp: ddi + phoneNum,
+      lgpd_privacidade: lgpd1.checked,
+      lgpd_contato: lgpd2.checked,
+      funil: 'aplicacao-premium'
+    };
+
+    var done = false;
+    function onCaptureDone() {
+      if (done) return;
+      done = true;
+      // Lead capturado — redireciona para o formulário completo
+      window.location.href = 'aplicar.html?nome=' + encodeURIComponent(nome.value.trim()) + '&email=' + encodeURIComponent(email.value.trim());
+    }
+
+    fetch(APLICACAO_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
+      .then(onCaptureDone)
+      .catch(onCaptureDone);
+
+    // Timeout de segurança — redireciona mesmo se Apps Script demorar
+    setTimeout(onCaptureDone, 4000);
   }
 
 
