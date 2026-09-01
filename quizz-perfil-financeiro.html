@@ -1,32 +1,917 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Redirecionando...</title>
-
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZ3QL2RJGM"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    // transport_type: 'beacon' garante o envio do hit mesmo com a página
-    // saindo do ar quase instantaneamente, através do redirect abaixo.
-    gtag('config', 'G-ZZ3QL2RJGM', { 'transport_type': 'beacon' });
+    gtag('config', 'G-ZZ3QL2RJGM');
   </script>
 
-  <!-- Fallback para navegadores com JavaScript desativado -->
-  <noscript>
-    <meta http-equiv="refresh" content="0;url=https://tally.so/r/D4969X" />
-  </noscript>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qual é o Seu Perfil Financeiro? | Phillip Souza</title>
+  <meta name="description" content="Descubra como você pensa e age com dinheiro — e o que isso revela sobre seus relacionamentos. Quiz de 4 minutos com resultado imediato." />
+  <link rel="icon" type="image/png" href="logo.png" />
 
-  <script>
-    // Pequeno atraso (300ms, imperceptível) só para dar tempo do hit
-    // do GA4 disparar antes de sair da página.
-    setTimeout(function() {
-      window.location.replace("https://tally.so/r/D4969X");
-    }, 300);
-  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0D0D1A;
+      color: #F0EDE8;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .wrap {
+      max-width: 640px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* ── Progress bar ──────────────────────────────────── */
+    .progress-wrap {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: rgba(212,175,55,.12);
+      z-index: 100;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #D4AF37, #F0D060);
+      width: 0%;
+      transition: width .5s ease;
+    }
+
+    /* ── Screens ───────────────────────────────────────── */
+    .screen { display: none; animation: fadeUp .4s ease; }
+    .screen.active { display: block; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Welcome ───────────────────────────────────────── */
+    .welcome {
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+    .welcome-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(212,175,55,.08);
+      border: 1px solid rgba(212,175,55,.2);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: .75rem;
+      color: #D4AF37;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 1.5rem;
+    }
+    .welcome h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: .75rem;
+    }
+    .welcome h1 span { color: #D4AF37; }
+    .welcome p {
+      color: #9CA3AF;
+      font-size: .95rem;
+      line-height: 1.7;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .welcome .time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #9CA3AF;
+      font-size: .8rem;
+      margin-bottom: 2rem;
+    }
+
+    /* ── Question ──────────────────────────────────────── */
+    .q-counter {
+      font-size: .8rem;
+      color: #D4AF37;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: .75rem;
+    }
+    .q-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.1rem, 3.5vw, 1.35rem);
+      font-weight: 600;
+      line-height: 1.4;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Option cards ─────────────────────────────────── */
+    .option-list { display: flex; flex-direction: column; gap: .6rem; }
+    .option-card {
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+      padding: .85rem 1rem;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(212,175,55,.12);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all .25s ease;
+    }
+    .option-card:hover {
+      background: rgba(212,175,55,.06);
+      border-color: rgba(212,175,55,.3);
+    }
+    .option-card:has(input:checked) {
+      background: rgba(212,175,55,.1);
+      border-color: #D4AF37;
+      box-shadow: 0 0 0 1px #D4AF37;
+    }
+    .option-card input[type="radio"] {
+      appearance: none;
+      width: 18px; height: 18px;
+      border: 2px solid rgba(212,175,55,.3);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: all .2s;
+    }
+    .option-card input[type="radio"]:checked {
+      border-color: #D4AF37;
+      background: #D4AF37;
+      box-shadow: inset 0 0 0 3px #0D0D1A;
+    }
+    .option-label {
+      font-size: .88rem;
+      line-height: 1.5;
+      color: #D1D5DB;
+    }
+
+    /* ── Gate (name + email) ──────────────────────────── */
+    .gate-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: .5rem;
+    }
+    .gate-sub {
+      text-align: center;
+      color: #9CA3AF;
+      font-size: .9rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .field-group { margin-bottom: 1rem; }
+    .field-group label {
+      display: block;
+      font-size: .8rem;
+      color: #9CA3AF;
+      margin-bottom: .4rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .field-group input {
+      width: 100%;
+      padding: .75rem 1rem;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(212,175,55,.2);
+      border-radius: 8px;
+      color: #F0EDE8;
+      font-size: .95rem;
+      outline: none;
+      transition: border-color .3s;
+    }
+    .field-group input:focus {
+      border-color: #D4AF37;
+    }
+    .field-error {
+      display: none;
+      color: #F87171;
+      font-size: .8rem;
+      margin-top: .4rem;
+    }
+    .field-error.show { display: block; }
+
+    /* ── Buttons ───────────────────────────────────────── */
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: .85rem 2rem;
+      background: linear-gradient(135deg, #D4AF37, #B8941F);
+      color: #0D0D1A;
+      font-weight: 700;
+      font-size: .95rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all .3s;
+      width: 100%;
+      margin-top: 1.5rem;
+    }
+    .btn-gold:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(212,175,55,.3);
+    }
+    .btn-gold:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-back {
+      background: transparent;
+      border: 1px solid rgba(212,175,55,.2);
+      color: #9CA3AF;
+      padding: .7rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: .85rem;
+      transition: all .25s;
+    }
+    .btn-back:hover { border-color: rgba(212,175,55,.4); color: #F0EDE8; }
+    .btn-row {
+      display: flex;
+      gap: .75rem;
+      margin-top: 1.5rem;
+    }
+    .btn-row .btn-gold { flex: 1; margin-top: 0; }
+
+    /* ── Result ────────────────────────────────────────── */
+    .result-card {
+      background: rgba(212,175,55,.04);
+      border: 1px solid rgba(212,175,55,.18);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .result-emoji { font-size: 3rem; margin-bottom: .75rem; }
+    .result-profile {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #D4AF37;
+      margin-bottom: .25rem;
+    }
+    .result-crenca {
+      font-size: .85rem;
+      color: #9CA3AF;
+      font-style: italic;
+      margin-bottom: 1.25rem;
+    }
+    .result-desc {
+      font-size: .92rem;
+      line-height: 1.7;
+      color: #D1D5DB;
+      text-align: left;
+    }
+    .result-section {
+      margin-top: 1.5rem;
+      text-align: left;
+    }
+    .result-section h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: .75rem;
+      color: #F0EDE8;
+    }
+    .result-section ol {
+      padding-left: 1.2rem;
+      font-size: .88rem;
+      line-height: 1.7;
+      color: #D1D5DB;
+    }
+    .result-section ol li { margin-bottom: .5rem; }
+    .result-email-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(74,222,128,.08);
+      border: 1px solid rgba(74,222,128,.25);
+      border-radius: 8px;
+      padding: .65rem 1rem;
+      font-size: .85rem;
+      color: #4ADE80;
+      margin-top: 1.5rem;
+    }
+    .result-cta {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: rgba(212,175,55,.04);
+      border: 1px solid rgba(212,175,55,.15);
+      border-radius: 12px;
+      text-align: center;
+    }
+    .result-cta p {
+      font-size: .88rem;
+      color: #9CA3AF;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+    .result-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #D4AF37;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: .9rem;
+    }
+    .result-cta a:hover { text-decoration: underline; }
+
+    /* ── Score bars ─────────────────────────────────────── */
+    .score-bars { margin-top: 1.5rem; }
+    .score-row {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: .5rem;
+    }
+    .score-label {
+      width: 100px;
+      font-size: .75rem;
+      color: #9CA3AF;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .score-track {
+      flex: 1;
+      height: 8px;
+      background: rgba(255,255,255,.06);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .score-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: rgba(212,175,55,.35);
+      transition: width .8s ease;
+    }
+    .score-fill.dominant {
+      background: linear-gradient(90deg, #D4AF37, #F0D060);
+    }
+    .score-val {
+      width: 24px;
+      font-size: .75rem;
+      color: #9CA3AF;
+    }
+
+    /* ── Loading ────────────────────────────────────────── */
+    .loading-wrap {
+      text-align: center;
+      padding: 4rem 1rem;
+    }
+    .loading-wrap p {
+      color: #9CA3AF;
+      font-size: .9rem;
+      margin-top: 1rem;
+    }
+    .spinner-lg {
+      width: 48px; height: 48px;
+      border: 3px solid rgba(212,175,55,.15);
+      border-top-color: #D4AF37;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Privacy note ──────────────────────────────────── */
+    .privacy-note {
+      text-align: center;
+      font-size: .75rem;
+      color: #6B7280;
+      margin-top: 1rem;
+      line-height: 1.5;
+    }
+
+    /* ── Responsive ────────────────────────────────────── */
+    @media (max-width: 480px) {
+      body { padding: 1rem .75rem; }
+      .option-card { padding: .75rem .85rem; }
+      .result-card { padding: 1.5rem 1rem; }
+    }
+  </style>
 </head>
-<body></body>
+<body>
+
+<div class="progress-wrap"><div class="progress-bar" id="progress"></div></div>
+
+<div class="wrap">
+
+  <!-- ══════════ SCREEN 0: WELCOME ══════════ -->
+  <div class="screen active" data-screen="0">
+    <div class="welcome">
+      <div class="welcome-badge">
+        <svg width="8" height="8" viewBox="0 0 8 8" fill="#D4AF37"><circle cx="4" cy="4" r="4"/></svg>
+        Diagnóstico Gratuito
+      </div>
+      <h1>Qual é o Seu <span>Perfil Financeiro</span>?</h1>
+      <p>Descubra como você pensa e age com dinheiro — e o que isso revela sobre seus relacionamentos.</p>
+      <div class="time-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        4 minutos · 10 perguntas · resultado imediato
+      </div>
+      <p style="font-size:.82rem;color:#6B7280;max-width:460px;margin:0 auto 2rem;">Não existe resposta certa ou errada — apenas a sua resposta honesta. Ao final, você receberá seu perfil financeiro dominante e um guia completo por e-mail.</p>
+      <button class="btn-gold" onclick="startQuiz()" style="max-width:320px;margin:0 auto;">Começar o Diagnóstico →</button>
+    </div>
+  </div>
+
+  <!-- ══════════ SCREENS 1-10: QUESTIONS ══════════ -->
+  <!-- Generated by JS -->
+  <div id="questions-container"></div>
+
+  <!-- ══════════ SCREEN 11: GATE ══════════ -->
+  <div class="screen" data-screen="11">
+    <div style="padding:1rem 0;">
+      <p class="gate-title">Seu resultado está pronto.</p>
+      <p class="gate-sub">Para ver seu perfil e receber o <strong style="color:#D4AF37;">Guia de Navegação</strong> completo por e-mail, preencha abaixo:</p>
+
+      <div class="field-group">
+        <label for="quiz-nome">Seu nome</label>
+        <input type="text" id="quiz-nome" placeholder="Como você se chama?" autocomplete="given-name" />
+        <p class="field-error" id="err-nome">Preencha seu nome.</p>
+      </div>
+      <div class="field-group">
+        <label for="quiz-email">Seu melhor e-mail</label>
+        <input type="email" id="quiz-email" placeholder="email@exemplo.com" autocomplete="email" />
+        <p class="field-error" id="err-email">Preencha um e-mail válido.</p>
+      </div>
+
+      <button class="btn-gold" id="btn-result" onclick="submitQuiz()">◆  Ver Meu Resultado</button>
+
+      <p class="privacy-note">Sem spam — você receberá apenas o guia do seu perfil.<br>Dados protegidos por lei · Processo confidencial.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SCREEN 12: LOADING ══════════ -->
+  <div class="screen" data-screen="12">
+    <div class="loading-wrap">
+      <div class="spinner-lg"></div>
+      <p>Calculando seu perfil financeiro...</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SCREEN 13: RESULT ══════════ -->
+  <div class="screen" data-screen="13">
+    <div id="result-content"></div>
+  </div>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// QUIZ PERFIL FINANCEIRO — Lógica completa
+// ═══════════════════════════════════════════════════════════════════
+
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxaqR5Qs2p-3odqIhKsnIrnRg-NRZTq01TAF8O5PcPW60B8YaOhUXqoABsSn00MmPjc/exec';
+
+// ── Perfis ──────────────────────────────────────────────────────
+var PERFIS = {
+  P: {
+    nome: 'O Poupador',
+    emoji: '🛡️',
+    crenca: 'Vigilância Financeira',
+    desc: 'Você é movido(a) pela necessidade profunda de segurança. Para você, poupar não é uma estratégia — é um estado emocional. A reserva financeira não representa liberdade; representa a ausência de ameaça. Sua força está na disciplina. Seu desafio está em permitir que a vida aconteça dentro da fortaleza que você construiu.',
+    pontos: [
+      'A dor que o gasto provoca em você é real — mas nem sempre proporcional ao risco real. Pergunte-se: "Esse medo é do presente ou de um passado que já passou?"',
+      'Quando você usa os números para "provar" algo ao parceiro(a), você não está comunicando dados — você está comunicando desconfiança.',
+      'Segurança não é um número no extrato. É um estado interno. Nenhuma reserva vai ser suficiente enquanto a vigilância for o único modo disponível.'
+    ],
+    guia: 'o Radar Completo do Poupador: pontos de atenção detalhados para você e um mapa de como o seu parceiro(a) te vê — e como iniciar uma conversa que não vire briga'
+  },
+  G: {
+    nome: 'O Gastador',
+    emoji: '💸',
+    crenca: 'Adoração / Status Financeiro',
+    desc: 'Para você, dinheiro é energia em movimento. Guardar parece contra-intuitivo — dinheiro parado é desperdício de vida. Sua força está na generosidade e na capacidade de celebrar. Seu desafio está em distinguir o desejo genuíno do analgésico emocional.',
+    pontos: [
+      'Quando você gasta sob estresse ou ansiedade, o problema que você está tentando resolver não é financeiro. O dinheiro é o anestésico. A dor continua.',
+      'Generosidade que compromete o futuro do casal não é generosidade — é uma forma de evitar uma conversa difícil.',
+      'Você tem direito de viver bem agora. A questão é: como criar um acordo que proteja o futuro sem matar o prazer do presente?'
+    ],
+    guia: 'o mapa completo do ciclo emocional do Gastador e um protocolo de conversa com o parceiro(a) que transforma a briga por gastos em negociação de valores'
+  },
+  D: {
+    nome: 'O Desligado',
+    emoji: '🌫️',
+    crenca: 'Evitação Financeira',
+    desc: 'Você não odeia dinheiro — odeia o desconforto que o assunto traz. O silêncio financeiro tem um custo altíssimo: alguém no seu entorno carrega o peso da gestão sozinho. Sua jornada começa com um passo simples: acender a luz.',
+    pontos: [
+      'Evitar olhar para o extrato não faz as dívidas desaparecerem. Só faz com que você perca o controle de quando elas aparecem.',
+      'O seu silêncio sobre dinheiro diz algo ao seu parceiro(a) — mesmo que você não queira dizer nada.',
+      'Participar das finanças não significa virar especialista. Significa ser presente.'
+    ],
+    guia: 'o Mapa do Desligado: os gatilhos específicos de evitação e um roteiro de como começar a participar das finanças sem precisar virar especialista'
+  },
+  C: {
+    nome: 'O Descontrolado',
+    emoji: '🌀',
+    crenca: 'Improviso Financeiro',
+    desc: 'Você não é irresponsável — você está em guerra com um sistema que nunca te ensinou a organizar o dinheiro. A sua energia e intenção são genuínas. O que falta é o método que transforma intenção em resultado.',
+    pontos: [
+      'Disciplina não vai resolver o seu caso. Sistema vai. A diferença: disciplina depende de você estar bem. Sistema funciona mesmo quando você não está.',
+      '"Morte por mil cortes" — o perigo do Descontrolado não é a compra grande. É o delivery, a assinatura esquecida, a compra de R$30 que "não conta".',
+      'Quando você está estressado(a) e quer gastar algo para aliviar, a pergunta certa é: "O que eu realmente preciso agora?"'
+    ],
+    guia: 'o Código do Descontrolado: os gatilhos de gasto emocional e um Checklist de Batalha Semanal — um ritual simples de 15 minutos que substitui a willpower por estrutura'
+  },
+  F: {
+    nome: 'O Financista',
+    emoji: '📊',
+    crenca: 'Eficiência / Controle Racional',
+    desc: 'Você trata as finanças com a precisão de um engenheiro. Isso é uma rara habilidade. Seu desafio não está nos números — está em traduzir essa linguagem para quem pensa em sonhos, não em spreadsheets.',
+    pontos: [
+      'Estar certo nos números não significa estar certo no relacionamento. São métricas diferentes.',
+      'Quando você apresenta dados para "provar" algo ao parceiro(a), ele(a) ouve: "Você é incompetente financeiro." Mesmo que essa não seja sua intenção.',
+      'Um casal não é uma empresa. A eficiência máxima não é o objetivo. A parceria sustentável é.'
+    ],
+    guia: 'o Código do Financista: como usar sua visão analítica como ativo do casal (não como arma), e como criar acordos que preservam eficiência sem destruir a autonomia do parceiro(a)'
+  }
+};
+
+// ── Perguntas ───────────────────────────────────────────────────
+var PERGUNTAS = [
+  {
+    titulo: 'O Gasto Inesperado',
+    texto: 'O carro quebrou. O conserto vai custar R$2.000 que você não tinha planejado. Como você reage internamente?',
+    opcoes: [
+      { perfil: 'P', texto: 'Sinto um aperto no estômago. Já começo a calcular de onde vai sair, o que vai ser cortado, como isso afeta minha reserva.' },
+      { perfil: 'G', texto: 'Resolvo na hora — parcelo no cartão ou uso o que tiver. A vida não para, e me sentir bloqueado é pior do que a dívida.' },
+      { perfil: 'D', texto: 'Fico paralizado(a) por um tempo. Prefiro não pensar muito nisso agora e ver o que acontece.' },
+      { perfil: 'C', texto: 'Me estresso muito. Quando estou assim, acabo gastando em outras coisas para aliviar — comida, delivery, uma compra pequena que "relaxa".' },
+      { perfil: 'F', texto: 'Analiso as opções: parcela com juros vs. usar reserva vs. alternativa mais barata. Preciso da melhor decisão possível antes de agir.' }
+    ]
+  },
+  {
+    titulo: 'A Conversa Sobre Dinheiro',
+    texto: 'Seu parceiro(a) quer conversar sobre as finanças do casal hoje à noite. Como você se sente antes de começar?',
+    opcoes: [
+      { perfil: 'P', texto: 'Aliviado(a). Finalmente vamos alinhar tudo. Talvez eu já tenha preparado alguns números antes.' },
+      { perfil: 'G', texto: 'Um pouco apreensivo(a). Tenho medo de ser julgado(a) por algum gasto que fiz sem contar.' },
+      { perfil: 'D', texto: 'Preferia que não fosse necessário. Essas conversas geralmente acabam em tensão e eu odeio isso.' },
+      { perfil: 'C', texto: 'Ansioso(a). Sei que tem coisas que não estão em ordem e não sei bem por onde começar.' },
+      { perfil: 'F', texto: 'Preparado(a). Já tenho planilha, gráficos e projeções. Quero que a conversa seja objetiva e baseada em dados.' }
+    ]
+  },
+  {
+    titulo: 'O Futuro Financeiro',
+    texto: 'Quando você pensa no seu futuro financeiro, qual sentimento aparece primeiro?',
+    opcoes: [
+      { perfil: 'P', texto: 'Preocupação de não ter guardado o suficiente — mesmo quando a conta está no azul.' },
+      { perfil: 'G', texto: 'Uma mistura de esperança e culpa. Sei que poderia estar melhor, mas também sinto que mereço aproveitar agora.' },
+      { perfil: 'D', texto: 'Uma névoa. Prefiro não pensar muito nisso — o futuro parece distante e incerto demais.' },
+      { perfil: 'C', texto: 'Frustração. Sei o que deveria fazer, mas sempre tem alguma coisa que me desvia do plano.' },
+      { perfil: 'F', texto: 'Foco total. Tenho metas claras e acompanho os números com regularidade para garantir que estou no caminho.' }
+    ]
+  },
+  {
+    titulo: 'A Decisão de Compra',
+    texto: 'Você está pensando em comprar algo que custa R$800 e não é uma necessidade urgente. O que acontece?',
+    opcoes: [
+      { perfil: 'P', texto: 'Fico em dúvida por dias. Calculo se faz sentido, se está dentro do orçamento, se não vou me arrepender.' },
+      { perfil: 'G', texto: 'Se eu quero e tenho como pagar (ou parcelar), compro. A vida é curta para ficar adiando os prazeres.' },
+      { perfil: 'D', texto: 'Fico procrastinando a decisão. Acabo nem comprando nem descartando — o item fica "em análise" por semanas.' },
+      { perfil: 'C', texto: 'Depende do meu humor. Se estou bem, espero. Se estou estressado(a), provavelmente compro — e depois me arrependo.' },
+      { perfil: 'F', texto: 'Pesquiso preço em pelo menos 3 lugares, leio avaliações, verifico alternativas, e só compro quando tenho certeza absoluta.' }
+    ]
+  },
+  {
+    titulo: 'O Dinheiro no Relacionamento',
+    texto: 'Qual dessas frases mais se parece com algo que você já pensou (ou falou) dentro de um relacionamento?',
+    opcoes: [
+      { perfil: 'P', texto: '"Eu me preocupo com o futuro porque alguém aqui precisa pensar nisso."' },
+      { perfil: 'G', texto: '"Você só reclama dos meus gastos, mas nunca reconhece o quanto eu trabalho para trazer esse dinheiro."' },
+      { perfil: 'D', texto: '"Prefiro nem comentar — só vai virar briga e não vai resolver nada."' },
+      { perfil: 'C', texto: '"Eu sei que fiz errado, mas as coisas estavam tão difíceis que eu precisava de algum alívio."' },
+      { perfil: 'F', texto: '"Se você seguisse o plano que eu montei, não estaríamos nessa situação."' }
+    ]
+  },
+  {
+    titulo: 'A Reserva de Emergência',
+    texto: 'Como é sua relação com a ideia de ter (ou não ter) uma reserva financeira?',
+    opcoes: [
+      { perfil: 'P', texto: 'É minha prioridade nº 1. A ideia de não ter reserva me gera uma angústia física, como um alarme ligado o tempo todo.' },
+      { perfil: 'G', texto: 'Sei que é importante, mas sempre aparece algo mais urgente — ou mais interessante — para usar o dinheiro.' },
+      { perfil: 'D', texto: 'Sei que deveria ter, mas esse assunto parece tão distante da minha realidade que nunca vira prioridade.' },
+      { perfil: 'C', texto: 'Já tentei construir várias vezes. Sempre começa bem, mas alguma coisa faz o dinheiro "sumir" antes de eu perceber.' },
+      { perfil: 'F', texto: 'Já calculei exatamente quantos meses de custo de vida preciso, onde está alocado e em qual liquidez. É parte do sistema.' }
+    ]
+  },
+  {
+    titulo: 'O Conflito Financeiro',
+    texto: 'Houve uma compra que seu parceiro(a) fez que te incomodou. Como você costuma agir?',
+    opcoes: [
+      { perfil: 'P', texto: 'Falo diretamente. Esse tipo de coisa precisa ser discutido — senão o problema só cresce.' },
+      { perfil: 'G', texto: 'Fico na minha. Não quero parecer controlador(a). Cada um tem suas prioridades.' },
+      { perfil: 'D', texto: 'Engulo o incômodo. Falar vai gerar conflito e não estou disposto(a) a isso.' },
+      { perfil: 'C', texto: 'Fico irritado(a) por dentro mas raramente falo na hora. Pode explodir depois, em outro contexto.' },
+      { perfil: 'F', texto: 'Mostro os dados. Digo com clareza quanto essa compra impacta no orçamento e o que teria sido mais eficiente.' }
+    ]
+  },
+  {
+    titulo: 'Extratos e Faturas',
+    texto: 'Com que frequência você olha seu extrato bancário ou fatura do cartão?',
+    opcoes: [
+      { perfil: 'P', texto: 'Regularmente — pelo menos uma vez por semana. Preciso saber exatamente como estão os números.' },
+      { perfil: 'G', texto: 'Quando preciso ou quando a fatura chega. Não tenho o hábito de acompanhar com frequência.' },
+      { perfil: 'D', texto: 'Raramente. Prefiro não abrir — o que não vejo não me preocupa (pelo menos por enquanto).' },
+      { perfil: 'C', texto: 'Minha relação é irregular. Às vezes acompanho tudo, às vezes fico semanas sem olhar.' },
+      { perfil: 'F', texto: 'Diariamente. Tenho dashboard, alertas configurados e categorias personalizadas. Quero visibilidade total.' }
+    ]
+  },
+  {
+    titulo: 'Dinheiro e Emoção',
+    texto: 'Para você, dinheiro é principalmente:',
+    opcoes: [
+      { perfil: 'P', texto: 'Segurança. É a proteção contra tudo que pode dar errado.' },
+      { perfil: 'G', texto: 'Liberdade e prazer. Dinheiro existe para ser usado — e quem não usa está desperdiçando a vida.' },
+      { perfil: 'D', texto: 'Estresse. Assunto que preferia que não existisse ou que alguém cuidasse por mim.' },
+      { perfil: 'C', texto: 'Alívio temporário. Quando estou bem financeiramente me sinto melhor; quando estou mal, gasto mais para me sentir bem.' },
+      { perfil: 'F', texto: 'Uma ferramenta. Um recurso que precisa ser otimizado, alocado e gerenciado com precisão.' }
+    ]
+  },
+  {
+    titulo: 'Auto-Identificação',
+    texto: 'Leia as cinco descrições abaixo. Qual ressoa mais com a sua forma de ser com dinheiro? Seja honesto(a) — a mais próxima da realidade, não a que você gostaria de ser.',
+    opcoes: [
+      { perfil: 'P', texto: '"Me preocupo muito com segurança financeira. Guardar dinheiro me dá tranquilidade, mas às vezes sei que exagero na contenção e isso gera tensão com quem está ao meu lado."' },
+      { perfil: 'G', texto: '"Gosto de viver bem agora. Às vezes gasto mais do que deveria e sei disso, mas a ideia de economizar tudo para um futuro incerto não faz sentido para mim."' },
+      { perfil: 'D', texto: '"Prefiro não lidar com esse assunto. Dinheiro me gera ansiedade e eu simplesmente evito pensar ou falar sobre isso."' },
+      { perfil: 'C', texto: '"Minha vida financeira é desorganizada. Não é falta de vontade — é que as coisas sempre saem do controle mesmo quando começo bem."' },
+      { perfil: 'F', texto: '"Sou muito analítico(a) com dinheiro. Tenho planilha, metas e sistemas. O problema é que às vezes isso gera conflito porque nem todos ao meu redor enxergam as coisas com a mesma lógica."' }
+    ]
+  }
+];
+
+// ── Gerar HTML das perguntas ────────────────────────────────────
+var container = document.getElementById('questions-container');
+PERGUNTAS.forEach(function(q, i) {
+  var num = i + 1;
+  var optionsHTML = q.opcoes.map(function(opt, oi) {
+    return '<label class="option-card">'
+      + '<input type="radio" name="q' + num + '" value="' + opt.perfil + '" />'
+      + '<span class="option-label">' + opt.texto + '</span>'
+      + '</label>';
+  }).join('');
+
+  var navHTML = '';
+  if (num === 1) {
+    navHTML = '<div class="btn-row"><button class="btn-gold" onclick="nextScreen(' + num + ')">Próxima →</button></div>';
+  } else {
+    navHTML = '<div class="btn-row">'
+      + '<button class="btn-back" onclick="prevScreen(' + num + ')">← Voltar</button>'
+      + '<button class="btn-gold" onclick="nextScreen(' + num + ')">Próxima →</button>'
+      + '</div>';
+  }
+
+  container.innerHTML += '<div class="screen" data-screen="' + num + '">'
+    + '<div style="padding:.5rem 0;">'
+    + '<p class="q-counter">Pergunta ' + num + ' de 10 — ' + q.titulo + '</p>'
+    + '<p class="q-text">' + q.texto + '</p>'
+    + '<div class="option-list">' + optionsHTML + '</div>'
+    + '<p class="field-error" id="err-q' + num + '" style="margin-top:.75rem;">Selecione uma opção para continuar.</p>'
+    + navHTML
+    + '</div></div>';
+});
+
+// ── Auto-avançar ao clicar ──────────────────────────────────────
+document.querySelectorAll('#questions-container input[type="radio"]').forEach(function(radio) {
+  radio.addEventListener('change', function() {
+    var screenNum = parseInt(this.closest('.screen').getAttribute('data-screen'));
+    var err = document.getElementById('err-q' + screenNum);
+    if (err) err.classList.remove('show');
+
+    var stepWhenClicked = screenNum;
+    setTimeout(function() {
+      if (currentScreen === stepWhenClicked) {
+        nextScreen(stepWhenClicked);
+      }
+    }, 400);
+  });
+});
+
+// ── Navegação ───────────────────────────────────────────────────
+var currentScreen = 0;
+
+function showScreen(n) {
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  var target = document.querySelector('[data-screen="' + n + '"]');
+  if (target) {
+    target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  currentScreen = n;
+  // Progress: 0=0%, 1-10=10-100%, 11+=100%
+  var pct = n <= 0 ? 0 : n >= 10 ? 100 : n * 10;
+  document.getElementById('progress').style.width = pct + '%';
+}
+
+function startQuiz() {
+  showScreen(1);
+}
+
+function nextScreen(from) {
+  if (from >= 1 && from <= 10) {
+    var checked = document.querySelector('input[name="q' + from + '"]:checked');
+    if (!checked) {
+      document.getElementById('err-q' + from).classList.add('show');
+      return;
+    }
+  }
+  showScreen(from + 1);
+}
+
+function prevScreen(from) {
+  showScreen(from - 1);
+}
+
+// ── Calcular perfil ─────────────────────────────────────────────
+function calcularPerfil() {
+  var scores = { P: 0, G: 0, D: 0, C: 0, F: 0 };
+  var respostas = {};
+
+  for (var i = 1; i <= 10; i++) {
+    var checked = document.querySelector('input[name="q' + i + '"]:checked');
+    if (checked) {
+      scores[checked.value]++;
+      respostas['q' + i] = checked.value;
+    }
+  }
+
+  // Determina perfil dominante
+  var maxScore = 0;
+  var dominante = 'P';
+  var empate = [];
+  for (var key in scores) {
+    if (scores[key] > maxScore) {
+      maxScore = scores[key];
+      dominante = key;
+    }
+  }
+
+  // Verificar empate
+  for (var key2 in scores) {
+    if (scores[key2] === maxScore) empate.push(key2);
+  }
+
+  // Desempate: P10 (auto-seleção) tem peso de desempate
+  if (empate.length > 1 && respostas.q10) {
+    var autosel = respostas.q10;
+    if (empate.indexOf(autosel) !== -1) {
+      dominante = autosel;
+    }
+  }
+
+  return { perfil: dominante, scores: scores, respostas: respostas };
+}
+
+// ── Renderizar resultado ────────────────────────────────────────
+function renderResult(resultado) {
+  var p = PERFIS[resultado.perfil];
+  var scores = resultado.scores;
+
+  var pontosHTML = resultado.perfil ? p.pontos.map(function(pt, i) {
+    return '<li>' + pt + '</li>';
+  }).join('') : '';
+
+  // Score bars
+  var labels = { P: 'Poupador', G: 'Gastador', D: 'Desligado', C: 'Descontrolado', F: 'Financista' };
+  var barsHTML = '';
+  for (var key in labels) {
+    var pct = (scores[key] / 10) * 100;
+    var isDom = key === resultado.perfil ? ' dominant' : '';
+    barsHTML += '<div class="score-row">'
+      + '<span class="score-label">' + labels[key] + '</span>'
+      + '<div class="score-track"><div class="score-fill' + isDom + '" style="width:' + pct + '%"></div></div>'
+      + '<span class="score-val">' + scores[key] + '</span>'
+      + '</div>';
+  }
+
+  document.getElementById('result-content').innerHTML = ''
+    + '<div class="result-card">'
+    + '  <div class="result-emoji">' + p.emoji + '</div>'
+    + '  <div class="result-profile">' + p.nome + '</div>'
+    + '  <div class="result-crenca">' + p.crenca + '</div>'
+    + '  <p class="result-desc">' + p.desc + '</p>'
+    + '</div>'
+
+    + '<div class="score-bars">'
+    + '  <p style="font-size:.8rem;color:#9CA3AF;margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.08em;">Sua distribuição</p>'
+    + barsHTML
+    + '</div>'
+
+    + '<div class="result-section">'
+    + '  <h3>3 pontos de atenção para você:</h3>'
+    + '  <ol>' + pontosHTML + '</ol>'
+    + '</div>'
+
+    + '<div class="result-email-badge">'
+    + '  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>'
+    + '  Guia completo enviado para o seu e-mail'
+    + '</div>'
+
+    + '<div class="result-cta">'
+    + '  <p>No guia que você recebeu por e-mail, você encontrará ' + p.guia + '.</p>'
+    + '  <p style="margin-top:.75rem;">Se seu parceiro(a) ainda não preencheu, compartilhe este link:</p>'
+    + '  <a href="https://phillipsouza.com/quizz-perfil-financeiro.html" onclick="copyLink(event)">📋 Copiar link do quiz</a>'
+    + '  <p style="margin-top:1.5rem;font-size:.82rem;color:#6B7280;">Quer dar o próximo passo com acompanhamento profissional?</p>'
+    + '  <a href="sessao-diagnostico.html" style="margin-top:.5rem;">→ Diagnóstico de Parceria Financeira</a>'
+    + '</div>';
+}
+
+function copyLink(e) {
+  e.preventDefault();
+  navigator.clipboard.writeText('https://phillipsouza.com/quizz-perfil-financeiro.html').then(function() {
+    e.target.textContent = '✅ Link copiado!';
+    setTimeout(function() { e.target.textContent = '📋 Copiar link do quiz'; }, 2000);
+  });
+}
+
+// ── Submit ──────────────────────────────────────────────────────
+function submitQuiz() {
+  var nome = document.getElementById('quiz-nome');
+  var email = document.getElementById('quiz-email');
+  var valid = true;
+
+  document.querySelectorAll('.field-error').forEach(function(e) { e.classList.remove('show'); });
+
+  if (!nome.value.trim()) {
+    document.getElementById('err-nome').classList.add('show');
+    valid = false;
+  }
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email.value.trim())) {
+    document.getElementById('err-email').classList.add('show');
+    valid = false;
+  }
+
+  if (!valid) return;
+
+  var btn = document.getElementById('btn-result');
+  btn.disabled = true;
+  btn.textContent = 'Processando...';
+
+  var resultado = calcularPerfil();
+
+  // Mostrar loading
+  showScreen(12);
+
+  var payload = {
+    funil: 'quiz-perfil-financeiro',
+    nome: nome.value.trim(),
+    email: email.value.trim(),
+    perfil: resultado.perfil,
+    scores: resultado.scores,
+    respostas: resultado.respostas
+  };
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(function() {
+    setTimeout(function() {
+      renderResult(resultado);
+      showScreen(13);
+    }, 1500);
+  }).catch(function() {
+    // Mesmo com erro de rede, mostra o resultado (UX first)
+    setTimeout(function() {
+      renderResult(resultado);
+      showScreen(13);
+    }, 1500);
+  });
+
+  // GA4 event
+  if (typeof gtag === 'function') {
+    gtag('event', 'quiz_completed', {
+      event_category: 'quiz',
+      event_label: 'perfil_' + resultado.perfil,
+      perfil: resultado.perfil
+    });
+  }
+}
+</script>
+
+</body>
 </html>
