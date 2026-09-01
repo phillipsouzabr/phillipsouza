@@ -88,8 +88,7 @@
         rel="stylesheet" media="print" onload="this.media='all'" />
   <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" /></noscript>
 
-  <!-- Tally widget — popup do formulário de lista de espera -->
-  <script src="https://tally.so/widgets/embed.js" defer></script>
+
 
   <style>
     *, *::before, *::after { box-sizing: border-box; }
@@ -331,6 +330,109 @@
     footer p { margin: 0; font-size: .75rem; }
     footer a { color: #4B5563; text-decoration: none; transition: color .3s; }
     footer a:hover { color: #D4AF37; }
+
+    /* ── Modal do formulário ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,.92); backdrop-filter: blur(6px);
+      align-items: center; justify-content: center; padding: 1rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #0A0F1A; border: 1px solid rgba(212,175,55,.2);
+      border-top: 3px solid #D4AF37; border-radius: 18px;
+      max-width: 480px; width: 100%; max-height: 90vh; overflow-y: auto;
+      box-shadow: 0 0 80px rgba(212,175,55,.08);
+      animation: modalUp .4s ease forwards;
+    }
+    @keyframes modalUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.5rem 1.75rem 0;
+    }
+    .modal-close {
+      background: none; border: none; color: #6B7280; font-size: 1.5rem;
+      cursor: pointer; padding: .25rem; line-height: 1; transition: color .3s;
+    }
+    .modal-close:hover { color: #D4AF37; }
+    .modal-body { padding: 1.25rem 1.75rem 1.75rem; }
+    .modal-body h2 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.35rem; color: #fff; margin-bottom: .5rem; }
+    .modal-body p.lead { font-size: .88rem; margin-bottom: 1.5rem; }
+
+    /* Form fields (reutilizados do padrão ebook) */
+    .form-field { margin-bottom: 1.15rem; text-align: left; }
+    .form-field label {
+      display: block; font-size: .72rem; color: #9CA3AF;
+      text-transform: uppercase; letter-spacing: .08em;
+      margin-bottom: .4rem; font-family: 'Montserrat', sans-serif; font-weight: 600;
+    }
+    .form-field label .req { color: #D4AF37; }
+    .form-field input[type="text"],
+    .form-field input[type="email"],
+    .form-field input[type="tel"] {
+      width: 100%; background: rgba(255,255,255,.04);
+      border: 1px solid rgba(212,175,55,.2); border-radius: 6px;
+      color: #F0EDE8; font-family: 'Inter', sans-serif; font-size: .9rem;
+      padding: .75rem 1rem; outline: none; transition: border-color .3s;
+    }
+    .form-field input:focus { border-color: #D4AF37; }
+    .form-field input::placeholder { color: rgba(240,237,232,.3); }
+    .form-hint { font-size: .68rem; color: #6B7280; margin-top: .3rem; }
+
+    /* Phone field */
+    .phone-row { display: flex; gap: 0; }
+    .phone-country-btn {
+      display: flex; align-items: center; gap: .35rem;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(212,175,55,.2); border-right: none;
+      border-radius: 6px 0 0 6px;
+      padding: .75rem .7rem; cursor: pointer; color: #F0EDE8;
+      font-family: 'Inter', sans-serif; font-size: .85rem;
+      white-space: nowrap; transition: border-color .3s;
+    }
+    .phone-country-btn:hover { border-color: rgba(212,175,55,.4); }
+    .phone-country-btn .flag { line-height: 1; display: flex; align-items: center; }
+    .phone-country-btn .flag img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; display: block; }
+    .phone-country-btn .code { color: #B0ADA8; font-size: .82rem; }
+    .phone-country-btn .arrow { color: #6B7280; font-size: .6rem; margin-left: .15rem; }
+    .phone-row input[type="tel"] { border-radius: 0 6px 6px 0; flex: 1; min-width: 0; }
+
+    .phone-dropdown-wrap { position: relative; }
+    .phone-dropdown {
+      display: none; position: absolute; top: 100%; left: 0; z-index: 100;
+      width: 280px; max-height: 220px; overflow-y: auto;
+      background: #0f1423; border: 1px solid rgba(212,175,55,.25);
+      border-radius: 8px; margin-top: 4px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.6);
+    }
+    .phone-dropdown.open { display: block; }
+    .phone-dropdown-search {
+      width: 100%; background: rgba(255,255,255,.04);
+      border: none; border-bottom: 1px solid rgba(212,175,55,.12);
+      color: #F0EDE8; font-family: 'Inter', sans-serif; font-size: .82rem;
+      padding: .6rem .85rem; outline: none;
+    }
+    .phone-dropdown-search::placeholder { color: rgba(240,237,232,.3); }
+    .phone-dropdown-item {
+      display: flex; align-items: center; gap: .6rem;
+      padding: .5rem .85rem; cursor: pointer; font-size: .82rem;
+      color: #D1D5DB; transition: background .15s;
+    }
+    .phone-dropdown-item:hover { background: rgba(212,175,55,.08); }
+    .phone-dropdown-item .flag { display: flex; align-items: center; }
+    .phone-dropdown-item .flag img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
+    .phone-dropdown-item .name { flex: 1; }
+    .phone-dropdown-item .dial { color: #6B7280; font-size: .78rem; }
+
+    .form-msg {
+      text-align: center; font-size: .85rem; margin-top: 1rem;
+      padding: .65rem; border-radius: 6px; display: none;
+    }
+    .form-msg.success { display: block; color: #34D399; background: rgba(52,211,153,.08); border: 1px solid rgba(52,211,153,.2); }
+    .form-msg.error { display: block; color: #F87171; background: rgba(248,113,113,.08); border: 1px solid rgba(248,113,113,.2); }
+
+    .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(10,10,0,.3); border-top-color: #0A0000; border-radius: 50%; animation: spin .7s linear infinite; margin-right: 8px; vertical-align: -2px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 
@@ -652,6 +754,66 @@
 </main>
 
 
+<!-- ══════════════ MODAL — FORMULÁRIO LISTA DE ESPERA ══════════════ -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="eyebrow">
+        <svg width="8" height="8" viewBox="0 0 8 8" fill="#D4AF37" aria-hidden="true"><circle cx="4" cy="4" r="4"/></svg>
+        Lista de Espera
+      </span>
+      <button class="modal-close" id="modal-close" aria-label="Fechar">×</button>
+    </div>
+    <div class="modal-body">
+      <h2>Entrar na Lista de Espera</h2>
+      <p class="lead">Preencha seus dados. Você será avisado em primeira mão quando as vagas abrirem.</p>
+
+      <form id="jornada-form" novalidate>
+
+        <div class="form-field">
+          <label for="j-nome">Nome completo <span class="req">*</span></label>
+          <input type="text" id="j-nome" name="nome" required placeholder="Seu nome completo" autocomplete="name" />
+        </div>
+
+        <div class="form-field">
+          <label for="j-email">E-mail <span class="req">*</span></label>
+          <input type="email" id="j-email" name="email" required placeholder="seu@email.com" autocomplete="email" />
+        </div>
+
+        <div class="form-field">
+          <label for="j-whatsapp">WhatsApp <span class="req">*</span></label>
+          <div class="phone-dropdown-wrap">
+            <div class="phone-row">
+              <button type="button" class="phone-country-btn" id="phone-country-btn" aria-label="Selecionar país">
+                <span class="flag" id="phone-flag"><img src="https://flagcdn.com/w40/br.png" alt="BR" /></span>
+                <span class="code" id="phone-code">+55</span>
+                <span class="arrow">▾</span>
+              </button>
+              <input type="tel" id="j-whatsapp" name="whatsapp" required placeholder="(00) 00000-0000" autocomplete="tel" />
+            </div>
+            <div class="phone-dropdown" id="phone-dropdown">
+              <input type="text" class="phone-dropdown-search" id="phone-search" placeholder="Buscar país..." />
+              <div id="phone-list"></div>
+            </div>
+          </div>
+          <p class="form-hint">Selecione o país e digite com DDD</p>
+        </div>
+
+        <button type="submit" class="btn-gold" id="btn-submit" style="width:100%;margin-top:.5rem;">
+          ◆ &nbsp;Confirmar Inscrição
+        </button>
+
+        <div class="form-msg" id="form-msg"></div>
+
+        <p style="text-align:center;font-size:.7rem;color:#4B5563;margin-top:.85rem;">
+          Sem compromisso · Vagas limitadas a 12 por turma
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
+
+
 <!-- ══════════════ FOOTER ══════════════ -->
 <footer>
   <p style="color:#D1D5DB;">© <span class="copy-year">2026</span> Phillip Souza</p>
@@ -668,10 +830,18 @@
 
 
 <script>
-  // Ano dinâmico
+  /* ══════════════════════════════════════════════════════════
+     JORNADA FINANCEIRA — Modal nativo + fetch() para Apps Script
+     Substitui o popup do Tally sem dependências externas
+  ══════════════════════════════════════════════════════════ */
+
+  // ── URL do Google Apps Script (Web App) ──
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyYdB-jV6s9S5bCDQ-Vulzsh4qQPujYWvnxvRVQeQ7YVKcJRn-aQhQN_X0fJ6kzzvx1/exec';
+
+  // ── Ano dinâmico ──
   document.querySelectorAll('.copy-year').forEach(function(e){ e.textContent = new Date().getFullYear(); });
 
-  // Scroll reveal
+  // ── Scroll reveal ──
   (function() {
     var items = document.querySelectorAll('.reveal');
     var obs = new IntersectionObserver(function(entries) {
@@ -682,70 +852,269 @@
     items.forEach(function(el) { obs.observe(el); });
   })();
 
-  // Chips de segmentação + Tally popup via API oficial
-  (function() {
-    var selected = { prioridade: '', acompanhamento: '' };
 
-    // Toggle chips
-    document.querySelectorAll('.chip').forEach(function(chip) {
-      chip.addEventListener('click', function() {
-        var group = chip.dataset.group;
-        var val   = chip.dataset.value;
+  // ══════════════════════════════════════════════════════════
+  // CHIPS DE SEGMENTAÇÃO (prioridade + acompanhamento)
+  // ══════════════════════════════════════════════════════════
+  var selectedChips = { prioridade: '', acompanhamento: '' };
 
-        if (selected[group] === val) {
-          selected[group] = '';
-          chip.classList.remove('selected');
-          chip.setAttribute('aria-pressed', 'false');
-        } else {
-          document.querySelectorAll('.chip[data-group="' + group + '"]').forEach(function(c) {
-            c.classList.remove('selected');
-            c.setAttribute('aria-pressed', 'false');
-          });
-          selected[group] = val;
-          chip.classList.add('selected');
-          chip.setAttribute('aria-pressed', 'true');
-        }
-      });
-    });
+  document.querySelectorAll('.chip').forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      var group = chip.dataset.group;
+      var val   = chip.dataset.value;
 
-    // Abre Tally via API oficial — com fallback para URL direta
-    function openTallyPopup() {
-      var params = [];
-      if (selected.prioridade) params.push('prioridade=' + encodeURIComponent(selected.prioridade));
-      if (selected.acompanhamento) params.push('acompanhamento=' + encodeURIComponent(selected.acompanhamento));
-      var qs = params.length ? '?' + params.join('&') : '';
-
-      if (typeof Tally !== 'undefined' && typeof Tally.openPopup === 'function') {
-        var hf = {};
-        if (selected.prioridade) hf.prioridade = selected.prioridade;
-        if (selected.acompanhamento) hf.acompanhamento = selected.acompanhamento;
-        Tally.openPopup('jaA19R', {
-          layout: 'modal',
-          emoji: { text: '\ud83e\udded', animation: 'wave' },
-          hiddenFields: hf
-        });
+      if (selectedChips[group] === val) {
+        selectedChips[group] = '';
+        chip.classList.remove('selected');
+        chip.setAttribute('aria-pressed', 'false');
       } else {
-        window.open('https://tally.so/r/jaA19R' + qs, '_blank');
+        document.querySelectorAll('.chip[data-group="' + group + '"]').forEach(function(c) {
+          c.classList.remove('selected');
+          c.setAttribute('aria-pressed', 'false');
+        });
+        selectedChips[group] = val;
+        chip.classList.add('selected');
+        chip.setAttribute('aria-pressed', 'true');
       }
+    });
+  });
+
+
+  // ══════════════════════════════════════════════════════════
+  // MODAL — abrir / fechar
+  // ══════════════════════════════════════════════════════════
+  var overlay = document.getElementById('modal-overlay');
+  var modalClose = document.getElementById('modal-close');
+
+  function openModal() {
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Botão do hero
+  document.getElementById('btn-lista-espera').addEventListener('click', openModal);
+  // Botão da seção "turma"
+  document.getElementById('btn-lista-espera-2').addEventListener('click', openModal);
+  // Botão X do modal
+  modalClose.addEventListener('click', closeModal);
+  // Clicar fora do modal
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeModal();
+  });
+  // Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+  });
+
+
+  // ══════════════════════════════════════════════════════════
+  // SELETOR DE PAÍS (Bandeira + DDI)
+  // ══════════════════════════════════════════════════════════
+  var COUNTRIES = [
+    { name: 'Brasil',          iso: 'br', dial: '+55',  placeholder: '(00) 00000-0000' },
+    { name: 'Portugal',        iso: 'pt', dial: '+351', placeholder: '900 000 000' },
+    { name: 'Estados Unidos',  iso: 'us', dial: '+1',   placeholder: '(000) 000-0000' },
+    { name: 'Angola',          iso: 'ao', dial: '+244', placeholder: '000 000 000' },
+    { name: 'Moçambique',      iso: 'mz', dial: '+258', placeholder: '00 000 0000' },
+    { name: 'Cabo Verde',      iso: 'cv', dial: '+238', placeholder: '000 00 00' },
+    { name: 'Guiné-Bissau',    iso: 'gw', dial: '+245', placeholder: '000 0000' },
+    { name: 'São Tomé e Príncipe', iso: 'st', dial: '+239', placeholder: '000 0000' },
+    { name: 'Timor-Leste',     iso: 'tl', dial: '+670', placeholder: '000 0000' },
+    { name: 'Espanha',         iso: 'es', dial: '+34',  placeholder: '000 000 000' },
+    { name: 'França',          iso: 'fr', dial: '+33',  placeholder: '00 00 00 00 00' },
+    { name: 'Alemanha',        iso: 'de', dial: '+49',  placeholder: '0000 0000000' },
+    { name: 'Itália',          iso: 'it', dial: '+39',  placeholder: '000 000 0000' },
+    { name: 'Reino Unido',     iso: 'gb', dial: '+44',  placeholder: '00000 000000' },
+    { name: 'Argentina',       iso: 'ar', dial: '+54',  placeholder: '00 0000-0000' },
+    { name: 'Chile',           iso: 'cl', dial: '+56',  placeholder: '0 0000 0000' },
+    { name: 'Colômbia',        iso: 'co', dial: '+57',  placeholder: '000 000 0000' },
+    { name: 'México',          iso: 'mx', dial: '+52',  placeholder: '000 000 0000' },
+    { name: 'Canadá',          iso: 'ca', dial: '+1',   placeholder: '(000) 000-0000' },
+    { name: 'Japão',           iso: 'jp', dial: '+81',  placeholder: '00-0000-0000' },
+    { name: 'China',           iso: 'cn', dial: '+86',  placeholder: '000 0000 0000' },
+    { name: 'Coreia do Sul',   iso: 'kr', dial: '+82',  placeholder: '00-0000-0000' },
+    { name: 'Tailândia',       iso: 'th', dial: '+66',  placeholder: '00 000 0000' },
+    { name: 'Indonésia',       iso: 'id', dial: '+62',  placeholder: '000-0000-0000' },
+    { name: 'Filipinas',       iso: 'ph', dial: '+63',  placeholder: '000 000 0000' },
+    { name: 'Austrália',       iso: 'au', dial: '+61',  placeholder: '0000 000 000' },
+    { name: 'Índia',           iso: 'in', dial: '+91',  placeholder: '00000 00000' },
+    { name: 'Emirados Árabes', iso: 'ae', dial: '+971', placeholder: '00 000 0000' },
+    { name: 'Israel',          iso: 'il', dial: '+972', placeholder: '00-000-0000' },
+    { name: 'Paraguai',        iso: 'py', dial: '+595', placeholder: '000 000 000' },
+    { name: 'Uruguai',         iso: 'uy', dial: '+598', placeholder: '00 000 000' },
+    { name: 'Suíça',           iso: 'ch', dial: '+41',  placeholder: '00 000 00 00' },
+    { name: 'Bolívia',         iso: 'bo', dial: '+591', placeholder: '0000 0000' },
+    { name: 'Peru',            iso: 'pe', dial: '+51',  placeholder: '000 000 000' },
+    { name: 'Venezuela',       iso: 've', dial: '+58',  placeholder: '0000-0000000' },
+    { name: 'Guiné Equatorial',iso: 'gq', dial: '+240', placeholder: '000 000 000' },
+    { name: 'Nova Zelândia',   iso: 'nz', dial: '+64',  placeholder: '000 000 0000' },
+    { name: 'África do Sul',   iso: 'za', dial: '+27',  placeholder: '00 000 0000' },
+    { name: 'Nigéria',         iso: 'ng', dial: '+234', placeholder: '000 000 0000' },
+    { name: 'Egito',           iso: 'eg', dial: '+20',  placeholder: '00 0000 0000' },
+  ];
+
+  var selectedCountry = COUNTRIES[0];
+  var dropdownOpen = false;
+
+  var btnCountry  = document.getElementById('phone-country-btn');
+  var phoneFlag   = document.getElementById('phone-flag');
+  var phoneCode   = document.getElementById('phone-code');
+  var dropdown    = document.getElementById('phone-dropdown');
+  var phoneSearch = document.getElementById('phone-search');
+  var phoneList   = document.getElementById('phone-list');
+  var phoneInput  = document.getElementById('j-whatsapp');
+
+  function flagImg(iso) {
+    return '<img src="https://flagcdn.com/w40/' + iso + '.png" alt="' + iso.toUpperCase() + '" />';
+  }
+
+  function renderCountryList(filter) {
+    var f = (filter || '').toLowerCase();
+    phoneList.innerHTML = '';
+    COUNTRIES.forEach(function(c) {
+      if (f && c.name.toLowerCase().indexOf(f) === -1 && c.dial.indexOf(f) === -1) return;
+      var item = document.createElement('div');
+      item.className = 'phone-dropdown-item';
+      item.innerHTML = '<span class="flag">' + flagImg(c.iso) + '</span><span class="name">' + c.name + '</span><span class="dial">' + c.dial + '</span>';
+      item.onclick = function() { selectCountry(c); };
+      phoneList.appendChild(item);
+    });
+  }
+
+  function selectCountry(c) {
+    selectedCountry = c;
+    phoneFlag.innerHTML = flagImg(c.iso);
+    phoneCode.textContent = c.dial;
+    phoneInput.placeholder = c.placeholder;
+    closeDropdown();
+    phoneInput.focus();
+  }
+
+  function toggleDropdown() {
+    dropdownOpen = !dropdownOpen;
+    if (dropdownOpen) {
+      dropdown.classList.add('open');
+      phoneSearch.value = '';
+      renderCountryList('');
+      phoneSearch.focus();
+    } else { closeDropdown(); }
+  }
+  function closeDropdown() {
+    dropdownOpen = false;
+    dropdown.classList.remove('open');
+  }
+
+  btnCountry.addEventListener('click', function(e) { e.preventDefault(); toggleDropdown(); });
+  phoneSearch.addEventListener('input', function() { renderCountryList(this.value); });
+  document.addEventListener('click', function(e) {
+    if (dropdownOpen && !btnCountry.contains(e.target) && !dropdown.contains(e.target)) closeDropdown();
+  });
+  renderCountryList('');
+
+
+  // ══════════════════════════════════════════════════════════
+  // ENVIO DO FORMULÁRIO
+  // ══════════════════════════════════════════════════════════
+  var form = document.getElementById('jornada-form');
+  var btnSubmit = document.getElementById('btn-submit');
+  var formMsg = document.getElementById('form-msg');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var nome  = document.getElementById('j-nome').value.trim();
+    var email = document.getElementById('j-email').value.trim();
+    var phone = phoneInput.value.trim();
+
+    // Validação
+    if (!nome || !email || !phone) {
+      showMsg('Preencha todos os campos obrigatórios.', 'error');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showMsg('Verifique o formato do e-mail.', 'error');
+      return;
     }
 
-    // Hero button (com chips)
-    var btn1 = document.getElementById('btn-lista-espera');
-    if (btn1) btn1.addEventListener('click', openTallyPopup);
+    var whatsappFull = selectedCountry.dial.replace('+','') + phone.replace(/\D/g, '');
 
-    // Turma button (abre sem hidden fields)
-    var btn2 = document.getElementById('btn-lista-espera-2');
-    if (btn2) btn2.addEventListener('click', function() {
-      if (typeof Tally !== 'undefined' && typeof Tally.openPopup === 'function') {
-        Tally.openPopup('jaA19R', {
-          layout: 'modal',
-          emoji: { text: '\ud83e\udded', animation: 'wave' }
-        });
-      } else {
-        window.open('https://tally.so/r/jaA19R', '_blank');
-      }
-    });
-  })();
+    btnSubmit.disabled = true;
+    btnSubmit.innerHTML = '<span class="spinner"></span>Enviando...';
+    formMsg.className = 'form-msg';
+    formMsg.style.display = 'none';
+
+    var payload = {
+      nome: nome,
+      email: email,
+      whatsapp: whatsappFull,
+      prioridade: selectedChips.prioridade,
+      acompanhamento: selectedChips.acompanhamento,
+      funil: 'jornada-financeira'
+    };
+
+    var done = false;
+    function onSuccess() {
+      if (done) return;
+      done = true;
+
+      // Transforma o modal inteiro na página de agradecimento
+      var modalBody = document.querySelector('.modal-body');
+      var firstName = nome.split(' ')[0]; // Pega só o primeiro nome
+
+      modalBody.innerHTML = ''
+        + '<div style="text-align:center;animation:modalUp .4s ease forwards;">'
+        + '  <div style="font-size:2.5rem;margin-bottom:.75rem;">🧭</div>'
+        + '  <h2 style="font-family:Montserrat,sans-serif;font-weight:800;font-size:1.5rem;color:#fff;margin-bottom:.5rem;">'
+        + '    Você está na lista!'
+        + '  </h2>'
+        + '  <p style="font-size:.92rem;color:#D1D5DB;line-height:1.7;margin-bottom:1.5rem;">'
+        + '    Boa decisão, <strong style="color:#D4AF37;">' + firstName + '</strong>!<br>'
+        + '    Você será avisado(a) antes de qualquer outra pessoa quando as vagas da próxima turma abrirem — com condição especial para quem está na lista de espera.'
+        + '  </p>'
+        + '</div>'
+        + '<div style="text-align:left;background:rgba(255,255,255,.03);border:1px solid rgba(212,175,55,.15);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;">'
+        + '  <p style="font-size:.78rem;color:#9CA3AF;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.85rem;font-family:Montserrat,sans-serif;font-weight:600;">'
+        + '    Enquanto isso, assista gratuitamente:'
+        + '  </p>'
+        + '  <a href="https://www.youtube.com/playlist?list=PLnfTpbnNywejSDZGmxlz0kWFtVdB8rDZU" target="_blank" rel="noopener" '
+        + '     style="display:flex;align-items:center;gap:.65rem;padding:.7rem .85rem;border-radius:8px;text-decoration:none;color:#F0EDE8;transition:background .2s;margin-bottom:.5rem;background:rgba(212,175,55,.06);"'
+        + '     onmouseover="this.style.background=\'rgba(212,175,55,.12)\'" onmouseout="this.style.background=\'rgba(212,175,55,.06)\'">'
+        + '    <span style="font-size:1.2rem;">📊</span>'
+        + '    <span>'
+        + '      <strong style="display:block;font-size:.88rem;">Raio-X Financeiro</strong>'
+        + '      <span style="font-size:.75rem;color:#9CA3AF;">O método que usamos na Jornada</span>'
+        + '    </span>'
+        + '  </a>'
+        + '  <a href="https://www.youtube.com/playlist?list=PLnfTpbnNyweg-bSB1lQtEFLqWqmOsKJcZ" target="_blank" rel="noopener" '
+        + '     style="display:flex;align-items:center;gap:.65rem;padding:.7rem .85rem;border-radius:8px;text-decoration:none;color:#F0EDE8;transition:background .2s;background:rgba(212,175,55,.06);"'
+        + '     onmouseover="this.style.background=\'rgba(212,175,55,.12)\'" onmouseout="this.style.background=\'rgba(212,175,55,.06)\'">'
+        + '    <span style="font-size:1.2rem;">🚨</span>'
+        + '    <span>'
+        + '      <strong style="display:block;font-size:.88rem;">M.E.R.D.A.</strong>'
+        + '      <span style="font-size:.75rem;color:#9CA3AF;">Se sua prioridade agora é sair das dívidas</span>'
+        + '    </span>'
+        + '  </a>'
+        + '</div>'
+        + '<p style="text-align:center;font-size:.85rem;color:#9CA3AF;margin-bottom:1rem;">Até breve,<br><strong style="color:#D4AF37;">Phillip</strong></p>'
+        + '<button type="button" onclick="closeModal()" class="btn-gold" style="width:100%;font-size:.85rem;">Fechar</button>';
+    }
+
+    fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
+      .then(onSuccess)
+      .catch(onSuccess);
+
+    setTimeout(onSuccess, 5000);
+  });
+
+  function showMsg(text, type) {
+    formMsg.textContent = text;
+    formMsg.className = 'form-msg ' + type;
+    formMsg.style.display = 'block';
+  }
 </script>
 
 </body>
