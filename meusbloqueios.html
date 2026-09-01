@@ -98,10 +98,11 @@
       font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .82rem;
       letter-spacing: .04em; text-transform: uppercase;
       border: none; border-radius: 6px; cursor: pointer;
-      padding: 1rem 2.25rem; text-decoration: none;
+      padding: 1rem 2.25rem; text-decoration: none; width: 100%;
       transition: background-position .4s ease, transform .2s ease, box-shadow .3s ease;
     }
     .btn-gold:hover { background-position: right center; transform: translateY(-2px); box-shadow: 0 12px 32px rgba(212,175,55,.3); }
+    .btn-gold:disabled { opacity: .6; cursor: default; transform: none; box-shadow: none; }
 
     .nav-blur {
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -136,17 +137,97 @@
       border: 2px solid rgba(212,175,55,.4);
     }
 
-    /* Tally embed */
-    .tally-wrap {
+    /* ── Form fields ── */
+    .form-wrap {
       background: rgba(10,15,26,.7);
       border: 1px solid rgba(212,175,55,.2);
       border-top: 3px solid #D4AF37;
       border-radius: 16px;
-      padding: 1.5rem;
+      padding: 2rem 1.75rem;
       max-width: 560px;
       margin: 0 auto;
     }
-    .tally-wrap iframe { width: 100%; border: none; display: block; }
+    .form-field { margin-bottom: 1.25rem; text-align: left; }
+    .form-field label {
+      display: block; font-size: .72rem; color: #9CA3AF;
+      text-transform: uppercase; letter-spacing: .08em;
+      margin-bottom: .4rem; font-family: 'Montserrat', sans-serif; font-weight: 600;
+    }
+    .form-field label .req { color: #D4AF37; }
+    .form-field input[type="text"],
+    .form-field input[type="email"],
+    .form-field input[type="tel"] {
+      width: 100%; background: rgba(255,255,255,.04);
+      border: 1px solid rgba(212,175,55,.2); border-radius: 6px;
+      color: #F0EDE8; font-family: 'Inter', sans-serif; font-size: .9rem;
+      padding: .8rem 1rem; outline: none; transition: border-color .3s;
+    }
+    .form-field input:focus { border-color: #D4AF37; }
+    .form-field input::placeholder { color: rgba(240,237,232,.3); }
+    .form-hint {
+      font-size: .68rem; color: #6B7280; margin-top: .3rem;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ── Phone field with country selector ── */
+    .phone-row { display: flex; gap: 0; }
+    .phone-country-btn {
+      display: flex; align-items: center; gap: .35rem;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(212,175,55,.2); border-right: none;
+      border-radius: 6px 0 0 6px;
+      padding: .8rem .75rem;
+      cursor: pointer; color: #F0EDE8;
+      font-family: 'Inter', sans-serif; font-size: .85rem;
+      white-space: nowrap; transition: border-color .3s;
+    }
+    .phone-country-btn:hover { border-color: rgba(212,175,55,.4); }
+    .phone-country-btn .flag { line-height: 1; display: flex; align-items: center; }
+    .phone-country-btn .flag img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; display: block; }
+    .phone-country-btn .code { color: #B0ADA8; font-size: .82rem; }
+    .phone-country-btn .arrow { color: #6B7280; font-size: .6rem; margin-left: .15rem; }
+    .phone-row input[type="tel"] {
+      border-radius: 0 6px 6px 0; flex: 1; min-width: 0;
+    }
+
+    /* ── Country dropdown ── */
+    .phone-dropdown-wrap { position: relative; }
+    .phone-dropdown {
+      display: none; position: absolute; top: 100%; left: 0; z-index: 100;
+      width: 280px; max-height: 260px; overflow-y: auto;
+      background: #0f1423; border: 1px solid rgba(212,175,55,.25);
+      border-radius: 8px; margin-top: 4px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.6);
+    }
+    .phone-dropdown.open { display: block; }
+    .phone-dropdown-search {
+      width: 100%; background: rgba(255,255,255,.04);
+      border: none; border-bottom: 1px solid rgba(212,175,55,.12);
+      color: #F0EDE8; font-family: 'Inter', sans-serif; font-size: .82rem;
+      padding: .65rem .85rem; outline: none;
+    }
+    .phone-dropdown-search::placeholder { color: rgba(240,237,232,.3); }
+    .phone-dropdown-item {
+      display: flex; align-items: center; gap: .6rem;
+      padding: .55rem .85rem; cursor: pointer; font-size: .82rem;
+      color: #D1D5DB; transition: background .15s;
+    }
+    .phone-dropdown-item:hover { background: rgba(212,175,55,.08); }
+    .phone-dropdown-item .flag { display: flex; align-items: center; }
+    .phone-dropdown-item .flag img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
+    .phone-dropdown-item .name { flex: 1; }
+    .phone-dropdown-item .dial { color: #6B7280; font-size: .78rem; }
+
+    /* ── Form feedback ── */
+    .form-msg {
+      text-align: center; font-size: .85rem; margin-top: 1rem;
+      padding: .65rem; border-radius: 6px; display: none;
+    }
+    .form-msg.success { display: block; color: #34D399; background: rgba(52,211,153,.08); border: 1px solid rgba(52,211,153,.2); }
+    .form-msg.error { display: block; color: #F87171; background: rgba(248,113,113,.08); border: 1px solid rgba(248,113,113,.2); }
+
+    .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(10,10,0,.3); border-top-color: #0A0000; border-radius: 50%; animation: spin .7s linear infinite; margin-right: 8px; vertical-align: -2px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     footer { border-top: 1px solid rgba(212,175,55,.1); padding: 2.5rem 1.5rem; text-align: center; line-height: 1.9; }
     footer p { margin: 0; font-size: .75rem; }
@@ -260,8 +341,8 @@
   </section>
 
 
-  <!-- ══════════════ FORM TALLY ══════════════ -->
-  <section class="section section-navy">
+  <!-- ══════════════ FORMULÁRIO NATIVO (substitui Tally) ══════════════ -->
+  <section class="section section-navy" id="form-section">
     <div class="wrap-sm">
       <div class="center reveal" style="margin-bottom:2rem;">
         <p class="eyebrow" style="margin-bottom:1.25rem;">Receba Grátis</p>
@@ -269,17 +350,44 @@
         <p class="lead">Preencha os campos abaixo e receba o material no seu e-mail.</p>
       </div>
 
-      <div class="tally-wrap reveal">
-        <iframe
-          data-tally-src="https://tally.so/embed/1AarxO?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-          loading="lazy"
-          width="100%"
-          height="1"
-          frameborder="0"
-          marginheight="0"
-          marginwidth="0"
-          title="Formulário — Quebrando Bloqueios Emocionais Financeiros">
-        </iframe>
+      <div class="form-wrap reveal">
+        <form id="ebook-form" novalidate>
+
+          <div class="form-field">
+            <label for="f-nome">Nome completo <span class="req">*</span></label>
+            <input type="text" id="f-nome" name="nome" required placeholder="Seu nome completo" autocomplete="name" />
+          </div>
+
+          <div class="form-field">
+            <label for="f-email">E-mail <span class="req">*</span></label>
+            <input type="email" id="f-email" name="email" required placeholder="seu@email.com" autocomplete="email" />
+          </div>
+
+          <div class="form-field">
+            <label for="f-whatsapp">WhatsApp <span style="text-transform:none;opacity:.6;">(opcional)</span></label>
+            <div class="phone-dropdown-wrap">
+              <div class="phone-row">
+                <button type="button" class="phone-country-btn" id="phone-country-btn" aria-label="Selecionar país">
+                  <span class="flag" id="phone-flag"><img src="https://flagcdn.com/w40/br.png" alt="BR" /></span>
+                  <span class="code" id="phone-code">+55</span>
+                  <span class="arrow">▾</span>
+                </button>
+                <input type="tel" id="f-whatsapp" name="whatsapp" placeholder="(00) 00000-0000" autocomplete="tel" />
+              </div>
+              <div class="phone-dropdown" id="phone-dropdown">
+                <input type="text" class="phone-dropdown-search" id="phone-search" placeholder="Buscar país..." />
+                <div id="phone-list"></div>
+              </div>
+            </div>
+            <p class="form-hint">Selecione o país e digite com DDD</p>
+          </div>
+
+          <button type="submit" class="btn-gold" id="btn-submit" style="margin-top:.5rem;">
+            ◆ &nbsp;Receber Ebook Gratuito
+          </button>
+
+          <div class="form-msg" id="form-msg"></div>
+        </form>
       </div>
     </div>
   </section>
@@ -300,8 +408,21 @@
   </p>
 </footer>
 
+
 <script>
+  /* ══════════════════════════════════════════════════════════
+     EBOOK FORM — HTML nativo + fetch() para Apps Script
+     Substitui o iframe Tally sem dependências externas
+  ══════════════════════════════════════════════════════════ */
+
+  // ── URL do Google Apps Script (Web App) ──
+  // IMPORTANTE: Substituir pela URL real após criar o deploy (instruções abaixo)
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxoMYxH2Uvdb-k6V7xZfqL-hG62yeDrWJz4NRKcxi5Cc7d8TNp2s8SyaYme5xjmvQu_/exec';
+
+  // ── Ano dinâmico ──
   document.querySelectorAll('.copy-year').forEach(function(e){ e.textContent = new Date().getFullYear(); });
+
+  // ── Scroll reveal ──
   (function() {
     var items = document.querySelectorAll('.reveal');
     var obs = new IntersectionObserver(function(entries) {
@@ -309,25 +430,185 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     items.forEach(function(el) { obs.observe(el); });
   })();
-</script>
 
-<!-- Tally — auto-resize do iframe embutido (remove barra de rolagem interna) -->
-<script>
-  var d = document, w = "https://tally.so/widgets/embed.js",
-      v = function() {
-        "undefined" != typeof Tally
-          ? Tally.loadEmbeds()
-          : d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach(function(e) {
-              e.src = e.dataset.tallySrc;
-            });
-      };
-  if ("undefined" != typeof Tally) v();
-  else if (d.querySelector('script[src="' + w + '"]') == null) {
-    var s = d.createElement("script");
-    s.src = w;
-    s.onload = v;
-    s.onerror = v;
-    d.body.appendChild(s);
+
+  // ══════════════════════════════════════════════════════════
+  // SELETOR DE PAÍS (Bandeira + DDI)
+  // ══════════════════════════════════════════════════════════
+  var COUNTRIES = [
+    { name: 'Brasil',          iso: 'br', dial: '+55',  placeholder: '(00) 00000-0000' },
+    { name: 'Portugal',        iso: 'pt', dial: '+351', placeholder: '900 000 000' },
+    { name: 'Estados Unidos',  iso: 'us', dial: '+1',   placeholder: '(000) 000-0000' },
+    { name: 'Angola',          iso: 'ao', dial: '+244', placeholder: '000 000 000' },
+    { name: 'Moçambique',      iso: 'mz', dial: '+258', placeholder: '00 000 0000' },
+    { name: 'Cabo Verde',      iso: 'cv', dial: '+238', placeholder: '000 00 00' },
+    { name: 'Guiné-Bissau',    iso: 'gw', dial: '+245', placeholder: '000 0000' },
+    { name: 'São Tomé e Príncipe', iso: 'st', dial: '+239', placeholder: '000 0000' },
+    { name: 'Timor-Leste',     iso: 'tl', dial: '+670', placeholder: '000 0000' },
+    { name: 'Espanha',         iso: 'es', dial: '+34',  placeholder: '000 000 000' },
+    { name: 'França',          iso: 'fr', dial: '+33',  placeholder: '00 00 00 00 00' },
+    { name: 'Alemanha',        iso: 'de', dial: '+49',  placeholder: '0000 0000000' },
+    { name: 'Itália',          iso: 'it', dial: '+39',  placeholder: '000 000 0000' },
+    { name: 'Reino Unido',     iso: 'gb', dial: '+44',  placeholder: '00000 000000' },
+    { name: 'Argentina',       iso: 'ar', dial: '+54',  placeholder: '00 0000-0000' },
+    { name: 'Chile',           iso: 'cl', dial: '+56',  placeholder: '0 0000 0000' },
+    { name: 'Colômbia',        iso: 'co', dial: '+57',  placeholder: '000 000 0000' },
+    { name: 'México',          iso: 'mx', dial: '+52',  placeholder: '000 000 0000' },
+    { name: 'Canadá',          iso: 'ca', dial: '+1',   placeholder: '(000) 000-0000' },
+    { name: 'Japão',           iso: 'jp', dial: '+81',  placeholder: '00-0000-0000' },
+    { name: 'China',           iso: 'cn', dial: '+86',  placeholder: '000 0000 0000' },
+    { name: 'Coreia do Sul',   iso: 'kr', dial: '+82',  placeholder: '00-0000-0000' },
+    { name: 'Tailândia',       iso: 'th', dial: '+66',  placeholder: '00 000 0000' },
+    { name: 'Indonésia',       iso: 'id', dial: '+62',  placeholder: '000-0000-0000' },
+    { name: 'Filipinas',       iso: 'ph', dial: '+63',  placeholder: '000 000 0000' },
+    { name: 'Austrália',       iso: 'au', dial: '+61',  placeholder: '0000 000 000' },
+    { name: 'Índia',           iso: 'in', dial: '+91',  placeholder: '00000 00000' },
+    { name: 'Emirados Árabes', iso: 'ae', dial: '+971', placeholder: '00 000 0000' },
+    { name: 'Israel',          iso: 'il', dial: '+972', placeholder: '00-000-0000' },
+    { name: 'Paraguai',        iso: 'py', dial: '+595', placeholder: '000 000 000' },
+    { name: 'Uruguai',         iso: 'uy', dial: '+598', placeholder: '00 000 000' },
+    { name: 'Suíça',           iso: 'ch', dial: '+41',  placeholder: '00 000 00 00' },
+    { name: 'Bolívia',         iso: 'bo', dial: '+591', placeholder: '0000 0000' },
+    { name: 'Peru',            iso: 'pe', dial: '+51',  placeholder: '000 000 000' },
+    { name: 'Venezuela',       iso: 've', dial: '+58',  placeholder: '0000-0000000' },
+    { name: 'Guiné Equatorial',iso: 'gq', dial: '+240', placeholder: '000 000 000' },
+    { name: 'Nova Zelândia',   iso: 'nz', dial: '+64',  placeholder: '000 000 0000' },
+    { name: 'África do Sul',   iso: 'za', dial: '+27',  placeholder: '00 000 0000' },
+    { name: 'Nigéria',         iso: 'ng', dial: '+234', placeholder: '000 000 0000' },
+    { name: 'Egito',           iso: 'eg', dial: '+20',  placeholder: '00 0000 0000' },
+  ];
+
+  var selectedCountry = COUNTRIES[0]; // Brasil default
+  var dropdownOpen = false;
+
+  var btnCountry  = document.getElementById('phone-country-btn');
+  var phoneFlag   = document.getElementById('phone-flag');
+  var phoneCode   = document.getElementById('phone-code');
+  var dropdown    = document.getElementById('phone-dropdown');
+  var phoneSearch = document.getElementById('phone-search');
+  var phoneList   = document.getElementById('phone-list');
+  var phoneInput  = document.getElementById('f-whatsapp');
+
+  function flagImg(iso) {
+    return '<img src="https://flagcdn.com/w40/' + iso + '.png" alt="' + iso.toUpperCase() + '" />';
+  }
+
+  function renderCountryList(filter) {
+    var f = (filter || '').toLowerCase();
+    phoneList.innerHTML = '';
+    COUNTRIES.forEach(function(c) {
+      if (f && c.name.toLowerCase().indexOf(f) === -1 && c.dial.indexOf(f) === -1) return;
+      var item = document.createElement('div');
+      item.className = 'phone-dropdown-item';
+      item.innerHTML = '<span class="flag">' + flagImg(c.iso) + '</span><span class="name">' + c.name + '</span><span class="dial">' + c.dial + '</span>';
+      item.onclick = function() { selectCountry(c); };
+      phoneList.appendChild(item);
+    });
+  }
+
+  function selectCountry(c) {
+    selectedCountry = c;
+    phoneFlag.innerHTML = flagImg(c.iso);
+    phoneCode.textContent = c.dial;
+    phoneInput.placeholder = c.placeholder;
+    closeDropdown();
+    phoneInput.focus();
+  }
+
+  function toggleDropdown() {
+    dropdownOpen = !dropdownOpen;
+    if (dropdownOpen) {
+      dropdown.classList.add('open');
+      phoneSearch.value = '';
+      renderCountryList('');
+      phoneSearch.focus();
+    } else {
+      closeDropdown();
+    }
+  }
+
+  function closeDropdown() {
+    dropdownOpen = false;
+    dropdown.classList.remove('open');
+  }
+
+  btnCountry.addEventListener('click', function(e) { e.preventDefault(); toggleDropdown(); });
+  phoneSearch.addEventListener('input', function() { renderCountryList(this.value); });
+
+  // Fecha dropdown ao clicar fora
+  document.addEventListener('click', function(e) {
+    if (dropdownOpen && !btnCountry.contains(e.target) && !dropdown.contains(e.target)) {
+      closeDropdown();
+    }
+  });
+
+  // Inicializa
+  renderCountryList('');
+
+
+  // ══════════════════════════════════════════════════════════
+  // ENVIO DO FORMULÁRIO
+  // ══════════════════════════════════════════════════════════
+  var form = document.getElementById('ebook-form');
+  var btnSubmit = document.getElementById('btn-submit');
+  var formMsg = document.getElementById('form-msg');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var nome  = document.getElementById('f-nome').value.trim();
+    var email = document.getElementById('f-email').value.trim();
+    var phone = phoneInput.value.trim();
+
+    // Validação básica
+    if (!nome || !email) {
+      showMsg('Preencha o nome e o e-mail.', 'error');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showMsg('Verifique o formato do e-mail.', 'error');
+      return;
+    }
+
+    // Monta WhatsApp completo (DDI + número)
+    var whatsappFull = phone ? selectedCountry.dial.replace('+','') + phone.replace(/\D/g, '') : '';
+
+    // Desabilita botão
+    btnSubmit.disabled = true;
+    btnSubmit.innerHTML = '<span class="spinner"></span>Enviando...';
+    formMsg.className = 'form-msg';
+    formMsg.style.display = 'none';
+
+    var payload = {
+      nome: nome,
+      email: email,
+      whatsapp: whatsappFull,
+      funil: 'ebook-bloqueios'
+    };
+
+    // Envia e redireciona (mesmo padrão do mapa.html)
+    var redirected = false;
+    function doRedirect() {
+      if (redirected) return;
+      redirected = true;
+      window.location.href = 'obrigado-ebook.html';
+    }
+
+    fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
+      .then(doRedirect)
+      .catch(function() {
+        // Mesmo se der erro no fetch, redireciona — o lead não pode ficar travado
+        doRedirect();
+      });
+
+    // Segurança: redireciona em no máximo 4s
+    setTimeout(doRedirect, 4000);
+  });
+
+  function showMsg(text, type) {
+    formMsg.textContent = text;
+    formMsg.className = 'form-msg ' + type;
+    formMsg.style.display = 'block';
   }
 </script>
 
