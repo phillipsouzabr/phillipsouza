@@ -584,6 +584,43 @@
       background: #0A0F1A;
       color: #F0EDE8;
     }
+
+    /* ── Custom phone country selector (flagcdn) ─── */
+    .app-phone-dropdown-wrap { position: relative; width: 100%; }
+    .app-phone-row { display: flex; gap: 0; width: 100%; }
+    .app-phone-country-btn {
+      display: flex; align-items: center; gap: .35rem;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(212,175,55,.2);
+      border-right: none; border-radius: 6px 0 0 6px;
+      color: #F0EDE8; font-family: 'Inter', sans-serif; font-size: .85rem;
+      padding: .75rem .6rem; cursor: pointer; flex-shrink: 0;
+      transition: border-color .3s;
+    }
+    .app-phone-country-btn:hover,
+    .app-phone-country-btn:focus { border-color: #D4AF37; outline: none; }
+    .app-phone-flag img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; vertical-align: middle; }
+    .app-phone-dial { font-weight: 500; }
+    .app-phone-arrow { font-size: .6rem; color: #D4AF37; margin-left: 2px; }
+    .app-phone-dropdown {
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      max-height: 220px; overflow-y: auto; z-index: 999;
+      background: #0A0F1A; border: 1px solid rgba(212,175,55,.25);
+      border-radius: 0 0 8px 8px; box-shadow: 0 12px 40px rgba(0,0,0,.5);
+    }
+    .app-phone-dropdown.open { display: block; }
+    .app-phone-search {
+      width: 100%; padding: .55rem .75rem; border: none; border-bottom: 1px solid rgba(212,175,55,.1);
+      background: transparent; color: #F0EDE8; font-size: .8rem; outline: none;
+    }
+    .app-phone-search::placeholder { color: rgba(240,237,232,.25); }
+    .app-phone-list { list-style: none; padding: 0; margin: 0; }
+    .app-phone-list li {
+      display: flex; align-items: center; gap: .6rem;
+      padding: .5rem .75rem; cursor: pointer; font-size: .82rem;
+      color: #D1D5DB; transition: background .15s;
+    }
+    .app-phone-list li:hover { background: rgba(212,175,55,.08); }
+    .app-phone-list li img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
     .phone-number {
       flex: 1;
       background: rgba(255,255,255,.04);
@@ -1575,44 +1612,27 @@
           WhatsApp <span class="text-gold" aria-hidden="true">*</span>
         </label>
         <div class="phone-wrapper">
-          <select id="app-ddi" name="ddi" class="phone-ddi" aria-label="Código do país">
-            <option value="+55" selected>🇧🇷 +55</option>
-            <option value="+1">🇺🇸 +1</option>
-            <option value="+1-CA">🇨🇦 +1</option>
-            <option value="+351">🇵🇹 +351</option>
-            <option value="+244">🇦🇴 +244</option>
-            <option value="+258">🇲🇿 +258</option>
-            <option value="+238">🇨🇻 +238</option>
-            <option value="+239">🇸🇹 +239</option>
-            <option value="+245">🇬🇼 +245</option>
-            <option value="+240">🇬🇶 +240</option>
-            <option value="+34">🇪🇸 +34</option>
-            <option value="+44">🇬🇧 +44</option>
-            <option value="+49">🇩🇪 +49</option>
-            <option value="+33">🇫🇷 +33</option>
-            <option value="+39">🇮🇹 +39</option>
-            <option value="+41">🇨🇭 +41</option>
-            <option value="+54">🇦🇷 +54</option>
-            <option value="+56">🇨🇱 +56</option>
-            <option value="+57">🇨🇴 +57</option>
-            <option value="+598">🇺🇾 +598</option>
-            <option value="+595">🇵🇾 +595</option>
-            <option value="+591">🇧🇴 +591</option>
-            <option value="+51">🇵🇪 +51</option>
-            <option value="+58">🇻🇪 +58</option>
-            <option value="+52">🇲🇽 +52</option>
-            <option value="+81">🇯🇵 +81</option>
-            <option value="+61">🇦🇺 +61</option>
-            <option value="+64">🇳🇿 +64</option>
-          </select>
-          <input
-            type="tel"
-            id="app-whatsapp"
-            name="whatsapp"
-            autocomplete="tel"
-            placeholder="(00) 00000-0000"
-            class="phone-number"
-          />
+          <div class="app-phone-dropdown-wrap">
+            <div class="app-phone-row">
+              <button type="button" class="app-phone-country-btn" id="app-phone-country-btn" aria-label="Selecionar país">
+                <span class="app-phone-flag" id="app-phone-flag"><img src="https://flagcdn.com/w40/br.png" alt="BR" /></span>
+                <span class="app-phone-dial" id="app-phone-dial">+55</span>
+                <span class="app-phone-arrow">▾</span>
+              </button>
+              <input
+                type="tel"
+                id="app-whatsapp"
+                name="whatsapp"
+                autocomplete="tel"
+                placeholder="(00) 00000-0000"
+                class="phone-number"
+              />
+            </div>
+            <div class="app-phone-dropdown" id="app-phone-dropdown">
+              <input type="text" class="app-phone-search" id="app-phone-search" placeholder="Buscar país..." />
+              <ul class="app-phone-list" id="app-phone-list"></ul>
+            </div>
+          </div>
         </div>
         <span class="field-error hidden text-xs text-red-400 mt-1 block" data-for="app-whatsapp">Por favor, informe seu WhatsApp com DDD.</span>
         <p class="text-xs text-gray-600 mt-1">Selecione o país e digite com DDD</p>
@@ -1685,6 +1705,101 @@
      JAVASCRIPT — Carta + Modal + Scroll Reveal + Nav
 ════════════════════════════════════════════════════════════════ -->
 <script>
+
+  /* ══════════════════════════════════════════════════════════
+     SELETOR DE PAÍS — Modal Aplicação (flagcdn)
+  ══════════════════════════════════════════════════════════ */
+  var APP_COUNTRIES = [
+    { name: 'Brasil',          iso: 'br', dial: '+55',  placeholder: '(00) 00000-0000' },
+    { name: 'Portugal',        iso: 'pt', dial: '+351', placeholder: '900 000 000' },
+    { name: 'Estados Unidos',  iso: 'us', dial: '+1',   placeholder: '(000) 000-0000' },
+    { name: 'Canadá',          iso: 'ca', dial: '+1',   placeholder: '(000) 000-0000' },
+    { name: 'Angola',          iso: 'ao', dial: '+244', placeholder: '900 000 000' },
+    { name: 'Moçambique',      iso: 'mz', dial: '+258', placeholder: '84 000 0000' },
+    { name: 'Cabo Verde',      iso: 'cv', dial: '+238', placeholder: '000 00 00' },
+    { name: 'São Tomé e Príncipe', iso: 'st', dial: '+239', placeholder: '990 0000' },
+    { name: 'Guiné-Bissau',    iso: 'gw', dial: '+245', placeholder: '955 000 000' },
+    { name: 'Guiné Equatorial', iso: 'gq', dial: '+240', placeholder: '222 000 000' },
+    { name: 'Timor-Leste',     iso: 'tl', dial: '+670', placeholder: '7700 0000' },
+    { name: 'Espanha',         iso: 'es', dial: '+34',  placeholder: '600 00 00 00' },
+    { name: 'Reino Unido',     iso: 'gb', dial: '+44',  placeholder: '07400 000000' },
+    { name: 'Alemanha',        iso: 'de', dial: '+49',  placeholder: '0151 00000000' },
+    { name: 'França',          iso: 'fr', dial: '+33',  placeholder: '06 00 00 00 00' },
+    { name: 'Itália',          iso: 'it', dial: '+39',  placeholder: '312 000 0000' },
+    { name: 'Suíça',           iso: 'ch', dial: '+41',  placeholder: '078 000 00 00' },
+    { name: 'Países Baixos',   iso: 'nl', dial: '+31',  placeholder: '06 00000000' },
+    { name: 'Irlanda',         iso: 'ie', dial: '+353', placeholder: '085 000 0000' },
+    { name: 'Argentina',       iso: 'ar', dial: '+54',  placeholder: '11 0000-0000' },
+    { name: 'Chile',           iso: 'cl', dial: '+56',  placeholder: '9 0000 0000' },
+    { name: 'Colômbia',        iso: 'co', dial: '+57',  placeholder: '300 000 0000' },
+    { name: 'Uruguai',         iso: 'uy', dial: '+598', placeholder: '094 000 000' },
+    { name: 'Paraguai',        iso: 'py', dial: '+595', placeholder: '0961 000000' },
+    { name: 'Bolívia',         iso: 'bo', dial: '+591', placeholder: '71234567' },
+    { name: 'Peru',            iso: 'pe', dial: '+51',  placeholder: '912 345 678' },
+    { name: 'Venezuela',       iso: 've', dial: '+58',  placeholder: '0412-0000000' },
+    { name: 'México',          iso: 'mx', dial: '+52',  placeholder: '55 0000 0000' },
+    { name: 'Japão',           iso: 'jp', dial: '+81',  placeholder: '090-0000-0000' },
+    { name: 'China',           iso: 'cn', dial: '+86',  placeholder: '131 0000 0000' },
+    { name: 'Coreia do Sul',   iso: 'kr', dial: '+82',  placeholder: '010-0000-0000' },
+    { name: 'Índia',           iso: 'in', dial: '+91',  placeholder: '90000 00000' },
+    { name: 'Emirados Árabes', iso: 'ae', dial: '+971', placeholder: '050 000 0000' },
+    { name: 'Israel',          iso: 'il', dial: '+972', placeholder: '050-000-0000' },
+    { name: 'Austrália',       iso: 'au', dial: '+61',  placeholder: '0400 000 000' },
+    { name: 'Nova Zelândia',   iso: 'nz', dial: '+64',  placeholder: '021 000 0000' },
+    { name: 'África do Sul',   iso: 'za', dial: '+27',  placeholder: '071 000 0000' }
+  ];
+
+  var appSelectedCountry = APP_COUNTRIES[0];
+  var appBtnCountry = document.getElementById('app-phone-country-btn');
+  var appPhoneFlag  = document.getElementById('app-phone-flag');
+  var appPhoneDial  = document.getElementById('app-phone-dial');
+  var appPhoneInput = document.getElementById('app-whatsapp');
+  var appDropdown   = document.getElementById('app-phone-dropdown');
+  var appPhoneList  = document.getElementById('app-phone-list');
+  var appPhoneSearch = document.getElementById('app-phone-search');
+  var appDropdownOpen = false;
+
+  function appSelectCountry(c) {
+    appSelectedCountry = c;
+    appPhoneFlag.innerHTML = '<img src="https://flagcdn.com/w40/' + c.iso + '.png" alt="' + c.iso.toUpperCase() + '" />';
+    appPhoneDial.textContent = c.dial;
+    appPhoneInput.placeholder = c.placeholder;
+    appPhoneInput.value = '';
+    appCloseDropdown();
+    appPhoneInput.focus();
+  }
+
+  function appRenderCountryList(filter) {
+    var html = '';
+    var f = (filter || '').toLowerCase();
+    APP_COUNTRIES.forEach(function(c) {
+      if (f && c.name.toLowerCase().indexOf(f) === -1 && c.dial.indexOf(f) === -1) return;
+      html += '<li onclick="appSelectCountry(APP_COUNTRIES[' + APP_COUNTRIES.indexOf(c) + '])">' +
+        '<img src="https://flagcdn.com/w40/' + c.iso + '.png" alt="' + c.iso.toUpperCase() + '" /> ' +
+        '<span>' + c.name + '</span> <span style="color:#6B7280;margin-left:auto">' + c.dial + '</span></li>';
+    });
+    appPhoneList.innerHTML = html || '<li style="color:#6B7280">Nenhum resultado</li>';
+  }
+
+  function appCloseDropdown() { appDropdownOpen = false; appDropdown.classList.remove('open'); }
+
+  appBtnCountry.addEventListener('click', function(e) {
+    e.preventDefault();
+    appDropdownOpen = !appDropdownOpen;
+    if (appDropdownOpen) {
+      appDropdown.classList.add('open');
+      appPhoneSearch.value = '';
+      appRenderCountryList('');
+      appPhoneSearch.focus();
+    } else { appCloseDropdown(); }
+  });
+  appPhoneSearch.addEventListener('input', function() { appRenderCountryList(this.value); });
+  document.addEventListener('click', function(e) {
+    if (appDropdownOpen && !appBtnCountry.contains(e.target) && !appDropdown.contains(e.target)) appCloseDropdown();
+  });
+  appRenderCountryList('');
+
+
   /* ── Validação e submit do formulário (cross-browser/mobile) ── */
   function submitForm() {
     const form    = document.getElementById('application-form');
@@ -1752,7 +1867,7 @@
 
     var APLICACAO_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyMF068TLx5VXT2NPKT2-pk7IZVv0sB6mp3Can4g_3hjPzKCTe3hgireK2tWPwXoqpZHg/exec';
 
-    var ddi = document.getElementById('app-ddi').value.replace('+','');
+    var ddi = appSelectedCountry.dial.replace('+','');
     var phoneNum = tel.value.trim().replace(/\D/g, '');
 
     var payload = {
