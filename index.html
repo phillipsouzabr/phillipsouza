@@ -545,8 +545,8 @@
       pointer-events: none;
     }
 
-    /* ── LGPD checkbox custom style ──────────────────────────── */
-    .lgpd-box {
+    /* ── Declaração de aceite ──────────────────────────── */
+    .app-terms-box {
       background: rgba(212,175,55,.04);
       border: 1px solid rgba(212,175,55,.18);
       border-radius: 8px;
@@ -1638,22 +1638,22 @@
         <p class="text-xs text-gray-600 mt-1">Selecione o país e digite com DDD</p>
       </div>
 
-      <!-- LGPD -->
-      <div class="lgpd-box">
+      <!-- Aceite -->
+      <div class="app-terms-box">
         <p class="text-xs text-gray-400 font-heading tracking-wider uppercase mb-3 font-600">
-          Declaração de Consentimento (LGPD) <span class="text-gold">*</span>
+          Declaração de Consentimento <span class="text-gold">*</span>
         </p>
 
         <div class="flex items-start gap-3 mb-3">
           <input
             type="checkbox"
-            id="app-lgpd-privacidade"
+            id="app-agree-privacy"
             name="lgpd_privacidade"
             value="concordo-politica-privacidade-termos-uso"
             class="mt-0.5 flex-shrink-0 accent-yellow-500"
             style="width:16px; height:16px; cursor:pointer;"
           />
-          <label for="app-lgpd-privacidade" class="text-xs text-gray-400 leading-relaxed cursor-pointer">
+          <label for="app-agree-privacy" class="text-xs text-gray-400 leading-relaxed cursor-pointer">
             Li e concordo com a
             <a href="privacidade.html" target="_blank" rel="noopener noreferrer" class="text-gold hover:underline">Política de Privacidade</a>
             e os
@@ -1665,13 +1665,13 @@
         <div class="flex items-start gap-3">
           <input
             type="checkbox"
-            id="app-lgpd-contato"
+            id="app-agree-contact"
             name="lgpd_contato"
             value="autorizo-contato-whatsapp-email"
             class="mt-0.5 flex-shrink-0 accent-yellow-500"
             style="width:16px; height:16px; cursor:pointer;"
           />
-          <label for="app-lgpd-contato" class="text-xs text-gray-400 leading-relaxed cursor-pointer">
+          <label for="app-agree-contact" class="text-xs text-gray-400 leading-relaxed cursor-pointer">
             Autorizo Phillip Souza e sua equipe a me contatarem pelo
             <strong class="text-gray-300">WhatsApp</strong> e
             <strong class="text-gray-300">e-mail</strong>
@@ -1679,10 +1679,10 @@
           </label>
         </div>
 
-        <span class="field-error hidden text-xs text-red-400 mt-2 block" id="lgpd-error">Marque as duas opções de consentimento para continuar.</span>
+        <span class="field-error hidden text-xs text-red-400 mt-2 block" id="terms-error">Marque as duas opções de consentimento para continuar.</span>
 
         <p class="text-xs text-gray-600 mt-3 leading-relaxed">
-          Proteção garantida pela Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018).
+          Proteção garantida pela Lei Geral de Proteção de Dados (Lei nº 13.709/2018).
         </p>
       </div>
 
@@ -1692,7 +1692,7 @@
       </button>
 
       <p class="text-center text-xs text-gray-600 pt-1">
-        Seus dados são protegidos pela LGPD · Processo 100% confidencial
+        Seus dados são protegidos por lei · Processo 100% confidencial
       </p>
 
     </form>
@@ -1806,8 +1806,8 @@
     const nome    = document.getElementById('app-nome');
     const email   = document.getElementById('app-email');
     const tel     = document.getElementById('app-whatsapp');
-    const lgpd1   = document.getElementById('app-lgpd-privacidade');
-    const lgpd2   = document.getElementById('app-lgpd-contato');
+    const lgpd1   = document.getElementById('app-agree-privacy');
+    const lgpd2   = document.getElementById('app-agree-contact');
     const btn     = document.getElementById('btn-submit');
 
     // Limpa erros anteriores
@@ -1844,9 +1844,9 @@
 
     // Validar LGPD
     if (!lgpd1.checked || !lgpd2.checked) {
-      document.getElementById('lgpd-error').classList.remove('hidden');
-      document.querySelector('.lgpd-box').style.borderColor = 'rgba(248,113,113,.4)';
-      if (valid) document.querySelector('.lgpd-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      document.getElementById('terms-error').classList.remove('hidden');
+      document.querySelector('.app-terms-box').style.borderColor = 'rgba(248,113,113,.4)';
+      if (valid) document.querySelector('.app-terms-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
       valid = false;
     }
 
