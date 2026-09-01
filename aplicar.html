@@ -2,6 +2,16 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZ3QL2RJGM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZZ3QL2RJGM');
+  </script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aplicação — Mentoria Premium · Phillip Souza</title>
   <meta name="description" content="Formulário de aplicação para a Mentoria Premium com Phillip Souza. Processo confidencial e analisado individualmente." />
@@ -497,6 +507,11 @@
       document.getElementById('conf-nome').textContent = leadNome.split(' ')[0] || 'amigo(a)';
       currentStep = 9;
       showStep(9);
+
+      // Evento de conversão — aplicação completa (não apenas visita à página)
+      if (typeof gtag === 'function') {
+        gtag('event', 'aplicacao_completa', { event_category: 'lead', event_label: 'mentoria-premium' });
+      }
     }
 
     fetch(APLICACAO_FORM_URL, { method: 'POST', body: JSON.stringify(payload) })
