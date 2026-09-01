@@ -327,11 +327,19 @@
         Se o seu perfil for compatível com o processo, entrarei em contato pelo
         <strong style="color:#fff;">WhatsApp em até 48 horas úteis</strong>.
       </p>
-      <p style="font-size:.8rem;color:#6B7280;margin-top:1.5rem;">
-        Enquanto isso, se ainda não conhece meu trabalho a fundo:
+
+      <p style="font-size:.8rem;color:#6B7280;margin-top:1.5rem;margin-bottom:.75rem;">
+        Se quiser adiantar a conversa:
       </p>
-      <a href="https://www.youtube.com/@phillipsouzabr" target="_blank" rel="noopener" class="cta-link">
-        📺 &nbsp;Conhecer o canal no YouTube
+      <a href="https://wa.me/5531980260779?text=Ol%C3%A1%20Phillip%2C%20acabei%20de%20enviar%20minha%20aplica%C3%A7%C3%A3o%20para%20a%20Mentoria%20Premium." target="_blank" rel="noopener" class="cta-link" style="background:rgba(37,211,102,.08);border-color:rgba(37,211,102,.3);color:#25D366;">
+        💬 &nbsp;Falar direto no WhatsApp
+      </a>
+
+      <p style="font-size:.75rem;color:#4B5563;margin-top:1.5rem;margin-bottom:.5rem;">
+        Enquanto isso, conheça meu trabalho:
+      </p>
+      <a href="https://www.youtube.com/@phillipsouzabr" target="_blank" rel="noopener" class="cta-link" style="font-size:.8rem;padding:.6rem 1.5rem;">
+        📺 &nbsp;Canal no YouTube
       </a>
       <div style="margin-top:1.5rem;">
         <a href="index.html" style="color:#6B7280;font-size:.8rem;text-decoration:none;">← Voltar ao site</a>
@@ -454,7 +462,8 @@
     function onDone() {
       if (done) return;
       done = true;
-      // Show confirmation
+      // Show confirmation — esconde header e progress
+      document.querySelector('.app-header').style.display = 'none';
       document.querySelector('.progress-wrap').style.display = 'none';
       document.getElementById('conf-nome').textContent = leadNome.split(' ')[0] || 'amigo(a)';
       currentStep = 9;
