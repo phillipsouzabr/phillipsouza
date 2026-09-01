@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZ3QL2RJGM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZZ3QL2RJGM');
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <title>Você está na lista · Jornada de Navegação Financeira — Phillip Souza</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" /></noscript>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: #000; color: #F0EDE8;
+      font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;
+      min-height: 100vh; display: flex; flex-direction: column;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: .5;
+    }
+    header, main, footer { position: relative; z-index: 1; }
+    .nav-blur {
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      background: rgba(0,0,0,.82); border-bottom: 1px solid rgba(212,175,55,.1);
+      padding: 1rem 1.5rem; display: flex; align-items: center;
+      position: sticky; top: 0; z-index: 50;
+    }
+    .logo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: .15em; color: #fff; text-decoration: none; }
+    .logo span { color: #D4AF37; }
+    .wrap-sm { max-width: 640px; margin: 0 auto; padding: 0 1.5rem; }
+    h1 { font-family: 'Montserrat', sans-serif; color: #fff; margin: 0; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: .5rem;
+      border: 1px solid rgba(212,175,55,.35); border-radius: 999px;
+      padding: .4rem 1.1rem; font-family: 'Montserrat', sans-serif;
+      font-size: .65rem; font-weight: 700; letter-spacing: .2em;
+      text-transform: uppercase; color: #D4AF37;
+    }
+    .h1 { font-size: clamp(1.8rem, 5vw, 2.75rem); font-weight: 900; line-height: 1.15; }
+    .text-gold { color: #D4AF37; }
+    p.lead { font-size: 1rem; color: #B0ADA8; line-height: 1.75; margin: 1.25rem 0 0; }
+    .hero-glow {
+      position: absolute; width: 480px; height: 480px; border-radius: 50%;
+      background: #6b5410; opacity: .1; filter: blur(120px);
+      top: -100px; left: 50%; transform: translateX(-50%);
+      pointer-events: none; z-index: 0;
+    }
+    .check-circle {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: rgba(212,175,55,.08); border: 2px solid rgba(212,175,55,.4);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 2rem;
+      animation: pulse-ring 2s ease-out infinite;
+    }
+    @keyframes pulse-ring {
+      0%   { box-shadow: 0 0 0 0 rgba(212,175,55,.3); }
+      70%  { box-shadow: 0 0 0 16px rgba(212,175,55,0); }
+      100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
+    }
+    .divider { width: 48px; height: 2px; background: linear-gradient(90deg, transparent, #D4AF37, transparent); margin: 2rem auto; }
+    .steps { display: grid; gap: 1rem; margin-top: 2rem; }
+    .step-card {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: rgba(10,15,26,.7); border: 1px solid rgba(212,175,55,.15);
+      border-radius: 12px; padding: 1.25rem 1.5rem; text-align: left;
+    }
+    .step-num { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.25rem; color: rgba(212,175,55,.35); flex-shrink: 0; line-height: 1; margin-top: .1rem; }
+    .step-card h3 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .92rem; color: #fff; margin: 0 0 .35rem; }
+    .step-card p { font-size: .82rem; color: #9CA3AF; line-height: 1.6; margin: 0; }
+    .step-card a { color: #D4AF37; text-decoration: none; }
+    .step-card a:hover { text-decoration: underline; }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: transparent; color: #D4AF37;
+      font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: .78rem;
+      letter-spacing: .04em; text-transform: uppercase;
+      border: 1px solid rgba(212,175,55,.4); border-radius: 6px;
+      padding: .85rem 1.75rem; text-decoration: none;
+      transition: background .3s, border-color .3s;
+    }
+    .btn-outline:hover { background: rgba(212,175,55,.06); border-color: #D4AF37; }
+    main { flex: 1; display: flex; align-items: center; padding: 5rem 0; position: relative; }
+    footer { border-top: 1px solid rgba(212,175,55,.1); padding: 2rem 1.5rem; text-align: center; line-height: 1.9; }
+    footer p { margin: 0; font-size: .72rem; color: #4B5563; }
+    footer a { color: #4B5563; text-decoration: none; transition: color .3s; }
+    footer a:hover { color: #D4AF37; }
+    .fade-in   { animation: fadeUp .7s ease both; }
+    .fade-in-2 { animation: fadeUp .7s .15s ease both; }
+    .fade-in-3 { animation: fadeUp .7s .3s ease both; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<header class="nav-blur">
+  <a href="index.html" class="logo">PHILLIP <span>SOUZA</span></a>
+</header>
+
+<main>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="wrap-sm" style="position:relative; width:100%; text-align:center;">
+
+    <div class="check-circle fade-in">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+
+    <div class="fade-in">
+      <span class="eyebrow">
+        <svg width="8" height="8" viewBox="0 0 8 8" fill="#D4AF37" aria-hidden="true"><circle cx="4" cy="4" r="4"/></svg>
+        Confirmado
+      </span>
+      <h1 class="h1" style="margin-top:1.25rem;">
+        Você está na<br />
+        <span class="text-gold">lista de espera.</span>
+      </h1>
+      <p class="lead">
+        Quando as inscrições abrirem, você será avisado em primeira mão —
+        antes do público geral e com prioridade de vaga.
+      </p>
+    </div>
+
+    <div class="divider fade-in-2"></div>
+
+    <div class="fade-in-2">
+      <p style="font-family:'Montserrat',sans-serif; font-size:.65rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#6B7280; margin-bottom:1.25rem;">
+        Enquanto isso
+      </p>
+      <div class="steps">
+        <div class="step-card">
+          <span class="step-num">01</span>
+          <div>
+            <h3>Comece o Raio-X Financeiro (gratuito)</h3>
+            <p>A Jornada começa com o diagnóstico. Assista ao curso base no YouTube e vá preenchendo a planilha — você chega na turma pronto para avançar. <a href="https://www.youtube.com/playlist?list=PLnfTpbnNywejSDZGmxlz0kWFtVdB8rDZU" target="_blank" rel="noopener noreferrer">Assistir agora →</a></p>
+          </div>
+        </div>
+        <div class="step-card">
+          <span class="step-num">02</span>
+          <div>
+            <h3>Se tiver dívidas, comece pelo M.E.R.D.A.</h3>
+            <p>Curso completo e gratuito para estancar a sangria antes de qualquer coisa. <a href="https://www.youtube.com/playlist?list=PLnfTpbnNyweg-bSB1lQtEFLqWqmOsKJcZ" target="_blank" rel="noopener noreferrer">Assistir agora →</a></p>
+          </div>
+        </div>
+        <div class="step-card">
+          <span class="step-num">03</span>
+          <div>
+            <h3>Precisa de acompanhamento individual agora?</h3>
+            <p>Se a sua situação não pode esperar a próxima turma, conheça a <a href="index.html#aplicar">mentoria 1:1</a> de Phillip Souza.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fade-in-3" style="margin-top:2.5rem;">
+      <a href="index.html" class="btn-outline">← Voltar ao site</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <p>© <span class="copy-year">2026</span> Phillip Souza &nbsp;·&nbsp; Planejador Financeiro · Psicoterapeuta Financeiro</p>
+  <p style="margin-top:.35rem;"><a href="privacidade.html">Privacidade</a> &nbsp;·&nbsp; <a href="jornada-financeira.html">Lista de espera</a></p>
+</footer>
+
+<script>
+  document.querySelectorAll('.copy-year').forEach(function(e){ e.textContent = new Date().getFullYear(); });
+</script>
+</body>
+</html>

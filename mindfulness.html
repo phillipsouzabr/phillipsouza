@@ -1,13 +1,32 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0;url=https://youtube.com/playlist?list=PLnfTpbnNywehyBb3modK0WSpgMQEFNECb&si=LaKHhtAdoLx0ljOI" />
   <title>Redirecionando...</title>
-  <script>window.location.replace("https://youtube.com/playlist?list=PLnfTpbnNywehyBb3modK0WSpgMQEFNECb&si=LaKHhtAdoLx0ljOI");</script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZ3QL2RJGM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    // transport_type: 'beacon' garante o envio do hit mesmo com a página
+    // saindo do ar quase instantaneamente, através do redirect abaixo.
+    gtag('config', 'G-ZZ3QL2RJGM', { 'transport_type': 'beacon' });
+  </script>
+
+  <!-- Fallback para navegadores com JavaScript desativado -->
+  <noscript>
+    <meta http-equiv="refresh" content="0;url=https://youtube.com/playlist?list=PLnfTpbnNywehyBb3modK0WSpgMQEFNECb&si=LaKHhtAdoLx0ljOI" />
+  </noscript>
+
+  <script>
+    // Pequeno atraso (300ms, imperceptível) só para dar tempo do hit
+    // do GA4 disparar antes de sair da página.
+    setTimeout(function() {
+      window.location.replace("https://youtube.com/playlist?list=PLnfTpbnNywehyBb3modK0WSpgMQEFNECb&si=LaKHhtAdoLx0ljOI");
+    }, 300);
+  </script>
 </head>
-
 <body></body>
-
 </html>
