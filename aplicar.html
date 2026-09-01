@@ -203,6 +203,7 @@
       <label class="option-card"><input type="radio" name="ocupacao" value="Outro profissional liberal" /><span class="option-label"><strong>D)</strong> Outro profissional liberal</span></label>
       <label class="option-card"><input type="radio" name="ocupacao" value="Outro" /><span class="option-label"><strong>E)</strong> Outro</span></label>
     </div>
+    <input type="text" id="ocupacao-outro-input" class="outro-input" placeholder="Qual a sua ocupação?" style="display:none;margin-top:.75rem;width:100%;padding:.75rem 1rem;background:rgba(255,255,255,.04);border:1px solid rgba(212,175,55,.25);border-radius:8px;color:#F0EDE8;font-size:.9rem;outline:none;transition:border-color .3s;" onfocus="this.style.borderColor='#D4AF37'" onblur="this.style.borderColor='rgba(212,175,55,.25)'" />
     <p class="step-error" id="err-1">Selecione uma opção para continuar.</p>
     <div class="btn-row">
       <button class="btn-gold" onclick="nextStep(1)">Próxima →</button>
@@ -390,10 +391,21 @@
       var err = document.getElementById('err-' + currentStep);
       if (err) err.classList.remove('show');
       // Auto-avança para o próximo passo (apenas nos radio, não no textarea)
-      if (currentStep <= 7) {
+      // Não auto-avança se a opção for "Outro" (precisa digitar)
+      var isOutro = radio.value === 'Outro';
+      var outroInput = document.getElementById('ocupacao-outro-input');
+      if (radio.name === 'ocupacao' && outroInput) {
+        if (isOutro) {
+          outroInput.style.display = 'block';
+          outroInput.focus();
+        } else {
+          outroInput.style.display = 'none';
+          outroInput.value = '';
+        }
+      }
+      if (currentStep <= 7 && !isOutro) {
         var stepWhenClicked = currentStep;
         setTimeout(function() {
-          // Só avança se o usuário ainda estiver no mesmo passo
           if (currentStep === stepWhenClicked) {
             nextStep(currentStep);
           }
@@ -457,7 +469,14 @@
     var payload = {
       nome: leadNome,
       email: leadEmail,
-      ocupacao: getRadioValue('ocupacao'),
+      ocupacao: (function() {
+        var v = getRadioValue('ocupacao');
+        if (v === 'Outro') {
+          var custom = document.getElementById('ocupacao-outro-input').value.trim();
+          return custom ? 'Outro: ' + custom : 'Outro';
+        }
+        return v;
+      })(),
       renda: getRadioValue('renda'),
       patrimonio: getRadioValue('patrimonio'),
       situacao: getRadioValue('situacao'),
