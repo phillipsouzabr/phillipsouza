@@ -28,12 +28,12 @@
   <meta property="og:site_name"   content="Phillip Souza" />
   <meta property="og:title"       content="Quebrando Bloqueios Emocionais Financeiros em 30 Minutos" />
   <meta property="og:description" content="6 passos práticos para descobrir e quebrar os bloqueios que te impediram de avançar financeiramente." />
-  <meta property="og:image"       content="https://www.phillipsouza.com/perfil.jpg" />
+  <meta property="og:image"       content="https://www.phillipsouza.com/ebook-mockup.png" />
 
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:title"       content="Quebrando Bloqueios Emocionais Financeiros em 30 Minutos" />
   <meta name="twitter:description" content="Ebook gratuito — 6 passos práticos para identificar e quebrar seus bloqueios financeiros." />
-  <meta name="twitter:image"       content="https://www.phillipsouza.com/perfil.jpg" />
+  <meta name="twitter:image"       content="https://www.phillipsouza.com/ebook-mockup.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -120,23 +120,14 @@
     .hero-flex { display: flex; flex-direction: column; align-items: center; gap: 2.5rem; position: relative; }
     @media (min-width: 860px) { .hero-flex { flex-direction: row; text-align: left; } }
 
-    /* Ebook mockup */
-    .ebook-mock {
-      width: 220px; height: 300px; flex-shrink: 0;
-      background: linear-gradient(160deg, #0A0F1A 0%, #050810 100%);
-      border: 1px solid rgba(212,175,55,.35);
-      border-radius: 8px;
-      box-shadow: 0 25px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(212,175,55,.08);
-      display: flex; flex-direction: column; justify-content: space-between;
-      padding: 1.75rem 1.5rem; position: relative;
+    /* Ebook mockup — imagem real */
+    .ebook-mock-img {
+      max-width: 340px;
+      width: 100%;
+      height: auto;
+      flex-shrink: 0;
+      filter: drop-shadow(0 25px 50px rgba(0,0,0,.55));
     }
-    .ebook-mock::before {
-      content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 6px;
-      background: rgba(212,175,55,.5); border-radius: 3px 0 0 3px;
-    }
-    .ebook-mock .tag { font-family: 'Montserrat', sans-serif; font-size: .6rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: #D4AF37; }
-    .ebook-mock h4 { font-family: 'Montserrat', sans-serif; font-weight: 900; color: #fff; font-size: 1.2rem; line-height: 1.3; margin: 1rem 0 0; }
-    .ebook-mock .author { font-size: .7rem; color: #6B7280; border-top: 1px solid rgba(212,175,55,.15); padding-top: .75rem; text-transform: uppercase; letter-spacing: .08em; }
 
     /* Sobre autor */
     .author-row { display: flex; align-items: center; gap: 1.5rem; }
@@ -155,7 +146,7 @@
       max-width: 560px;
       margin: 0 auto;
     }
-    .tally-wrap iframe { width: 100%; min-height: 320px; border: none; }
+    .tally-wrap iframe { width: 100%; border: none; display: block; }
 
     footer { border-top: 1px solid rgba(212,175,55,.1); padding: 2.5rem 1.5rem; text-align: center; line-height: 1.9; }
     footer p { margin: 0; font-size: .75rem; }
@@ -182,13 +173,14 @@
     <div class="wrap">
       <div class="hero-flex">
 
-        <div class="ebook-mock reveal">
-          <div>
-            <span class="tag">Ebook Gratuito</span>
-            <h4>Quebrando Bloqueios Emocionais Financeiros em 30 Minutos</h4>
-          </div>
-          <p class="author">Phillip Souza</p>
-        </div>
+        <picture class="reveal">
+          <source srcset="ebook-mockup.webp" type="image/webp" />
+          <img src="ebook-mockup.png"
+               alt="Ebook Quebrando Bloqueios Emocionais Financeiros em 30 Minutos — Phillip Souza, capa e mockup em Kindle"
+               class="ebook-mock-img"
+               width="900" height="653"
+               loading="eager" fetchpriority="high" decoding="async" />
+        </picture>
 
         <div class="reveal" style="transition-delay:.05s;">
           <span class="eyebrow">
@@ -279,9 +271,14 @@
 
       <div class="tally-wrap reveal">
         <iframe
-          src="https://tally.so/embed/1AarxO?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-          title="Formulário — Quebrando Bloqueios Emocionais Financeiros"
-          loading="lazy">
+          data-tally-src="https://tally.so/embed/1AarxO?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+          loading="lazy"
+          width="100%"
+          height="1"
+          frameborder="0"
+          marginheight="0"
+          marginwidth="0"
+          title="Formulário — Quebrando Bloqueios Emocionais Financeiros">
         </iframe>
       </div>
     </div>
@@ -312,6 +309,26 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     items.forEach(function(el) { obs.observe(el); });
   })();
+</script>
+
+<!-- Tally — auto-resize do iframe embutido (remove barra de rolagem interna) -->
+<script>
+  var d = document, w = "https://tally.so/widgets/embed.js",
+      v = function() {
+        "undefined" != typeof Tally
+          ? Tally.loadEmbeds()
+          : d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach(function(e) {
+              e.src = e.dataset.tallySrc;
+            });
+      };
+  if ("undefined" != typeof Tally) v();
+  else if (d.querySelector('script[src="' + w + '"]') == null) {
+    var s = d.createElement("script");
+    s.src = w;
+    s.onload = v;
+    s.onerror = v;
+    d.body.appendChild(s);
+  }
 </script>
 
 </body>
