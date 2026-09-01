@@ -1,32 +1,640 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Redirecionando...</title>
-
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZ3QL2RJGM"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    // transport_type: 'beacon' garante o envio do hit mesmo com a página
-    // saindo do ar quase instantaneamente, através do redirect abaixo.
-    gtag('config', 'G-ZZ3QL2RJGM', { 'transport_type': 'beacon' });
+    gtag('config', 'G-ZZ3QL2RJGM');
   </script>
 
-  <!-- Fallback para navegadores com JavaScript desativado -->
-  <noscript>
-    <meta http-equiv="refresh" content="0;url=https://tally.so/r/q4qZP5" />
-  </noscript>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diagnóstico de Parceria Financeira | Phillip Souza</title>
+  <meta name="description" content="Sessão de Diagnóstico de Parceria Financeira — 90 minutos para mapear a dinâmica financeira do casal e identificar a raiz real do conflito." />
+  <link rel="icon" type="image/png" href="logo.png" />
 
-  <script>
-    // Pequeno atraso (300ms, imperceptível) só para dar tempo do hit
-    // do GA4 disparar antes de sair da página.
-    setTimeout(function() {
-      window.location.replace("https://tally.so/r/q4qZP5");
-    }, 300);
-  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0D0D1A;
+      color: #F0EDE8;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .wrap { max-width: 640px; width: 100%; margin: 0 auto; }
+
+    /* ── Progress ─────────────────────────────────────── */
+    .progress-wrap {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 4px; background: rgba(212,175,55,.12); z-index: 100;
+    }
+    .progress-bar {
+      height: 100%; background: linear-gradient(90deg, #D4AF37, #F0D060);
+      width: 0%; transition: width .5s ease;
+    }
+
+    /* ── Screens ──────────────────────────────────────── */
+    .screen { display: none; animation: fadeUp .4s ease; }
+    .screen.active { display: block; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Welcome ──────────────────────────────────────── */
+    .welcome { text-align: center; padding: 2.5rem 1rem; }
+    .welcome-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(212,175,55,.08); border: 1px solid rgba(212,175,55,.2);
+      border-radius: 100px; padding: 6px 16px;
+      font-size: .75rem; color: #D4AF37;
+      text-transform: uppercase; letter-spacing: .08em; margin-bottom: 1.5rem;
+    }
+    .welcome h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.5rem, 5vw, 2rem); font-weight: 700;
+      line-height: 1.25; margin-bottom: .75rem;
+    }
+    .welcome h1 span { color: #D4AF37; }
+    .welcome p { color: #9CA3AF; font-size: .95rem; line-height: 1.7; max-width: 500px; margin: 0 auto 1.5rem; }
+
+    /* ── Section header ───────────────────────────────── */
+    .step-badge {
+      font-size: .75rem; color: #D4AF37; text-transform: uppercase;
+      letter-spacing: .1em; margin-bottom: .5rem;
+    }
+    .step-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem; font-weight: 700; margin-bottom: .4rem;
+    }
+    .step-sub { color: #9CA3AF; font-size: .92rem; line-height: 1.6; margin-bottom: 1.5rem; }
+
+    /* ── Form fields ──────────────────────────────────── */
+    .q-label {
+      display: block; font-size: 1rem; font-weight: 600;
+      margin-bottom: .75rem; line-height: 1.5;
+    }
+    .q-hint { font-size: .85rem; color: #9CA3AF; font-weight: 400; font-style: italic; display: block; margin-top: .25rem; }
+    .field-group { margin-bottom: 1.5rem; }
+
+    /* Radio cards */
+    .radio-list { display: flex; flex-direction: column; gap: .5rem; }
+    .radio-card {
+      display: flex; align-items: flex-start; gap: .75rem;
+      padding: .75rem .85rem;
+      background: rgba(255,255,255,.03); border: 1px solid rgba(212,175,55,.12);
+      border-radius: 10px; cursor: pointer; transition: all .25s;
+    }
+    .radio-card:hover { background: rgba(212,175,55,.06); border-color: rgba(212,175,55,.3); }
+    .radio-card:has(input:checked) {
+      background: rgba(212,175,55,.1); border-color: #D4AF37;
+      box-shadow: 0 0 0 1px #D4AF37;
+    }
+    .radio-card input[type="radio"] {
+      appearance: none; width: 18px; height: 18px;
+      border: 2px solid rgba(212,175,55,.3); border-radius: 50%;
+      flex-shrink: 0; margin-top: 2px; transition: all .2s;
+    }
+    .radio-card input[type="radio"]:checked {
+      border-color: #D4AF37; background: #D4AF37;
+      box-shadow: inset 0 0 0 3px #0D0D1A;
+    }
+    .radio-label { font-size: .93rem; line-height: 1.55; color: #D1D5DB; }
+
+    /* Checkbox cards */
+    .check-card {
+      display: flex; align-items: flex-start; gap: .75rem;
+      padding: .65rem .85rem;
+      background: rgba(255,255,255,.03); border: 1px solid rgba(212,175,55,.12);
+      border-radius: 10px; cursor: pointer; transition: all .25s;
+    }
+    .check-card:hover { background: rgba(212,175,55,.06); border-color: rgba(212,175,55,.3); }
+    .check-card:has(input:checked) {
+      background: rgba(212,175,55,.1); border-color: #D4AF37;
+    }
+    .check-card input[type="checkbox"] {
+      appearance: none; width: 18px; height: 18px;
+      border: 2px solid rgba(212,175,55,.3); border-radius: 4px;
+      flex-shrink: 0; margin-top: 2px; transition: all .2s;
+    }
+    .check-card input[type="checkbox"]:checked {
+      border-color: #D4AF37; background: #D4AF37;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='%230D0D1A' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.3 4.3L6.5 11.1 2.7 7.3l1.4-1.4 2.4 2.4 5.4-5.4 1.4 1.4z'/%3E%3C/svg%3E");
+      background-size: 14px; background-position: center; background-repeat: no-repeat;
+    }
+
+    /* Text inputs */
+    .text-input, .text-area {
+      width: 100%; padding: .75rem 1rem;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(212,175,55,.2);
+      border-radius: 8px; color: #F0EDE8; font-size: .95rem; font-family: 'Inter', sans-serif;
+      outline: none; transition: border-color .3s;
+    }
+    .text-input:focus, .text-area:focus { border-color: #D4AF37; }
+    .text-area { min-height: 120px; resize: vertical; line-height: 1.6; }
+    .text-area-lg { min-height: 180px; }
+
+    /* Conditional field */
+    .conditional { display: none; margin-top: .75rem; }
+    .conditional.show { display: block; }
+
+    /* Error */
+    .field-error { display: none; color: #F87171; font-size: .8rem; margin-top: .4rem; }
+    .field-error.show { display: block; }
+
+    /* ── Buttons ──────────────────────────────────────── */
+    .btn-gold {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: .85rem 2rem; background: linear-gradient(135deg, #D4AF37, #B8941F);
+      color: #0D0D1A; font-weight: 700; font-size: .95rem;
+      border: none; border-radius: 8px; cursor: pointer;
+      transition: all .3s; width: 100%; margin-top: 1rem;
+    }
+    .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(212,175,55,.3); }
+    .btn-gold:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+    .btn-back {
+      background: transparent; border: 1px solid rgba(212,175,55,.2);
+      color: #9CA3AF; padding: .7rem 1.2rem; border-radius: 8px;
+      cursor: pointer; font-size: .85rem; transition: all .25s;
+    }
+    .btn-back:hover { border-color: rgba(212,175,55,.4); color: #F0EDE8; }
+    .btn-row { display: flex; gap: .75rem; margin-top: 1.5rem; }
+    .btn-row .btn-gold { flex: 1; margin-top: 0; }
+
+    /* ── Confirm screen ──────────────────────────────── */
+    .confirm-card {
+      background: rgba(212,175,55,.04); border: 1px solid rgba(212,175,55,.18);
+      border-radius: 16px; padding: 2rem 1.5rem; text-align: center;
+    }
+    .confirm-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .confirm-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.4rem; font-weight: 700; color: #D4AF37; margin-bottom: .5rem;
+    }
+    .confirm-text { color: #D1D5DB; font-size: .9rem; line-height: 1.7; }
+    .confirm-cta {
+      margin-top: 1.5rem; padding-top: 1.5rem;
+      border-top: 1px solid rgba(212,175,55,.15);
+    }
+    .confirm-cta a {
+      color: #D4AF37; font-weight: 600; text-decoration: none; font-size: .9rem;
+    }
+    .confirm-cta a:hover { text-decoration: underline; }
+
+    .privacy-note { text-align: center; font-size: .75rem; color: #6B7280; margin-top: 1rem; line-height: 1.5; }
+
+    /* ── Loading ──────────────────────────────────────── */
+    .spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid rgba(13,13,26,.2); border-top-color: #0D0D1A; border-radius: 50%; animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 480px) {
+      body { padding: 1rem .75rem; }
+      .radio-card, .check-card { padding: .65rem .7rem; }
+    }
+  </style>
 </head>
-<body></body>
+<body>
+
+<div class="progress-wrap"><div class="progress-bar" id="progress"></div></div>
+
+<div class="wrap">
+
+  <!-- ══════ TELA 0: BOAS-VINDAS ══════ -->
+  <div class="screen active" data-step="0">
+    <div class="welcome">
+      <div class="welcome-badge">
+        <svg width="8" height="8" viewBox="0 0 8 8" fill="#D4AF37"><circle cx="4" cy="4" r="4"/></svg>
+        Sessão 1:1 com Phillip
+      </div>
+      <h1>Diagnóstico de <span>Parceria Financeira</span></h1>
+      <p>O primeiro passo para transformar o conflito financeiro em parceria.</p>
+      <p style="font-size:.82rem;color:#6B7280;max-width:460px;margin:0 auto 1.5rem;">Este formulário é a porta de entrada para a <strong style="color:#D4AF37;">Sessão de Diagnóstico</strong> — 90 minutos onde mapeamos a dinâmica financeira do casal e identificamos a raiz real do conflito. Após analisar suas respostas, entrarei em contato para alinhar condições e disponibilidade.</p>
+      <p style="font-size:.8rem;color:#6B7280;">Preencha com honestidade. Não existe resposta certa.<br>Tempo estimado: 6-8 minutos.</p>
+      <button class="btn-gold" onclick="goTo(1)" style="max-width:320px;margin:1.5rem auto 0;">Começar →</button>
+    </div>
+  </div>
+
+  <!-- ══════ TELA 1: D1 + D2 ══════ -->
+  <div class="screen" data-step="1">
+    <p class="step-badge">Etapa 1 de 7 — O Casal</p>
+    <h2 class="step-title">Sobre vocês</h2>
+    <p class="step-sub">Contexto do relacionamento.</p>
+
+    <div class="field-group">
+      <label class="q-label">Quem está preenchendo este formulário?</label>
+      <div class="radio-list" id="d1-quem">
+        <label class="radio-card"><input type="radio" name="d1_quem" value="Sozinho(a) — parceiro(a) não sabe" /><span class="radio-label">Estou preenchendo sozinho(a) — meu parceiro(a) ainda não sabe / não quis preencher</span></label>
+        <label class="radio-card"><input type="radio" name="d1_quem" value="Sozinho(a) — com acordo do parceiro(a)" /><span class="radio-label">Estou preenchendo sozinho(a), mas com o conhecimento e acordo do meu parceiro(a)</span></label>
+        <label class="radio-card"><input type="radio" name="d1_quem" value="Preenchemos juntos" /><span class="radio-label">Preenchemos juntos</span></label>
+      </div>
+      <p class="field-error" id="err-d1">Selecione uma opção.</p>
+    </div>
+
+    <div class="field-group">
+      <label class="q-label">Contexto de como chegaram aqui <span class="q-hint">(opcional)</span></label>
+      <textarea class="text-area" id="d1-contexto" placeholder="Se quiser, adicione o contexto..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="q-label">Há quanto tempo estão juntos?</label>
+      <div class="radio-list" id="d2-tempo">
+        <label class="radio-card"><input type="radio" name="d2_tempo" value="Menos de 1 ano" /><span class="radio-label">Menos de 1 ano</span></label>
+        <label class="radio-card"><input type="radio" name="d2_tempo" value="1 a 3 anos" /><span class="radio-label">1 a 3 anos</span></label>
+        <label class="radio-card"><input type="radio" name="d2_tempo" value="3 a 7 anos" /><span class="radio-label">3 a 7 anos</span></label>
+        <label class="radio-card"><input type="radio" name="d2_tempo" value="7 a 15 anos" /><span class="radio-label">7 a 15 anos</span></label>
+        <label class="radio-card"><input type="radio" name="d2_tempo" value="Mais de 15 anos" /><span class="radio-label">Mais de 15 anos</span></label>
+      </div>
+      <p class="field-error" id="err-d2t">Selecione uma opção.</p>
+    </div>
+
+    <div class="field-group">
+      <label class="q-label">Estão casados oficialmente ou em união estável?</label>
+      <div class="radio-list" id="d2-casamento">
+        <label class="radio-card"><input type="radio" name="d2_casamento" value="Sim" /><span class="radio-label">Sim</span></label>
+        <label class="radio-card"><input type="radio" name="d2_casamento" value="Não, mas moramos juntos(as)" /><span class="radio-label">Não, mas moramos juntos(as)</span></label>
+        <label class="radio-card"><input type="radio" name="d2_casamento" value="Não moramos juntos(as) ainda" /><span class="radio-label">Não moramos juntos(as) ainda</span></label>
+        <label class="radio-card"><input type="radio" name="d2_casamento" value="Em separação com obrigações compartilhadas" /><span class="radio-label">Estamos em processo de separação mas ainda compartilhamos obrigações financeiras</span></label>
+      </div>
+      <p class="field-error" id="err-d2c">Selecione uma opção.</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goTo(0)">← Voltar</button>
+      <button class="btn-gold" onclick="validateAndGo(1, 2)">Próxima →</button>
+    </div>
+  </div>
+
+  <!-- ══════ TELA 2: D3 ══════ -->
+  <div class="screen" data-step="2">
+    <p class="step-badge">Etapa 2 de 7 — Contexto Financeiro</p>
+    <h2 class="step-title">Situação financeira do casal</h2>
+    <p class="step-sub">Ajuda a entender o contexto, não a julgar.</p>
+
+    <div class="field-group">
+      <label class="q-label">Como vocês descrevem a situação financeira atual do casal?</label>
+      <div class="radio-list">
+        <label class="radio-card"><input type="radio" name="d3_situacao" value="Dívidas significativas e dificuldade com gastos mensais" /><span class="radio-label">Estamos com dívidas significativas e dificuldade para cobrir os gastos mensais</span></label>
+        <label class="radio-card"><input type="radio" name="d3_situacao" value="Pagamos contas mas sobra pouco e sem reserva" /><span class="radio-label">Conseguimos pagar as contas, mas sobra muito pouco e não há reserva</span></label>
+        <label class="radio-card"><input type="radio" name="d3_situacao" value="Equilibrados mas sem progresso real" /><span class="radio-label">Estamos equilibrados, mas sem progresso real — o dinheiro não "anda para frente"</span></label>
+        <label class="radio-card"><input type="radio" name="d3_situacao" value="Alguma organização mas conflitos sobre prioridades" /><span class="radio-label">Temos alguma organização, mas há conflitos frequentes sobre prioridades e gastos</span></label>
+        <label class="radio-card"><input type="radio" name="d3_situacao" value="Bem financeiramente mas relação com dinheiro gera tensão" /><span class="radio-label">Estamos razoavelmente bem financeiramente, mas a relação com o dinheiro entre nós gera tensão</span></label>
+      </div>
+      <p class="field-error" id="err-d3s">Selecione uma opção.</p>
+    </div>
+
+    <div class="field-group">
+      <label class="q-label">Faixa de renda mensal combinada do casal (aproximada)
+        <span class="q-hint">Confidencial — usada apenas para adequar o acompanhamento.</span>
+      </label>
+      <div class="radio-list">
+        <label class="radio-card"><input type="radio" name="d3_renda" value="Até R$5.000" /><span class="radio-label">Até R$5.000</span></label>
+        <label class="radio-card"><input type="radio" name="d3_renda" value="R$5.001 a R$10.000" /><span class="radio-label">R$5.001 a R$10.000</span></label>
+        <label class="radio-card"><input type="radio" name="d3_renda" value="R$10.001 a R$20.000" /><span class="radio-label">R$10.001 a R$20.000</span></label>
+        <label class="radio-card"><input type="radio" name="d3_renda" value="R$20.001 a R$40.000" /><span class="radio-label">R$20.001 a R$40.000</span></label>
+        <label class="radio-card"><input type="radio" name="d3_renda" value="Acima de R$40.000" /><span class="radio-label">Acima de R$40.000</span></label>
+        <label class="radio-card"><input type="radio" name="d3_renda" value="Prefiro não informar" /><span class="radio-label">Prefiro não informar</span></label>
+      </div>
+      <p class="field-error" id="err-d3r">Selecione uma opção.</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goTo(1)">← Voltar</button>
+      <button class="btn-gold" onclick="validateAndGo(2, 3)">Próxima →</button>
+    </div>
+  </div>
+
+  <!-- ══════ TELA 3: D4 ══════ -->
+  <div class="screen" data-step="3">
+    <p class="step-badge">Etapa 3 de 7 — O Conflito</p>
+    <h2 class="step-title">Dinheiro e tensão</h2>
+
+    <div class="field-group">
+      <label class="q-label">Com que frequência o dinheiro gera tensão ou conflito entre vocês?</label>
+      <div class="radio-list">
+        <label class="radio-card"><input type="radio" name="d4_frequencia" value="Raramente" /><span class="radio-label">Raramente — ocorre mas não é o padrão</span></label>
+        <label class="radio-card"><input type="radio" name="d4_frequencia" value="Às vezes" /><span class="radio-label">Às vezes — algumas vezes por mês</span></label>
+        <label class="radio-card"><input type="radio" name="d4_frequencia" value="Com frequência" /><span class="radio-label">Com frequência — toda semana</span></label>
+        <label class="radio-card"><input type="radio" name="d4_frequencia" value="Quase sempre" /><span class="radio-label">Quase sempre — fonte constante de tensão</span></label>
+        <label class="radio-card"><input type="radio" name="d4_frequencia" value="Principal motivo de conflito" /><span class="radio-label">É o principal motivo de conflito no relacionamento</span></label>
+      </div>
+      <p class="field-error" id="err-d4f">Selecione uma opção.</p>
+    </div>
+
+    <div class="field-group">
+      <label class="q-label">Qual(is) desses padrões mais se parecem com o que acontece entre vocês?
+        <span class="q-hint">Pode marcar mais de um.</span>
+      </label>
+      <div class="radio-list">
+        <label class="check-card"><input type="checkbox" name="d4_padroes" value="Um guarda demais e outro gasta demais" /><span class="radio-label">Um de nós guarda demais e o outro gasta demais — e isso vira briga</span></label>
+        <label class="check-card"><input type="checkbox" name="d4_padroes" value="Um evita falar e outro carrega sozinho" /><span class="radio-label">Um de nós evita falar sobre dinheiro e o outro carrega tudo sozinho(a)</span></label>
+        <label class="check-card"><input type="checkbox" name="d4_padroes" value="Um controla com planilhas outro sem liberdade" /><span class="radio-label">Um de nós controla tudo com planilhas e o outro sente que não tem liberdade</span></label>
+        <label class="check-card"><input type="checkbox" name="d4_padroes" value="Gastos impulsivos comprometem planos" /><span class="radio-label">Os gastos impulsivos de um de nós comprometem o que o outro planejou</span></label>
+        <label class="check-card"><input type="checkbox" name="d4_padroes" value="Não sabem decidir juntos sem discutir" /><span class="radio-label">Não sabemos como tomar decisões financeiras juntos sem discutir</span></label>
+        <label class="check-card"><input type="checkbox" name="d4_padroes" value="Falta de transparência sobre gastos/dívidas" /><span class="radio-label">Há falta de transparência — um de nós esconde gastos ou dívidas</span></label>
+        <label class="check-card"><input type="checkbox" name="d4_padroes" value="Outro padrão" id="chk-padrao-outro" /><span class="radio-label">Outro padrão</span></label>
+      </div>
+      <div class="conditional" id="padrao-outro-wrap">
+        <input type="text" class="text-input" id="d4-padrao-outro" placeholder="Descreva o padrão..." />
+      </div>
+      <p class="field-error" id="err-d4p">Selecione ao menos um padrão.</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goTo(2)">← Voltar</button>
+      <button class="btn-gold" onclick="validateAndGo(3, 4)">Próxima →</button>
+    </div>
+  </div>
+
+  <!-- ══════ TELA 4: D5 ══════ -->
+  <div class="screen" data-step="4">
+    <p class="step-badge">Etapa 4 de 7 — Tentativas Anteriores</p>
+    <h2 class="step-title">Já tentaram resolver?</h2>
+
+    <div class="field-group">
+      <label class="q-label">Já tentaram resolver os conflitos financeiros antes?</label>
+      <div class="radio-list">
+        <label class="radio-card"><input type="radio" name="d5_tentativas" value="Não, nunca tentamos" /><span class="radio-label">Não, nunca tentamos de forma estruturada</span></label>
+        <label class="radio-card"><input type="radio" name="d5_tentativas" value="Tentamos por conta própria" /><span class="radio-label">Tentamos por conta própria, mas não avançamos muito</span></label>
+        <label class="radio-card"><input type="radio" name="d5_tentativas" value="Buscamos ajuda externa" /><span class="radio-label">Buscamos ajuda externa antes</span></label>
+      </div>
+      <p class="field-error" id="err-d5t">Selecione uma opção.</p>
+    </div>
+
+    <div class="field-group conditional" id="d5-como-wrap">
+      <label class="q-label">Como foi?
+        <span class="q-hint">Conte o que tentaram e o que funcionou ou não.</span>
+      </label>
+      <textarea class="text-area" id="d5-como" placeholder='Ex: "Fizemos terapia de casal mas não focou no financeiro", "Tentamos seguir um orçamento juntos mas durou 2 meses"...'></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goTo(3)">← Voltar</button>
+      <button class="btn-gold" onclick="validateAndGo(4, 5)">Próxima →</button>
+    </div>
+  </div>
+
+  <!-- ══════ TELA 5: D6 ══════ -->
+  <div class="screen" data-step="5">
+    <p class="step-badge">Etapa 5 de 7 — Objetivos</p>
+    <h2 class="step-title">O que gostariam de alcançar?</h2>
+    <p class="step-sub">Pode marcar mais de um.</p>
+
+    <div class="field-group">
+      <div class="radio-list">
+        <label class="check-card"><input type="checkbox" name="d6_objetivos" value="Parar de brigar por dinheiro" /><span class="radio-label">Parar de brigar por dinheiro</span></label>
+        <label class="check-card"><input type="checkbox" name="d6_objetivos" value="Criar um orçamento que os dois respeitem" /><span class="radio-label">Criar um orçamento que os dois respeitem</span></label>
+        <label class="check-card"><input type="checkbox" name="d6_objetivos" value="Sair de dívidas juntos" /><span class="radio-label">Sair de dívidas juntos</span></label>
+        <label class="check-card"><input type="checkbox" name="d6_objetivos" value="Construir reserva ou investir" /><span class="radio-label">Construir uma reserva ou começar a investir</span></label>
+        <label class="check-card"><input type="checkbox" name="d6_objetivos" value="Conversas sem tensão" /><span class="radio-label">Ter conversas sobre dinheiro sem tensão</span></label>
+        <label class="check-card"><input type="checkbox" name="d6_objetivos" value="Entender diferenças de padrões" /><span class="radio-label">Entender por que nossos padrões são tão diferentes</span></label>
+        <label class="check-card"><input type="checkbox" name="d6_objetivos" value="Visão financeira compartilhada" /><span class="radio-label">Definir uma visão financeira compartilhada para o futuro</span></label>
+        <label class="check-card"><input type="checkbox" name="d6_objetivos" value="Outro objetivo" id="chk-obj-outro" /><span class="radio-label">Outro</span></label>
+      </div>
+      <div class="conditional" id="obj-outro-wrap">
+        <input type="text" class="text-input" id="d6-obj-outro" placeholder="Descreva..." />
+      </div>
+      <p class="field-error" id="err-d6">Selecione ao menos um objetivo.</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goTo(4)">← Voltar</button>
+      <button class="btn-gold" onclick="validateAndGo(5, 6)">Próxima →</button>
+    </div>
+  </div>
+
+  <!-- ══════ TELA 6: D7 ══════ -->
+  <div class="screen" data-step="6">
+    <p class="step-badge">Etapa 6 de 7 — Sua História</p>
+    <h2 class="step-title">Conte o que está acontecendo.</h2>
+    <p class="step-sub">Não precisa ser perfeito ou organizado. Escreva como falaria para um amigo de confiança. Qual é a situação real de vocês? O que te trouxe aqui hoje?</p>
+
+    <div class="field-group">
+      <textarea class="text-area text-area-lg" id="d7-historia" placeholder="Escreva livremente... (mínimo 3 linhas)"></textarea>
+      <p class="field-error" id="err-d7">Conte um pouco da sua história para continuarmos.</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goTo(5)">← Voltar</button>
+      <button class="btn-gold" onclick="validateAndGo(6, 7)">Próxima →</button>
+    </div>
+  </div>
+
+  <!-- ══════ TELA 7: D8 ══════ -->
+  <div class="screen" data-step="7">
+    <p class="step-badge">Etapa 7 de 7 — Contato</p>
+    <h2 class="step-title">Seus dados para contato</h2>
+    <p class="step-sub">Para agendamento da sessão.</p>
+
+    <div class="field-group">
+      <label class="q-label" for="d8-nome">Seu nome completo</label>
+      <input type="text" class="text-input" id="d8-nome" placeholder="Nome e sobrenome" autocomplete="name" />
+      <p class="field-error" id="err-d8n">Preencha seu nome.</p>
+    </div>
+    <div class="field-group">
+      <label class="q-label" for="d8-email">E-mail</label>
+      <input type="email" class="text-input" id="d8-email" placeholder="email@exemplo.com" autocomplete="email" />
+      <p class="field-error" id="err-d8e">Preencha um e-mail válido.</p>
+    </div>
+    <div class="field-group">
+      <label class="q-label" for="d8-whatsapp">WhatsApp (com DDD)
+        <span class="q-hint">Usado exclusivamente para agendamento. Sem grupos ou listas.</span>
+      </label>
+      <input type="tel" class="text-input" id="d8-whatsapp" placeholder="(31) 99999-9999" autocomplete="tel" />
+      <p class="field-error" id="err-d8w">Preencha seu WhatsApp.</p>
+    </div>
+    <div class="field-group">
+      <label class="q-label" for="d8-parceiro">Nome do parceiro(a) <span class="q-hint">(opcional)</span></label>
+      <input type="text" class="text-input" id="d8-parceiro" placeholder="Nome do parceiro(a)" />
+    </div>
+
+    <!-- Aceite -->
+    <div class="app-terms-box" style="background:rgba(212,175,55,.04);border:1px solid rgba(212,175,55,.18);border-radius:8px;padding:1rem;margin-top:.5rem;">
+      <p style="font-size:.75rem;color:#9CA3AF;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.75rem;font-weight:600;">Declaração de Consentimento <span style="color:#D4AF37;">*</span></p>
+      <label style="display:flex;align-items:flex-start;gap:.6rem;cursor:pointer;margin-bottom:.6rem;">
+        <input type="checkbox" id="agree-privacy" style="width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:#D4AF37;" />
+        <span style="font-size:.78rem;color:#9CA3AF;line-height:1.5;">Li e concordo com a <a href="privacidade.html" target="_blank" style="color:#D4AF37;">Política de Privacidade</a> e os <a href="termos.html" target="_blank" style="color:#D4AF37;">Termos de Uso</a>.</span>
+      </label>
+      <label style="display:flex;align-items:flex-start;gap:.6rem;cursor:pointer;">
+        <input type="checkbox" id="agree-contact" style="width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:#D4AF37;" />
+        <span style="font-size:.78rem;color:#9CA3AF;line-height:1.5;">Autorizo contato pelo WhatsApp e e-mail informados. Dados não compartilhados com terceiros.</span>
+      </label>
+      <p class="field-error" id="err-agree">Marque as duas opções para continuar.</p>
+    </div>
+
+    <button class="btn-gold" id="btn-submit" onclick="submitForm()" style="margin-top:1.5rem;">◆  Enviar Aplicação</button>
+    <p class="privacy-note">Dados protegidos por lei · Processo 100% confidencial.</p>
+  </div>
+
+  <!-- ══════ TELA 8: CONFIRMAÇÃO ══════ -->
+  <div class="screen" data-step="8">
+    <div style="padding:2rem 0;">
+      <div class="confirm-card">
+        <div class="confirm-icon">✓</div>
+        <p class="confirm-title">Aplicação recebida.</p>
+        <p class="confirm-text">Obrigado pela honestidade. Isso já é raro.<br><br>Analisarei pessoalmente suas respostas nos próximos dias. Se a Sessão de Diagnóstico fizer sentido para o momento de vocês, entrarei em contato pelo WhatsApp informado para alinhar investimento, formato e disponibilidade.<br><br>A Sessão tem duração de <strong style="color:#D4AF37;">90 minutos</strong>. Não é um curso — é uma conversa estruturada e individual onde mapeamos juntos a dinâmica financeira de vocês e identificamos a causa-raiz real do conflito.</p>
+        <div class="confirm-cta">
+          <p style="font-size:.85rem;color:#9CA3AF;margin-bottom:.75rem;">Enquanto analiso suas respostas, assista à série que já ajudou milhares de casais:</p>
+          <a href="https://www.youtube.com/playlist?list=PLJOzmVAV5EaY" target="_blank" rel="noopener noreferrer">▶ Assistir série Guerra Fria Financeira</a>
+          <p style="margin-top:1rem;"><a href="quizz-perfil-financeiro.html" style="color:#9CA3AF;font-size:.8rem;font-weight:400;">Ainda não fez o Quiz de Perfil? → Fazer agora</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzPHpnVSr0vSo-L6OUStC7tlWjVZoeSQMWmeVUr7JNB8wB7P2vMR-bHCkKRHsF-fcV_2Q/exec';
+
+var currentStep = 0;
+
+function goTo(step) {
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  var target = document.querySelector('[data-step="' + step + '"]');
+  if (target) { target.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  currentStep = step;
+  var pct = step <= 0 ? 0 : Math.min(Math.round((step / 7) * 100), 100);
+  document.getElementById('progress').style.width = pct + '%';
+}
+
+// ── Condicional: "Outro padrão" ──
+document.getElementById('chk-padrao-outro').addEventListener('change', function() {
+  document.getElementById('padrao-outro-wrap').classList.toggle('show', this.checked);
+});
+document.getElementById('chk-obj-outro').addEventListener('change', function() {
+  document.getElementById('obj-outro-wrap').classList.toggle('show', this.checked);
+});
+
+// ── Condicional: D5 tentativas ──
+document.querySelectorAll('input[name="d5_tentativas"]').forEach(function(r) {
+  r.addEventListener('change', function() {
+    var show = this.value !== 'Não, nunca tentamos';
+    document.getElementById('d5-como-wrap').classList.toggle('show', show);
+  });
+});
+
+// ── Limpa erros ao interagir ──
+document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(function(el) {
+  el.addEventListener('change', function() {
+    var err = this.closest('.field-group');
+    if (err) { var e = err.querySelector('.field-error'); if (e) e.classList.remove('show'); }
+  });
+});
+
+// ── Validação por tela ──
+function validateAndGo(fromStep, toStep) {
+  var valid = true;
+  function showErr(id) { document.getElementById(id).classList.add('show'); valid = false; }
+  function clearErrs() { document.querySelectorAll('[data-step="' + fromStep + '"] .field-error').forEach(function(e) { e.classList.remove('show'); }); }
+  clearErrs();
+
+  if (fromStep === 1) {
+    if (!document.querySelector('input[name="d1_quem"]:checked')) showErr('err-d1');
+    if (!document.querySelector('input[name="d2_tempo"]:checked')) showErr('err-d2t');
+    if (!document.querySelector('input[name="d2_casamento"]:checked')) showErr('err-d2c');
+  }
+  if (fromStep === 2) {
+    if (!document.querySelector('input[name="d3_situacao"]:checked')) showErr('err-d3s');
+    if (!document.querySelector('input[name="d3_renda"]:checked')) showErr('err-d3r');
+  }
+  if (fromStep === 3) {
+    if (!document.querySelector('input[name="d4_frequencia"]:checked')) showErr('err-d4f');
+    if (!document.querySelector('input[name="d4_padroes"]:checked')) showErr('err-d4p');
+  }
+  if (fromStep === 4) {
+    if (!document.querySelector('input[name="d5_tentativas"]:checked')) showErr('err-d5t');
+  }
+  if (fromStep === 5) {
+    if (!document.querySelector('input[name="d6_objetivos"]:checked')) showErr('err-d6');
+  }
+  if (fromStep === 6) {
+    if (document.getElementById('d7-historia').value.trim().length < 30) showErr('err-d7');
+  }
+
+  if (valid) goTo(toStep);
+}
+
+// ── Coleta valores ──
+function getRadio(name) { var r = document.querySelector('input[name="' + name + '"]:checked'); return r ? r.value : ''; }
+function getChecked(name) {
+  var vals = [];
+  document.querySelectorAll('input[name="' + name + '"]:checked').forEach(function(c) { vals.push(c.value); });
+  return vals;
+}
+
+// ── Submit ──
+function submitForm() {
+  var valid = true;
+  document.querySelectorAll('[data-step="7"] .field-error').forEach(function(e) { e.classList.remove('show'); });
+
+  var nome = document.getElementById('d8-nome').value.trim();
+  var email = document.getElementById('d8-email').value.trim();
+  var whatsapp = document.getElementById('d8-whatsapp').value.trim();
+
+  if (!nome) { document.getElementById('err-d8n').classList.add('show'); valid = false; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById('err-d8e').classList.add('show'); valid = false; }
+  if (whatsapp.length < 8) { document.getElementById('err-d8w').classList.add('show'); valid = false; }
+  if (!document.getElementById('agree-privacy').checked || !document.getElementById('agree-contact').checked) {
+    document.getElementById('err-agree').classList.add('show'); valid = false;
+  }
+
+  if (!valid) return;
+
+  var btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Enviando...';
+
+  var padroes = getChecked('d4_padroes');
+  if (document.getElementById('chk-padrao-outro').checked && document.getElementById('d4-padrao-outro').value.trim()) {
+    padroes.push('Outro: ' + document.getElementById('d4-padrao-outro').value.trim());
+  }
+
+  var objetivos = getChecked('d6_objetivos');
+  if (document.getElementById('chk-obj-outro').checked && document.getElementById('d6-obj-outro').value.trim()) {
+    objetivos.push('Outro: ' + document.getElementById('d6-obj-outro').value.trim());
+  }
+
+  var payload = {
+    funil: 'diagnostico-casal',
+    nome: nome,
+    email: email,
+    whatsapp: whatsapp,
+    parceiro: document.getElementById('d8-parceiro').value.trim(),
+    d1_quem: getRadio('d1_quem'),
+    d1_contexto: document.getElementById('d1-contexto').value.trim(),
+    d2_tempo: getRadio('d2_tempo'),
+    d2_casamento: getRadio('d2_casamento'),
+    d3_situacao: getRadio('d3_situacao'),
+    d3_renda: getRadio('d3_renda'),
+    d4_frequencia: getRadio('d4_frequencia'),
+    d4_padroes: padroes.join(' | '),
+    d5_tentativas: getRadio('d5_tentativas'),
+    d5_como: document.getElementById('d5-como').value.trim(),
+    d6_objetivos: objetivos.join(' | '),
+    d7_historia: document.getElementById('d7-historia').value.trim()
+  };
+
+  fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
+    .then(function() { goTo(8); })
+    .catch(function() { goTo(8); });
+
+  setTimeout(function() { if (currentStep !== 8) goTo(8); }, 4000);
+
+  if (typeof gtag === 'function') {
+    gtag('event', 'form_submit', { event_category: 'diagnostico', event_label: 'diagnostico_casal' });
+  }
+}
+</script>
+
+</body>
 </html>
