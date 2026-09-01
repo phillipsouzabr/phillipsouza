@@ -1069,17 +1069,13 @@
           <strong class="text-gray-200 font-500">Os 12 Bloqueios Emocionais Financeiros</strong> revela as origens e libertações dos impedimentos e autoboicotes inconscientes que impedem profissionais de alta renda de construir a vida rica e próspera que merecem — com profundidade que o mercado financeiro convencional nunca teve coragem de publicar.
         </p>
 
-        <!-- Web3Forms — Lead Capture Livro -->
+        <!-- Lead Capture Livro — via Google Apps Script -->
         <form
-          action="https://api.web3forms.com/submit"
-          method="POST"
+          id="form-livro"
           class="flex flex-col sm:flex-row gap-3"
           aria-label="Formulário de aviso de lançamento do livro"
+          novalidate
         >
-          <input type="hidden" name="access_key"  value="bfb5e7df-8aa8-4459-9be5-52ecde0ef59b" />
-          <input type="hidden" name="subject"     value="Novo lead — Lista do Livro" />
-          <input type="hidden" name="form_source" value="lead-livro" />
-          <input type="hidden" name="botcheck"    value="" style="display:none;" />
           <label for="email-livro" class="sr-only">Seu melhor e-mail</label>
           <input
             type="email"
@@ -1090,10 +1086,11 @@
             class="form-input flex-1"
             autocomplete="email"
           />
-          <button type="submit" class="btn-gold text-xs px-6 py-3 rounded whitespace-nowrap">
+          <button type="submit" class="btn-gold text-xs px-6 py-3 rounded whitespace-nowrap" id="btn-livro">
             Avisar Lançamento
           </button>
         </form>
+        <div id="livro-msg" style="display:none;margin-top:.75rem;"></div>
 
         <p class="text-xs text-gray-600 mt-3">Sem spam. Você será notificado apenas no lançamento.</p>
       </div>
@@ -1908,5 +1905,52 @@
 
 
 <script>document.querySelectorAll('.copy-year').forEach(function(e){e.textContent=new Date().getFullYear();});</script>
+
+<!-- ── Lead Capture Livro — envio via Apps Script ── -->
+<script>
+(function() {
+  var LIVRO_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxfk_5hyZhy758t1netZc9XW4D-GomrLJ9Q4vNmqDn0vviADUXaJC45Taz4WIvoxLdT/exec';
+
+  var formLivro = document.getElementById('form-livro');
+  var btnLivro  = document.getElementById('btn-livro');
+  var livroMsg  = document.getElementById('livro-msg');
+
+  if (!formLivro) return;
+
+  formLivro.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var email = document.getElementById('email-livro').value.trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      livroMsg.textContent = 'Informe um e-mail válido.';
+      livroMsg.style.display = 'block';
+      livroMsg.style.color = '#F87171';
+      return;
+    }
+
+    btnLivro.disabled = true;
+    btnLivro.textContent = 'Enviando...';
+    livroMsg.style.display = 'none';
+
+    var payload = { email: email, funil: 'lead-livro' };
+
+    var done = false;
+    function onDone() {
+      if (done) return;
+      done = true;
+      btnLivro.disabled = false;
+      btnLivro.textContent = 'Avisar Lançamento';
+      livroMsg.innerHTML = '✓ Pronto! Você será avisado no lançamento.';
+      livroMsg.style.display = 'block';
+      livroMsg.style.color = '#34D399';
+      formLivro.reset();
+    }
+
+    fetch(LIVRO_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
+      .then(onDone).catch(onDone);
+    setTimeout(onDone, 5000);
+  });
+})();
+</script>
 </body>
 </html>
