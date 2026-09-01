@@ -389,6 +389,10 @@
       // Hide error
       var err = document.getElementById('err-' + currentStep);
       if (err) err.classList.remove('show');
+      // Auto-avança para o próximo passo (apenas nos radio, não no textarea)
+      if (currentStep <= 7) {
+        setTimeout(function() { nextStep(currentStep); }, 400);
+      }
     });
   });
 
