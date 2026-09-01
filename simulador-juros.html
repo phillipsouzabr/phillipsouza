@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZ3QL2RJGM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZZ3QL2RJGM');
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador de Juros Compostos · Planilha Gratuita — Phillip Souza</title>
+  <meta name="description" content="Descubra quanto seu dinheiro pode render com juros compostos. Baixe a planilha gratuita, preencha seus dados e veja o resultado na hora." />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="canonical" href="https://www.phillipsouza.com/simulador-juros.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.phillipsouza.com/simulador-juros.html" />
+  <meta property="og:title" content="Simulador de Juros Compostos · Planilha Gratuita" />
+  <meta property="og:description" content="Descubra quanto seu dinheiro pode render com juros compostos. Planilha pronta no Google Sheets." />
+  <meta property="og:image" content="https://www.phillipsouza.com/perfil.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0D0D1A;
+      color: #F0EDE8;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+    }
+
+    .container {
+      max-width: 520px; width: 100%;
+      animation: fadeUp .5s ease;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Hero ─────────────────────────────────────────── */
+    .hero { text-align: center; margin-bottom: 2rem; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(212,175,55,.08); border: 1px solid rgba(212,175,55,.2);
+      border-radius: 100px; padding: 6px 16px;
+      font-size: .75rem; color: #D4AF37;
+      text-transform: uppercase; letter-spacing: .08em; margin-bottom: 1.25rem;
+    }
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      font-weight: 800; line-height: 1.2; margin-bottom: .75rem;
+    }
+    .hero h1 span { color: #D4AF37; }
+    .hero p { color: #9CA3AF; font-size: .95rem; line-height: 1.7; max-width: 440px; margin: 0 auto; }
+
+    /* ── Value props ──────────────────────────────────── */
+    .props {
+      display: flex; flex-direction: column; gap: .6rem;
+      margin-bottom: 2rem;
+    }
+    .prop {
+      display: flex; align-items: flex-start; gap: .75rem;
+      padding: .75rem 1rem;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(212,175,55,.1);
+      border-radius: 10px;
+    }
+    .prop-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+    .prop-text { font-size: .9rem; color: #D1D5DB; line-height: 1.5; }
+    .prop-text strong { color: #F0EDE8; }
+
+    /* ── Card form ────────────────────────────────────── */
+    .form-card {
+      background: rgba(212,175,55,.04);
+      border: 1px solid rgba(212,175,55,.18);
+      border-radius: 16px;
+      padding: 1.75rem 1.5rem;
+    }
+    .form-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem; font-weight: 700;
+      text-align: center; margin-bottom: 1.25rem;
+    }
+    .field { margin-bottom: 1rem; }
+    .field label {
+      display: block; font-size: .85rem; font-weight: 600;
+      margin-bottom: .4rem; color: #D1D5DB;
+    }
+    .field input {
+      width: 100%; padding: .75rem 1rem;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(212,175,55,.2);
+      border-radius: 8px;
+      color: #F0EDE8; font-size: .95rem; font-family: 'Inter', sans-serif;
+      outline: none; transition: border-color .3s;
+    }
+    .field input:focus { border-color: #D4AF37; }
+    .field input::placeholder { color: #6B7280; }
+
+    .btn-gold {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: .9rem 1.5rem;
+      background: linear-gradient(135deg, #D4AF37, #B8941F);
+      color: #0D0D1A; font-weight: 700; font-size: 1rem;
+      border: none; border-radius: 8px; cursor: pointer;
+      transition: all .3s; margin-top: .5rem;
+    }
+    .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(212,175,55,.3); }
+    .btn-gold:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+    .form-error {
+      display: none; color: #F87171; font-size: .82rem; margin-top: .4rem;
+    }
+    .form-error.show { display: block; }
+
+    .privacy-note {
+      text-align: center; font-size: .75rem; color: #6B7280;
+      margin-top: 1rem; line-height: 1.5;
+    }
+    .privacy-note a { color: #D4AF37; }
+
+    /* ── Success ──────────────────────────────────────── */
+    .success-card {
+      background: rgba(212,175,55,.04);
+      border: 1px solid rgba(212,175,55,.18);
+      border-radius: 16px;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      animation: fadeUp .4s ease;
+    }
+    .success-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .success-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.4rem; font-weight: 700; color: #D4AF37; margin-bottom: .5rem;
+    }
+    .success-text { color: #D1D5DB; font-size: .92rem; line-height: 1.7; margin-bottom: 1.5rem; }
+    .btn-download {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, #D4AF37, #B8941F);
+      color: #0D0D1A; font-weight: 700; font-size: 1rem;
+      text-decoration: none; border-radius: 8px;
+      transition: all .3s;
+    }
+    .btn-download:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(212,175,55,.3); }
+    .success-extra {
+      margin-top: 1.5rem; padding-top: 1.5rem;
+      border-top: 1px solid rgba(212,175,55,.12);
+    }
+    .success-extra a { color: #D4AF37; font-size: .88rem; text-decoration: none; font-weight: 600; }
+    .success-extra a:hover { text-decoration: underline; }
+
+    .spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid rgba(13,13,26,.2); border-top-color: #0D0D1A; border-radius: 50%; animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 480px) {
+      body { padding: 1rem .75rem; }
+      .form-card { padding: 1.5rem 1.15rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ══════ ESTADO 1: LANDING ══════ -->
+  <div id="landing-state">
+    <div class="hero">
+      <div class="badge">
+        <svg width="8" height="8" viewBox="0 0 8 8" fill="#D4AF37"><circle cx="4" cy="4" r="4"/></svg>
+        Ferramenta Gratuita
+      </div>
+      <h1>Simulador de <span>Juros Compostos</span></h1>
+      <p>Descubra em segundos quanto seu dinheiro pode render — e quanto tempo falta para alcançar sua meta.</p>
+    </div>
+
+    <div class="props">
+      <div class="prop">
+        <span class="prop-icon">📊</span>
+        <span class="prop-text"><strong>Planilha pronta no Google Sheets</strong> — abra, duplique e comece a usar. Sem instalar nada.</span>
+      </div>
+      <div class="prop">
+        <span class="prop-icon">🎯</span>
+        <span class="prop-text"><strong>Simulação personalizada</strong> — insira seu aporte, taxa e prazo. Veja o efeito dos juros compostos mês a mês.</span>
+      </div>
+      <div class="prop">
+        <span class="prop-icon">🔓</span>
+        <span class="prop-text"><strong>100% editável</strong> — ajuste cenários, compare opções e tome decisões com dados reais, não com achismo.</span>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <p class="form-title">Acesse a planilha agora</p>
+      <form id="lead-form" onsubmit="return submitLead(event)">
+        <div class="field">
+          <label for="f-nome">Seu nome</label>
+          <input type="text" id="f-nome" placeholder="Nome e sobrenome" autocomplete="name" required />
+          <p class="form-error" id="err-nome">Preencha seu nome.</p>
+        </div>
+        <div class="field">
+          <label for="f-email">Seu melhor e-mail</label>
+          <input type="email" id="f-email" placeholder="email@exemplo.com" autocomplete="email" required />
+          <p class="form-error" id="err-email">Preencha um e-mail válido.</p>
+        </div>
+        <button type="submit" class="btn-gold" id="btn-submit">Quero a planilha →</button>
+      </form>
+      <p class="privacy-note">Seus dados estão seguros. <a href="privacidade.html" target="_blank">Política de Privacidade</a></p>
+    </div>
+  </div>
+
+  <!-- ══════ ESTADO 2: SUCESSO ══════ -->
+  <div id="success-state" style="display:none;">
+    <div class="success-card">
+      <div class="success-icon">📊</div>
+      <p class="success-title">Planilha liberada!</p>
+      <p class="success-text" id="success-msg">Pronto! Clique abaixo para abrir o Simulador de Juros Compostos no Google Sheets. Faça uma cópia para a sua conta e comece a simular.</p>
+      <a href="https://docs.google.com/spreadsheets/d/1WOkUS5oSJkGVwJc9fpeTeyRNameyuaP4sj1OE0KKU80/copy" class="btn-download" target="_blank" rel="noopener noreferrer">
+        Abrir Simulador →
+      </a>
+      <div class="success-extra">
+        <p style="font-size:.85rem;color:#9CA3AF;margin-bottom:.75rem;">Quer ir além dos números? Conheça a Jornada de Navegação Financeira:</p>
+        <a href="jornada-financeira.html">→ Ver a Jornada</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyYdB-jV6s9S5bCDQ-Vulzsh4qQPujYWvnxvRVQeQ7YVKcJRn-aQhQN_X0fJ6kzzvx1/exec';
+
+function submitLead(evt) {
+  evt.preventDefault();
+
+  document.querySelectorAll('.form-error').forEach(function(e) { e.classList.remove('show'); });
+
+  var nome = document.getElementById('f-nome').value.trim();
+  var email = document.getElementById('f-email').value.trim();
+  var valid = true;
+
+  if (!nome) { document.getElementById('err-nome').classList.add('show'); valid = false; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById('err-email').classList.add('show'); valid = false; }
+  if (!valid) return false;
+
+  var btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Enviando...';
+
+  var payload = {
+    nome: nome,
+    email: email,
+    funil: 'simulador-juros'
+  };
+
+  var done = false;
+  function onSuccess() {
+    if (done) return;
+    done = true;
+    var firstName = nome.split(' ')[0];
+    document.getElementById('success-msg').innerHTML = '<strong>' + firstName + '</strong>, sua planilha está pronta! Clique abaixo para abrir o Simulador de Juros Compostos no Google Sheets. Faça uma cópia para a sua conta e comece a simular.';
+    document.getElementById('landing-state').style.display = 'none';
+    document.getElementById('success-state').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
+    .then(onSuccess)
+    .catch(onSuccess);
+
+  setTimeout(onSuccess, 3500);
+
+  if (typeof gtag === 'function') {
+    gtag('event', 'form_submit', { event_category: 'lead', event_label: 'simulador_juros' });
+  }
+
+  return false;
+}
+</script>
+
+</body>
+</html>
