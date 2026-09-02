@@ -1061,6 +1061,11 @@
       if (done) return;
       done = true;
 
+      // Evento de conversão — entrada na lista de espera
+      if (typeof gtag === 'function') {
+        gtag('event', 'form_submit', { event_category: 'lead', event_label: 'jornada-financeira' });
+      }
+
       // Transforma o modal inteiro na página de agradecimento
       var modalBody = document.querySelector('.modal-body');
       var firstName = nome.split(' ')[0]; // Pega só o primeiro nome

@@ -591,6 +591,12 @@
     function doRedirect() {
       if (redirected) return;
       redirected = true;
+
+      // Evento de conversão — lead do ebook capturado
+      if (typeof gtag === 'function') {
+        gtag('event', 'form_submit', { event_category: 'lead', event_label: 'ebook-bloqueios' });
+      }
+
       window.location.href = 'obrigado-ebook.html';
     }
 

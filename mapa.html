@@ -548,6 +548,11 @@
       return '<p>' + p + '</p>';
     }).join('');
     showScreen('screen-result');
+
+    // Evento de conversão — quiz completo com lead capturado
+    if (typeof gtag === 'function') {
+      gtag('event', 'quiz_completo', { event_category: 'lead', event_label: dominant });
+    }
   }
 
   /* ── Ano dinâmico ── */
