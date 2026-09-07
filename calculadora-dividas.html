@@ -300,7 +300,7 @@
       </div>
 
       <div>
-        <a href="https://mpago.la/1Mb7VkU" class="btn-gold" target="_blank" rel="noopener">
+        <a href="#" class="btn-gold btn-checkout" onclick="iniciarCheckout(this);return false;">
           ◈ Comprar Agora — R$67
         </a>
       </div>
@@ -490,7 +490,7 @@
         </div>
 
         <div style="margin-top:1.5rem;">
-          <a href="https://mpago.la/1Mb7VkU" class="btn-gold" target="_blank" rel="noopener" style="font-size:.95rem;padding:1.2rem 3rem;">
+          <a href="#" class="btn-gold btn-checkout" onclick="iniciarCheckout(this);return false;" style="font-size:.95rem;padding:1.2rem 3rem;">
             ◈ Comprar Agora — R$67
           </a>
         </div>
@@ -523,6 +523,7 @@
 
 
 <script>
+  // ─── Reveal animations ───
   (function() {
     var items = document.querySelectorAll('.reveal');
     var obs = new IntersectionObserver(function(entries) {
@@ -530,6 +531,31 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     items.forEach(function(el) { obs.observe(el); });
   })();
+
+  // ─── Checkout Pro via Apps Script ───
+  // IMPORTANTE: após deploy, cole aqui a URL do seu Apps Script (a mesma do IPN)
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx9Op9fDTqkRpgxbpczXl323G3TK7libfCALXt4lLOP5t6Szyw8NmvskXXlkKWFShdIvQ/exec';
+  var FALLBACK_URL = 'https://mpago.la/1Mb7VkU';
+
+  function iniciarCheckout(btn) {
+    // Desabilita todos os botões de compra
+    var btns = document.querySelectorAll('.btn-checkout');
+    btns.forEach(function(b) {
+      b.style.pointerEvents = 'none';
+      b.style.opacity = '.6';
+      b.textContent = '⏳ Redirecionando...';
+    });
+
+    fetch(APPS_SCRIPT_URL + '?action=checkout')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        window.location.href = data.checkout_url || FALLBACK_URL;
+      })
+      .catch(function() {
+        // Fallback: link estático do MP
+        window.location.href = FALLBACK_URL;
+      });
+  }
 </script>
 
 </body>
