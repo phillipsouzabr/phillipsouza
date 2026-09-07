@@ -8,18 +8,18 @@
   <link rel="apple-touch-icon" href="logo.png" />
 
   <!-- ─── SEO ─────────────────────────────────────────────── -->
-  <title>Planilha M.E.R.D.A. Grátis · Guerra Contra as Dívidas — Phillip Souza</title>
-  <meta name="description" content="Simuladores PRICE e SAC, cadastro de credores e inventário de ativos. A planilha gratuita que mostra exatamente quanto você paga de juros em cada dívida." />
-  <link rel="canonical" href="https://www.phillipsouza.com/estrategico-dividas.html" />
+  <title>Linha do Tempo Financeira Grátis · Guerra Contra as Dívidas — Phillip Souza</title>
+  <meta name="description" content="Simulador de fluxo de caixa de 60 dias. Descubra o dia exato em que seu saldo vai para o negativo — e aja antes que a crise aconteça." />
+  <link rel="canonical" href="https://www.phillipsouza.com/tempo-dividas.html" />
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Phillip Souza" />
 
   <meta property="og:type"        content="website" />
-  <meta property="og:url"         content="https://www.phillipsouza.com/estrategico-dividas.html" />
+  <meta property="og:url"         content="https://www.phillipsouza.com/tempo-dividas.html" />
   <meta property="og:locale"      content="pt_BR" />
   <meta property="og:site_name"   content="Phillip Souza" />
-  <meta property="og:title"       content="Planilha M.E.R.D.A. Grátis · Guerra Contra as Dívidas" />
-  <meta property="og:description" content="Você sabe quanto paga de juros por mês em cada dívida? A maioria não sabe. Planilha estratégica gratuita." />
+  <meta property="og:title"       content="Linha do Tempo Financeira Grátis · Guerra Contra as Dívidas" />
+  <meta property="og:description" content="Você sabe em qual dia do mês seu caixa vai para o negativo? Simulador gratuito de 60 dias." />
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZ3QL2RJGM"></script>
@@ -60,7 +60,7 @@
       overflow-x: hidden;
     }
 
-    /* Textura tática sutil — linhas diagonais quase imperceptíveis */
+    /* Textura tática sutil */
     body::before {
       content: '';
       position: fixed; inset: 0;
@@ -76,15 +76,14 @@
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 4px; }
 
-    /* Layout helpers */
+    /* Layout */
     .wrap    { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
     .wrap-sm { max-width: 640px; margin: 0 auto; padding: 0 1.5rem; }
     .center  { text-align: center; }
     .section { padding: 5rem 0; position: relative; }
     .grid    { display: grid; gap: 1.25rem; }
     @media (min-width: 720px) {
-      .grid-3 { grid-template-columns: repeat(3, 1fr); }
-      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .grid-2 { grid-template-columns: repeat(2, 1fr); }
     }
 
     /* Tipografia */
@@ -102,7 +101,7 @@
     .text-gold { color: var(--gold); }
     .text-red  { color: var(--red); }
 
-    /* Badge tático */
+    /* Badge */
     .badge {
       display: inline-flex; align-items: center; gap: .6rem;
       background: rgba(171,0,0,.12);
@@ -114,7 +113,7 @@
     }
     .badge .dot { width: 6px; height: 6px; background: var(--red); flex-shrink: 0; }
 
-    /* Divisor tático — faixa diagonal ouro/vermelho */
+    /* Divisor tático */
     .stripe-divider {
       height: 3px; width: 100%;
       background: repeating-linear-gradient(
@@ -122,6 +121,87 @@
         var(--red) 10px, var(--red) 20px
       );
       opacity: .8;
+    }
+
+    /* ══════ TIMELINE VISUAL — gráfico CSS ══════ */
+    .timeline-graph {
+      position: relative;
+      width: 100%; height: 120px;
+      margin: 2.5rem 0 1rem;
+      overflow: hidden;
+    }
+    .timeline-graph .line {
+      position: absolute; bottom: 50%; left: 0;
+      width: 100%; height: 2px;
+      background: rgba(239,184,16,.2);
+    }
+    .timeline-graph .zero-label {
+      position: absolute; bottom: calc(50% - 8px); left: 0;
+      font-size: .6rem; color: var(--muted); font-family: 'Montserrat', sans-serif;
+      letter-spacing: .08em; text-transform: uppercase; opacity: .5;
+    }
+    .timeline-graph .flow-path {
+      position: absolute; bottom: 0; left: 0;
+      width: 100%; height: 100%;
+    }
+    .timeline-graph .flow-path svg {
+      width: 100%; height: 100%;
+    }
+    .timeline-graph .flow-path .saldo-line {
+      fill: none; stroke: var(--gold); stroke-width: 2;
+      stroke-dasharray: 800; stroke-dashoffset: 800;
+      animation: drawLine 2.5s ease forwards;
+    }
+    .timeline-graph .flow-path .danger-area {
+      fill: rgba(171,0,0,.15); stroke: none;
+    }
+    @keyframes drawLine {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* Ponto Crítico pulsante */
+    .critical-dot {
+      position: absolute;
+      width: 12px; height: 12px;
+      background: var(--red);
+      border-radius: 50%;
+      bottom: 18%; left: 38%;
+      animation: pulse 2s ease-in-out infinite;
+      z-index: 2;
+    }
+    .critical-dot::after {
+      content: '';
+      position: absolute; inset: -6px;
+      border: 2px solid var(--red);
+      border-radius: 50%;
+      animation: pulseRing 2s ease-in-out infinite;
+      opacity: 0;
+    }
+    .critical-label {
+      position: absolute;
+      bottom: 8%; left: calc(38% + 18px);
+      font-family: 'Montserrat', sans-serif;
+      font-size: .6rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .1em;
+      color: var(--red);
+      white-space: nowrap;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(171,0,0,.5); }
+      50% { transform: scale(1.3); box-shadow: 0 0 16px 4px rgba(171,0,0,.3); }
+    }
+    @keyframes pulseRing {
+      0% { transform: scale(1); opacity: .6; }
+      100% { transform: scale(2.5); opacity: 0; }
+    }
+
+    /* Day markers */
+    .day-markers {
+      display: flex; justify-content: space-between;
+      padding: 0 .25rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .55rem; color: rgba(176,184,193,.4);
+      letter-spacing: .05em; text-transform: uppercase;
     }
 
     /* Cards */
@@ -138,28 +218,24 @@
     .card h3 { font-size: 1rem; font-weight: 600; margin-bottom: .6rem; letter-spacing: .01em; }
     .card p { font-size: .87rem; color: var(--muted); line-height: 1.65; margin: 0; }
 
-    .card-pain {
+    .card-critical {
+      border-color: rgba(171,0,0,.4);
       background: rgba(171,0,0,.06);
-      border: 1px solid rgba(171,0,0,.3);
     }
-    .card-pain:hover { border-color: var(--red); }
+    .card-critical:hover { border-color: var(--red); }
 
-    /* Steps numerados — estilo operacional */
-    .step {
-      display: flex; align-items: flex-start; gap: 1.25rem;
-      padding: 1.5rem 0;
-      border-bottom: 1px dashed rgba(239,184,16,.2);
+    /* Pain cards */
+    .pain-block {
+      background: rgba(171,0,0,.04);
+      border: 1px solid rgba(171,0,0,.2);
+      border-left: 3px solid var(--red);
+      padding: 2rem;
+      border-radius: 4px;
     }
-    .step:last-child { border-bottom: none; }
-    .step-num {
-      flex-shrink: 0; width: 44px; height: 44px;
-      border: 2px solid var(--gold);
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--gold);
-      clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+    .pain-block p {
+      font-size: .92rem; color: var(--muted); line-height: 1.75; margin: 0;
     }
-    .step h3 { font-size: .98rem; font-weight: 600; margin-bottom: .3rem; }
-    .step p  { font-size: .87rem; color: var(--muted); margin: 0; line-height: 1.6; }
+    .pain-block p + p { margin-top: 1.25rem; }
 
     /* Buttons */
     .btn-red {
@@ -202,7 +278,7 @@
     .btn-outline:hover { color: var(--gold); }
 
     /* Hero */
-    .hero { padding: 4.5rem 0 4rem; }
+    .hero { padding: 4.5rem 0 2rem; }
     .hero-glow {
       position: absolute; width: 520px; height: 520px; border-radius: 50%;
       background: var(--red); opacity: .08; filter: blur(140px);
@@ -259,10 +335,37 @@
       text-align: center;
     }
 
+    /* Stat callout */
+    .stat-row {
+      display: flex; flex-wrap: wrap; gap: 1.5rem;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+    .stat {
+      text-align: center;
+      padding: 1.25rem 1.75rem;
+      border: 1px solid rgba(239,184,16,.15);
+      border-radius: 4px;
+      background: rgba(239,184,16,.03);
+      flex: 1; min-width: 160px; max-width: 220px;
+    }
+    .stat .num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem; font-weight: 800;
+      color: var(--gold); line-height: 1;
+    }
+    .stat .label {
+      font-size: .72rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .08em;
+      margin-top: .5rem;
+      font-family: 'Montserrat', sans-serif; font-weight: 500;
+    }
+
     /* Reveal */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
+    /* Footer */
     footer {
       border-top: 1px solid rgba(239,184,16,.12);
       padding: 3rem 1.5rem; text-align: center; line-height: 1.9;
@@ -278,82 +381,6 @@
     .footer-ctas .btn-gold {
       font-size: .75rem; padding: .8rem 1.6rem;
     }
-
-    /* ══════ AMORT CHART — barras juros vs amortização ══════ */
-    .amort-chart {
-      display: flex; align-items: flex-end; justify-content: center;
-      gap: 3px; height: 100px;
-      margin: 2.5rem auto 0;
-      max-width: 520px;
-      padding: 0 .5rem;
-    }
-    .amort-bar {
-      flex: 1; max-width: 28px;
-      display: flex; flex-direction: column;
-      border-radius: 2px 2px 0 0;
-      overflow: hidden;
-      height: 0;
-      animation: growBar .8s ease forwards;
-    }
-    .amort-bar .juros {
-      background: var(--red);
-      transition: flex .6s ease;
-    }
-    .amort-bar .amort {
-      background: var(--gold);
-      transition: flex .6s ease;
-    }
-    @keyframes growBar {
-      to { height: 100%; }
-    }
-    .amort-legend {
-      display: flex; gap: 1.5rem; justify-content: center;
-      margin-top: .75rem;
-    }
-    .amort-legend span {
-      display: flex; align-items: center; gap: .4rem;
-      font-family: 'Montserrat', sans-serif;
-      font-size: .6rem; font-weight: 600;
-      text-transform: uppercase; letter-spacing: .08em;
-      color: var(--muted);
-    }
-    .amort-legend .swatch {
-      width: 10px; height: 10px; border-radius: 2px;
-    }
-    .amort-month-labels {
-      display: flex; justify-content: space-between;
-      max-width: 520px; margin: 0 auto;
-      padding: 0 .5rem;
-      font-family: 'Montserrat', sans-serif;
-      font-size: .55rem; color: rgba(176,184,193,.4);
-      letter-spacing: .05em; text-transform: uppercase;
-    }
-
-    /* Stat callout */
-    .stat-row {
-      display: flex; flex-wrap: wrap; gap: 1.5rem;
-      justify-content: center;
-      margin: 2rem 0;
-    }
-    .stat {
-      text-align: center;
-      padding: 1.25rem 1.75rem;
-      border: 1px solid rgba(239,184,16,.15);
-      border-radius: 4px;
-      background: rgba(239,184,16,.03);
-      flex: 1; min-width: 140px; max-width: 200px;
-    }
-    .stat .num {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.8rem; font-weight: 800;
-      color: var(--gold); line-height: 1;
-    }
-    .stat .label {
-      font-size: .68rem; color: var(--muted);
-      text-transform: uppercase; letter-spacing: .08em;
-      margin-top: .5rem;
-      font-family: 'Montserrat', sans-serif; font-weight: 500;
-    }
   </style>
 </head>
 
@@ -367,94 +394,90 @@
     <div class="wrap center" style="position:relative;">
       <span class="badge">
         <span class="dot"></span>
-        Curso Guerra Contra as Dívidas · Recurso Gratuito
+        Aula 08 — Guerra Contra as Dívidas · Recurso Gratuito
       </span>
 
       <h1 class="h1" style="margin-top:1.75rem;">
-        Você sabe quanto paga de
-        <span class="text-red">juros</span> por mês em cada dívida?
+        Você sabe em qual dia do mês seu caixa vai para o
+        <span class="text-red">negativo</span>?
       </h1>
-      <p class="lead" style="font-family:'Montserrat',sans-serif;font-weight:700;text-transform:uppercase;font-size:.95rem;letter-spacing:.03em;color:var(--gold);margin-top:.75rem;">
-        A maioria não sabe.
+
+      <p class="lead" style="max-width:580px;margin-left:auto;margin-right:auto;">
+        A <strong style="color:#fff;">Linha do Tempo Financeira</strong> projeta
+        <strong style="color:var(--gold);">60 dias</strong> do seu fluxo de caixa
+        dia a dia e identifica o <strong style="color:var(--red);">Ponto Crítico</strong>
+        — o momento exato em que o saldo afunda.
       </p>
 
-      <p class="lead">
-        A <strong style="color:#fff;">Planilha Estratégica M.E.R.D.A.</strong> é uma suite completa:
-        simuladores PRICE e SAC, cadastro de credores e inventário de ativos —
-        para você enxergar o que está acontecendo dentro de cada parcela.
-      </p>
-
-      <p style="font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--white);margin-top:1rem;line-height:1.2;">
-        M.E.R.D.A.
-      </p>
-      <p style="font-family:'Montserrat',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:.25rem;">
-        <span style="color:var(--gold);">M</span>apeamento
-        <span style="color:var(--gold);">E</span>stratégico de
-        <span style="color:var(--gold);">R</span>esolução de
-        <span style="color:var(--gold);">D</span>ívidas com
-        <span style="color:var(--gold);">A</span>titude
-      </p>
-
-      <!-- ── Gráfico CSS: Juros vs Amortização ao longo das parcelas ── -->
-      <div class="amort-chart" id="amort-chart" aria-hidden="true"></div>
-      <div class="amort-month-labels">
-        <span>Parcela 1</span><span>Parcela 30</span><span>Parcela 60</span>
+      <!-- ── Gráfico CSS do fluxo de caixa ── -->
+      <div class="timeline-graph" aria-hidden="true">
+        <div class="line"></div>
+        <span class="zero-label">R$ 0</span>
+        <div class="flow-path">
+          <svg viewBox="0 0 800 120" preserveAspectRatio="none">
+            <!-- Zona de perigo (abaixo de zero) -->
+            <path class="danger-area"
+              d="M 240,60 Q 280,90 310,95 Q 340,90 360,60 L 360,120 L 240,120 Z" />
+            <!-- Linha do saldo -->
+            <path class="saldo-line"
+              d="M 0,30 Q 40,28 80,25 Q 120,22 160,35 Q 200,50 240,70 Q 280,95 310,95 Q 340,88 360,55 Q 400,30 440,20 Q 520,10 560,15 Q 600,20 640,28 Q 680,35 720,25 Q 760,18 800,22" />
+          </svg>
+        </div>
+        <div class="critical-dot"></div>
+        <span class="critical-label">Ponto Crítico</span>
       </div>
-      <div class="amort-legend">
-        <span><span class="swatch" style="background:var(--red);"></span>Juros</span>
-        <span><span class="swatch" style="background:var(--gold);"></span>Amortização</span>
+      <div class="day-markers">
+        <span>Dia 1</span><span>Dia 10</span><span>Dia 20</span><span>Dia 30</span><span>Dia 40</span><span>Dia 50</span><span>Dia 60</span>
       </div>
 
-      <div style="margin-top:2rem;">
-        <a href="#form" class="btn-red">◈ Quero a Planilha Grátis</a>
+      <div style="margin-top:2.25rem;">
+        <a href="#form" class="btn-red">◈ Quero Ver Meu Ponto Crítico</a>
       </div>
     </div>
   </section>
+
 
   <!-- ══════════════ STATS ══════════════ -->
   <section class="section" style="padding-top:1rem;padding-bottom:2rem;">
     <div class="wrap reveal">
       <div class="stat-row">
         <div class="stat">
-          <div class="num">5</div>
-          <div class="label">Abas integradas</div>
+          <div class="num">60</div>
+          <div class="label">Dias projetados</div>
         </div>
         <div class="stat">
-          <div class="num">420</div>
-          <div class="label">Parcelas simuladas</div>
+          <div class="num" style="color:var(--red);">1</div>
+          <div class="label">Ponto Crítico<br>identificado</div>
         </div>
         <div class="stat">
-          <div class="num" style="color:var(--red);">2</div>
-          <div class="label">Tabelas<br>PRICE + SAC</div>
+          <div class="num">0</div>
+          <div class="label">Custo para<br>mudar a data</div>
         </div>
       </div>
     </div>
   </section>
 
+  <div class="wrap"><div class="stripe-divider"></div></div>
+
 
   <!-- ══════════════ BLOCO DE DOR ══════════════ -->
-  <section class="section" style="padding-top:2rem;">
-    <div class="wrap">
-      <div class="center reveal" style="margin-bottom:2.5rem;">
-        <h2 class="h2">Você reconhece alguma dessas situações?</h2>
+  <section class="section">
+    <div class="wrap-sm">
+      <div class="center reveal" style="margin-bottom:2rem;">
+        <h2 class="h2">O problema não é o valor da dívida.<br><span class="text-red">É o timing.</span></h2>
       </div>
 
-      <div class="grid grid-3">
-        <div class="card card-pain reveal">
-          <span class="icon">⚠️</span>
-          <h3>Sabe que deve — mas não sabe exatamente quanto</h3>
-          <p>O número existe, mas está espalhado entre extratos, apps e memória. Nunca consolidado.</p>
-        </div>
-        <div class="card card-pain reveal" style="transition-delay:.05s;">
-          <span class="icon">⚠️</span>
-          <h3>Já tentou organizar, mas desistiu no meio</h3>
-          <p>Planilha genérica, sem simulador, sem visão consolidada. Parou de fazer sentido continuar.</p>
-        </div>
-        <div class="card card-pain reveal" style="transition-delay:.1s;">
-          <span class="icon">⚠️</span>
-          <h3>Negocia às cegas porque não tem o número real na mesa</h3>
-          <p>Sem saber a taxa efetiva de cada dívida, toda negociação começa em desvantagem.</p>
-        </div>
+      <div class="pain-block reveal">
+        <p>
+          Acontece com todo mundo: o salário cai no dia 5. As despesas grandes vencem nos dias 3, 5, 6 e 8.
+          O resultado é que o caixa vai para o negativo antes mesmo da renda entrar — ou exatamente no dia
+          em que ela entra, zerando tudo de uma vez.
+        </p>
+        <p>
+          A <strong style="color:#fff;">Linha do Tempo Financeira</strong> torna esse padrão visível.
+          Você vê o vale. Sabe o dia. Sabe o valor. E aí a ação é simples: uma ligação para o credor
+          pedindo a mudança de data de vencimento. <strong style="color:var(--gold);">Sem renegociação, sem taxa extra.</strong>
+        </p>
       </div>
     </div>
   </section>
@@ -466,30 +489,30 @@
   <section class="section">
     <div class="wrap">
       <div class="center reveal" style="margin-bottom:2.5rem;">
-        <span class="badge">Arsenal Tático</span>
-        <h2 class="h2" style="margin-top:1.25rem;">O que a Planilha M.E.R.D.A. entrega</h2>
+        <span class="badge">Inteligência Tática</span>
+        <h2 class="h2" style="margin-top:1.25rem;">O que a Linha do Tempo entrega</h2>
       </div>
 
-      <div class="grid grid-4">
+      <div class="grid grid-2">
         <div class="card reveal">
-          <span class="icon">🧮</span>
-          <h3>Simuladores PRICE e SAC</h3>
-          <p>Veja mês a mês quanto da sua parcela vai para juros e quanto amortiza de verdade. Até 420 parcelas. Inclui simulador de amortização antecipada.</p>
+          <span class="icon">📅</span>
+          <h3>Projeção de 60 dias dia a dia</h3>
+          <p>Cada receita e cada despesa no dia exato em que entra ou sai do seu caixa. 2 meses completos de visibilidade.</p>
         </div>
-        <div class="card reveal" style="transition-delay:.05s;">
-          <span class="icon">📋</span>
-          <h3>Cadastro completo de credores</h3>
-          <p>Todas as dívidas detalhadas: taxa efetiva, parcelas pagas, valor para quitação total, parcelas restantes.</p>
+        <div class="card card-critical reveal" style="transition-delay:.05s;">
+          <span class="icon">🔴</span>
+          <h3>Ponto Crítico identificado</h3>
+          <p>O dia e valor exato em que seu saldo vai mais fundo no vermelho. Calculado automaticamente.</p>
         </div>
         <div class="card reveal" style="transition-delay:.1s;">
-          <span class="icon">💼</span>
-          <h3>Inventário de ativos</h3>
-          <p>CDB, LCI, imóveis, veículos — o que você tem, quanto vale e o que pode ser mobilizado.</p>
+          <span class="icon">📈</span>
+          <h3>Gráfico visual do fluxo</h3>
+          <p>Curvas de receita, despesa e saldo acumulado. Os "vales" ficam imediatamente visíveis — como o gráfico acima.</p>
         </div>
         <div class="card reveal" style="transition-delay:.15s;">
-          <span class="icon">📊</span>
-          <h3>Dashboard consolidado</h3>
-          <p>Gráficos automáticos de dívidas por categoria e distribuição de ativos. A visão que você nunca teve.</p>
+          <span class="icon">🎯</span>
+          <h3>Poder de negociação de data</h3>
+          <p>Com o Ponto Crítico em mãos, uma ligação para o credor resolve o que parecia crise. Mover a data de vencimento é gratuito.</p>
         </div>
       </div>
     </div>
@@ -498,33 +521,33 @@
   <div class="wrap"><div class="stripe-divider"></div></div>
 
 
-  <!-- ══════════════ COMO USAR ══════════════ -->
+  <!-- ══════════════ COMO FUNCIONA ══════════════ -->
   <section class="section">
     <div class="wrap-sm">
       <div class="center reveal" style="margin-bottom:2rem;">
-        <h2 class="h2">Em 3 passos, você tem seu diagnóstico completo</h2>
+        <h2 class="h2">Como funciona na prática</h2>
       </div>
 
       <div class="reveal">
-        <div class="step">
-          <div class="step-num">01</div>
+        <div style="display:flex;align-items:flex-start;gap:1.25rem;padding:1.5rem 0;border-bottom:1px dashed rgba(239,184,16,.2);">
+          <div style="flex-shrink:0;width:44px;height:44px;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.1rem;color:var(--gold);clip-path:polygon(15% 0,100% 0,85% 100%,0 100%);">01</div>
           <div>
-            <h3>Preencha a aba Credores</h3>
-            <p>Abra a planilha no Google Sheets e cadastre todas as suas dívidas — nome, taxa, parcelas.</p>
+            <h3 style="font-family:'Montserrat',sans-serif;font-size:.98rem;font-weight:600;margin:0 0 .3rem;text-transform:uppercase;">Insira suas receitas e despesas</h3>
+            <p class="body-text">Salário, freelances, aluguel, parcelas, cartão, academia — com o dia exato de cada entrada e saída.</p>
           </div>
         </div>
-        <div class="step">
-          <div class="step-num">02</div>
+        <div style="display:flex;align-items:flex-start;gap:1.25rem;padding:1.5rem 0;border-bottom:1px dashed rgba(239,184,16,.2);">
+          <div style="flex-shrink:0;width:44px;height:44px;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.1rem;color:var(--gold);clip-path:polygon(15% 0,100% 0,85% 100%,0 100%);">02</div>
           <div>
-            <h3>Preencha a aba Disponibilidades</h3>
-            <p>Cadastre seus investimentos e ativos: o que você tem para eventualmente mobilizar.</p>
+            <h3 style="font-family:'Montserrat',sans-serif;font-size:.98rem;font-weight:600;margin:0 0 .3rem;text-transform:uppercase;">Veja o gráfico de 60 dias</h3>
+            <p class="body-text">A planilha calcula o saldo acumulado dia a dia e revela o Ponto Crítico — o dia em que o saldo afunda mais.</p>
           </div>
         </div>
-        <div class="step">
-          <div class="step-num">03</div>
+        <div style="display:flex;align-items:flex-start;gap:1.25rem;padding:1.5rem 0;">
+          <div style="flex-shrink:0;width:44px;height:44px;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.1rem;color:var(--gold);clip-path:polygon(15% 0,100% 0,85% 100%,0 100%);">03</div>
           <div>
-            <h3>Use os simuladores e o Dashboard</h3>
-            <p>PRICE e SAC mostram quanto cada dívida custa de verdade. O Dashboard dá a visão consolidada de tudo.</p>
+            <h3 style="font-family:'Montserrat',sans-serif;font-size:.98rem;font-weight:600;margin:0 0 .3rem;text-transform:uppercase;">Aja antes que a crise aconteça</h3>
+            <p class="body-text">Ligue para o credor e peça para mudar a data de vencimento. Sem custo, sem renegociação. O caixa se equilibra.</p>
           </div>
         </div>
       </div>
@@ -539,8 +562,8 @@
       <!-- Estado 1: formulário -->
       <div id="form-state" class="reveal">
         <div class="center" style="margin-bottom:2rem;">
-          <h2 class="h2">Receba a planilha<br>no seu e-mail</h2>
-          <p class="lead" style="margin-top:.75rem;">É gratuita.</p>
+          <h2 class="h2">Descubra seu Ponto Crítico<br>— gratuitamente</h2>
+          <p class="lead" style="margin-top:.75rem;">Basta ter os valores e datas das suas contas.</p>
         </div>
 
         <div class="form-box">
@@ -554,16 +577,16 @@
               <input type="email" id="f-email" placeholder="seu@email.com" autocomplete="email" required />
             </div>
             <button type="submit" class="btn-red" id="btn-submit" style="width:100%;">
-              Enviar a Planilha
+              Quero Minha Linha do Tempo
             </button>
           </form>
           <p class="privacy-note">
-            Sem spam. Só enviaremos conteúdos de qualidade sobre finanças e comportamento.
+            Sem spam. Você receberá a planilha com instruções de uso. Compatível com Google Sheets (gratuito).
           </p>
         </div>
       </div>
 
-      <!-- Estado 2: sucesso (oculto até o submit) -->
+      <!-- Estado 2: sucesso -->
       <div id="success-state" style="display:none;">
         <div class="success-box">
           <div class="success-icon" aria-hidden="true">
@@ -571,11 +594,11 @@
           </div>
           <h2 class="h2" style="font-size:1.4rem;">Pronto! Verifique seu e-mail.</h2>
           <p class="body-text" id="success-msg" style="margin-top:1rem;margin-bottom:1.75rem;">
-            Enviamos a planilha para o seu e-mail. Caso não encontre, verifique a caixa de spam.
+            Enviamos a Linha do Tempo para o seu e-mail. Verifique também a caixa de spam.
           </p>
-          <a href="https://docs.google.com/spreadsheets/d/1WbEm9mLGsgEjWFDqKvQGDtlgMK9Q7gS4VzIH_hLm-_I/copy"
+          <a href="https://docs.google.com/spreadsheets/d/1dAZM0XkhIEIEQjmD0MuFz7uE2E5Al63Y0XubP6-XNx0/copy"
              target="_blank" rel="noopener noreferrer" class="btn-gold">
-            Acessar a Planilha Agora →
+            Acessar Minha Linha do Tempo →
           </a>
           <div style="margin-top:1.5rem;">
             <a href="jornada-financeira" class="btn-outline">Conhecer a Jornada de Navegação Financeira →</a>
@@ -593,13 +616,13 @@
       <div class="stripe-divider" style="margin-bottom:2.5rem;"></div>
       <div class="upsell-box reveal">
         <p style="font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">
-          Próxima Fase
+          Próximo Passo
         </p>
-        <h2 class="h2" style="font-size:1.5rem;">Quer ir além da planilha?</h2>
+        <h2 class="h2" style="font-size:1.5rem;">Você sabe quando o caixa vai ao negativo.<br>E agora?</h2>
         <p class="body-text" style="margin:1rem 0 1.75rem;max-width:480px;margin-left:auto;margin-right:auto;">
-          A <strong style="color:#fff;">Jornada de Navegação Financeira</strong> é o próximo passo.
-          6 semanas com diagnóstico personalizado, encontros ao vivo e acompanhamento em grupo —
-          para quem quer sair das dívidas com método e sem solidão.
+          O próximo passo é ter um plano completo de saída das dívidas — com acompanhamento.
+          A <strong style="color:#fff;">Jornada de Navegação Financeira</strong> faz exatamente isso:
+          6 semanas com diagnóstico personalizado, encontros ao vivo e acompanhamento em grupo.
         </p>
         <a href="jornada-financeira" class="btn-gold">Conhecer a Jornada</a>
       </div>
@@ -621,37 +644,6 @@
 <script>
   var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbypwfu8bNpvjZEy8bhxoRUwZqFDQWwAkDi8miWfJ2bEO1BqHV8xzWNU46uZrmj55Q27uQ/exec';
 
-  /* Gráfico de amortização — simula Tabela PRICE */
-  (function() {
-    var chart = document.getElementById('amort-chart');
-    if (!chart) return;
-    var N = 20; // barras visíveis (representam 60 parcelas)
-    var rate = 0.01; // 1% a.m.
-    var pv = 11000;
-    var pmt = pv * rate / (1 - Math.pow(1 + rate, -60));
-
-    for (var i = 0; i < N; i++) {
-      var month = Math.round(i * 59 / (N - 1)) + 1; // distribui de 1 a 60
-      var balance = pv * (Math.pow(1 + rate, month) - 1) / (Math.pow(1 + rate, 60) - 1);
-      balance = pv - (pmt * (Math.pow(1 + rate, month) - 1) / rate - pv * (Math.pow(1 + rate, month) - 1));
-      // Recalcular saldo devedor corretamente
-      var bal = pv * Math.pow(1 + rate, month) - pmt * (Math.pow(1 + rate, month) - 1) / rate;
-      if (bal < 0) bal = 0;
-      var juros = bal * rate;
-      var amort = pmt - juros;
-      var jPct = (juros / pmt) * 100;
-      var aPct = (amort / pmt) * 100;
-
-      var bar = document.createElement('div');
-      bar.className = 'amort-bar';
-      bar.style.animationDelay = (i * 0.06) + 's';
-      bar.innerHTML =
-        '<div class="juros" style="flex:' + jPct.toFixed(1) + '"></div>' +
-        '<div class="amort" style="flex:' + aPct.toFixed(1) + '"></div>';
-      chart.appendChild(bar);
-    }
-  })();
-
   function submitLead(evt) {
     evt.preventDefault();
 
@@ -663,7 +655,7 @@
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span>Enviando...';
 
-    var payload = { nome: nome, email: email, funil: 'merda-principal' };
+    var payload = { nome: nome, email: email, funil: 'linha-do-tempo' };
 
     var done = false;
     function onDone() {
@@ -671,13 +663,13 @@
       done = true;
 
       document.getElementById('success-msg').textContent =
-        'Enviamos a planilha para ' + email + '. Caso não encontre, verifique a caixa de spam.';
+        'Enviamos a Linha do Tempo para ' + email + '. Verifique também a caixa de spam.';
       document.getElementById('form-state').style.display = 'none';
       document.getElementById('success-state').style.display = 'block';
       window.scrollTo({ top: document.getElementById('form').offsetTop - 20, behavior: 'smooth' });
 
       if (typeof gtag === 'function') {
-        gtag('event', 'form_submit', { event_category: 'lead', event_label: 'merda-principal' });
+        gtag('event', 'form_submit', { event_category: 'lead', event_label: 'linha-do-tempo' });
       }
     }
 
