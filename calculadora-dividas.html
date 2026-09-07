@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
+
+  <!-- SEO -->
+  <title>Calculadora Bola-de-Neve vs Avalanche · R$67 — Phillip Souza</title>
+  <meta name="description" content="5 estratégias de quitação, calendário de 120 meses, gráficos automáticos. Descubra qual estratégia economiza mais juros — com os seus números." />
+  <link rel="canonical" href="https://www.phillipsouza.com/calculadora-dividas.html" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Phillip Souza" />
+
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://www.phillipsouza.com/calculadora-dividas.html" />
+  <meta property="og:locale"      content="pt_BR" />
+  <meta property="og:site_name"   content="Phillip Souza" />
+  <meta property="og:title"       content="Calculadora Bola-de-Neve vs Avalanche — R$67" />
+  <meta property="og:description" content="5 estratégias. 15 credores. 120 meses de projeção. Descubra qual ataque economiza mais juros." />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZ3QL2RJGM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZZ3QL2RJGM');
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" /></noscript>
+
+  <style>
+    :root {
+      --red:      #AB0000;
+      --red-dark: #8B0000;
+      --gold:     #EFB810;
+      --gold-dark:#C89A0E;
+      --base:     #0F181C;
+      --bg:       #0A0F1A;
+      --white:    #FFFFFF;
+      --muted:    #B0B8C1;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: repeating-linear-gradient(
+        135deg, rgba(239,184,16,.015) 0px, rgba(239,184,16,.015) 1px,
+        transparent 1px, transparent 14px
+      );
+      pointer-events: none; z-index: 0;
+    }
+    main, footer { position: relative; z-index: 1; }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 4px; }
+
+    .wrap    { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
+    .wrap-sm { max-width: 640px; margin: 0 auto; padding: 0 1.5rem; }
+    .center  { text-align: center; }
+    .section { padding: 5rem 0; position: relative; }
+    .grid    { display: grid; gap: 1.25rem; }
+    @media (min-width: 720px) {
+      .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    h1, h2, h3 {
+      font-family: 'Montserrat', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      color: var(--white);
+      margin: 0;
+    }
+    .h1 { font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 800; line-height: 1.2; }
+    .h2 { font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 700; line-height: 1.25; }
+    p.lead { font-size: 1.05rem; color: var(--muted); line-height: 1.75; margin: 1.25rem 0 0; }
+    p.body-text { font-size: .92rem; color: var(--muted); line-height: 1.7; margin: 0; }
+    .text-gold { color: var(--gold); }
+    .text-red  { color: var(--red); }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: rgba(239,184,16,.1);
+      border: 1px solid rgba(239,184,16,.5);
+      clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+      padding: .5rem 1.4rem;
+      font-family: 'Montserrat', sans-serif; font-size: .68rem; font-weight: 600;
+      letter-spacing: .18em; text-transform: uppercase; color: var(--gold);
+    }
+
+    .stripe-divider {
+      height: 3px; width: 100%;
+      background: repeating-linear-gradient(
+        -45deg, var(--gold) 0px, var(--gold) 10px,
+        var(--red) 10px, var(--red) 20px
+      );
+      opacity: .8;
+    }
+
+    /* Cards */
+    .card {
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(239,184,16,.15);
+      border-radius: 4px;
+      padding: 1.75rem;
+      transition: border-color .3s, transform .3s;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+    }
+    .card:hover { border-color: var(--gold); transform: translateY(-3px); }
+    .card .icon { font-size: 1.6rem; margin-bottom: .9rem; display: block; }
+    .card h3 { font-size: 1rem; font-weight: 600; margin-bottom: .6rem; letter-spacing: .01em; }
+    .card p { font-size: .87rem; color: var(--muted); line-height: 1.65; margin: 0; }
+
+    /* Strategy rows */
+    .strat-row {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.1rem 1.25rem;
+      border: 1px solid rgba(255,255,255,.06);
+      border-left: 3px solid;
+      border-radius: 4px;
+      background: rgba(255,255,255,.015);
+      transition: border-color .3s, background .3s;
+    }
+    .strat-row:hover { background: rgba(255,255,255,.03); }
+    .strat-row .strat-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .strat-row .strat-name {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700; font-size: .82rem;
+      text-transform: uppercase; letter-spacing: .04em;
+      color: var(--white);
+    }
+    .strat-row .strat-desc {
+      font-size: .82rem; color: var(--muted); line-height: 1.55; margin-top: .2rem;
+    }
+
+    /* Price tag */
+    .price-tag {
+      display: inline-flex; flex-direction: column; align-items: center;
+      background: rgba(239,184,16,.06);
+      border: 2px solid var(--gold);
+      border-radius: 4px;
+      padding: 1.5rem 3rem;
+      margin: 2rem 0;
+    }
+    .price-tag .currency { font-family: 'Montserrat', sans-serif; font-size: .9rem; font-weight: 600; color: var(--muted); }
+    .price-tag .amount { font-family: 'Montserrat', sans-serif; font-size: 3.5rem; font-weight: 800; color: var(--gold); line-height: 1; }
+    .price-tag .period { font-size: .75rem; color: var(--muted); margin-top: .25rem; }
+
+    /* Buttons */
+    .btn-red {
+      display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+      background: var(--red); color: var(--white);
+      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .85rem;
+      letter-spacing: .06em; text-transform: uppercase;
+      border: none; cursor: pointer; padding: 1.05rem 2.25rem;
+      clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+      transition: background .25s, transform .2s;
+      text-decoration: none;
+    }
+    .btn-red:hover { background: var(--red-dark); transform: translateY(-2px); }
+
+    .btn-gold {
+      display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+      background: var(--gold); color: var(--base);
+      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .85rem;
+      letter-spacing: .06em; text-transform: uppercase;
+      border: none; cursor: pointer; padding: 1.1rem 2.5rem;
+      clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+      transition: background .25s, transform .2s, box-shadow .3s;
+      text-decoration: none;
+      animation: pulseBtn 2.5s ease-in-out infinite;
+    }
+    .btn-gold:hover { background: #F5D44A; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(239,184,16,.35); animation: none; }
+    @keyframes pulseBtn {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(239,184,16,.3); }
+      50% { box-shadow: 0 0 20px 4px rgba(239,184,16,.2); }
+    }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: transparent; color: var(--muted);
+      font-family: 'Inter', sans-serif; font-weight: 500; font-size: .85rem;
+      border: none; cursor: pointer; text-decoration: underline;
+      text-underline-offset: 3px; transition: color .25s;
+    }
+    .btn-outline:hover { color: var(--gold); }
+
+    /* Hero */
+    .hero { padding: 4.5rem 0 2rem; }
+    .hero-glow {
+      position: absolute; width: 520px; height: 520px; border-radius: 50%;
+      background: var(--gold); opacity: .06; filter: blur(140px);
+      top: -160px; left: 50%; transform: translateX(-50%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* Stat callout */
+    .stat-row {
+      display: flex; flex-wrap: wrap; gap: 1.5rem;
+      justify-content: center; margin: 2rem 0;
+    }
+    .stat {
+      text-align: center; padding: 1.25rem 1.5rem;
+      border: 1px solid rgba(239,184,16,.15); border-radius: 4px;
+      background: rgba(239,184,16,.03);
+      flex: 1; min-width: 130px; max-width: 190px;
+    }
+    .stat .num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem; font-weight: 800; color: var(--gold); line-height: 1;
+    }
+    .stat .label {
+      font-size: .68rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .08em; margin-top: .5rem;
+      font-family: 'Montserrat', sans-serif; font-weight: 500;
+    }
+
+    /* Anchor / value compare */
+    .anchor-box {
+      background: rgba(171,0,0,.06);
+      border: 1px solid rgba(171,0,0,.3);
+      border-left: 3px solid var(--red);
+      padding: 1.5rem 1.75rem; border-radius: 4px;
+      margin: 2rem 0;
+    }
+
+    /* Guarantee */
+    .guarantee-box {
+      background: rgba(239,184,16,.04);
+      border: 1px solid rgba(239,184,16,.25);
+      padding: 2rem; border-radius: 4px; text-align: center;
+    }
+
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    footer {
+      border-top: 1px solid rgba(239,184,16,.12);
+      padding: 3rem 1.5rem; text-align: center; line-height: 1.9;
+    }
+    footer p { margin: 0; font-size: .75rem; color: var(--muted); }
+    footer a { color: var(--muted); text-decoration: none; transition: color .3s; }
+    footer a:hover { color: var(--gold); }
+    .footer-ctas {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      justify-content: center; margin-top: 1.5rem;
+    }
+    .footer-ctas .btn-red,
+    .footer-ctas .btn-gold { font-size: .75rem; padding: .8rem 1.6rem; }
+  </style>
+</head>
+
+<body>
+
+<main>
+
+  <!-- ══════════════ HERO ══════════════ -->
+  <section class="hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="wrap center" style="position:relative;">
+      <span class="badge">
+        Calculadora Estratégica — Até 10 Anos de Projeção
+      </span>
+
+      <h1 class="h1" style="margin-top:1.75rem;">
+        Qual estratégia de quitação<br>
+        <span class="text-gold">economiza mais juros</span> para você?
+      </h1>
+
+      <p class="lead" style="max-width:580px;margin-left:auto;margin-right:auto;">
+        A <strong style="color:#fff;">Calculadora Bola-de-Neve vs. Avalanche</strong>
+        compara <strong style="color:var(--gold);">5 estratégias</strong> com os seus números reais.
+        Até 15 credores. Calendário de 120 meses. Resultado instantâneo.
+      </p>
+
+      <div class="price-tag" style="margin-top:2rem;">
+        <span class="currency">R$</span>
+        <span class="amount">67</span>
+        <span class="period">Acesso vitalício · Google Sheets</span>
+      </div>
+
+      <div>
+        <a href="https://mpago.la/1Mb7VkU" class="btn-gold" target="_blank" rel="noopener">
+          ◈ Comprar Agora — R$67
+        </a>
+      </div>
+      <p style="font-size:.72rem;color:var(--muted);margin-top:.75rem;">Pagamento seguro via Mercado Pago · Pix, cartão ou boleto</p>
+    </div>
+  </section>
+
+
+  <!-- ══════════════ STATS ══════════════ -->
+  <section class="section" style="padding-top:1rem;padding-bottom:2rem;">
+    <div class="wrap reveal">
+      <div class="stat-row">
+        <div class="stat">
+          <div class="num">5</div>
+          <div class="label">Estratégias</div>
+        </div>
+        <div class="stat">
+          <div class="num">15</div>
+          <div class="label">Credores</div>
+        </div>
+        <div class="stat">
+          <div class="num">120</div>
+          <div class="label">Meses projetados</div>
+        </div>
+        <div class="stat">
+          <div class="num" style="color:var(--red);">0</div>
+          <div class="label">Macros necessárias</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="stripe-divider"></div></div>
+
+
+  <!-- ══════════════ PROMESSA ══════════════ -->
+  <section class="section" style="padding-bottom:3rem;">
+    <div class="wrap-sm center reveal">
+      <h2 style="font-family:'Montserrat',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;line-height:1.2;color:var(--gold);text-transform:uppercase;margin:0;">
+        Fique livre de todas as suas dívidas em até 10 anos.
+      </h2>
+      <p class="lead" style="max-width:520px;margin-left:auto;margin-right:auto;">
+        Não é um slogan. É o limite máximo da calculadora: 120 meses de projeção,
+        mês a mês, dívida a dívida. Com estratégia, a maioria liquida <strong style="color:#fff;">bem antes</strong>.
+      </p>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="stripe-divider"></div></div>
+
+
+  <!-- ══════════════ 5 ESTRATÉGIAS ══════════════ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="center reveal" style="margin-bottom:2.5rem;">
+        <span class="badge">Arsenal Tático</span>
+        <h2 class="h2" style="margin-top:1.25rem;">5 estratégias. Uma é a certa para você.</h2>
+        <p class="body-text" style="margin-top:.75rem;">Basta alterar uma célula. Os resultados mudam instantaneamente.</p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:.75rem;" class="reveal">
+        <div class="strat-row" style="border-left-color:#EFB810;">
+          <span class="strat-icon">❄️</span>
+          <div>
+            <div class="strat-name">Bola-de-Neve — Menor Saldo Primeiro</div>
+            <div class="strat-desc">Cada dívida quitada libera a parcela, que se soma à próxima. Vitórias rápidas. Máximo incentivo psicológico.</div>
+          </div>
+        </div>
+        <div class="strat-row" style="border-left-color:#AB0000;">
+          <span class="strat-icon">🏔️</span>
+          <div>
+            <div class="strat-name">Avalanche — Maior Taxa Primeiro</div>
+            <div class="strat-desc">Concentra tudo na dívida mais cara. Menor custo total em juros. Eficiência matemática máxima.</div>
+          </div>
+        </div>
+        <div class="strat-row" style="border-left-color:#4A5568;">
+          <span class="strat-icon">📋</span>
+          <div>
+            <div class="strat-name">Ordem Tabela — Sequencialidade</div>
+            <div class="strat-desc">Liquida na ordem em que você digitou. Ideal para acordos judiciais ou dívidas com parentes.</div>
+          </div>
+        </div>
+        <div class="strat-row" style="border-left-color:#2D6A4F;">
+          <span class="strat-icon">🎯</span>
+          <div>
+            <div class="strat-name">Personalizado — Controle Total</div>
+            <div class="strat-desc">Você numera a prioridade. A calculadora respeita exatamente a ordem que você definiu.</div>
+          </div>
+        </div>
+        <div class="strat-row" style="border-left-color:#6B2737;">
+          <span class="strat-icon">⚠️</span>
+          <div>
+            <div class="strat-name">Sem Bola-de-Neve — O Cenário do Não</div>
+            <div class="strat-desc">Paga apenas os mínimos. Sem redirecionar parcelas quitadas. É o retrato do endividamento arrastado — para você ver o que acontece se não agir.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="center reveal" style="margin-top:2rem;">
+        <p style="font-size:.85rem;color:var(--gold);font-style:italic;">
+          "A calculadora calcula todas as cinco. Você vê os números. Você decide."
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="stripe-divider"></div></div>
+
+
+  <!-- ══════════════ O QUE ESTÁ INCLUÍDO ══════════════ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="center reveal" style="margin-bottom:2.5rem;">
+        <h2 class="h2">O que você recebe</h2>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card reveal">
+          <span class="icon">📋</span>
+          <h3>5 estratégias selecionáveis</h3>
+          <p>Troca instantânea por dropdown, sem macros. Bola-de-Neve, Avalanche, Ordem Tabela, Personalizado e Sem Bola-de-Neve.</p>
+        </div>
+        <div class="card reveal" style="transition-delay:.05s;">
+          <span class="icon">📅</span>
+          <h3>Data exata de liberdade</h3>
+          <p>Mês e ano em que cada credor é quitado. E a data em que você fica livre de todas as dívidas.</p>
+        </div>
+        <div class="card reveal" style="transition-delay:.1s;">
+          <span class="icon">📊</span>
+          <h3>Dois gráficos automáticos</h3>
+          <p>Crescimento da Bola-de-Neve e Evolução da redução do saldo devedor. Atualizados a cada alteração.</p>
+        </div>
+        <div class="card reveal" style="transition-delay:.15s;">
+          <span class="icon">🧮</span>
+          <h3>Simulador Price + Conversor de taxas</h3>
+          <p>Calcule a parcela de qualquer dívida e converta taxas mês ↔ ano sem calculadora financeira.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="stripe-divider"></div></div>
+
+
+  <!-- ══════════════ ÂNCORA DE VALOR ══════════════ -->
+  <section class="section" style="padding-bottom:3rem;">
+    <div class="wrap-sm">
+      <div class="center reveal" style="margin-bottom:2rem;">
+        <h2 class="h2">Por que não é gratuita</h2>
+      </div>
+
+      <div class="anchor-box reveal">
+        <p class="body-text" style="margin-bottom:1rem;">
+          As planilhas M.E.R.D.A. e Linha do Tempo são gratuitas — e já ajudam muito.
+          Elas organizam suas dívidas e mostram quando o caixa aperta.
+        </p>
+        <p class="body-text">
+          Mas a Calculadora é diferente: ela <strong style="color:#fff;">decide por você a ordem de ataque</strong>,
+          calcula exatamente quanto você vai pagar de juros em cada cenário, e projeta
+          mês a mês até a quitação total. É a ferramenta que transforma diagnóstico em ação.
+        </p>
+      </div>
+
+      <div class="center reveal" style="margin-top:1.5rem;">
+        <p style="font-size:.85rem;color:var(--gold);font-style:italic;">
+          "No exemplo da Aula 11: a estratégia certa economizou R$400 em juros. A calculadora custa R$67."
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════ CTA FINAL ══════════════ -->
+  <section class="section" style="padding-top:2rem;">
+    <div class="wrap-sm center">
+      <div class="stripe-divider" style="margin-bottom:3rem;"></div>
+
+      <div class="reveal">
+        <div class="price-tag">
+          <span class="currency">R$</span>
+          <span class="amount">67</span>
+          <span class="period">Acesso vitalício · Google Sheets</span>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+          <a href="https://mpago.la/1Mb7VkU" class="btn-gold" target="_blank" rel="noopener" style="font-size:.95rem;padding:1.2rem 3rem;">
+            ◈ Comprar Agora — R$67
+          </a>
+        </div>
+        <p style="font-size:.72rem;color:var(--muted);margin-top:.75rem;">Pagamento seguro via Mercado Pago · Pix, cartão ou boleto</p>
+
+        <div class="guarantee-box" style="margin-top:2.5rem;">
+          <p style="font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin:0 0 .75rem;">
+            Garantia
+          </p>
+          <p class="body-text" style="max-width:420px;margin:0 auto;">
+            Se a planilha não fizer sentido para a sua situação,
+            entre em contato em até 7 dias e devolvemos o valor integral.
+            Sem burocracia. <strong style="color:#fff;">contato@phillipsouza.com</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+
+<footer>
+  <p>© Phillip Souza — Planejador e Psicoterapeuta Financeiro</p>
+  <div class="footer-ctas">
+    <a href="dividas" class="btn-red">▶ Playlist Completa do Curso</a>
+    <a href="sessao-diagnostico" class="btn-gold" style="animation:none;">◈ Aplicação 1:1</a>
+  </div>
+</footer>
+
+
+<script>
+  (function() {
+    var items = document.querySelectorAll('.reveal');
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) { if (entry.isIntersecting) { entry.target.classList.add('visible'); obs.unobserve(entry.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    items.forEach(function(el) { obs.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
