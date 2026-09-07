@@ -267,6 +267,40 @@
     }
     .footer-ctas .btn-red,
     .footer-ctas .btn-gold { font-size: .75rem; padding: .8rem 1.6rem; }
+
+    /* Checkout modal */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+      background: var(--base); border: 1px solid var(--gold);
+      border-top: 3px solid var(--gold); border-radius: 4px;
+      padding: 2.5rem 2rem; max-width: 420px; width: 90%;
+      text-align: center; position: relative;
+    }
+    .modal-box h3 {
+      font-family: 'Montserrat', sans-serif; font-size: 1.1rem;
+      font-weight: 700; text-transform: uppercase; margin: 0 0 .5rem;
+    }
+    .modal-box p { font-size: .85rem; color: var(--muted); margin: 0 0 1.5rem; line-height: 1.6; }
+    .modal-box input {
+      display: block; width: 100%; padding: .85rem 1rem;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(239,184,16,.3);
+      border-radius: 4px; color: var(--white); font-family: 'Inter', sans-serif;
+      font-size: .9rem; margin-bottom: .75rem; outline: none;
+      transition: border-color .3s;
+    }
+    .modal-box input:focus { border-color: var(--gold); }
+    .modal-box input::placeholder { color: rgba(255,255,255,.3); }
+    .modal-close {
+      position: absolute; top: .75rem; right: 1rem;
+      background: none; border: none; color: var(--muted);
+      font-size: 1.4rem; cursor: pointer; transition: color .3s;
+    }
+    .modal-close:hover { color: var(--white); }
   </style>
 </head>
 
@@ -513,6 +547,22 @@
 </main>
 
 
+<!-- ══════════════ MODAL DE CHECKOUT ══════════════ -->
+<div class="modal-overlay" id="checkout-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="fecharModal()" aria-label="Fechar">&times;</button>
+    <h3><span style="color:var(--gold);">Último passo</span></h3>
+    <p>Informe seu e-mail para receber a calculadora<br>imediatamente após o pagamento.</p>
+    <form id="checkout-form" onsubmit="enviarCheckout(event)">
+      <input type="text" name="nome" placeholder="Seu nome" required />
+      <input type="email" name="email" placeholder="Seu melhor e-mail" required />
+      <button type="submit" class="btn-gold" style="width:100%;margin-top:.5rem;animation:none;">Ir para o pagamento →</button>
+    </form>
+    <p style="font-size:.68rem;margin-top:1rem;">Pagamento seguro via Mercado Pago</p>
+  </div>
+</div>
+
+
 <footer>
   <p>© Phillip Souza — Planejador e Psicoterapeuta Financeiro</p>
   <div class="footer-ctas">
@@ -532,27 +582,45 @@
     items.forEach(function(el) { obs.observe(el); });
   })();
 
-  // ─── Checkout Pro via Apps Script ───
-  // IMPORTANTE: após deploy, cole aqui a URL do seu Apps Script (a mesma do IPN)
+  // ─── Checkout com captura de e-mail ───
   var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx9Op9fDTqkRpgxbpczXl323G3TK7libfCALXt4lLOP5t6Szyw8NmvskXXlkKWFShdIvQ/exec';
   var FALLBACK_URL = 'https://mpago.la/1Mb7VkU';
 
-  function iniciarCheckout(btn) {
-    // Desabilita todos os botões de compra
-    var btns = document.querySelectorAll('.btn-checkout');
-    btns.forEach(function(b) {
-      b.style.pointerEvents = 'none';
-      b.style.opacity = '.6';
-      b.textContent = '⏳ Redirecionando...';
-    });
+  function iniciarCheckout() {
+    document.getElementById('checkout-modal').classList.add('active');
+    document.querySelector('#checkout-form input[name="nome"]').focus();
+  }
 
-    fetch(APPS_SCRIPT_URL + '?action=checkout')
+  function fecharModal() {
+    document.getElementById('checkout-modal').classList.remove('active');
+  }
+
+  // Fechar com ESC
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') fecharModal();
+  });
+
+  function enviarCheckout(e) {
+    e.preventDefault();
+    var form = e.target;
+    var nome = form.nome.value.trim();
+    var email = form.email.value.trim();
+    var btn = form.querySelector('button[type="submit"]');
+
+    btn.style.pointerEvents = 'none';
+    btn.style.opacity = '.6';
+    btn.textContent = '⏳ Redirecionando...';
+
+    var url = APPS_SCRIPT_URL + '?action=checkout'
+      + '&nome=' + encodeURIComponent(nome)
+      + '&email=' + encodeURIComponent(email);
+
+    fetch(url)
       .then(function(r) { return r.json(); })
       .then(function(data) {
         window.location.href = data.checkout_url || FALLBACK_URL;
       })
       .catch(function() {
-        // Fallback: link estático do MP
         window.location.href = FALLBACK_URL;
       });
   }
