@@ -582,20 +582,20 @@
     items.forEach(function(el) { obs.observe(el); });
   })();
 
-  // ─── Checkout com captura de e-mail ───
+  // ─── Checkout direto (sem fetch = sem CORS) ───
   var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx9Op9fDTqkRpgxbpczXl323G3TK7libfCALXt4lLOP5t6Szyw8NmvskXXlkKWFShdIvQ/exec';
-  var FALLBACK_URL = 'https://mpago.la/1Mb7VkU';
 
   function iniciarCheckout() {
     document.getElementById('checkout-modal').classList.add('active');
-    document.querySelector('#checkout-form input[name="nome"]').focus();
+    setTimeout(function() {
+      document.querySelector('#checkout-form input[name="nome"]').focus();
+    }, 100);
   }
 
   function fecharModal() {
     document.getElementById('checkout-modal').classList.remove('active');
   }
 
-  // Fechar com ESC
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') fecharModal();
   });
@@ -611,18 +611,11 @@
     btn.style.opacity = '.6';
     btn.textContent = '⏳ Redirecionando...';
 
-    var url = APPS_SCRIPT_URL + '?action=checkout'
+    // Navegação direta — zero CORS, funciona de qualquer lugar
+    window.location.href = APPS_SCRIPT_URL
+      + '?action=checkout'
       + '&nome=' + encodeURIComponent(nome)
       + '&email=' + encodeURIComponent(email);
-
-    fetch(url)
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        window.location.href = data.checkout_url || FALLBACK_URL;
-      })
-      .catch(function() {
-        window.location.href = FALLBACK_URL;
-      });
   }
 </script>
 
