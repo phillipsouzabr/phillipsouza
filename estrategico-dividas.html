@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
+
+  <!-- ─── SEO ─────────────────────────────────────────────── -->
+  <title>Planilha M.E.R.D.A. Grátis · Guerra Contra as Dívidas — Phillip Souza</title>
+  <meta name="description" content="Simuladores PRICE e SAC, cadastro de credores e inventário de ativos. A planilha gratuita que mostra exatamente quanto você paga de juros em cada dívida." />
+  <link rel="canonical" href="https://www.phillipsouza.com/estrategico-dividas.html" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Phillip Souza" />
+
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://www.phillipsouza.com/estrategico-dividas.html" />
+  <meta property="og:locale"      content="pt_BR" />
+  <meta property="og:site_name"   content="Phillip Souza" />
+  <meta property="og:title"       content="Planilha M.E.R.D.A. Grátis · Guerra Contra as Dívidas" />
+  <meta property="og:description" content="Você sabe quanto paga de juros por mês em cada dívida? A maioria não sabe. Planilha estratégica gratuita." />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZ3QL2RJGM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZZ3QL2RJGM');
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" /></noscript>
+
+  <style>
+    :root {
+      --red:      #AB0000;
+      --red-dark: #8B0000;
+      --gold:     #EFB810;
+      --gold-dark:#C89A0E;
+      --base:     #0F181C;
+      --bg:       #0A0F1A;
+      --white:    #FFFFFF;
+      --muted:    #B0B8C1;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Textura tática sutil — linhas diagonais quase imperceptíveis */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: repeating-linear-gradient(
+        135deg, rgba(239,184,16,.015) 0px, rgba(239,184,16,.015) 1px,
+        transparent 1px, transparent 14px
+      );
+      pointer-events: none; z-index: 0;
+    }
+    main, footer { position: relative; z-index: 1; }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 4px; }
+
+    /* Layout helpers */
+    .wrap    { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
+    .wrap-sm { max-width: 640px; margin: 0 auto; padding: 0 1.5rem; }
+    .center  { text-align: center; }
+    .section { padding: 5rem 0; position: relative; }
+    .grid    { display: grid; gap: 1.25rem; }
+    @media (min-width: 720px) {
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+      .grid-5 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+    }
+
+    /* Tipografia */
+    h1, h2, h3 {
+      font-family: 'Oswald', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      color: var(--white);
+      margin: 0;
+    }
+    .h1 { font-size: clamp(1.9rem, 5.5vw, 3.1rem); font-weight: 700; line-height: 1.15; }
+    .h2 { font-size: clamp(1.5rem, 4vw, 2.1rem); font-weight: 600; line-height: 1.2; }
+    p.lead { font-size: 1.05rem; color: var(--muted); line-height: 1.75; margin: 1.25rem 0 0; }
+    p.body-text { font-size: .92rem; color: var(--muted); line-height: 1.7; margin: 0; }
+    .text-gold { color: var(--gold); }
+    .text-red  { color: var(--red); }
+
+    /* Badge tático */
+    .badge {
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: rgba(171,0,0,.12);
+      border: 1px solid rgba(171,0,0,.45);
+      clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+      padding: .5rem 1.4rem;
+      font-family: 'Oswald', sans-serif; font-size: .68rem; font-weight: 600;
+      letter-spacing: .18em; text-transform: uppercase; color: var(--gold);
+    }
+    .badge .dot { width: 6px; height: 6px; background: var(--red); flex-shrink: 0; }
+
+    /* Divisor tático — faixa diagonal ouro/vermelho */
+    .stripe-divider {
+      height: 3px; width: 100%;
+      background: repeating-linear-gradient(
+        -45deg, var(--gold) 0px, var(--gold) 10px,
+        var(--red) 10px, var(--red) 20px
+      );
+      opacity: .8;
+    }
+
+    /* Cards */
+    .card {
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(239,184,16,.15);
+      border-radius: 4px;
+      padding: 1.75rem;
+      transition: border-color .3s, transform .3s;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+    }
+    .card:hover { border-color: var(--gold); transform: translateY(-3px); }
+    .card .icon { font-size: 1.6rem; margin-bottom: .9rem; display: block; }
+    .card h3 { font-size: 1rem; font-weight: 600; margin-bottom: .6rem; letter-spacing: .01em; }
+    .card p { font-size: .87rem; color: var(--muted); line-height: 1.65; margin: 0; }
+
+    .card-pain {
+      background: rgba(171,0,0,.06);
+      border: 1px solid rgba(171,0,0,.3);
+    }
+    .card-pain:hover { border-color: var(--red); }
+
+    /* Steps numerados — estilo operacional */
+    .step {
+      display: flex; align-items: flex-start; gap: 1.25rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px dashed rgba(239,184,16,.2);
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      flex-shrink: 0; width: 44px; height: 44px;
+      border: 2px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--gold);
+      clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+    }
+    .step h3 { font-size: .98rem; font-weight: 600; margin-bottom: .3rem; }
+    .step p  { font-size: .87rem; color: var(--muted); margin: 0; line-height: 1.6; }
+
+    /* Buttons */
+    .btn-red {
+      display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+      background: var(--red);
+      color: var(--white);
+      font-family: 'Oswald', sans-serif; font-weight: 600; font-size: .9rem;
+      letter-spacing: .06em; text-transform: uppercase;
+      border: none; cursor: pointer;
+      padding: 1.05rem 2.25rem;
+      clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+      transition: background .25s, transform .2s;
+      text-decoration: none;
+    }
+    .btn-red:hover  { background: var(--red-dark); transform: translateY(-2px); }
+    .btn-red:disabled { opacity: .6; cursor: default; transform: none; }
+
+    .btn-gold {
+      display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+      background: var(--gold);
+      color: var(--base);
+      font-family: 'Oswald', sans-serif; font-weight: 600; font-size: .85rem;
+      letter-spacing: .06em; text-transform: uppercase;
+      border: none; cursor: pointer;
+      padding: .95rem 2rem;
+      clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+      transition: background .25s, transform .2s;
+      text-decoration: none;
+    }
+    .btn-gold:hover { background: var(--gold-dark); transform: translateY(-2px); }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+      background: transparent; color: var(--muted);
+      font-family: 'Inter', sans-serif; font-weight: 500; font-size: .85rem;
+      border: none; cursor: pointer; text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color .25s;
+    }
+    .btn-outline:hover { color: var(--gold); }
+
+    /* Hero */
+    .hero { padding: 4.5rem 0 4rem; }
+    .hero-glow {
+      position: absolute; width: 520px; height: 520px; border-radius: 50%;
+      background: var(--red); opacity: .08; filter: blur(140px);
+      top: -160px; left: 50%; transform: translateX(-50%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* Form */
+    .form-box {
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(239,184,16,.2);
+      border-top: 3px solid var(--red);
+      padding: 2.25rem 2rem;
+    }
+    .field { margin-bottom: 1.1rem; text-align: left; }
+    .field label {
+      display: block; font-size: .72rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .1em;
+      margin-bottom: .45rem; font-family: 'Oswald', sans-serif; font-weight: 500;
+    }
+    .field input {
+      width: 100%; background: rgba(255,255,255,.03);
+      border: 1px solid rgba(239,184,16,.25); border-radius: 2px;
+      color: var(--white); font-family: 'Inter', sans-serif; font-size: .92rem;
+      padding: .85rem 1rem; outline: none; transition: border-color .3s;
+    }
+    .field input:focus { border-color: var(--gold); }
+    .field input::placeholder { color: rgba(176,184,193,.4); }
+    .privacy-note { font-size: .72rem; color: var(--muted); text-align: center; margin-top: 1rem; line-height: 1.6; }
+
+    .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; margin-right: 6px; vertical-align: -2px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Success state */
+    .success-box {
+      background: rgba(239,184,16,.05);
+      border: 1px solid rgba(239,184,16,.3);
+      border-top: 3px solid var(--gold);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .success-icon {
+      width: 60px; height: 60px; margin: 0 auto 1.25rem;
+      border: 2px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+    }
+
+    /* Upsell */
+    .upsell-box {
+      background: rgba(239,184,16,.04);
+      border: 1px solid rgba(239,184,16,.2);
+      padding: 2rem 1.75rem;
+      text-align: center;
+    }
+
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    footer {
+      border-top: 1px solid rgba(239,184,16,.12);
+      padding: 2.5rem 1.5rem; text-align: center; line-height: 1.9;
+    }
+    footer p { margin: 0; font-size: .75rem; color: var(--muted); }
+    footer a { color: var(--muted); text-decoration: none; transition: color .3s; }
+    footer a:hover { color: var(--gold); }
+  </style>
+</head>
+
+<body>
+
+<main>
+
+  <!-- ══════════════ HERO ══════════════ -->
+  <section class="hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="wrap-sm center" style="position:relative;">
+      <span class="badge">
+        <span class="dot"></span>
+        Curso Guerra Contra as Dívidas · Recurso Gratuito
+      </span>
+
+      <h1 class="h1" style="margin-top:1.75rem;">
+        Você sabe quanto paga de<br />
+        <span class="text-red">juros</span> por mês em cada dívida?
+      </h1>
+      <p class="lead" style="font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;font-size:.95rem;letter-spacing:.03em;color:var(--gold);margin-top:.75rem;">
+        A maioria não sabe.
+      </p>
+
+      <p class="lead">
+        A <strong style="color:#fff;">Planilha Estratégica M.E.R.D.A.</strong> é uma suite completa:
+        simuladores PRICE e SAC, cadastro de credores e inventário de ativos —
+        para você enxergar o que está acontecendo dentro de cada parcela.
+      </p>
+
+      <p style="font-family:'Oswald',sans-serif;font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.85rem;">
+        M.E.R.D.A. — <span style="color:var(--gold);">M</span>apeamento
+        <span style="color:var(--gold);">E</span>stratégico de
+        <span style="color:var(--gold);">R</span>esolução de
+        <span style="color:var(--gold);">D</span>ívidas com
+        <span style="color:var(--gold);">A</span>titude
+      </p>
+
+      <div style="margin-top:2.25rem;">
+        <a href="#form" class="btn-red">◈ Quero a Planilha Grátis</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════ BLOCO DE DOR ══════════════ -->
+  <section class="section" style="padding-top:2rem;">
+    <div class="wrap">
+      <div class="center reveal" style="margin-bottom:2.5rem;">
+        <h2 class="h2">Você reconhece alguma dessas situações?</h2>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="card card-pain reveal">
+          <span class="icon">⚠️</span>
+          <h3>Sabe que deve — mas não sabe exatamente quanto</h3>
+          <p>O número existe, mas está espalhado entre extratos, apps e memória. Nunca consolidado.</p>
+        </div>
+        <div class="card card-pain reveal" style="transition-delay:.05s;">
+          <span class="icon">⚠️</span>
+          <h3>Já tentou organizar, mas desistiu no meio</h3>
+          <p>Planilha genérica, sem simulador, sem visão consolidada. Parou de fazer sentido continuar.</p>
+        </div>
+        <div class="card card-pain reveal" style="transition-delay:.1s;">
+          <span class="icon">⚠️</span>
+          <h3>Negocia às cegas porque não tem o número real na mesa</h3>
+          <p>Sem saber a taxa efetiva de cada dívida, toda negociação começa em desvantagem.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="stripe-divider"></div></div>
+
+
+  <!-- ══════════════ O QUE VOCÊ RECEBE ══════════════ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="center reveal" style="margin-bottom:2.5rem;">
+        <span class="badge">Arsenal Tático</span>
+        <h2 class="h2" style="margin-top:1.25rem;">O que a Planilha M.E.R.D.A. entrega</h2>
+      </div>
+
+      <div class="grid grid-5">
+        <div class="card reveal">
+          <span class="icon">📊</span>
+          <h3>Dashboard consolidado</h3>
+          <p>Gráficos automáticos de dívidas por categoria e distribuição de ativos. A visão que você nunca teve.</p>
+        </div>
+        <div class="card reveal" style="transition-delay:.05s;">
+          <span class="icon">🧮</span>
+          <h3>Simulador Tabela PRICE</h3>
+          <p>Veja mês a mês quanto da sua parcela vai para juros e quanto amortiza de verdade. Até 420 parcelas.</p>
+        </div>
+        <div class="card reveal" style="transition-delay:.1s;">
+          <span class="icon">🏠</span>
+          <h3>Simulador Tabela SAC</h3>
+          <p>Para financiamento imobiliário: a evolução real das parcelas decrescentes e o saldo devedor.</p>
+        </div>
+        <div class="card reveal" style="transition-delay:.15s;">
+          <span class="icon">📋</span>
+          <h3>Cadastro completo de credores</h3>
+          <p>Todas as dívidas detalhadas: taxa efetiva, parcelas pagas, valor para quitação total, parcelas restantes.</p>
+        </div>
+        <div class="card reveal" style="transition-delay:.2s;">
+          <span class="icon">💼</span>
+          <h3>Inventário de ativos</h3>
+          <p>CDB, LCI, imóveis, veículos — o que você tem, quanto vale e o que pode ser mobilizado.</p>
+        </div>
+        <div class="card reveal" style="transition-delay:.25s;">
+          <span class="icon">⏱️</span>
+          <h3>Simulador de Amortização Antecipada</h3>
+          <p>Simule aportes extras (13º salário, FGTS a cada 24 meses) e veja o impacto real: um financiamento de 30 anos pode cair para 10 — e os juros totais, de quase R$ 199 mil para R$ 64 mil.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="stripe-divider"></div></div>
+
+
+  <!-- ══════════════ COMO USAR ══════════════ -->
+  <section class="section">
+    <div class="wrap-sm">
+      <div class="center reveal" style="margin-bottom:2rem;">
+        <h2 class="h2">Em 3 passos, você tem seu diagnóstico completo</h2>
+      </div>
+
+      <div class="reveal">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div>
+            <h3>Preencha a aba Credores</h3>
+            <p>Abra a planilha no Google Sheets e cadastre todas as suas dívidas — nome, taxa, parcelas.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div>
+            <h3>Preencha a aba Disponibilidades</h3>
+            <p>Cadastre seus investimentos e ativos: o que você tem para eventualmente mobilizar.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div>
+            <h3>Use os simuladores e o Dashboard</h3>
+            <p>PRICE e SAC mostram quanto cada dívida custa de verdade. O Dashboard dá a visão consolidada de tudo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════ FORMULÁRIO ══════════════ -->
+  <section class="section" id="form" style="padding-top:2rem;">
+    <div class="wrap-sm">
+
+      <!-- Estado 1: formulário -->
+      <div id="form-state" class="reveal">
+        <div class="center" style="margin-bottom:2rem;">
+          <h2 class="h2">Receba a planilha no seu e-mail</h2>
+          <p class="lead" style="margin-top:.75rem;">É gratuita.</p>
+        </div>
+
+        <div class="form-box">
+          <form id="lead-form" onsubmit="return submitLead(event)">
+            <div class="field">
+              <label for="f-nome">Nome</label>
+              <input type="text" id="f-nome" placeholder="Seu nome completo" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="f-email">E-mail</label>
+              <input type="email" id="f-email" placeholder="seu@email.com" autocomplete="email" required />
+            </div>
+            <button type="submit" class="btn-red" id="btn-submit" style="width:100%;">
+              Enviar a Planilha
+            </button>
+          </form>
+          <p class="privacy-note">
+            Sem spam. Só enviaremos conteúdos de qualidade sobre finanças e comportamento.
+          </p>
+        </div>
+      </div>
+
+      <!-- Estado 2: sucesso (oculto até o submit) -->
+      <div id="success-state" style="display:none;">
+        <div class="success-box">
+          <div class="success-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EFB810" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h2 class="h2" style="font-size:1.4rem;">Pronto! Verifique seu e-mail.</h2>
+          <p class="body-text" id="success-msg" style="margin-top:1rem;margin-bottom:1.75rem;">
+            Enviamos a planilha para o seu e-mail. Caso não encontre, verifique a caixa de spam.
+          </p>
+          <a href="https://docs.google.com/spreadsheets/d/1WbEm9mLGsgEjWFDqKvQGDtlgMK9Q7gS4VzIH_hLm-_I/copy"
+             target="_blank" rel="noopener noreferrer" class="btn-gold">
+            Acessar a Planilha Agora →
+          </a>
+          <div style="margin-top:1.5rem;">
+            <a href="jornada-financeira" class="btn-outline">Conhecer a Jornada de Navegação Financeira →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════ UPSELL ══════════════ -->
+  <section class="section" style="padding-top:1rem;">
+    <div class="wrap-sm">
+      <div class="stripe-divider" style="margin-bottom:2.5rem;"></div>
+      <div class="upsell-box reveal">
+        <p style="font-family:'Oswald',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">
+          Próxima Fase
+        </p>
+        <h2 class="h2" style="font-size:1.5rem;">Quer ir além da planilha?</h2>
+        <p class="body-text" style="margin:1rem 0 1.75rem;max-width:480px;margin-left:auto;margin-right:auto;">
+          A <strong style="color:#fff;">Jornada de Navegação Financeira</strong> é o próximo passo.
+          6 semanas com diagnóstico personalizado, encontros ao vivo e acompanhamento em grupo —
+          para quem quer sair das dívidas com método e sem solidão.
+        </p>
+        <a href="jornada-financeira" class="btn-gold">Conhecer a Jornada</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+
+<footer>
+  <p>© Phillip Souza — Psicoterapeuta Financeiro</p>
+  <p style="margin-top:.5rem;">
+    <a href="dividas">Playlist completa do curso</a>
+    &nbsp;·&nbsp;
+    <a href="sessao-diagnostico">Aplicação 1:1</a>
+  </p>
+</footer>
+
+
+<script>
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbypwfu8bNpvjZEy8bhxoRUwZqFDQWwAkDi8miWfJ2bEO1BqHV8xzWNU46uZrmj55Q27uQ/exec';
+
+  function submitLead(evt) {
+    evt.preventDefault();
+
+    var nome  = document.getElementById('f-nome').value.trim();
+    var email = document.getElementById('f-email').value.trim();
+    if (!nome || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return false;
+
+    var btn = document.getElementById('btn-submit');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Enviando...';
+
+    var payload = { nome: nome, email: email, funil: 'merda-principal' };
+
+    var done = false;
+    function onDone() {
+      if (done) return;
+      done = true;
+
+      document.getElementById('success-msg').textContent =
+        'Enviamos a planilha para ' + email + '. Caso não encontre, verifique a caixa de spam.';
+      document.getElementById('form-state').style.display = 'none';
+      document.getElementById('success-state').style.display = 'block';
+      window.scrollTo({ top: document.getElementById('form').offsetTop - 20, behavior: 'smooth' });
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'form_submit', { event_category: 'lead', event_label: 'merda-principal' });
+      }
+    }
+
+    fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
+      .then(onDone)
+      .catch(onDone);
+    setTimeout(onDone, 3500);
+
+    return false;
+  }
+
+  /* Scroll reveal */
+  (function() {
+    var items = document.querySelectorAll('.reveal');
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) { if (entry.isIntersecting) { entry.target.classList.add('visible'); obs.unobserve(entry.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    items.forEach(function(el) { obs.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
