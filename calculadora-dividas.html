@@ -582,8 +582,9 @@
     items.forEach(function(el) { obs.observe(el); });
   })();
 
-  // ─── Checkout direto (sem fetch = sem CORS) ───
+  // ─── Checkout via fetch (invisível para o usuário) ───
   var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx9Op9fDTqkRpgxbpczXl323G3TK7libfCALXt4lLOP5t6Szyw8NmvskXXlkKWFShdIvQ/exec';
+  var FALLBACK_URL = 'https://mpago.la/1Mb7VkU';
 
   function iniciarCheckout() {
     document.getElementById('checkout-modal').classList.add('active');
@@ -609,13 +610,25 @@
 
     btn.style.pointerEvents = 'none';
     btn.style.opacity = '.6';
-    btn.textContent = '⏳ Redirecionando...';
+    btn.textContent = '⏳ Preparando pagamento...';
 
-    // Navegação direta — zero CORS, funciona de qualquer lugar
-    window.location.href = APPS_SCRIPT_URL
-      + '?action=checkout'
+    var url = APPS_SCRIPT_URL + '?action=checkout'
       + '&nome=' + encodeURIComponent(nome)
       + '&email=' + encodeURIComponent(email);
+
+    fetch(url)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.checkout_url) {
+          window.location.href = data.checkout_url;
+        } else {
+          window.location.href = FALLBACK_URL;
+        }
+      })
+      .catch(function() {
+        // Fallback direto para o link estático do MP
+        window.location.href = FALLBACK_URL;
+      });
   }
 </script>
 
