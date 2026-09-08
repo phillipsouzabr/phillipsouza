@@ -556,9 +556,17 @@
     <form id="checkout-form" onsubmit="enviarCheckout(event)">
       <input type="text" name="nome" placeholder="Seu nome" required />
       <input type="email" name="email" placeholder="Seu melhor e-mail" required />
+      <div style="margin:.75rem 0 .5rem;padding:.65rem .8rem;background:rgba(239,184,16,0.07);border:1px solid rgba(239,184,16,0.25);border-radius:4px;text-align:left;">
+        <p style="font-size:.68rem;margin:0;color:#B0B8C1;line-height:1.6;">
+          <strong style="color:var(--gold);">Pagando via PIX?</strong> Após confirmar o pagamento no seu banco, a calculadora chega automaticamente no e-mail acima — mesmo que a página não redirecione de volta ao site. Cartão aprova e redireciona na hora.
+        </p>
+      </div>
       <button type="submit" class="btn-gold" style="width:100%;margin-top:.5rem;animation:none;">Ir para o pagamento →</button>
     </form>
-    <p style="font-size:.68rem;margin-top:1rem;">Pagamento seguro via Mercado Pago</p>
+    <p style="font-size:.68rem;margin-top:.75rem;display:flex;align-items:center;justify-content:center;gap:.4rem;opacity:.7;">
+      <img src="https://imgmp.mlstatic.com/org-img/homesnw/img/br/_logos/mp_logo.png" alt="Mercado Pago" style="height:16px;width:auto;vertical-align:middle;filter:brightness(0) invert(1);opacity:.6;" loading="lazy">
+      Pagamento seguro via Mercado Pago
+    </p>
   </div>
 </div>
 
