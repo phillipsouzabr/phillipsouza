@@ -727,7 +727,7 @@
           Responda a cada afirmação com seu <strong>primeiro impulso inconsciente</strong>, mesmo que você racionalmente considere a resposta "errada" ou politicamente incorreta. O seu primeiro reflexo é a manifestação exata dos seus programas emocionais de infância.
         </div>
 
-        <button class="btn-submit" style="width:100%;" onclick="startTest()">
+        <button class="btn-submit" id="btn-iniciar-teste" style="width:100%;" onclick="startTest()">
           Iniciar Inventário Clínico →
         </button>
         <p style="font-size:.75rem;color:#6B7280;margin-top:1rem;">
@@ -904,9 +904,10 @@ var currentScreen = 0;
 var startTimestamp = 0;
 var respostasSalvas = {};
 
-// ─── INICIALIZAÇÃO ───────────────────────────────────────────
-window.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('copy-year').textContent = new Date().getFullYear();
+// ─── INICIALIZAÇÃO ROBUSTA MULTI-NAVEGADOR ──────────────────
+function initKmsi() {
+  var copyEl = document.getElementById('copy-year');
+  if (copyEl) copyEl.textContent = new Date().getFullYear();
 
   var urlParams = new URLSearchParams(window.location.search);
   var consultId = urlParams.get('id');
@@ -924,11 +925,27 @@ window.addEventListener('DOMContentLoaded', function() {
   } catch(e) {}
 
   renderizarBlocosHTML();
-});
+
+  // Garante disparo mesmo se onclick inline for bloqueado por extensões ou Brave Shields
+  var btnStart = document.getElementById('btn-iniciar-teste');
+  if (btnStart) {
+    btnStart.addEventListener('click', function(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      startTest();
+    });
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initKmsi);
+} else {
+  initKmsi();
+}
 
 // ─── RENDERIZAÇÃO DOS 9 BLOCOS DE PERGUNTAS ──────────────────
 function renderizarBlocosHTML() {
   var container = document.getElementById('dynamic-blocks-container');
+  if (!container) return;
   var html = '';
 
   for (var b = 1; b <= 9; b++) {
@@ -992,15 +1009,21 @@ function goToScreen(screenNumber) {
   var target = document.querySelector('[data-screen="' + screenNumber + '"]');
   if (target) {
     target.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    try {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch(e) {
+      window.scrollTo(0, 0);
+    }
   }
 
   currentScreen = screenNumber;
   updateProgressBar(screenNumber);
 
-  if (typeof clarity === 'function') {
-    clarity("set", "etapa_kmsi", "tela_" + screenNumber);
-  }
+  try {
+    if (typeof clarity === 'function') {
+      clarity("set", "etapa_kmsi", "tela_" + screenNumber);
+    }
+  } catch(e) {}
 }
 
 function updateProgressBar(screenNumber) {
@@ -1010,17 +1033,29 @@ function updateProgressBar(screenNumber) {
   } else if (screenNumber >= 10) {
     pct = 100;
   }
-  document.getElementById('main-progress').style.width = pct + '%';
+  var bar = document.getElementById('main-progress');
+  if (bar) bar.style.width = pct + '%';
 }
 
 function startTest() {
   startTimestamp = Date.now();
+  var container = document.getElementById('dynamic-blocks-container');
+  if (container && (!container.children || container.children.length === 0)) {
+    renderizarBlocosHTML();
+  }
   goToScreen(1);
 
-  if (typeof gtag === 'function') {
-    gtag('event', 'kmsi_start', { event_category: 'quiz' });
-  }
+  try {
+    if (typeof gtag === 'function') {
+      gtag('event', 'kmsi_start', { event_category: 'quiz' });
+    }
+  } catch(e) {}
 }
+
+window.startTest = startTest;
+window.goToScreen = goToScreen;
+window.nextBlock = nextBlock;
+window.renderizarBlocosHTML = renderizarBlocosHTML;
 
 function onSelectAnswer(qId, val) {
   respostasSalvas['q' + qId] = val;
@@ -1055,12 +1090,14 @@ function nextBlock(currentBlock) {
   }
   if (alertBox) alertBox.classList.remove('show');
 
-  if (typeof gtag === 'function') {
-    gtag('event', 'kmsi_block_progress', {
-      block_number: currentBlock,
-      percent: Math.round((currentBlock / 9) * 100)
-    });
-  }
+  try {
+    if (typeof gtag === 'function') {
+      gtag('event', 'kmsi_block_progress', {
+        block_number: currentBlock,
+        percent: Math.round((currentBlock / 9) * 100)
+      });
+    }
+  } catch(e) {}
 
   goToScreen(currentBlock + 1);
 }
@@ -1169,11 +1206,13 @@ function submitClinicalTest() {
 
   try { localStorage.removeItem('kmsi_respostas_backup'); } catch(e) {}
 
-  if (typeof gtag === 'function') {
-    gtag('event', 'kmsi_complete', {
-      dominant_script: resultadoLocal.dominante.nome
-    });
-  }
+  try {
+    if (typeof gtag === 'function') {
+      gtag('event', 'kmsi_complete', {
+        dominant_script: resultadoLocal.dominante.nome
+      });
+    }
+  } catch(e) {}
 }
 
 // ─── CÁLCULO LOCAL DOS ÍNDICES PSICOMÉTRICOS ──────────────────
@@ -1549,6 +1588,7 @@ function carregarResultadoWeb(id) {
     })
     .catch(function() {
       alert('Não foi possível carregar o resultado online no momento.');
+    });
 }
 
 function toggleSecondaryProfile() {
@@ -1563,6 +1603,15 @@ function toggleSecondaryProfile() {
     if (arrow) arrow.innerText = '▲';
   }
 }
+
+// ─── EXPORTAÇÃO GLOBAL DE ESCOPO (Chrome, Brave, Opera, Edge) ─
+window.onSelectAnswer = onSelectAnswer;
+window.submitClinicalTest = submitClinicalTest;
+window.onCountryChange = onCountryChange;
+window.maskPhoneInput = maskPhoneInput;
+window.formatPhoneOnBlur = formatPhoneOnBlur;
+window.toggleSecondaryProfile = toggleSecondaryProfile;
+window.copiarLinkResultado = copiarLinkResultado;
 </script>
 
 </body>
