@@ -1172,17 +1172,58 @@ function submitClinicalTest() {
 
   if (!valid) return;
 
+  var btnFinalizar = document.getElementById('btn-finalizar');
+  if (btnFinalizar) {
+    btnFinalizar.disabled = true;
+    btnFinalizar.textContent = 'Verificando cadastro clínico...';
+  }
+
   var telCompleto = (country === '+55' ? '+55 ' : (country !== 'other' ? country + ' ' : '')) + tel.value.trim();
   var elapsedSeconds = Math.round((Date.now() - (startTimestamp || Date.now())) / 1000);
+  var emailValue = email.value.trim().toLowerCase();
+  var nomeValue = nome.value.trim();
+
+  // Gera o ID Único previamente para garantir sincronia perfeita entre tela e link compartilhado
+  var uniqueId = 'ISF-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+  window.currentUniqueId = uniqueId;
+  window.currentUniqueUrl = 'https://phillipsouza.com/scripts-financeiros.html?id=' + uniqueId;
+
+  // 1. Checagem de E-mail Único (Impede que a mesma pessoa refaça e sobreponha laudo)
+  fetch(APPS_SCRIPT_URL + '?action=checkEmail&email=' + encodeURIComponent(emailValue))
+    .then(function(res) { return res.json(); })
+    .then(function(check) {
+      if (check && check.status === 'exists') {
+        if (btnFinalizar) {
+          btnFinalizar.disabled = false;
+          btnFinalizar.textContent = 'Finalizar e Gerar Meu Diagnóstico Clínico →';
+        }
+        alert('Identificamos que este e-mail já possui um diagnóstico clínico registrado no sistema.\n\nCada paciente possui um laudo único. Redirecionando para o seu diagnóstico...');
+        window.location.href = check.urlAcesso || ('scripts-financeiros.html?id=' + check.id);
+        return;
+      }
+      executarEnvioClinico(uniqueId, nomeValue, emailValue, telCompleto, honeypot.value, elapsedSeconds);
+    })
+    .catch(function() {
+      // Se offline ou timeout na checagem, prossegue com o envio normalmente
+      executarEnvioClinico(uniqueId, nomeValue, emailValue, telCompleto, honeypot.value, elapsedSeconds);
+    });
+}
+
+function executarEnvioClinico(uniqueId, nomeVal, emailVal, telCompleto, honeypotVal, elapsedSeconds) {
   var resultadoLocal = calcularResultadoLocal(respostasSalvas);
+
+  try {
+    window.history.replaceState({}, '', '?id=' + uniqueId);
+  } catch(e) {}
 
   goToScreen(11);
 
   var payload = {
-    nome: nome.value.trim(),
-    email: email.value.trim(),
+    id: uniqueId,
+    nome: nomeVal,
+    email: emailVal,
     telefone: telCompleto,
-    b_consultorio_check: honeypot.value,
+    b_consultorio_check: honeypotVal,
     elapsedSeconds: elapsedSeconds,
     respostas: respostasSalvas
   };
@@ -1194,12 +1235,12 @@ function submitClinicalTest() {
     body: JSON.stringify(payload)
   }).then(function() {
     setTimeout(function() {
-      renderizarTelaResultado(resultadoLocal, nome.value.trim());
+      renderizarTelaResultado(resultadoLocal, nomeVal);
       goToScreen(12);
     }, 1500);
   }).catch(function() {
     setTimeout(function() {
-      renderizarTelaResultado(resultadoLocal, nome.value.trim());
+      renderizarTelaResultado(resultadoLocal, nomeVal);
       goToScreen(12);
     }, 1500);
   });
@@ -1213,6 +1254,133 @@ function submitClinicalTest() {
       });
     }
   } catch(e) {}
+}
+
+// ─── BASE DE DADOS DOS PERFIS CLÍNICOS APROFUNDADOS ─────────
+var PERFIS_CLINICOS = {
+  E: {
+    cat: 'E',
+    nome: 'Evitação ao Dinheiro (Money Avoidance)',
+    subtitulo: 'Aversão Inconsciente, Culpa pelo Ganho e Sabotagem da Abundância',
+    crencaCentral: '"O dinheiro corrompe o caráter, destrói relacionamentos e eu não sou digno de ter mais do que o básico."',
+    anatomia: [
+      'Seu perfil apresenta uma repulsa emocional ativa a assuntos financeiros. Em nível neurocientífico, o seu sistema límbico (o "Mico") e o tronco cerebral (o "Jacaré") interpretam o dinheiro não como ferramenta de prosperidade, mas como uma ameaça moral ou emocional. Para manter uma sensação interna de retidão ou integridade, o seu inconsciente dispara ordens de afastamento.',
+      'Pessoas com pontuação elevada em Evitação frequentemente vivenciaram na infância o que Brad Klontz chama de <em>Financial Flashpoints</em> de rejeição: lares onde dinheiro era motivo de brigas violentas, falências familiares traumáticas ou ambientes religiosos/morais onde ser rico era sinônimo de perversidade. O resultado é o desenvolvimento de um "voto de pobreza inconsciente".'
+    ],
+    impactoGoverno: 'No dia a dia, isso se manifesta na incapacidade de olhar extratos bancários com tranquilidade (padrão crônico de desdém e fuga), na procrastinação de investimentos e no impulso de se livrar rapidamente do dinheiro quando ele entra (doando, emprestando para quem não paga ou gastando tudo para zerar o saldo e aliviar a culpa inconsciente).',
+    dinamicaFamiliarHTML:
+      '<div class="relacional-block">'
+      + '<div class="relacional-item"><strong>1. Dinâmica Conjugal (Casal & Intimidade):</strong><p>Tende a transferir passivamente a governança das contas para o cônjuge ("você cuida disso que eu não entendo nada"), gerando sobrecarga relacional. Diante de cobranças ou dívidas, refugia-se na negação ou no silêncio, infantilizando-se no casamento.</p></div>'
+      + '<div class="relacional-item"><strong>2. Relação com os Filhos (Transmissão de Crenças):</strong><p>Dificuldade de ensinar educação financeira e limites práticos. O filho cresce percebendo o dinheiro como um tabu proibido ou sombrio, herdando a aversão inconsciente e o medo de negociar o próprio valor no mercado.</p></div>'
+      + '<div class="relacional-item"><strong>3. Lealdades Familiares e Pais (Herança Transgeracional):</strong><p>Fidelidade invisível ao sacrifício dos pais. Se os pais viveram em privação ou foram humildes, prosperar além deles é vivido como uma traição moral ("quem sou eu para ser rico se minha família sempre sofreu?"), disparando autoboicotes inconscientes.</p></div>'
+      + '</div>',
+    pontosCegos: [
+      '<strong>Autossabotagem no Ponto de Virada:</strong> Recusar promoções, cobrar menos do que vale ou perder oportunidades lucrativas por culpa silenciosa de ganhar mais que parentes ou amigos.',
+      '<strong>Dissociação Financeira:</strong> Viver como se o saldo bancário pertencesse a outra pessoa até que uma crise forçada exija socorro emergencial.',
+      '<strong>Falso Altruísmo:</strong> Bancar despesas de terceiros ou emprestar sem condições reais, disfarçando de caridade uma profunda crença de não-merecimento pessoal.'
+    ],
+    principioOrdem: 'A Ordem Cura: Reconhecer que o dinheiro não possui caráter ético — ele é apenas um amplificador do coração. Ter governo financeiro não corrompe; ao contrário, restaura a autoridade de servir à sua família com dignidade.'
+  },
+  A: {
+    cat: 'A',
+    nome: 'Adoração ao Dinheiro (Money Worship)',
+    subtitulo: 'Insaciabilidade Crônica, Salvação Material e Anestesia Emocional',
+    crencaCentral: '"As coisas só vão melhorar quando eu tiver mais dinheiro; ele resolverá todos os meus problemas emocionais e me dará felicidade."',
+    anatomia: [
+      'Seu perfil opera sob a ilusão de que o dinheiro é a "Fada Madrinha". Há uma convicção arraigada de que a paz de espírito, o amor próprio e a segurança definitiva estão sempre à distância de um próximo degrau de patrimônio. No entanto, por mais que sua renda aumente, a linha de chegada sempre se move para frente.',
+      'Na infância, este script é moldado por memórias de escassez humilhante ou pela crença de que os problemas dos pais teriam desaparecido se houvesse dinheiro. O cérebro límbico grava a equação perigosa: <em>Dinheiro = Ausência de Dor</em>. Quando o adulto se depara com estresse, frustração ou vazio existencial, a resposta automática é buscar dopamina no consumo ou na busca desenfreada por ganho.'
+    ],
+    impactoGoverno: 'O fluxo de caixa torna-se refém de oscilações emocionais. Há uma tendência crônica à compra compulsiva e ao consumo compensatório. O dinheiro entra com esforço, mas vaza com velocidade em itens que prometiam preenchimento interior, mas entregam apenas arrependimento após o pico passageiro de dopamina.',
+    dinamicaFamiliarHTML:
+      '<div class="relacional-block">'
+      + '<div class="relacional-item"><strong>1. Dinâmica Conjugal (Casal & Intimidade):</strong><p>Ausência emocional justificada pela narrativa de estar "trabalhando pelo futuro de todos". O parceiro sente a solidão relacional e a incapacidade do outro de estar presente sem estar obcecado pela próxima meta patrimonial ou por gastos compensatórios.</p></div>'
+      + '<div class="relacional-item"><strong>2. Relação com os Filhos (Transmissão de Crenças):</strong><p>Substituição de presença por presentes. A ausência e a culpa parental são compensadas com concessões materiais excessivas, ensinando à criança que o amor se mede em bens materiais e gerando baixa tolerância a frustrações.</p></div>'
+      + '<div class="relacional-item"><strong>3. Lealdades Familiares e Pais (Herança Transgeracional):</strong><p>Tentativa urgente de compensar as feridas de escassez da infância ou de provar aos pais que superou as limitações de origem. Torna-se o "salvador financeiro" da família estendida, bancando parentes como forma de comprar pertencimento.</p></div>'
+      + '</div>',
+    pontosCegos: [
+      '<strong>A Síndrome do "Quando Eu Tiver":</strong> Adiar a felicidade presente e o convívio familiar para um momento idealizado no futuro que nunca chega.',
+      '<strong>Anestesia pelo Consumo:</strong> Usar o ato de comprar ou contratar como calmante para ansiedade, tristeza ou esgotamento profissional.',
+      '<strong>Apetite Irracional por Atalhos:</strong> Vulnerabilidade a promessas de ganhos rápidos, especulações financeiras ou investimentos arriscados para atingir a "liberdade" mais cedo.'
+    ],
+    principioOrdem: 'A Ordem Cura: Compreender que dinheiro resolve problemas de liquidez, mas é incapaz de preencher vazios de identidade. Governar suas finanças exige discernir o que é ferramenta material e o que pertence à esfera da alma e dos relacionamentos.'
+  },
+  S: {
+    cat: 'S',
+    nome: 'Status Financeiro (Money Status)',
+    subtitulo: 'Equivalência de Valor Pessoal, Prestígio e Guerra de Aparências',
+    crencaCentral: '"O meu valor como ser humano é determinado pelo meu patrimônio líquido e pelos símbolos de sucesso que os outros veem."',
+    anatomia: [
+      'Seu perfil vincula o senso de valor próprio, respeitabilidade e honra diretamente ao nível de renda e aos bens ostentados. Em termos neurobiológicos, o medo primordial ativado é a exclusão da "tropa" e a vergonha do rebaixamento social. Mostrar fraqueza ou simplicidade é vivido como uma ferida narcísica insuportável.',
+      'Geralmente nasce em lares onde o amor e a aprovação dos pais eram condicionados a desempenhos excepcionais, ou em famílias de primeira geração que ascenderam financeiramente e sentem necessidade imperativa de provar pertencimento aos círculos de alta renda. Para esse perfil, ficar para trás é morrer.'
+    ],
+    impactoGoverno: 'Gera um custo de vida inflacionado e artificial. O patrimônio é drenado por despesas de manutenção de imagem: veículos acima do ideal, residências caras e consumo ostensivo. Mesmo auferindo receitas expressivas (médicos, empresários, executivos), vive na corda bamba financeira para manter o cenário social.',
+    dinamicaFamiliarHTML:
+      '<div class="relacional-block">'
+      + '<div class="relacional-item"><strong>1. Dinâmica Conjugal (Casal & Intimidade):</strong><p>Terreno fértil para a <strong>Infidelidade Financeira e Omissão</strong>: compras escondidas, despesas maquiadas e contas secretas para não parecer frágil diante do parceiro. As finanças viram um jogo velado de poder e controle mútuo.</p></div>'
+      + '<div class="relacional-item"><strong>2. Relação com os Filhos (Transmissão de Crenças):</strong><p>Pressão por performance e imagem. Os filhos são incentivados a projetar status social desde cedo, correndo o risco de vincular seu afeto parental à capacidade de corresponder às expectativas de prestígio da família.</p></div>'
+      + '<div class="relacional-item"><strong>3. Lealdades Familiares e Pais (Herança Transgeracional):</strong><p>Necessidade de se afirmar como o "troféu" da família de origem. A pessoa assume um fardo asfixiante para manter parentes impressionados, sentindo pânico de admitir qualquer instabilidade ou rebaixamento socioeconômico.</p></div>'
+      + '</div>',
+    pontosCegos: [
+      '<strong>Riqueza Aparente vs. Riqueza Real:</strong> Alto padrão de vida sustentado por fluxo de caixa vulnerável, sem blindagem patrimonial líquida real.',
+      '<strong>Compulsão por Trabalho (Workaholism):</strong> Trabalhar 14 a 16 horas por dia não por vocação, mas pelo pânico de perder a posição social e o respeito externo.',
+      '<strong>Segredos Financeiros Conjugais:</strong> Esconder despesas ou investimentos do cônjuge sob a justificativa de "manter a paz", minando a base de confiança mútua.'
+    ],
+    principioOrdem: 'A Ordem Cura: Romper a ilusão de que seu valor depende da aprovação dos homens. Quem governa de verdade não precisa performar riqueza para plateias; vive com a soberania silenciosa de quem tem ordem no lar e nas contas.'
+  },
+  V: {
+    cat: 'V',
+    nome: 'Vigilância Financeira (Money Vigilance)',
+    subtitulo: 'Hiper-prudência, Rigidez de Escassez e Medo Paralisante de Crises',
+    crencaCentral: '"O dinheiro deve ser estritamente guardado e protegido; uma tragédia pode acontecer a qualquer momento e falar sobre ele é perigoso."',
+    anatomia: [
+      'Seu perfil exibe prudência, capacidade exemplar de poupança e discrição. No entanto, por trás dessa aparente virtude financeira, esconde-se um estado crônico de alerta do sistema nervoso simpático. A pessoa vive em permanente prontidão contra um apocalipse financeiro iminente.',
+      'Quase invariavelmente, este script tem raízes em traumas severos de desamparo na infância: pais que perderam tudo repentinamente, hiperinflação descontrolada, falecimentos prematuros de provedores ou períodos de privação real. A criança gravou a mensagem de sobrevivência: <em>"Nunca baixe a guarda; o mundo é imprevisível e ninguém virá nos salvar"</em>.'
+    ],
+    impactoGoverno: 'Cria o fenômeno do "rico financeiramente, miserável emocionalmente" (padrão de paralisia e escassez emocional). A pessoa possui patrimônio acumulado e reservas substanciais, mas não consegue usufruir de viagens de qualidade, cuidados de saúde preventivos ou conforto pessoal sem sentir aperto no peito e culpa avassaladora.',
+    dinamicaFamiliarHTML:
+      '<div class="relacional-block">'
+      + '<div class="relacional-item"><strong>1. Dinâmica Conjugal (Casal & Intimidade):</strong><p>Clima de inquisição doméstica. Cada gasto do parceiro — por mais rotineiro ou legítimo — é recebido com tensão, interrogatórios ou reprovação implícita. O parceiro se sente controlado e asfixiado, desgastando a cumplicidade do casal.</p></div>'
+      + '<div class="relacional-item"><strong>2. Relação com os Filhos (Transmissão de Crenças):</strong><p>Educação baseada no medo constante da escassez. A repetição exaustiva de que "o dinheiro vai acabar" ou "é perigoso gastar" transmite aos filhos um fardo de ansiedade precoce ou gera o efeito rebote (filhos hipergastadores no futuro).</p></div>'
+      + '<div class="relacional-item"><strong>3. Lealdades Familiares e Pais (Herança Transgeracional):</strong><p>Preso à guarda eterna do forte familiar. Frequentemente descende de pais que sofreram falências súbitas, confiscos ou traumas de desamparo. A pessoa jurou inconscientemente nunca baixar a guarda para honrar e proteger a linhagem.</p></div>'
+      + '</div>',
+    pontosCegos: [
+      '<strong>A Ilusão da Segurança Absoluta:</strong> Acreditar que mais R$500k ou R$1 milhão na conta trarão a paz que o coração procura, quando na verdade o medo é estrutural e não depende do saldo.',
+      '<strong>Mão de Ferro com a Própria Vida:</strong> Postergar transições de carreira ou desfrutes legítimos hoje por terror injustificado de faltar no futuro distante.',
+      '<strong>Transmissão Intergeracional de Escassez:</strong> Ensinar aos filhos, por meio de comportamentos rígidos, que o dinheiro é algo perigoso e motivo de angústia constante.'
+    ],
+    principioOrdem: 'A Ordem Cura: Aprender a confiar e a transitar da acumulação por pânico para a governabilidade com paz. O dinheiro deve ser servo do seu propósito familiar, nunca um carcereiro das suas emoções.'
+  }
+};
+
+// ─── CONSTRUTOR DE RESULTADO CLÍNICO INTEGRAL ────────────────
+function construirResultadoPorMedias(medias) {
+  var ranking = [
+    { cat: 'E', score: medias.E },
+    { cat: 'A', score: medias.A },
+    { cat: 'S', score: medias.S },
+    { cat: 'V', score: medias.V }
+  ].sort(function(a, b){ return b.score - a.score; });
+
+  var domCat = ranking[0].cat;
+  var secCat = ranking[1].cat;
+  var secScore = ranking[1].score;
+  var coocorrencia = null;
+
+  if (secScore >= 4.5) {
+    coocorrencia = {
+      presente: true,
+      cat: secCat,
+      score: secScore,
+      perfil: PERFIS_CLINICOS[secCat]
+    };
+  }
+
+  return {
+    dominante: PERFIS_CLINICOS[domCat],
+    coocorrencia: coocorrencia,
+    medias: medias,
+    ranking: ranking
+  };
 }
 
 // ─── CÁLCULO LOCAL DOS ÍNDICES PSICOMÉTRICOS ──────────────────
@@ -1229,130 +1397,14 @@ function calcularResultadoLocal(respostas) {
     return Math.round((s / arr.length) * 100) / 100;
   }
 
-  var mE = media(scores.E);
-  var mA = media(scores.A);
-  var mS = media(scores.S);
-  var mV = media(scores.V);
-
-  // ── Conteúdos Clínicos Aprofundados (Raio-X de Estado Atual) ──
-  var perfisInfo = {
-    E: {
-      nome: 'Evitação ao Dinheiro (Money Avoidance)',
-      subtitulo: 'Aversão Inconsciente, Culpa pelo Ganho e Sabotagem da Abundância',
-      crencaCentral: '"O dinheiro corrompe o caráter, destrói relacionamentos e eu não sou digno de ter mais do que o básico."',
-      anatomia: [
-        'Seu perfil apresenta uma repulsa emocional ativa a assuntos financeiros. Em nível neurocientífico, o seu sistema límbico (o "Mico") e o tronco cerebral (o "Jacaré") interpretam o dinheiro não como ferramenta de prosperidade, mas como uma ameaça moral ou emocional. Para manter uma sensação interna de retidão ou integridade, o seu inconsciente dispara ordens de afastamento.',
-        'Pessoas com pontuação elevada em Evitação frequentemente vivenciaram na infância o que Brad Klontz chama de <em>Financial Flashpoints</em> de rejeição: lares onde dinheiro era motivo de brigas violentas, falências familiares traumáticas ou ambientes religiosos/morais onde ser rico era sinônimo de perversidade. O resultado é o desenvolvimento de um "voto de pobreza inconsciente".'
-      ],
-      impactoGoverno: 'No dia a dia, isso se manifesta na incapacidade de olhar extratos bancários com tranquilidade (padrão crônico de desdém e fuga), na procrastinação de investimentos e no impulso de se livrar rapidamente do dinheiro quando ele entra (doando, emprestando para quem não paga ou gastando tudo para zerar o saldo e aliviar a culpa inconsciente).',
-      dinamicaFamiliarHTML:
-        '<div class="relacional-block">'
-        + '<div class="relacional-item"><strong>1. Dinâmica Conjugal (Casal & Intimidade):</strong><p>Tende a transferir passivamente a governança das contas para o cônjuge ("você cuida disso que eu não entendo nada"), gerando sobrecarga relacional. Diante de cobranças ou dívidas, refugia-se na negação ou no silêncio, infantilizando-se no casamento.</p></div>'
-        + '<div class="relacional-item"><strong>2. Relação com os Filhos (Transmissão de Crenças):</strong><p>Dificuldade de ensinar educação financeira e limites práticos. O filho cresce percebendo o dinheiro como um tabu proibido ou sombrio, herdando a aversão inconsciente e o medo de negociar o próprio valor no mercado.</p></div>'
-        + '<div class="relacional-item"><strong>3. Lealdades Familiares e Pais (Herança Transgeracional):</strong><p>Fidelidade invisível ao sacrifício dos pais. Se os pais viveram em privação ou foram humildes, prosperar além deles é vivido como uma traição moral ("quem sou eu para ser rico se minha família sempre sofreu?"), disparando autoboicotes inconscientes.</p></div>'
-        + '</div>',
-      pontosCegos: [
-        '<strong>Autossabotagem no Ponto de Virada:</strong> Recusar promoções, cobrar menos do que vale ou perder oportunidades lucrativas por culpa silenciosa de ganhar mais que parentes ou amigos.',
-        '<strong>Dissociação Financeira:</strong> Viver como se o saldo bancário pertencesse a outra pessoa até que uma crise forçada exija socorro emergencial.',
-        '<strong>Falso Altruísmo:</strong> Bancar despesas de terceiros ou emprestar sem condições reais, disfarçando de caridade uma profunda crença de não-merecimento pessoal.'
-      ],
-      principioOrdem: 'A Ordem Cura: Reconhecer que o dinheiro não possui caráter ético — ele é apenas um amplificador do coração. Ter governo financeiro não corrompe; ao contrário, restaura a autoridade de servir à sua família com dignidade.'
-    },
-    A: {
-      nome: 'Adoração ao Dinheiro (Money Worship)',
-      subtitulo: 'Insaciabilidade Crônica, Salvação Material e Anestesia Emocional',
-      crencaCentral: '"As coisas só vão melhorar quando eu tiver mais dinheiro; ele resolverá todos os meus problemas emocionais e me dará felicidade."',
-      anatomia: [
-        'Seu perfil opera sob a ilusão de que o dinheiro é a "Fada Madrinha". Há uma convicção arraigada de que a paz de espírito, o amor próprio e a segurança definitiva estão sempre à distância de um próximo degrau de patrimônio. No entanto, por mais que sua renda aumente, a linha de chegada sempre se move para frente.',
-        'Na infância, este script é moldado por memórias de escassez humilhante ou pela crença de que os problemas dos pais teriam desaparecido se houvesse dinheiro. O cérebro límbico grava a equação perigosa: <em>Dinheiro = Ausência de Dor</em>. Quando o adulto se depara com estresse, frustração ou vazio existencial, a resposta automática é buscar dopamina no consumo ou na busca desenfreada por ganho.'
-      ],
-      impactoGoverno: 'O fluxo de caixa torna-se refém de oscilações emocionais. Há uma tendência crônica à compra compulsiva e ao consumo compensatório. O dinheiro entra com esforço, mas vaza com velocidade em itens que prometiam preenchimento interior, mas entregam apenas arrependimento após o pico passageiro de dopamina.',
-      dinamicaFamiliarHTML:
-        '<div class="relacional-block">'
-        + '<div class="relacional-item"><strong>1. Dinâmica Conjugal (Casal & Intimidade):</strong><p>Ausência emocional justificada pela narrativa de estar "trabalhando pelo futuro de todos". O parceiro sente a solidão relacional e a incapacidade do outro de estar presente sem estar obcecado pela próxima meta patrimonial ou por gastos compensatórios.</p></div>'
-        + '<div class="relacional-item"><strong>2. Relação com os Filhos (Transmissão de Crenças):</strong><p>Substituição de presença por presentes. A ausência e a culpa parental são compensadas com concessões materiais excessivas, ensinando à criança que o amor se mede em bens materiais e gerando baixa tolerância a frustrações.</p></div>'
-        + '<div class="relacional-item"><strong>3. Lealdades Familiares e Pais (Herança Transgeracional):</strong><p>Tentativa urgente de compensar as feridas de escassez da infância ou de provar aos pais que superou as limitações de origem. Torna-se o "salvador financeiro" da família estendida, bancando parentes como forma de comprar pertencimento.</p></div>'
-        + '</div>',
-      pontosCegos: [
-        '<strong>A Síndrome do "Quando Eu Tiver":</strong> Adiar a felicidade presente e o convívio familiar para um momento idealizado no futuro que nunca chega.',
-        '<strong>Anestesia pelo Consumo:</strong> Usar o ato de comprar ou contratar como calmante para ansiedade, tristeza ou esgotamento profissional.',
-        '<strong>Apetite Irracional por Atalhos:</strong> Vulnerabilidade a promessas de ganhos rápidos, especulações financeiras ou investimentos arriscados para atingir a "liberdade" mais cedo.'
-      ],
-      principioOrdem: 'A Ordem Cura: Compreender que dinheiro resolve problemas de liquidez, mas é incapaz de preencher vazios de identidade. Governar suas finanças exige discernir o que é ferramenta material e o que pertence à esfera da alma e dos relacionamentos.'
-    },
-    S: {
-      nome: 'Status Financeiro (Money Status)',
-      subtitulo: 'Equivalência de Valor Pessoal, Prestígio e Guerra de Aparências',
-      crencaCentral: '"O meu valor como ser humano é determinado pelo meu patrimônio líquido e pelos símbolos de sucesso que os outros veem."',
-      anatomia: [
-        'Seu perfil vincula o senso de valor próprio, respeitabilidade e honra diretamente ao nível de renda e aos bens ostentados. Em termos neurobiológicos, o medo primordial ativado é a exclusão da "tropa" e a vergonha do rebaixamento social. Mostrar fraqueza ou simplicidade é vivido como uma ferida narcísica insuportável.',
-        'Geralmente nasce em lares onde o amor e a aprovação dos pais eram condicionados a desempenhos excepcionais, ou em famílias de primeira geração que ascenderam financeiramente e sentem necessidade imperativa de provar pertencimento aos círculos de alta renda. Para esse perfil, ficar para trás é morrer.'
-      ],
-      impactoGoverno: 'Gera um custo de vida inflacionado e artificial. O patrimônio é drenado por despesas de manutenção de imagem: veículos acima do ideal, residências caras e consumo ostensivo. Mesmo auferindo receitas expressivas (médicos, empresários, executivos), vive na corda bamba financeira para manter o cenário social.',
-      dinamicaFamiliarHTML:
-        '<div class="relacional-block">'
-        + '<div class="relacional-item"><strong>1. Dinâmica Conjugal (Casal & Intimidade):</strong><p>Terreno fértil para a <strong>Infidelidade Financeira e Omissão</strong>: compras escondidas, despesas maquiadas e contas secretas para não parecer frágil diante do parceiro. As finanças viram um jogo velado de poder e controle mútuo.</p></div>'
-        + '<div class="relacional-item"><strong>2. Relação com os Filhos (Transmissão de Crenças):</strong><p>Pressão por performance e imagem. Os filhos são incentivados a projetar status social desde cedo, correndo o risco de vincular seu afeto parental à capacidade de corresponder às expectativas de prestígio da família.</p></div>'
-        + '<div class="relacional-item"><strong>3. Lealdades Familiares e Pais (Herança Transgeracional):</strong><p>Necessidade de se afirmar como o "troféu" da família de origem. A pessoa assume um fardo asfixiante para manter parentes impressionados, sentindo pânico de admitir qualquer instabilidade ou rebaixamento socioeconômico.</p></div>'
-        + '</div>',
-      pontosCegos: [
-        '<strong>Riqueza Aparente vs. Riqueza Real:</strong> Alto padrão de vida sustentado por fluxo de caixa vulnerável, sem blindagem patrimonial líquida real.',
-        '<strong>Compulsão por Trabalho (Workaholism):</strong> Trabalhar 14 a 16 horas por dia não por vocação, mas pelo pânico de perder a posição social e o respeito externo.',
-        '<strong>Segredos Financeiros Conjugais:</strong> Esconder despesas ou investimentos do cônjuge sob a justificativa de "manter a paz", minando a base de confiança mútua.'
-      ],
-      principioOrdem: 'A Ordem Cura: Romper a ilusão de que seu valor depende da aprovação dos homens. Quem governa de verdade não precisa performar riqueza para plateias; vive com a soberania silenciosa de quem tem ordem no lar e nas contas.'
-    },
-    V: {
-      nome: 'Vigilância Financeira (Money Vigilance)',
-      subtitulo: 'Hiper-prudência, Rigidez de Escassez e Medo Paralisante de Crises',
-      crencaCentral: '"O dinheiro deve ser estritamente guardado e protegido; uma tragédia pode acontecer a qualquer momento e falar sobre ele é perigoso."',
-      anatomia: [
-        'Seu perfil exibe prudência, capacidade exemplar de poupança e discrição. No entanto, por trás dessa aparente virtude financeira, esconde-se um estado crônico de alerta do sistema nervoso simpático. A pessoa vive em permanente prontidão contra um apocalipse financeiro iminente.',
-        'Quase invariavelmente, este script tem raízes em traumas severos de desamparo na infância: pais que perderam tudo repentinamente, hiperinflação descontrolada, falecimentos prematuros de provedores ou períodos de privação real. A criança gravou a mensagem de sobrevivência: <em>"Nunca baixe a guarda; o mundo é imprevisível e ninguém virá nos salvar"</em>.'
-      ],
-      impactoGoverno: 'Cria o fenômeno do "rico financeiramente, miserável emocionalmente" (padrão de paralisia e escassez emocional). A pessoa possui patrimônio acumulado e reservas substanciais, mas não consegue usufruir de viagens de qualidade, cuidados de saúde preventivos ou conforto pessoal sem sentir aperto no peito e culpa avassaladora.',
-      dinamicaFamiliarHTML:
-        '<div class="relacional-block">'
-        + '<div class="relacional-item"><strong>1. Dinâmica Conjugal (Casal & Intimidade):</strong><p>Clima de inquisição doméstica. Cada gasto do parceiro — por mais rotineiro ou legítimo — é recebido com tensão, interrogatórios ou reprovação implícita. O parceiro se sente controlado e asfixiado, desgastando a cumplicidade do casal.</p></div>'
-        + '<div class="relacional-item"><strong>2. Relação com os Filhos (Transmissão de Crenças):</strong><p>Educação baseada no medo constante da escassez. A repetição exaustiva de que "o dinheiro vai acabar" ou "é perigoso gastar" transmite aos filhos um fardo de ansiedade precoce ou gera o efeito rebote (filhos hipergastadores no futuro).</p></div>'
-        + '<div class="relacional-item"><strong>3. Lealdades Familiares e Pais (Herança Transgeracional):</strong><p>Preso à guarda eterna do forte familiar. Frequentemente descende de pais que sofreram falências súbitas, confiscos ou traumas de desamparo. A pessoa jurou inconscientemente nunca baixar a guarda para honrar e proteger a linhagem.</p></div>'
-        + '</div>',
-      pontosCegos: [
-        '<strong>A Ilusão da Segurança Absoluta:</strong> Acreditar que mais R$500k ou R$1 milhão na conta trarão a paz que o coração procura, quando na verdade o medo é estrutural e não depende do saldo.',
-        '<strong>Mão de Ferro com a Própria Vida:</strong> Postergar transições de carreira ou desfrutes legítimos hoje por terror injustificado de faltar no futuro distante.',
-        '<strong>Transmissão Intergeracional de Escassez:</strong> Ensinar aos filhos, por meio de comportamentos rígidos, que o dinheiro é algo perigoso e motivo de angústia constante.'
-      ],
-      principioOrdem: 'A Ordem Cura: Aprender a confiar e a transitar da acumulação por pânico para a governabilidade com paz. O dinheiro deve ser servo do seu propósito familiar, nunca um carcereiro das suas emoções.'
-    }
+  var m = {
+    E: media(scores.E),
+    A: media(scores.A),
+    S: media(scores.S),
+    V: media(scores.V)
   };
 
-  var ranking = [
-    { cat: 'E', score: mE },
-    { cat: 'A', score: mA },
-    { cat: 'S', score: mS },
-    { cat: 'V', score: mV }
-  ].sort(function(a,b){ return b.score - a.score; });
-
-  var domCat = ranking[0].cat;
-  var secCat = ranking[1].cat;
-  var secScore = ranking[1].score;
-  var coocorrencia = null;
-
-  if (secScore >= 4.5) {
-    coocorrencia = {
-      presente: true,
-      cat: secCat,
-      score: secScore,
-      perfil: perfisInfo[secCat]
-    };
-  }
-
-  return {
-    dominante: perfisInfo[domCat],
-    coocorrencia: coocorrencia,
-    medias: { E: mE, A: mA, S: mS, V: mV },
-    ranking: ranking
-  };
+  return construirResultadoPorMedias(m);
 }
 
 // ─── RENDERIZAÇÃO DA TELA DE RESULTADO (Aprofundada) ──────────
@@ -1484,7 +1536,7 @@ function renderizarTelaResultado(res, nomePaciente) {
     + '  <button class="share-btn" onclick="copiarLinkResultado()">📋 Copiar Meu Link de Acesso Exclusivo</button>'
     + '  <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.08);">'
     + '    <p style="color:#E5E7EB;font-size:.92rem;margin-bottom:.75rem;"><strong>Deseja tratar a raiz emocional dos seus bloqueios em acompanhamento 1:1?</strong></p>'
-    + '    <a href="aplicar.html" class="btn-submit" style="display:inline-block;text-decoration:none;padding:.95rem 2rem;font-size:.88rem;">'
+    + '    <a href="https://phillipsouza.com/#aplicar" class="btn-submit" style="display:inline-block;text-decoration:none;padding:.95rem 2rem;font-size:.88rem;">'
     + '      Submeter Aplicação para Psicoterapia Financeira →'
     + '    </a>'
     + '  </div>'
@@ -1544,9 +1596,19 @@ function renderRadarChart(e, a, s, v) {
 }
 
 function copiarLinkResultado() {
-  navigator.clipboard.writeText(window.location.href).then(function() {
-    alert('Link exclusivo copiado para a área de transferência!');
-  });
+  var urlParaCopiar = window.currentUniqueUrl || window.location.href;
+  if ((!urlParaCopiar.includes('?id=') || urlParaCopiar.endsWith('scripts-financeiros.html')) && window.currentUniqueId) {
+    urlParaCopiar = 'https://phillipsouza.com/scripts-financeiros.html?id=' + encodeURIComponent(window.currentUniqueId);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(urlParaCopiar).then(function() {
+      alert('Link exclusivo copiado para a área de transferência!\n\n' + urlParaCopiar);
+    }).catch(function() {
+      prompt('Copie seu link de acesso exclusivo abaixo:', urlParaCopiar);
+    });
+  } else {
+    prompt('Copie seu link de acesso exclusivo abaixo:', urlParaCopiar);
+  }
 }
 
 // ─── CARREGAMENTO DE RESULTADO EXISTENTE VIA ?id= ───────────
@@ -1561,32 +1623,26 @@ function carregarResultadoWeb(id) {
     .then(function(res) { return res.json(); })
     .then(function(data) {
       if (data && data.status === 'ok') {
-        var resObj = {
-          dominante: {
-            nome: data.scriptDominante,
-            subtitulo: 'Diagnóstico registrado no arquivo clínico',
-            crencaCentral: 'Padrão inconsciente validado pelo Inventário de Scripts Financeiros.',
-            anatomia: ['Este diagnóstico foi recuperado da sua avaliação prévia. Suas respostas permanecem arquivadas com segurança no consultório clínico.'],
-            impactoGoverno: 'Seus índices refletem a estrutura de crenças financeiras mapeada na data do teste.',
-            impactoRelacionamento: 'Para reavaliar sua evolução ou trabalhar os bloqueios em sessão, consulte seu terapeuta.',
-            pontosCegos: ['Consulte o PDF completo enviado ao seu e-mail para verificar a análise detalhada dos pontos cegos.'],
-            principioOrdem: 'A Ordem Cura: A restauração da ordem emocional e relacional é o mecanismo real de cura financeira.'
-          },
-          medias: {
-            E: data.mediaEvitacao,
-            A: data.mediaAdoracao,
-            S: data.mediaStatus,
-            V: data.mediaVigilancia
-          }
+        window.currentUniqueId = data.id;
+        window.currentUniqueUrl = 'https://phillipsouza.com/scripts-financeiros.html?id=' + encodeURIComponent(data.id);
+
+        var medias = {
+          E: parseFloat(data.mediaEvitacao) || 0,
+          A: parseFloat(data.mediaAdoracao) || 0,
+          S: parseFloat(data.mediaStatus) || 0,
+          V: parseFloat(data.mediaVigilancia) || 0
         };
-        renderizarTelaResultado(resObj, data.nome);
+
+        var resObj = construirResultadoPorMedias(medias);
+        renderizarTelaResultado(resObj, data.nome || 'Paciente');
         goToScreen(12);
       } else {
         alert('Diagnóstico não localizado. Redirecionando para o teste...');
         window.location.href = 'scripts-financeiros.html';
       }
     })
-    .catch(function() {
+    .catch(function(err) {
+      console.error(err);
       alert('Não foi possível carregar o resultado online no momento.');
     });
 }
