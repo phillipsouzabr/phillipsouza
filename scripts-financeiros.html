@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZ3QL2RJGM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZZ3QL2RJGM');
+  </script>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xmvs6zp648");
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventário de Scripts Financeiros (ISF) | Phillip Souza</title>
+  <meta name="description" content="Avaliação clínica das 4 crenças fundamentais sobre dinheiro (ISF - 72 itens). Descubra seus Money Scripts e a raiz emocional do seu comportamento financeiro." />
+  <link rel="icon" type="image/png" href="logo.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Chart.js para o Gráfico Radar de Resultado -->
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #0A0F1A;
+      --card-bg: #0F181C;
+      --gold: #EFB810;
+      --gold-dark: #C89A0E;
+      --white: #FFFFFF;
+      --muted: #B0B8C1;
+      --border: rgba(239, 184, 16, 0.15);
+      --border-hover: rgba(239, 184, 16, 0.4);
+      --amber: #FBBF24;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: #F0EDE8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem 1rem 3.5rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: repeating-linear-gradient(
+        135deg, rgba(239,184,16,.012) 0px, rgba(239,184,16,.012) 1px,
+        transparent 1px, transparent 16px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrap {
+      max-width: 680px;
+      width: 100%;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Header ────────────────────────────────────────── */
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .header-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #FFFFFF;
+    }
+    .header-logo span { color: var(--gold); }
+    .header-sub {
+      color: var(--gold);
+      opacity: 0.9;
+      font-size: .7rem;
+      letter-spacing: 3px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ── Progress Bar Fixa ─────────────────────────────── */
+    .progress-wrap {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      z-index: 100;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), #F0D060);
+      width: 0%;
+      transition: width .4s ease;
+    }
+
+    /* ── Telas ─────────────────────────────────────────── */
+    .screen {
+      display: none;
+      animation: fadeUp .35s ease;
+    }
+    .screen.active { display: block; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Welcome Screen ────────────────────────────────── */
+    .welcome-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--gold);
+      border-radius: 8px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,.4);
+    }
+    .welcome-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(239, 184, 16, 0.08);
+      border: 1px solid rgba(239, 184, 16, 0.25);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: .72rem;
+      color: var(--gold);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 1.25rem;
+    }
+    .welcome-card h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.4rem, 4vw, 1.85rem);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+      color: #FFFFFF;
+    }
+    .welcome-card h1 span { color: var(--gold); }
+    .welcome-desc {
+      color: var(--muted);
+      font-size: .92rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+    .clinical-notice {
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 3px solid var(--gold);
+      padding: .95rem 1.1rem;
+      border-radius: 4px;
+      font-size: .84rem;
+      color: #D1D5DB;
+      text-align: left;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    /* ── Barra de Bloco e Status ───────────────────────── */
+    .block-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      padding-bottom: .6rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .block-counter {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .78rem;
+      color: var(--gold);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .block-time {
+      font-size: .75rem;
+      color: #6B7280;
+    }
+
+    /* ── Pergunta Card ─────────────────────────────────── */
+    .question-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 1.25rem 1.25rem 1.5rem;
+      margin-bottom: 1.2rem;
+      transition: border-color .2s;
+    }
+    .question-card.answered {
+      border-color: rgba(239, 184, 16, 0.3);
+    }
+    .question-title {
+      font-size: .95rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+      line-height: 1.45;
+    }
+    .question-title span {
+      color: var(--gold);
+      margin-right: 6px;
+    }
+
+    /* ── Escala Likert 6 Pontos ────────────────────────── */
+    .likert-scale {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+    }
+    @media (max-width: 520px) {
+      .likert-scale { gap: 4px; }
+    }
+    .likert-btn {
+      position: relative;
+      cursor: pointer;
+    }
+    .likert-btn input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .likert-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: .65rem .25rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px;
+      text-align: center;
+      transition: all .2s;
+    }
+    .likert-num {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .95rem;
+      color: #D1D5DB;
+    }
+    .likert-text {
+      font-size: .55rem;
+      color: #9CA3AF;
+      margin-top: 2px;
+      line-height: 1.1;
+      display: none;
+    }
+    @media (min-width: 600px) {
+      .likert-text { display: block; }
+    }
+    .likert-btn:hover .likert-label {
+      border-color: var(--border-hover);
+      background: rgba(239, 184, 16, 0.05);
+    }
+    .likert-btn input:checked + .likert-label {
+      background: rgba(239, 184, 16, 0.15);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px var(--gold);
+    }
+    .likert-btn input:checked + .likert-label .likert-num {
+      color: var(--gold);
+    }
+    .likert-legend {
+      display: flex;
+      justify-content: space-between;
+      font-size: .68rem;
+      color: #6B7280;
+      margin-top: 6px;
+      padding: 0 2px;
+    }
+
+    /* ── Botões de Navegação de Bloco ──────────────────── */
+    .nav-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 1.5rem;
+    }
+    .btn-prev {
+      flex: 1;
+      padding: .85rem 1rem;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #B0B8C1;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: .85rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .btn-prev:hover {
+      background: rgba(255,255,255,0.05);
+      color: #FFFFFF;
+    }
+    .btn-next, .btn-submit {
+      flex: 2;
+      padding: .95rem 1.25rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #0A0F1A;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .9rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      transition: all .25s ease;
+    }
+    .btn-next:hover, .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(239, 184, 16, 0.25);
+    }
+    .block-alert {
+      display: none;
+      background: rgba(251, 191, 36, 0.08);
+      border-left: 3px solid var(--amber);
+      padding: .75rem 1rem;
+      font-size: .82rem;
+      color: var(--amber);
+      margin-top: 1rem;
+      border-radius: 4px;
+    }
+    .block-alert.show { display: block; }
+
+    /* ── Lead Form Screen & Telefone com Dropdown ───────── */
+    .lead-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--gold);
+      border-radius: 8px;
+      padding: 2.2rem 1.75rem;
+    }
+    .lead-box h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.35rem;
+      color: #FFFFFF;
+      margin-bottom: .5rem;
+    }
+    .lead-box p {
+      color: var(--muted);
+      font-size: .88rem;
+      margin-bottom: 1.5rem;
+    }
+    .form-group {
+      margin-bottom: 1.2rem;
+      text-align: left;
+    }
+    .form-group label {
+      display: block;
+      font-size: .8rem;
+      color: #D1D5DB;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    .form-group input, .country-select {
+      width: 100%;
+      padding: .85rem 1rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      font-size: .92rem;
+      transition: border-color .2s;
+    }
+    .form-group input:focus, .country-select:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(239, 184, 16, 0.03);
+    }
+    .phone-row {
+      display: flex;
+      gap: 10px;
+    }
+    .country-select {
+      width: 110px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .country-select option {
+      background: #0A0F1A;
+      color: #FFFFFF;
+    }
+    .field-error {
+      font-size: .75rem;
+      color: var(--amber);
+      margin-top: 4px;
+      display: none;
+    }
+    .field-error.show { display: block; }
+
+    /* ── Loading Screen ────────────────────────────────── */
+    .loading-box {
+      text-align: center;
+      padding: 4rem 1rem;
+    }
+    .loading-spinner {
+      width: 46px; height: 46px;
+      border: 3px solid rgba(239, 184, 16, 0.15);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1.5rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Resultado Screen (Aprofundado e Clínico) ──────── */
+    .result-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--gold);
+      border-radius: 8px;
+      padding: 2.2rem 2rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+    .result-badge {
+      display: inline-block;
+      font-size: .72rem;
+      color: var(--gold);
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: .5rem;
+    }
+    .result-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.55rem;
+      color: #FFFFFF;
+      margin-bottom: .5rem;
+    }
+    .result-crenca {
+      font-style: italic;
+      color: var(--gold);
+      font-size: .95rem;
+      margin-bottom: 1.5rem;
+      padding-left: 12px;
+      border-left: 2px solid var(--gold);
+    }
+    
+    .clinical-section {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      padding: 1.25rem 1.4rem;
+      margin-bottom: 1.25rem;
+    }
+    .clinical-section h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .92rem;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: .6rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .clinical-section p {
+      font-size: .88rem;
+      color: #D1D5DB;
+      line-height: 1.7;
+      margin-bottom: .75rem;
+    }
+    .clinical-section p:last-child { margin-bottom: 0; }
+    
+    .blind-spots-list {
+      list-style: none;
+      padding: 0;
+      margin: .6rem 0 0;
+    }
+    .blind-spots-list li {
+      position: relative;
+      padding-left: 1.25rem;
+      font-size: .86rem;
+      color: #D1D5DB;
+      margin-bottom: .6rem;
+      line-height: 1.5;
+    }
+    .blind-spots-list li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: bold;
+    }
+
+    /* ── Bloco de Co-Ocorrência Terapêutica (Segunda Crença >= 4.5) ── */
+    .secondary-belief-box {
+      background: rgba(239, 184, 16, 0.05);
+      border: 1px solid rgba(239, 184, 16, 0.35);
+      border-left: 4px solid var(--gold);
+      border-radius: 8px;
+      padding: 1.5rem 1.6rem;
+      margin-bottom: 1.5rem;
+    }
+    .secondary-badge {
+      display: inline-block;
+      font-size: .7rem;
+      color: #0A0F1A;
+      background: var(--gold);
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 3px;
+      margin-bottom: .6rem;
+    }
+    .btn-toggle-secondary {
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: .65rem 1.2rem;
+      border-radius: 4px;
+      font-size: .82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: .75rem;
+    }
+    .btn-toggle-secondary:hover {
+      background: rgba(239, 184, 16, 0.12);
+    }
+    .secondary-content-wrap {
+      display: none;
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px dashed rgba(239, 184, 16, 0.25);
+    }
+    .secondary-content-wrap.open {
+      display: block;
+    }
+
+    /* ── 3 Linhas de Interferência Familiar ────────────── */
+    .relacional-block {
+      margin-top: .75rem;
+    }
+    .relacional-item {
+      background: rgba(255, 255, 255, 0.015);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-left: 2px solid var(--gold);
+      padding: .85rem 1.1rem;
+      border-radius: 4px;
+      margin-bottom: .75rem;
+    }
+    .relacional-item:last-child { margin-bottom: 0; }
+    .relacional-item strong {
+      color: #FFFFFF;
+      display: block;
+      font-size: .84rem;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .relacional-item p {
+      margin: 0;
+      font-size: .84rem;
+      color: #B0B8C1;
+      line-height: 1.6;
+    }
+
+    .chart-container {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .scores-list { margin-top: 1.2rem; }
+    .score-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .score-name {
+      width: 140px;
+      font-size: .8rem;
+      color: var(--muted);
+      text-align: left;
+    }
+    .score-track {
+      flex: 1;
+      height: 8px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .score-fill {
+      height: 100%;
+      background: rgba(239, 184, 16, 0.4);
+      border-radius: 4px;
+      transition: width 1s ease;
+    }
+    .score-fill.dominant {
+      background: linear-gradient(90deg, var(--gold), #F0D060);
+    }
+    .score-val {
+      width: 45px;
+      text-align: right;
+      font-size: .82rem;
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+
+    /* ── CTAs e YouTube ────────────────────────────────── */
+    .result-cta-box {
+      background: rgba(239, 184, 16, 0.08);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem 1.75rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .share-btn {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: .65rem 1.25rem;
+      border-radius: 4px;
+      font-size: .82rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: .75rem;
+      transition: all .2s;
+    }
+    .share-btn:hover {
+      background: rgba(239, 184, 16, 0.1);
+    }
+
+    .youtube-channel-box {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 1.4rem 1.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .youtube-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #FFFFFF;
+      text-decoration: none;
+      font-size: .85rem;
+      font-weight: 600;
+      transition: color .2s;
+    }
+    .youtube-link:hover { color: var(--gold); }
+    .youtube-badge {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    /* ── Footer ────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      font-size: .72rem;
+      color: #6B7280;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    footer a { color: #9CA3AF; text-decoration: none; }
+    footer a:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de Progresso Superior -->
+  <div class="progress-wrap">
+    <div class="progress-bar" id="main-progress"></div>
+  </div>
+
+  <div class="wrap">
+    <header>
+      <div class="header-logo">PHILLIP <span>SOUZA</span></div>
+      <div class="header-sub">Psicoterapia Financeira Clínica</div>
+    </header>
+
+    <!-- TELA 0: Welcome & Instruções Clínicas -->
+    <div class="screen active" data-screen="0">
+      <div class="welcome-card">
+        <div class="welcome-badge">Avaliação Psicométrica Clínica</div>
+        <h1>Inventário de <span>Scripts Financeiros</span></h1>
+        <p class="welcome-desc">
+          Este teste é fundamentado no modelo acadêmico do <strong>Dr. Brad Klontz (Inventário de Scripts Financeiros - ISF 72)</strong>, a principal referência científica global em Terapia Financeira.
+          Ele avalia a presença das 4 crenças inconscientes que governam silenciosamente sua relação com o dinheiro, seus investimentos e seus conflitos relacionais.
+        </p>
+
+        <div class="clinical-notice">
+          <strong>Regra de Ouro para a Validade do Teste:</strong><br>
+          Responda a cada afirmação com seu <strong>primeiro impulso inconsciente</strong>, mesmo que você racionalmente considere a resposta "errada" ou politicamente incorreta. O seu primeiro reflexo é a manifestação exata dos seus programas emocionais de infância.
+        </div>
+
+        <button class="btn-submit" style="width:100%;" onclick="startTest()">
+          Iniciar Inventário Clínico →
+        </button>
+        <p style="font-size:.75rem;color:#6B7280;margin-top:1rem;">
+          Tempo estimado: 8 a 12 minutos · 72 afirmações divididas em 9 blocos
+        </p>
+      </div>
+    </div>
+
+    <!-- TELAS 1 a 9: Os 9 Blocos de 8 Perguntas Intercaladas (Geradas via JS) -->
+    <div id="dynamic-blocks-container"></div>
+
+    <!-- TELA 10: Coleta de Dados Clínicos com Dropdown de País e Máscara -->
+    <div class="screen" data-screen="10">
+      <div class="lead-box">
+        <h2>Seu teste está concluído.</h2>
+        <p>Informe seus dados para processar os escores psicométricos, receber o <strong>Relatório Clínico em PDF</strong> e gerar seu link de acesso exclusivo.</p>
+
+        <!-- Honeypot Anti-Spam invisível -->
+        <input type="text" id="b_consultorio_check" name="b_consultorio_check" style="display:none;" tabindex="-1" autocomplete="off" />
+
+        <div class="form-group">
+          <label for="lead-nome">Nome Completo</label>
+          <input type="text" id="lead-nome" placeholder="Seu nome" required />
+          <div class="field-error" id="err-nome">Por favor, informe seu nome completo.</div>
+        </div>
+
+        <div class="form-group">
+          <label for="lead-email">Seu Melhor E-mail</label>
+          <input type="email" id="lead-email" placeholder="seuemail@exemplo.com" required />
+          <div class="field-error" id="err-email">Informe um endereço de e-mail válido para envio do relatório.</div>
+        </div>
+
+        <div class="form-group">
+          <label for="lead-tel">WhatsApp / Celular</label>
+          <div class="phone-row">
+            <select id="country-code" class="country-select" onchange="onCountryChange()">
+              <option value="+55" selected>🇧🇷 +55</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+351">🇵🇹 +351</option>
+              <option value="+34">🇪🇸 +34</option>
+              <option value="+44">🇬🇧 +44</option>
+              <option value="other">🌍 Outro</option>
+            </select>
+            <input type="tel" id="lead-tel" placeholder="(31) 9.9999-9999" oninput="maskPhoneInput(this)" onblur="formatPhoneOnBlur(this)" required />
+          </div>
+          <div class="field-error" id="err-tel">Informe seu número de WhatsApp com DDD.</div>
+        </div>
+
+        <button class="btn-submit" id="btn-finalizar" style="width:100%;margin-top:.5rem;" onclick="submitClinicalTest()">
+          Processar Diagnóstico e Gerar Relatório →
+        </button>
+      </div>
+    </div>
+
+    <!-- TELA 11: Loading Clínico -->
+    <div class="screen" data-screen="11">
+      <div class="loading-box">
+        <div class="loading-spinner"></div>
+        <h3 style="color:var(--gold);font-family:'Montserrat',sans-serif;margin-bottom:.5rem;">Processando Índices Psicométricos...</h3>
+        <p style="color:var(--muted);font-size:.85rem;">Calculando dispersão nos 4 Money Scripts e gerando PDF diagnóstico.</p>
+      </div>
+    </div>
+
+    <!-- TELA 12: Resultado Visual na Tela -->
+    <div class="screen" data-screen="12">
+      <div id="result-content"></div>
+    </div>
+
+    <footer>
+      <p>CNPJ 33.577.542/0001-80 · <a href="privacidade.html">Política de Privacidade</a> · <a href="termos.html">Termos de Uso</a></p>
+      <p style="margin-top:6px;">© <span id="copy-year"></span> Phillip Souza · Todos os direitos reservados</p>
+    </footer>
+  </div>
+
+<script>
+// ─── CONFIGURAÇÃO DO BACKEND (Google Apps Script) ───────────
+var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby2SJPeL7l55uK21CuYGsj2ioD6V6oDEinuPO9WXQWHle-jQplEbeec0PI0dZWeZzsq/exec';
+
+// ─── AS 72 PERGUNTAS INTERCALADAS (E, A, S, V) ───────────────
+var PERGUNTAS = [
+  // BLOCO 1
+  { id: 1,  cat: 'E', text: "Não mereço ter muito dinheiro enquanto outras pessoas têm menos do que eu." },
+  { id: 2,  cat: 'A', text: "Minha vida seria praticamente perfeita se eu tivesse mais dinheiro." },
+  { id: 3,  cat: 'S', text: "A maioria das pessoas pobres não se esforça o suficiente para ter dinheiro." },
+  { id: 4,  cat: 'V', text: "Você nunca deve contar para outras pessoas quanto dinheiro possui ou ganha." },
+  { id: 5,  cat: 'A', text: "Mais dinheiro é o caminho garantido para ser verdadeiramente mais feliz." },
+  { id: 6,  cat: 'E', text: "Pessoas ricas são, em sua grande maioria, gananciosas." },
+  { id: 7,  cat: 'V', text: "É uma invasão de privacidade e falta de educação perguntar quanto os outros ganham." },
+  { id: 8,  cat: 'S', text: "Em um relacionamento, você pode ter amor verdadeiro ou muito dinheiro, mas não ambos." },
+
+  // BLOCO 2
+  { id: 9,  cat: 'S', text: "Não gosto de comprar nada usado; sinto necessidade de ter coisas sempre novas." },
+  { id: 10, cat: 'V', text: "O dinheiro deve ser guardado e acumulado, não gasto em supérfluos." },
+  { id: 11, cat: 'E', text: "Não é certo acumular mais dinheiro do que o estritamente necessário para viver." },
+  { id: 12, cat: 'A', text: "Por mais dinheiro que eu ganhe, sinto que nunca será suficiente." },
+  { id: 13, cat: 'V', text: "É uma obrigação moral inegociável poupar religiosamente para imprevistos." },
+  { id: 14, cat: 'S', text: "Pessoas que não prosperam financeiramente são acomodadas ou preguiçosas." },
+  { id: 15, cat: 'A', text: "É praticamente impossível ser pobre e genuinamente feliz." },
+  { id: 16, cat: 'E', text: "As pessoas só ficam ricas de verdade se aproveitando dos outros." },
+
+  // BLOCO 3
+  { id: 17, cat: 'A', text: "Você nunca pode relaxar completamente porque nunca há dinheiro suficiente acumulado." },
+  { id: 18, cat: 'E', text: "No fundo, sinto que não mereço ter muito dinheiro." },
+  { id: 19, cat: 'V', text: "Todas as pessoas devem trabalhar duro pelo seu sustento e nunca aceitar esmolas ou ajuda." },
+  { id: 20, cat: 'S', text: "Ter sucesso financeiro é a principal coisa que dá sentido e propósito à vida." },
+  { id: 21, cat: 'E', text: "Pessoas verdadeiramente boas não deveriam se importar com dinheiro." },
+  { id: 22, cat: 'A', text: "Dinheiro representa poder pessoal absoluto." },
+  { id: 23, cat: 'S', text: "O seu valor como indivíduo é determinado pelo tamanho do seu patrimônio ou renda." },
+  { id: 24, cat: 'V', text: "Se alguém me perguntar quanto ganho, prefiro dizer que ganho menos para evitar pedidos." },
+
+  // BLOCO 4
+  { id: 25, cat: 'V', text: "Faço questão de pesquisar exaustivamente a melhor oferta antes de comprar, mesmo que gaste horas." },
+  { id: 26, cat: 'S', text: "Se um produto não é de marca conceituada ou 'o melhor', não vale a pena comprar." },
+  { id: 27, cat: 'A', text: "Sinto que nunca poderei pagar pelas coisas que realmente desejo na vida." },
+  { id: 28, cat: 'E', text: "É muito difícil ser rico e continuar sendo uma boa pessoa." },
+  { id: 29, cat: 'S', text: "As pessoas só são verdadeiramente respeitadas pelo valor financeiro que acumulam." },
+  { id: 30, cat: 'V', text: "Se eu não puder pagar à vista e em dinheiro, simplesmente não devo comprar." },
+  { id: 31, cat: 'E', text: "A maioria dos ricos não merece o patrimônio que possui." },
+  { id: 32, cat: 'A', text: "Se eu ganhasse na loteria ou recebesse uma bolada, todos os meus problemas estariam resolvidos." },
+
+  // BLOCO 5
+  { id: 33, cat: 'E', text: "Há uma virtude moral em viver com pouco dinheiro." },
+  { id: 34, cat: 'V', text: "É deselegante e impróprio conversar abertamente sobre finanças em conversas familiares." },
+  { id: 35, cat: 'S', text: "É perfeitamente aceitável esconder compras ou decisões financeiras do parceiro(a)." },
+  { id: 36, cat: 'A', text: "Dinheiro é a única coisa que realmente compra liberdade e paz." },
+  { id: 37, cat: 'V', text: "Eu entraria em pânico ou desespero profundo se não tivesse uma reserva guardada para emergências." },
+  { id: 38, cat: 'E', text: "Quanto menos dinheiro uma pessoa tem na vida, mais leve e melhor ela vive." },
+  { id: 39, cat: 'A', text: "Se você tiver dinheiro, as pessoas ao redor tentarão tirá-lo de você." },
+  { id: 40, cat: 'S', text: "Contanto que você viva uma vida correta e boa, suas finanças se resolverão sozinhas." },
+
+  // BLOCO 6
+  { id: 41, cat: 'A', text: "Não se pode confiar plenamente nas pessoas quando o assunto envolve dinheiro." },
+  { id: 42, cat: 'S', text: "Pessoas ricas não têm motivos legítimos para se sentirem deprimidas ou tristes." },
+  { id: 43, cat: 'E', text: "O dinheiro corrompe o caráter e os valores morais das pessoas." },
+  { id: 44, cat: 'V', text: "Sinto uma culpa terrível quando gasto dinheiro comigo mesmo em algo que não seja estritamente essencial." },
+  { id: 45, cat: 'S', text: "Se você for uma pessoa boa, suas necessidades financeiras serão automaticamente supridas." },
+  { id: 46, cat: 'A', text: "Comprar coisas novas me traz um alívio ou prazer imediato quando estou estressado(a)." },
+  { id: 47, cat: 'V', text: "Fico profundamente constrangido ou desconfortável quando o assunto 'minhas finanças' vem à tona." },
+  { id: 48, cat: 'E', text: "Ficar rico significa se afastar e não se encaixar mais com velhos amigos e familiares." },
+
+  // BLOCO 7
+  { id: 49, cat: 'S', text: "Se alguém perguntar quanto ganho, sinto vontade de dizer um valor maior do que a realidade." },
+  { id: 50, cat: 'A', text: "Sempre que sobra algum dinheiro na conta, sinto um impulso incontrolável de gastá-lo." },
+  { id: 51, cat: 'V', text: "Sinto que preciso estar sempre em alerta máximo porque uma catástrofe financeira pode acontecer." },
+  { id: 52, cat: 'E', text: "Os ricos não dão valor ao dinheiro que têm e vivem de aparências fúteis." },
+  { id: 53, cat: 'A', text: "Eu me sinto incompleto ou diminuído quando não posso comprar o que desejo." },
+  { id: 54, cat: 'S', text: "Para mim é vital que as pessoas percebam meus símbolos de sucesso e conquistas." },
+  { id: 55, cat: 'E', text: "Você não pode ser rico e confiar sinceramente no que as pessoas querem de você." },
+  { id: 56, cat: 'V', text: "É um erro ajudar financeiramente parentes adultos que não sabem gerenciar suas vidas." },
+
+  // BLOCO 8
+  { id: 57, cat: 'V', text: "Fico extremamente ansioso(a) quando preciso fazer qualquer gasto que reduza minha reserva." },
+  { id: 58, cat: 'E', text: "É desconfortável ou difícil para mim aceitar presentes financeiros ou ajuda de outros." },
+  { id: 59, cat: 'A', text: "A busca por dinheiro consome a maior parte dos meus pensamentos diários." },
+  { id: 60, cat: 'S', text: "Fico constrangido se alguém percebe que estou usando algo simples ou econômico." },
+  { id: 61, cat: 'E', text: "Prefiro não olhar para extratos ou saldo bancário para não sentir ansiedade." },
+  { id: 62, cat: 'V', text: "Mesmo tendo dinheiro guardado suficiente, continuo sentindo que estou vulnerável à pobreza." },
+  { id: 63, cat: 'S', text: "Julgo secretamente as pessoas pela casa onde moram, o carro que dirigem ou onde passam férias." },
+  { id: 64, cat: 'A', text: "Acredito que a principal recompensa de trabalhar duro é poder ostentar coisas boas." },
+
+  // BLOCO 9
+  { id: 65, cat: 'E', text: "O dinheiro traz mais problemas emocionais e discussões do que soluções reais." },
+  { id: 66, cat: 'S', text: "Ter bens superiores aos do meu círculo social me traz uma sensação de segurança e vitória." },
+  { id: 67, cat: 'A', text: "Ter dinheiro suficiente me blindaria contra qualquer sofrimento emocional." },
+  { id: 68, cat: 'V', text: "Prefiro abrir mão de experiências e lazer hoje para garantir segurança absoluta no futuro." },
+  { id: 69, cat: 'S', text: "Esconder gastos do cônjuge é uma forma necessária de manter minha autonomia e evitar brigas." },
+  { id: 70, cat: 'E', text: "Ter ambição financeira excessiva destrói os valores espirituais de uma pessoa." },
+  { id: 71, cat: 'V', text: "Falar abertamente sobre dinheiro dentro de casa traz mau agouro ou conflitos desnecessários." },
+  { id: 72, cat: 'A', text: "Se eu pudesse comprar tudo o que quero, não teria motivos para ficar triste ou ansioso(a)." }
+];
+
+// ─── ESTADO DO TESTE ─────────────────────────────────────────
+var currentScreen = 0;
+var startTimestamp = 0;
+var respostasSalvas = {};
+
+// ─── INICIALIZAÇÃO ───────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('copy-year').textContent = new Date().getFullYear();
+
+  var urlParams = new URLSearchParams(window.location.search);
+  var consultId = urlParams.get('id');
+
+  if (consultId) {
+    carregarResultadoWeb(consultId);
+    return;
+  }
+
+  try {
+    var backup = localStorage.getItem('kmsi_respostas_backup');
+    if (backup) {
+      respostasSalvas = JSON.parse(backup);
+    }
+  } catch(e) {}
+
+  renderizarBlocosHTML();
+});
+
+// ─── RENDERIZAÇÃO DOS 9 BLOCOS DE PERGUNTAS ──────────────────
+function renderizarBlocosHTML() {
+  var container = document.getElementById('dynamic-blocks-container');
+  var html = '';
+
+  for (var b = 1; b <= 9; b++) {
+    var startIdx = (b - 1) * 8;
+    var endIdx = startIdx + 8;
+    var blocoPerguntas = PERGUNTAS.slice(startIdx, endIdx);
+    var minutosRestantes = 11 - b;
+
+    html += '<div class="screen" data-screen="' + b + '">'
+      + '  <div class="block-header">'
+      + '    <span class="block-counter">Bloco ' + b + ' de 9</span>'
+      + '    <span class="block-time">~' + minutosRestantes + ' min restantes</span>'
+      + '  </div>';
+
+    blocoPerguntas.forEach(function(q) {
+      var savedVal = respostasSalvas['q' + q.id] || '';
+      var isAnsweredClass = savedVal ? ' answered' : '';
+
+      html += '<div class="question-card' + isAnsweredClass + '" id="card-q' + q.id + '">'
+        + '  <div class="question-title"><span>#' + q.id + '</span> ' + q.text + '</div>'
+        + '  <div class="likert-scale">';
+
+      for (var nota = 1; nota <= 6; nota++) {
+        var isChecked = savedVal == nota ? ' checked' : '';
+        var rotuloCurto = nota == 1 ? 'Discordo Total' : (nota == 6 ? 'Concordo Total' : '');
+
+        html += '<label class="likert-btn">'
+          + '  <input type="radio" name="q' + q.id + '" value="' + nota + '"' + isChecked + ' onchange="onSelectAnswer(' + q.id + ', ' + nota + ')" />'
+          + '  <div class="likert-label">'
+          + '    <span class="likert-num">' + nota + '</span>'
+          + '    <span class="likert-text">' + rotuloCurto + '</span>'
+          + '  </div>'
+          + '</label>';
+      }
+
+      html += '  </div>'
+        + '  <div class="likert-legend">'
+        + '    <span>1 = Discordo Totalmente</span>'
+        + '    <span>6 = Concordo Totalmente</span>'
+        + '  </div>'
+        + '</div>';
+    });
+
+    html += '<div class="block-alert" id="alert-block-' + b + '">Por favor, responda a todas as 8 afirmações deste bloco para avançar.</div>'
+      + '<div class="nav-buttons">'
+      + (b > 1 ? '<button class="btn-prev" onclick="goToScreen(' + (b - 1) + ')">← Anterior</button>' : '')
+      + '<button class="btn-next" onclick="nextBlock(' + b + ')">Avançar para o ' + (b < 9 ? 'Bloco ' + (b + 1) : 'Dados Finais') + ' →</button>'
+      + '</div>'
+      + '</div>';
+  }
+
+  container.innerHTML = html;
+}
+
+// ─── NAVEGAÇÃO ENTRE TELAS ───────────────────────────────────
+function goToScreen(screenNumber) {
+  document.querySelectorAll('.screen').forEach(function(s) {
+    s.classList.remove('active');
+  });
+
+  var target = document.querySelector('[data-screen="' + screenNumber + '"]');
+  if (target) {
+    target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  currentScreen = screenNumber;
+  updateProgressBar(screenNumber);
+
+  if (typeof clarity === 'function') {
+    clarity("set", "etapa_kmsi", "tela_" + screenNumber);
+  }
+}
+
+function updateProgressBar(screenNumber) {
+  var pct = 0;
+  if (screenNumber >= 1 && screenNumber <= 9) {
+    pct = Math.round((screenNumber / 10) * 100);
+  } else if (screenNumber >= 10) {
+    pct = 100;
+  }
+  document.getElementById('main-progress').style.width = pct + '%';
+}
+
+function startTest() {
+  startTimestamp = Date.now();
+  goToScreen(1);
+
+  if (typeof gtag === 'function') {
+    gtag('event', 'kmsi_start', { event_category: 'quiz' });
+  }
+}
+
+function onSelectAnswer(qId, val) {
+  respostasSalvas['q' + qId] = val;
+  var card = document.getElementById('card-q' + qId);
+  if (card) card.classList.add('answered');
+
+  try {
+    localStorage.setItem('kmsi_respostas_backup', JSON.stringify(respostasSalvas));
+  } catch(e) {}
+}
+
+function nextBlock(currentBlock) {
+  var startIdx = (currentBlock - 1) * 8 + 1;
+  var endIdx = startIdx + 7;
+  var respondidas = true;
+
+  for (var i = startIdx; i <= endIdx; i++) {
+    if (!respostasSalvas['q' + i]) {
+      respondidas = false;
+      var card = document.getElementById('card-q' + i);
+      if (card) {
+        card.style.borderColor = 'var(--amber)';
+        setTimeout(function() { if (card) card.style.borderColor = ''; }, 2000);
+      }
+    }
+  }
+
+  var alertBox = document.getElementById('alert-block-' + currentBlock);
+  if (!respondidas) {
+    if (alertBox) alertBox.classList.add('show');
+    return;
+  }
+  if (alertBox) alertBox.classList.remove('show');
+
+  if (typeof gtag === 'function') {
+    gtag('event', 'kmsi_block_progress', {
+      block_number: currentBlock,
+      percent: Math.round((currentBlock / 9) * 100)
+    });
+  }
+
+  goToScreen(currentBlock + 1);
+}
+
+// ─── MÁSCARA E FORMATAÇÃO DE CELULAR / WHATSAPP ──────────────
+function onCountryChange() {
+  var select = document.getElementById('country-code');
+  var input = document.getElementById('lead-tel');
+  if (select.value === '+55') {
+    input.placeholder = '(31) 9.9999-9999';
+  } else {
+    input.placeholder = 'Número com código de área';
+  }
+}
+
+function maskPhoneInput(input) {
+  var country = document.getElementById('country-code').value;
+  if (country !== '+55') return; // Outros países aceitam livre
+
+  var v = input.value.replace(/\D/g, '');
+  if (v.length > 11) v = v.substring(0, 11);
+
+  if (v.length > 6) {
+    input.value = '(' + v.substring(0,2) + ') ' + v.substring(2,6) + '-' + v.substring(6);
+  } else if (v.length > 2) {
+    input.value = '(' + v.substring(0,2) + ') ' + v.substring(2);
+  } else if (v.length > 0) {
+    input.value = '(' + v;
+  }
+}
+
+// Formatação exata ao perder o foco (desselecionar): (31) 9.9999-9999
+function formatPhoneOnBlur(input) {
+  var country = document.getElementById('country-code').value;
+  if (country !== '+55') return;
+
+  var v = input.value.replace(/\D/g, '');
+  if (v.length === 11) {
+    // DDD + 9 dígitos: (XX) 9.XXXX-XXXX
+    input.value = '(' + v.substring(0,2) + ') ' + v.substring(2,3) + '.' + v.substring(3,7) + '-' + v.substring(7,11);
+  } else if (v.length === 10) {
+    // Fixo ou antigo: (XX) XXXX-XXXX
+    input.value = '(' + v.substring(0,2) + ') ' + v.substring(2,6) + '-' + v.substring(6,10);
+  }
+}
+
+// ─── SUBMISSÃO FINAL E ENVIO ─────────────────────────────────
+function submitClinicalTest() {
+  var nome = document.getElementById('lead-nome');
+  var email = document.getElementById('lead-email');
+  var tel = document.getElementById('lead-tel');
+  var country = document.getElementById('country-code').value;
+  var honeypot = document.getElementById('b_consultorio_check');
+
+  var valid = true;
+  document.querySelectorAll('.field-error').forEach(function(e) { e.classList.remove('show'); });
+
+  if (!nome.value.trim() || nome.value.trim().split(' ').length < 2) {
+    document.getElementById('err-nome').classList.add('show');
+    valid = false;
+  }
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email.value.trim())) {
+    document.getElementById('err-email').classList.add('show');
+    valid = false;
+  }
+  var rawTel = tel.value.replace(/\D/g, '');
+  if (!rawTel || rawTel.length < 8) {
+    document.getElementById('err-tel').classList.add('show');
+    valid = false;
+  }
+
+  if (!valid) return;
+
+  var telCompleto = (country === '+55' ? '+55 ' : (country !== 'other' ? country + ' ' : '')) + tel.value.trim();
+  var elapsedSeconds = Math.round((Date.now() - (startTimestamp || Date.now())) / 1000);
+  var resultadoLocal = calcularResultadoLocal(respostasSalvas);
+
+  goToScreen(11);
+
+  var payload = {
+    nome: nome.value.trim(),
+    email: email.value.trim(),
+    telefone: telCompleto,
+    b_consultorio_check: honeypot.value,
+    elapsedSeconds: elapsedSeconds,
+    respostas: respostasSalvas
+  };
+
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(function() {
+    setTimeout(function() {
+      renderizarTelaResultado(resultadoLocal, nome.value.trim());
+      goToScreen(12);
+    }, 1500);
+  }).catch(function() {
+    setTimeout(function() {
+      renderizarTelaResultado(resultadoLocal, nome.value.trim());
+      goToScreen(12);
+    }, 1500);
+  });
+
+  try { localStorage.removeItem('kmsi_respostas_backup'); } catch(e) {}
+
+  if (typeof gtag === 'function') {
+    gtag('event', 'kmsi_complete', {
+      dominant_script: resultadoLocal.dominante.nome
+    });
+  }
+}
+
+// ─── CÁLCULO LOCAL DOS ÍNDICES PSICOMÉTRICOS ──────────────────
+function calcularResultadoLocal(respostas) {
+  var scores = { E: [], A: [], S: [], V: [] };
+
+  PERGUNTAS.forEach(function(q) {
+    var val = parseInt(respostas['q' + q.id]) || 3;
+    scores[q.cat].push(val);
+  });
+
+  function media(arr) {
+    var s = arr.reduce(function(a,b){return a+b;},0);
+    return Math.round((s / arr.length) * 100) / 100;
+  }
+
+  var mE = media(scores.E);
+  var mA = media(scores.A);
+  var mS = media(scores.S);
+  var mV = media(scores.V);
+
+  // ── Conteúdos Clínicos Aprofundados (Raio-X de Estado Atual) ──
+  var perfisInfo = {
+    E: {
+      nome: 'Evitação ao Dinheiro (Money Avoidance)',
+      subtitulo: 'Aversão Inconsciente, Culpa pelo Ganho e Sabotagem da Abundância',
+      crencaCentral: '"O dinheiro corrompe o caráter, destrói relacionamentos e eu não sou digno de ter mais do que o básico."',
+      anatomia: [
+        'Seu perfil apresenta uma repulsa emocional ativa a assuntos financeiros. Em nível neurocientífico, o seu sistema límbico (o "Mico") e o tronco cerebral (o "Jacaré") interpretam o dinheiro não como ferramenta de prosperidade, mas como uma ameaça moral ou emocional. Para manter uma sensação interna de retidão ou integridade, o seu inconsciente dispara ordens de afastamento.',
+        'Pessoas com pontuação elevada em Evitação frequentemente vivenciaram na infância o que Brad Klontz chama de <em>Financial Flashpoints</em> de rejeição: lares onde dinheiro era motivo de brigas violentas, falências familiares traumáticas ou ambientes religiosos/morais onde ser rico era sinônimo de perversidade. O resultado é o desenvolvimento de um "voto de pobreza inconsciente".'
+      ],
+      impactoGoverno: 'No dia a dia, isso se manifesta na incapacidade de olhar extratos bancários com tranquilidade (padrão crônico de desdém e fuga), na procrastinação de investimentos e no impulso de se livrar rapidamente do dinheiro quando ele entra (doando, emprestando para quem não paga ou gastando tudo para zerar o saldo e aliviar a culpa inconsciente).',
+      dinamicaFamiliarHTML:
+        '<div class="relacional-block">'
+        + '<div class="relacional-item"><strong>1. Dinâmica Conjugal (Casal & Intimidade):</strong><p>Tende a transferir passivamente a governança das contas para o cônjuge ("você cuida disso que eu não entendo nada"), gerando sobrecarga relacional. Diante de cobranças ou dívidas, refugia-se na negação ou no silêncio, infantilizando-se no casamento.</p></div>'
+        + '<div class="relacional-item"><strong>2. Relação com os Filhos (Transmissão de Crenças):</strong><p>Dificuldade de ensinar educação financeira e limites práticos. O filho cresce percebendo o dinheiro como um tabu proibido ou sombrio, herdando a aversão inconsciente e o medo de negociar o próprio valor no mercado.</p></div>'
+        + '<div class="relacional-item"><strong>3. Lealdades Familiares e Pais (Herança Transgeracional):</strong><p>Fidelidade invisível ao sacrifício dos pais. Se os pais viveram em privação ou foram humildes, prosperar além deles é vivido como uma traição moral ("quem sou eu para ser rico se minha família sempre sofreu?"), disparando autoboicotes inconscientes.</p></div>'
+        + '</div>',
+      pontosCegos: [
+        '<strong>Autossabotagem no Ponto de Virada:</strong> Recusar promoções, cobrar menos do que vale ou perder oportunidades lucrativas por culpa silenciosa de ganhar mais que parentes ou amigos.',
+        '<strong>Dissociação Financeira:</strong> Viver como se o saldo bancário pertencesse a outra pessoa até que uma crise forçada exija socorro emergencial.',
+        '<strong>Falso Altruísmo:</strong> Bancar despesas de terceiros ou emprestar sem condições reais, disfarçando de caridade uma profunda crença de não-merecimento pessoal.'
+      ],
+      principioOrdem: 'A Ordem Cura: Reconhecer que o dinheiro não possui caráter ético — ele é apenas um amplificador do coração. Ter governo financeiro não corrompe; ao contrário, restaura a autoridade de servir à sua família com dignidade.'
+    },
+    A: {
+      nome: 'Adoração ao Dinheiro (Money Worship)',
+      subtitulo: 'Insaciabilidade Crônica, Salvação Material e Anestesia Emocional',
+      crencaCentral: '"As coisas só vão melhorar quando eu tiver mais dinheiro; ele resolverá todos os meus problemas emocionais e me dará felicidade."',
+      anatomia: [
+        'Seu perfil opera sob a ilusão de que o dinheiro é a "Fada Madrinha". Há uma convicção arraigada de que a paz de espírito, o amor próprio e a segurança definitiva estão sempre à distância de um próximo degrau de patrimônio. No entanto, por mais que sua renda aumente, a linha de chegada sempre se move para frente.',
+        'Na infância, este script é moldado por memórias de escassez humilhante ou pela crença de que os problemas dos pais teriam desaparecido se houvesse dinheiro. O cérebro límbico grava a equação perigosa: <em>Dinheiro = Ausência de Dor</em>. Quando o adulto se depara com estresse, frustração ou vazio existencial, a resposta automática é buscar dopamina no consumo ou na busca desenfreada por ganho.'
+      ],
+      impactoGoverno: 'O fluxo de caixa torna-se refém de oscilações emocionais. Há uma tendência crônica à compra compulsiva e ao consumo compensatório. O dinheiro entra com esforço, mas vaza com velocidade em itens que prometiam preenchimento interior, mas entregam apenas arrependimento após o pico passageiro de dopamina.',
+      dinamicaFamiliarHTML:
+        '<div class="relacional-block">'
+        + '<div class="relacional-item"><strong>1. Dinâmica Conjugal (Casal & Intimidade):</strong><p>Ausência emocional justificada pela narrativa de estar "trabalhando pelo futuro de todos". O parceiro sente a solidão relacional e a incapacidade do outro de estar presente sem estar obcecado pela próxima meta patrimonial ou por gastos compensatórios.</p></div>'
+        + '<div class="relacional-item"><strong>2. Relação com os Filhos (Transmissão de Crenças):</strong><p>Substituição de presença por presentes. A ausência e a culpa parental são compensadas com concessões materiais excessivas, ensinando à criança que o amor se mede em bens materiais e gerando baixa tolerância a frustrações.</p></div>'
+        + '<div class="relacional-item"><strong>3. Lealdades Familiares e Pais (Herança Transgeracional):</strong><p>Tentativa urgente de compensar as feridas de escassez da infância ou de provar aos pais que superou as limitações de origem. Torna-se o "salvador financeiro" da família estendida, bancando parentes como forma de comprar pertencimento.</p></div>'
+        + '</div>',
+      pontosCegos: [
+        '<strong>A Síndrome do "Quando Eu Tiver":</strong> Adiar a felicidade presente e o convívio familiar para um momento idealizado no futuro que nunca chega.',
+        '<strong>Anestesia pelo Consumo:</strong> Usar o ato de comprar ou contratar como calmante para ansiedade, tristeza ou esgotamento profissional.',
+        '<strong>Apetite Irracional por Atalhos:</strong> Vulnerabilidade a promessas de ganhos rápidos, especulações financeiras ou investimentos arriscados para atingir a "liberdade" mais cedo.'
+      ],
+      principioOrdem: 'A Ordem Cura: Compreender que dinheiro resolve problemas de liquidez, mas é incapaz de preencher vazios de identidade. Governar suas finanças exige discernir o que é ferramenta material e o que pertence à esfera da alma e dos relacionamentos.'
+    },
+    S: {
+      nome: 'Status Financeiro (Money Status)',
+      subtitulo: 'Equivalência de Valor Pessoal, Prestígio e Guerra de Aparências',
+      crencaCentral: '"O meu valor como ser humano é determinado pelo meu patrimônio líquido e pelos símbolos de sucesso que os outros veem."',
+      anatomia: [
+        'Seu perfil vincula o senso de valor próprio, respeitabilidade e honra diretamente ao nível de renda e aos bens ostentados. Em termos neurobiológicos, o medo primordial ativado é a exclusão da "tropa" e a vergonha do rebaixamento social. Mostrar fraqueza ou simplicidade é vivido como uma ferida narcísica insuportável.',
+        'Geralmente nasce em lares onde o amor e a aprovação dos pais eram condicionados a desempenhos excepcionais, ou em famílias de primeira geração que ascenderam financeiramente e sentem necessidade imperativa de provar pertencimento aos círculos de alta renda. Para esse perfil, ficar para trás é morrer.'
+      ],
+      impactoGoverno: 'Gera um custo de vida inflacionado e artificial. O patrimônio é drenado por despesas de manutenção de imagem: veículos acima do ideal, residências caras e consumo ostensivo. Mesmo auferindo receitas expressivas (médicos, empresários, executivos), vive na corda bamba financeira para manter o cenário social.',
+      dinamicaFamiliarHTML:
+        '<div class="relacional-block">'
+        + '<div class="relacional-item"><strong>1. Dinâmica Conjugal (Casal & Intimidade):</strong><p>Terreno fértil para a <strong>Infidelidade Financeira e Omissão</strong>: compras escondidas, despesas maquiadas e contas secretas para não parecer frágil diante do parceiro. As finanças viram um jogo velado de poder e controle mútuo.</p></div>'
+        + '<div class="relacional-item"><strong>2. Relação com os Filhos (Transmissão de Crenças):</strong><p>Pressão por performance e imagem. Os filhos são incentivados a projetar status social desde cedo, correndo o risco de vincular seu afeto parental à capacidade de corresponder às expectativas de prestígio da família.</p></div>'
+        + '<div class="relacional-item"><strong>3. Lealdades Familiares e Pais (Herança Transgeracional):</strong><p>Necessidade de se afirmar como o "troféu" da família de origem. A pessoa assume um fardo asfixiante para manter parentes impressionados, sentindo pânico de admitir qualquer instabilidade ou rebaixamento socioeconômico.</p></div>'
+        + '</div>',
+      pontosCegos: [
+        '<strong>Riqueza Aparente vs. Riqueza Real:</strong> Alto padrão de vida sustentado por fluxo de caixa vulnerável, sem blindagem patrimonial líquida real.',
+        '<strong>Compulsão por Trabalho (Workaholism):</strong> Trabalhar 14 a 16 horas por dia não por vocação, mas pelo pânico de perder a posição social e o respeito externo.',
+        '<strong>Segredos Financeiros Conjugais:</strong> Esconder despesas ou investimentos do cônjuge sob a justificativa de "manter a paz", minando a base de confiança mútua.'
+      ],
+      principioOrdem: 'A Ordem Cura: Romper a ilusão de que seu valor depende da aprovação dos homens. Quem governa de verdade não precisa performar riqueza para plateias; vive com a soberania silenciosa de quem tem ordem no lar e nas contas.'
+    },
+    V: {
+      nome: 'Vigilância Financeira (Money Vigilance)',
+      subtitulo: 'Hiper-prudência, Rigidez de Escassez e Medo Paralisante de Crises',
+      crencaCentral: '"O dinheiro deve ser estritamente guardado e protegido; uma tragédia pode acontecer a qualquer momento e falar sobre ele é perigoso."',
+      anatomia: [
+        'Seu perfil exibe prudência, capacidade exemplar de poupança e discrição. No entanto, por trás dessa aparente virtude financeira, esconde-se um estado crônico de alerta do sistema nervoso simpático. A pessoa vive em permanente prontidão contra um apocalipse financeiro iminente.',
+        'Quase invariavelmente, este script tem raízes em traumas severos de desamparo na infância: pais que perderam tudo repentinamente, hiperinflação descontrolada, falecimentos prematuros de provedores ou períodos de privação real. A criança gravou a mensagem de sobrevivência: <em>"Nunca baixe a guarda; o mundo é imprevisível e ninguém virá nos salvar"</em>.'
+      ],
+      impactoGoverno: 'Cria o fenômeno do "rico financeiramente, miserável emocionalmente" (padrão de paralisia e escassez emocional). A pessoa possui patrimônio acumulado e reservas substanciais, mas não consegue usufruir de viagens de qualidade, cuidados de saúde preventivos ou conforto pessoal sem sentir aperto no peito e culpa avassaladora.',
+      dinamicaFamiliarHTML:
+        '<div class="relacional-block">'
+        + '<div class="relacional-item"><strong>1. Dinâmica Conjugal (Casal & Intimidade):</strong><p>Clima de inquisição doméstica. Cada gasto do parceiro — por mais rotineiro ou legítimo — é recebido com tensão, interrogatórios ou reprovação implícita. O parceiro se sente controlado e asfixiado, desgastando a cumplicidade do casal.</p></div>'
+        + '<div class="relacional-item"><strong>2. Relação com os Filhos (Transmissão de Crenças):</strong><p>Educação baseada no medo constante da escassez. A repetição exaustiva de que "o dinheiro vai acabar" ou "é perigoso gastar" transmite aos filhos um fardo de ansiedade precoce ou gera o efeito rebote (filhos hipergastadores no futuro).</p></div>'
+        + '<div class="relacional-item"><strong>3. Lealdades Familiares e Pais (Herança Transgeracional):</strong><p>Preso à guarda eterna do forte familiar. Frequentemente descende de pais que sofreram falências súbitas, confiscos ou traumas de desamparo. A pessoa jurou inconscientemente nunca baixar a guarda para honrar e proteger a linhagem.</p></div>'
+        + '</div>',
+      pontosCegos: [
+        '<strong>A Ilusão da Segurança Absoluta:</strong> Acreditar que mais R$500k ou R$1 milhão na conta trarão a paz que o coração procura, quando na verdade o medo é estrutural e não depende do saldo.',
+        '<strong>Mão de Ferro com a Própria Vida:</strong> Postergar transições de carreira ou desfrutes legítimos hoje por terror injustificado de faltar no futuro distante.',
+        '<strong>Transmissão Intergeracional de Escassez:</strong> Ensinar aos filhos, por meio de comportamentos rígidos, que o dinheiro é algo perigoso e motivo de angústia constante.'
+      ],
+      principioOrdem: 'A Ordem Cura: Aprender a confiar e a transitar da acumulação por pânico para a governabilidade com paz. O dinheiro deve ser servo do seu propósito familiar, nunca um carcereiro das suas emoções.'
+    }
+  };
+
+  var ranking = [
+    { cat: 'E', score: mE },
+    { cat: 'A', score: mA },
+    { cat: 'S', score: mS },
+    { cat: 'V', score: mV }
+  ].sort(function(a,b){ return b.score - a.score; });
+
+  var domCat = ranking[0].cat;
+  var secCat = ranking[1].cat;
+  var secScore = ranking[1].score;
+  var coocorrencia = null;
+
+  if (secScore >= 4.5) {
+    coocorrencia = {
+      presente: true,
+      cat: secCat,
+      score: secScore,
+      perfil: perfisInfo[secCat]
+    };
+  }
+
+  return {
+    dominante: perfisInfo[domCat],
+    coocorrencia: coocorrencia,
+    medias: { E: mE, A: mA, S: mS, V: mV },
+    ranking: ranking
+  };
+}
+
+// ─── RENDERIZAÇÃO DA TELA DE RESULTADO (Aprofundada) ──────────
+function renderizarTelaResultado(res, nomePaciente) {
+  var container = document.getElementById('result-content');
+  var m = res.medias;
+  var dom = res.dominante;
+
+  var blindSpotsHTML = dom.pontosCegos.map(function(pt) {
+    return '<li>' + pt + '</li>';
+  }).join('');
+
+  var anatomiaHTML = dom.anatomia.map(function(p) {
+    return '<p>' + p + '</p>';
+  }).join('');
+
+  // Bloco de Co-ocorrência da Segunda Crença (se score >= 4.5)
+  var secHTML = '';
+  if (res.coocorrencia && res.coocorrencia.presente) {
+    var sec = res.coocorrencia;
+    var secBlindSpots = sec.perfil.pontosCegos.map(function(pt) {
+      return '<li>' + pt + '</li>';
+    }).join('');
+    var secAnatomia = sec.perfil.anatomia.map(function(p) {
+      return '<p>' + p + '</p>';
+    }).join('');
+
+    secHTML = ''
+      + '<div class="secondary-belief-box">'
+      + '  <span class="secondary-badge">⚠️ Padrão Associado Identificado (Co-Ocorrência Terapêutica)</span>'
+      + '  <h3 style="color:#EFB810;font-size:1.15rem;margin:.5rem 0 .3rem;font-family:Montserrat,sans-serif;">'
+      + '    Segunda Força Ativa: ' + sec.perfil.nome + ' (Média ' + sec.score.toFixed(1) + ' / 6.0)'
+      + '  </h3>'
+      + '  <p style="color:#D1D5DB;font-size:.86rem;line-height:1.6;margin-bottom:.85rem;">'
+      + '    Seu teste revelou uma sobreposição clínica de alta intensidade: além do script dominante, você possui pontuação crítica nesta segunda crença. Quando essas duas forças atuam juntas no cérebro, criam um conflito interior que bloqueia soluções financeiras convencionais.'
+      + '  </p>'
+      + '  <button type="button" class="btn-toggle-secondary" onclick="toggleSecondaryProfile()">'
+      + '    <span>🔍 Ver Raio-X Completo da Crença Associada</span> <span id="sec-arrow">▼</span>'
+      + '  </button>'
+      + '  <div id="secondary-details" class="secondary-content-wrap">'
+      + '    <div class="result-crenca" style="margin-top:.5rem;">' + sec.perfil.crencaCentral + '</div>'
+      + '    <div class="clinical-section">'
+      + '      <h4>1. Anatomia do Padrão Associado</h4>'
+      +        secAnatomia
+      + '    </div>'
+      + '    <div class="clinical-section">'
+      + '      <h4>2. Impacto no Governo Financeiro</h4>'
+      + '      <p>' + sec.perfil.impactoGoverno + '</p>'
+      + '    </div>'
+      + '    <div class="clinical-section">'
+      + '      <h4>3. Dinâmica Familiar Integral (Casal, Filhos e Herança)</h4>'
+      +        sec.perfil.dinamicaFamiliarHTML
+      + '    </div>'
+      + '    <div class="clinical-section">'
+      + '      <h4>4. Pontos Cegos Deste Segundo Padrão</h4>'
+      + '      <ul class="blind-spots-list">' + secBlindSpots + '</ul>'
+      + '    </div>'
+      + '    <div class="clinical-section" style="border-left:3px solid var(--gold);background:rgba(239,184,16,0.04);">'
+      + '      <h4 style="color:var(--gold);">Princípio de Restauração</h4>'
+      + '      <p style="color:#FFFFFF;font-weight:500;">' + sec.perfil.principioOrdem + '</p>'
+      + '    </div>'
+      + '  </div>'
+      + '</div>';
+  }
+
+  container.innerHTML = ''
+    + '<div class="result-card">'
+    + '  <span class="result-badge">Diagnóstico Psicométrico Clínico</span>'
+    + '  <h2 class="result-title">' + dom.nome + '</h2>'
+    + '  <p style="font-size:.85rem;color:#B0B8C1;margin-bottom:1rem;font-weight:600;">' + dom.subtitulo + '</p>'
+    + '  <div class="result-crenca">' + dom.crencaCentral + '</div>'
+    + '  <div class="clinical-section">'
+    + '    <h4>1. Anatomia do Padrão Inconsciente</h4>'
+    +      anatomiaHTML
+    + '  </div>'
+    + '  <div class="clinical-section">'
+    + '    <h4>2. Impacto no Governo Financeiro</h4>'
+    + '    <p>' + dom.impactoGoverno + '</p>'
+    + '  </div>'
+    + '  <div class="clinical-section">'
+    + '    <h4>3. Dinâmica Familiar Integral (Casal, Filhos e Herança)</h4>'
+    +      dom.dinamicaFamiliarHTML
+    + '  </div>'
+    + '  <div class="clinical-section">'
+    + '    <h4>4. Seus 3 Maiores Pontos Cegos de Autossabotagem</h4>'
+    + '    <ul class="blind-spots-list">' + blindSpotsHTML + '</ul>'
+    + '  </div>'
+    + '  <div class="clinical-section" style="border-left:3px solid var(--gold);background:rgba(239,184,16,0.04);">'
+    + '    <h4 style="color:var(--gold);">O Princípio de Restauração</h4>'
+    + '    <p style="color:#FFFFFF;font-weight:500;">' + dom.principioOrdem + '</p>'
+    + '  </div>'
+    + '</div>'
+
+    + secHTML
+
+    + '<div class="chart-container">'
+    + '  <h3 style="font-family:Montserrat,sans-serif;font-size:1.05rem;color:#EFB810;margin-bottom:1rem;text-align:center;">Seu Mapa Psicométrico Multidimensional</h3>'
+    + '  <div style="max-width:320px;margin:0 auto 1.5rem;"><canvas id="radarChart"></canvas></div>'
+    + '  <div class="scores-list">'
+    + '    <div class="score-row">'
+    + '      <span class="score-name">Evitação:</span>'
+    + '      <div class="score-track"><div class="score-fill' + (dom.nome.indexOf('Evitação') !== -1 ? ' dominant' : '') + '" style="width:' + (m.E / 6 * 100) + '%;"></div></div>'
+    + '      <span class="score-val">' + m.E.toFixed(1) + ' / 6</span>'
+    + '    </div>'
+    + '    <div class="score-row">'
+    + '      <span class="score-name">Adoração:</span>'
+    + '      <div class="score-track"><div class="score-fill' + (dom.nome.indexOf('Adoração') !== -1 ? ' dominant' : '') + '" style="width:' + (m.A / 6 * 100) + '%;"></div></div>'
+    + '      <span class="score-val">' + m.A.toFixed(1) + ' / 6</span>'
+    + '    </div>'
+    + '    <div class="score-row">'
+    + '      <span class="score-name">Status:</span>'
+    + '      <div class="score-track"><div class="score-fill' + (dom.nome.indexOf('Status') !== -1 ? ' dominant' : '') + '" style="width:' + (m.S / 6 * 100) + '%;"></div></div>'
+    + '      <span class="score-val">' + m.S.toFixed(1) + ' / 6</span>'
+    + '    </div>'
+    + '    <div class="score-row">'
+    + '      <span class="score-name">Vigilância:</span>'
+    + '      <div class="score-track"><div class="score-fill' + (dom.nome.indexOf('Vigilância') !== -1 ? ' dominant' : '') + '" style="width:' + (m.V / 6 * 100) + '%;"></div></div>'
+    + '      <span class="score-val">' + m.V.toFixed(1) + ' / 6</span>'
+    + '    </div>'
+    + '  </div>'
+    + '</div>'
+
+    + '<div class="result-cta-box">'
+    + '  <h3 style="color:#FFFFFF;font-family:Montserrat,sans-serif;font-size:1.2rem;margin-bottom:.5rem;">Relatório Clínico e Guia Enviados</h3>'
+    + '  <p style="color:#B0B8C1;font-size:.88rem;line-height:1.6;margin-bottom:1.2rem;">'
+    + '    O seu <strong>PDF completo</strong> e o seu <strong>Guia de Interrupção de Padrão</strong> foram encaminhados para o seu e-mail.<br>'
+    + '    Você também pode salvar ou compartilhar o link permanente do seu diagnóstico:'
+    + '  </p>'
+    + '  <button class="share-btn" onclick="copiarLinkResultado()">📋 Copiar Meu Link de Acesso Exclusivo</button>'
+    + '  <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.08);">'
+    + '    <p style="color:#E5E7EB;font-size:.92rem;margin-bottom:.75rem;"><strong>Deseja tratar a raiz emocional dos seus bloqueios em acompanhamento 1:1?</strong></p>'
+    + '    <a href="aplicar.html" class="btn-submit" style="display:inline-block;text-decoration:none;padding:.95rem 2rem;font-size:.88rem;">'
+    + '      Submeter Aplicação para Psicoterapia Financeira →'
+    + '    </a>'
+    + '  </div>'
+    + '</div>'
+
+    + '<div class="youtube-channel-box">'
+    + '  <p style="font-size:.8rem;color:#8A929B;margin-bottom:.5rem;">Conteúdo Complementar em Vídeo</p>'
+    + '  <a href="https://www.youtube.com/@phillipsouzabr" target="_blank" class="youtube-link">'
+    + '    <span class="youtube-badge"></span> Acessar o Canal no YouTube (Phillip Souza | Inteligência Financeira) →'
+    + '  </a>'
+    + '</div>';
+
+  setTimeout(function() {
+    renderRadarChart(m.E, m.A, m.S, m.V);
+  }, 100);
+}
+
+// ─── GRÁFICO RADAR CHART.JS ──────────────────────────────────
+function renderRadarChart(e, a, s, v) {
+  var canvas = document.getElementById('radarChart');
+  if (!canvas) return;
+
+  new Chart(canvas.getContext('2d'), {
+    type: 'radar',
+    data: {
+      labels: ['Evitação', 'Adoração', 'Status', 'Vigilância'],
+      datasets: [{
+        label: 'Sua Pontuação',
+        data: [e, a, s, v],
+        backgroundColor: 'rgba(239, 184, 16, 0.2)',
+        borderColor: '#EFB810',
+        borderWidth: 2,
+        pointBackgroundColor: '#EFB810',
+        pointBorderColor: '#FFFFFF',
+        pointRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        r: {
+          min: 1,
+          max: 6,
+          beginAtZero: false,
+          ticks: { stepSize: 1, display: false },
+          grid: { color: 'rgba(255, 255, 255, 0.08)' },
+          angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+          pointLabels: {
+            color: '#D1D5DB',
+            font: { family: 'Montserrat', size: 11, weight: '600' }
+          }
+        }
+      },
+      plugins: { legend: { display: false } }
+    }
+  });
+}
+
+function copiarLinkResultado() {
+  navigator.clipboard.writeText(window.location.href).then(function() {
+    alert('Link exclusivo copiado para a área de transferência!');
+  });
+}
+
+// ─── CARREGAMENTO DE RESULTADO EXISTENTE VIA ?id= ───────────
+function carregarResultadoWeb(id) {
+  goToScreen(11);
+  var loadingBox = document.querySelector('.loading-box');
+  if (loadingBox) {
+    loadingBox.innerHTML = '<div class="loading-spinner"></div><h3 style="color:var(--gold);">Recuperando seu Diagnóstico...</h3><p style="color:var(--muted);font-size:.85rem;">Consultando o arquivo clínico do paciente.</p>';
+  }
+
+  fetch(APPS_SCRIPT_URL + '?action=getResult&id=' + encodeURIComponent(id))
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data && data.status === 'ok') {
+        var resObj = {
+          dominante: {
+            nome: data.scriptDominante,
+            subtitulo: 'Diagnóstico registrado no arquivo clínico',
+            crencaCentral: 'Padrão inconsciente validado pelo Inventário de Scripts Financeiros.',
+            anatomia: ['Este diagnóstico foi recuperado da sua avaliação prévia. Suas respostas permanecem arquivadas com segurança no consultório clínico.'],
+            impactoGoverno: 'Seus índices refletem a estrutura de crenças financeiras mapeada na data do teste.',
+            impactoRelacionamento: 'Para reavaliar sua evolução ou trabalhar os bloqueios em sessão, consulte seu terapeuta.',
+            pontosCegos: ['Consulte o PDF completo enviado ao seu e-mail para verificar a análise detalhada dos pontos cegos.'],
+            principioOrdem: 'A Ordem Cura: A restauração da ordem emocional e relacional é o mecanismo real de cura financeira.'
+          },
+          medias: {
+            E: data.mediaEvitacao,
+            A: data.mediaAdoracao,
+            S: data.mediaStatus,
+            V: data.mediaVigilancia
+          }
+        };
+        renderizarTelaResultado(resObj, data.nome);
+        goToScreen(12);
+      } else {
+        alert('Diagnóstico não localizado. Redirecionando para o teste...');
+        window.location.href = 'scripts-financeiros.html';
+      }
+    })
+    .catch(function() {
+      alert('Não foi possível carregar o resultado online no momento.');
+}
+
+function toggleSecondaryProfile() {
+  var wrap = document.getElementById('secondary-details');
+  var arrow = document.getElementById('sec-arrow');
+  if (!wrap) return;
+  if (wrap.classList.contains('open')) {
+    wrap.classList.remove('open');
+    if (arrow) arrow.innerText = '▼';
+  } else {
+    wrap.classList.add('open');
+    if (arrow) arrow.innerText = '▲';
+  }
+}
+</script>
+
+</body>
+</html>
