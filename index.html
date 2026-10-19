@@ -1123,6 +1123,12 @@
             class="form-input flex-1"
             autocomplete="email"
           />
+
+          <!-- Campo-isca anti-spam (invisível para humanos) -->
+          <div style="position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;" aria-hidden="true">
+            <input type="text" name="website" id="hp-livro" tabindex="-1" autocomplete="off" value="" />
+          </div>
+
           <button type="submit" class="btn-gold text-xs px-6 py-3 rounded whitespace-nowrap" id="btn-livro">
             Avisar Lançamento
           </button>
@@ -2026,6 +2032,7 @@
   var formLivro = document.getElementById('form-livro');
   var btnLivro  = document.getElementById('btn-livro');
   var livroMsg  = document.getElementById('livro-msg');
+  var formInitTime = Date.now();
 
   if (!formLivro) return;
 
@@ -2044,7 +2051,13 @@
     btnLivro.textContent = 'Enviando...';
     livroMsg.style.display = 'none';
 
-    var payload = { email: email, funil: 'lead-livro' };
+    var hpField = document.getElementById('hp-livro');
+    var payload = {
+      email: email,
+      funil: 'lead-livro',
+      website: hpField ? hpField.value : '',
+      t: Date.now() - formInitTime
+    };
 
     var done = false;
     function onDone() {
@@ -2056,6 +2069,7 @@
       livroMsg.style.display = 'block';
       livroMsg.style.color = '#34D399';
       formLivro.reset();
+      formInitTime = Date.now();
     }
 
     fetch(LIVRO_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
