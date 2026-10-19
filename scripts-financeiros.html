@@ -380,7 +380,7 @@
       margin-bottom: 6px;
       font-weight: 500;
     }
-    .form-group input, .country-select {
+    .form-group input, .form-group select, .country-select {
       width: 100%;
       padding: .85rem 1rem;
       background: rgba(255,255,255,0.03);
@@ -391,10 +391,29 @@
       font-size: .92rem;
       transition: border-color .2s;
     }
-    .form-group input:focus, .country-select:focus {
+    .form-group input:focus, .form-group select:focus, .country-select:focus {
       outline: none;
       border-color: var(--gold);
       background: rgba(239, 184, 16, 0.03);
+    }
+    .form-group select option {
+      background: #0A0F1A;
+      color: #FFFFFF;
+    }
+    .form-row-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 1.2rem;
+    }
+    @media (max-width: 540px) {
+      .form-row-2col {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .form-row-2col .form-group {
+        margin-bottom: 1.2rem;
+      }
     }
     .phone-row {
       display: flex;
@@ -441,6 +460,39 @@
       padding: 2.2rem 2rem;
       margin-bottom: 1.5rem;
       text-align: left;
+    }
+    .clinical-disclaimer-card {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-left: 4px solid #F59E0B;
+      border-radius: 6px;
+      padding: 1.1rem 1.3rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+    .disclaimer-badge {
+      display: inline-block;
+      background: rgba(245, 158, 11, 0.2);
+      color: #FDE68A;
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      padding: 3px 8px;
+      border-radius: 3px;
+      margin-bottom: .6rem;
+    }
+    .clinical-disclaimer-card p {
+      font-size: .84rem;
+      color: #E5E7EB;
+      line-height: 1.6;
+      margin-bottom: .4rem;
+    }
+    .clinical-disclaimer-card p:last-child {
+      margin-bottom: 0;
+    }
+    .clinical-disclaimer-card strong {
+      color: #FBBF24;
     }
     .result-badge {
       display: inline-block;
@@ -774,6 +826,29 @@
             <input type="tel" id="lead-tel" placeholder="(31) 9.9999-9999" oninput="maskPhoneInput(this)" onblur="formatPhoneOnBlur(this)" required />
           </div>
           <div class="field-error" id="err-tel">Informe seu número de WhatsApp com DDD.</div>
+        </div>
+
+        <div class="form-row-2col">
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="lead-relacionamento">Estado Civil / Parceria</label>
+            <select id="lead-relacionamento" required>
+              <option value="casado" selected>Casado(a) / União Estável</option>
+              <option value="namorando">Em relacionamento / Namorando</option>
+              <option value="solteiro">Solteiro(a)</option>
+              <option value="divorciado">Divorciado(a) / Separado(a)</option>
+              <option value="viuvo">Viúvo(a)</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="lead-filhos">Filhos</label>
+            <select id="lead-filhos" required>
+              <option value="nao">Não tenho filhos</option>
+              <option value="sim_1">Sim, tenho 1 filho</option>
+              <option value="sim_2">Sim, tenho 2 filhos</option>
+              <option value="sim_3plus">Sim, tenho 3 ou mais filhos</option>
+              <option value="pretendo">Não tenho filhos (pretendo ter)</option>
+            </select>
+          </div>
         </div>
 
         <button class="btn-submit" id="btn-finalizar" style="width:100%;margin-top:.5rem;" onclick="submitClinicalTest()">
@@ -1182,6 +1257,14 @@ function submitClinicalTest() {
   var elapsedSeconds = Math.round((Date.now() - (startTimestamp || Date.now())) / 1000);
   var emailValue = email.value.trim().toLowerCase();
   var nomeValue = nome.value.trim();
+  var relSelect = document.getElementById('lead-relacionamento');
+  var filhosSelect = document.getElementById('lead-filhos');
+  var relValue = relSelect ? relSelect.value : 'casado';
+  var filhosValue = filhosSelect ? filhosSelect.value : 'nao';
+
+  // Salva no escopo global para sincronia de tela imediata
+  window.currentRelacionamento = relValue;
+  window.currentFilhos = filhosValue;
 
   // Gera o ID Único previamente para garantir sincronia perfeita entre tela e link compartilhado
   var uniqueId = 'ISF-' + Math.random().toString(36).substring(2, 10).toUpperCase();
@@ -1201,15 +1284,15 @@ function submitClinicalTest() {
         window.location.href = check.urlAcesso || ('scripts-financeiros.html?id=' + check.id);
         return;
       }
-      executarEnvioClinico(uniqueId, nomeValue, emailValue, telCompleto, honeypot.value, elapsedSeconds);
+      executarEnvioClinico(uniqueId, nomeValue, emailValue, telCompleto, honeypot.value, elapsedSeconds, relValue, filhosValue);
     })
     .catch(function() {
       // Se offline ou timeout na checagem, prossegue com o envio normalmente
-      executarEnvioClinico(uniqueId, nomeValue, emailValue, telCompleto, honeypot.value, elapsedSeconds);
+      executarEnvioClinico(uniqueId, nomeValue, emailValue, telCompleto, honeypot.value, elapsedSeconds, relValue, filhosValue);
     });
 }
 
-function executarEnvioClinico(uniqueId, nomeVal, emailVal, telCompleto, honeypotVal, elapsedSeconds) {
+function executarEnvioClinico(uniqueId, nomeVal, emailVal, telCompleto, honeypotVal, elapsedSeconds, relVal, filhosVal) {
   var resultadoLocal = calcularResultadoLocal(respostasSalvas);
 
   try {
@@ -1223,6 +1306,8 @@ function executarEnvioClinico(uniqueId, nomeVal, emailVal, telCompleto, honeypot
     nome: nomeVal,
     email: emailVal,
     telefone: telCompleto,
+    relacionamento: relVal,
+    filhos: filhosVal,
     b_consultorio_check: honeypotVal,
     elapsedSeconds: elapsedSeconds,
     respostas: respostasSalvas
@@ -1235,12 +1320,12 @@ function executarEnvioClinico(uniqueId, nomeVal, emailVal, telCompleto, honeypot
     body: JSON.stringify(payload)
   }).then(function() {
     setTimeout(function() {
-      renderizarTelaResultado(resultadoLocal, nomeVal);
+      renderizarTelaResultado(resultadoLocal, nomeVal, relVal, filhosVal);
       goToScreen(12);
     }, 1500);
   }).catch(function() {
     setTimeout(function() {
-      renderizarTelaResultado(resultadoLocal, nomeVal);
+      renderizarTelaResultado(resultadoLocal, nomeVal, relVal, filhosVal);
       goToScreen(12);
     }, 1500);
   });
@@ -1268,12 +1353,15 @@ var PERFIS_CLINICOS = {
       'Pessoas com pontuação elevada em Evitação frequentemente vivenciaram na infância o que Brad Klontz chama de <em>Financial Flashpoints</em> de rejeição: lares onde dinheiro era motivo de brigas violentas, falências familiares traumáticas ou ambientes religiosos/morais onde ser rico era sinônimo de perversidade. O resultado é o desenvolvimento de um "voto de pobreza inconsciente".'
     ],
     impactoGoverno: 'No dia a dia, isso se manifesta na incapacidade de olhar extratos bancários com tranquilidade (padrão crônico de desdém e fuga), na procrastinação de investimentos e no impulso de se livrar rapidamente do dinheiro quando ele entra (doando, emprestando para quem não paga ou gastando tudo para zerar o saldo e aliviar a culpa inconsciente).',
-    dinamicaFamiliarHTML:
-      '<div class="relacional-block">'
-      + '<div class="relacional-item"><strong>1. Dinâmica Conjugal (Casal & Intimidade):</strong><p>Tende a transferir passivamente a governança das contas para o cônjuge ("você cuida disso que eu não entendo nada"), gerando sobrecarga relacional. Diante de cobranças ou dívidas, refugia-se na negação ou no silêncio, infantilizando-se no casamento.</p></div>'
-      + '<div class="relacional-item"><strong>2. Relação com os Filhos (Transmissão de Crenças):</strong><p>Dificuldade de ensinar educação financeira e limites práticos. O filho cresce percebendo o dinheiro como um tabu proibido ou sombrio, herdando a aversão inconsciente e o medo de negociar o próprio valor no mercado.</p></div>'
-      + '<div class="relacional-item"><strong>3. Lealdades Familiares e Pais (Herança Transgeracional):</strong><p>Fidelidade invisível ao sacrifício dos pais. Se os pais viveram em privação ou foram humildes, prosperar além deles é vivido como uma traição moral ("quem sou eu para ser rico se minha família sempre sofreu?"), disparando autoboicotes inconscientes.</p></div>'
-      + '</div>',
+    dinamicaConjugal: {
+      casado: 'No casamento e na convivência a dois, manifesta-se pela renúncia passiva da governança econômica. O paciente transfere todas as decisões e o controle das contas para o cônjuge com a justificativa de "não levar jeito para números", gerando sobrecarga relacional. Diante de cobranças ou endividamento do lar, refugia-se na negação ou no silêncio, infantilizando-se no relacionamento em vez de agir como sócio de vida.',
+      solteiro: 'Na fase autônoma e na busca por novos relacionamentos, a evitação se manifesta pelo medo inconsciente de vulnerabilidade financeira perante pretendentes. Há forte tendência a atrair parceiros controladores (que assumem o comando total) ou dependentes (onde o paciente banca tudo para se sentir bom, mas acaba se endividando). Falar abertamente sobre dinheiro em encontros é vivido como desconforto extremo.'
+    },
+    dinamicaFilhos: {
+      comFilhos: 'Na relação com os filhos e na transmissão intergeracional, o tema do dinheiro torna-se um tabu sombrio. O paciente tem profunda dificuldade de ensinar limites orçamentários, precificação e educação financeira prática. Os filhos crescem desarmados para a realidade econômica do mercado de trabalho, replicando a timidez na cobrança de honorários ou o sentimento de que o dinheiro corrompe.',
+      semFilhos: 'Sem dependentes diretos, a evitação projeta-se na gestão do próprio patrimônio e no horizonte de futuro. Há um receio inconsciente de que assumir maiores responsabilidades aumente as exigências financeiras das quais a mente tenta fugir. O paciente tende a canalizar seus recursos para socorrer parentes estendidos ou amigos (falso altruísmo) em vez de construir um patrimônio seguro para seu próprio amanhã.'
+    },
+    lealdadePais: 'Fidelidade invisível ao sacrifício dos pais. Se os pais viveram em privação ou foram humildes, prosperar além deles é vivido como uma traição moral ("quem sou eu para ser rico se minha família sempre sofreu?"), disparando autoboicotes inconscientes.',
     pontosCegos: [
       '<strong>Autossabotagem no Ponto de Virada:</strong> Recusar promoções, cobrar menos do que vale ou perder oportunidades lucrativas por culpa silenciosa de ganhar mais que parentes ou amigos.',
       '<strong>Dissociação Financeira:</strong> Viver como se o saldo bancário pertencesse a outra pessoa até que uma crise forçada exija socorro emergencial.',
@@ -1291,12 +1379,15 @@ var PERFIS_CLINICOS = {
       'Na infância, este script é moldado por memórias de escassez humilhante ou pela crença de que os problemas dos pais teriam desaparecido se houvesse dinheiro. O cérebro límbico grava a equação perigosa: <em>Dinheiro = Ausência de Dor</em>. Quando o adulto se depara com estresse, frustração ou vazio existencial, a resposta automática é buscar dopamina no consumo ou na busca desenfreada por ganho.'
     ],
     impactoGoverno: 'O fluxo de caixa torna-se refém de oscilações emocionais. Há uma tendência crônica à compra compulsiva e ao consumo compensatório. O dinheiro entra com esforço, mas vaza com velocidade em itens que prometiam preenchimento interior, mas entregam apenas arrependimento após o pico passageiro de dopamina.',
-    dinamicaFamiliarHTML:
-      '<div class="relacional-block">'
-      + '<div class="relacional-item"><strong>1. Dinâmica Conjugal (Casal & Intimidade):</strong><p>Ausência emocional justificada pela narrativa de estar "trabalhando pelo futuro de todos". O parceiro sente a solidão relacional e a incapacidade do outro de estar presente sem estar obcecado pela próxima meta patrimonial ou por gastos compensatórios.</p></div>'
-      + '<div class="relacional-item"><strong>2. Relação com os Filhos (Transmissão de Crenças):</strong><p>Substituição de presença por presentes. A ausência e a culpa parental são compensadas com concessões materiais excessivas, ensinando à criança que o amor se mede em bens materiais e gerando baixa tolerância a frustrações.</p></div>'
-      + '<div class="relacional-item"><strong>3. Lealdades Familiares e Pais (Herança Transgeracional):</strong><p>Tentativa urgente de compensar as feridas de escassez da infância ou de provar aos pais que superou as limitações de origem. Torna-se o "salvador financeiro" da família estendida, bancando parentes como forma de comprar pertencimento.</p></div>'
-      + '</div>',
+    dinamicaConjugal: {
+      casado: 'Ausência emocional justificada pela narrativa de estar "trabalhando pelo futuro de todos". O parceiro sente a solidão relacional e a incapacidade do outro de estar presente sem estar obcecado pela próxima meta patrimonial ou por gastos compensatórios.',
+      solteiro: 'Na ausência de cônjuge, a busca incessante por ascensão material opera frequentemente como anestesia para a solidão e carência afetiva. O paciente adia a vida pessoal e novos relacionamentos sob a justificativa de que "primeiro preciso enriquecer", projetando no dinheiro a solução mágica para seus vazios.'
+    },
+    dinamicaFilhos: {
+      comFilhos: 'Substituição de presença por presentes. A ausência e a culpa parental são compensadas com concessões materiais excessivas, ensinando à criança que o amor se mede em bens materiais e gerando baixa tolerância a frustrações.',
+      semFilhos: 'Sem dependentes diretos, o ciclo de insaciabilidade e consumo compensatório volta-se integralmente para si mesmo ou para projetos de expansão sem fim. Há frequentemente a fantasia de que só se sentirá autorizado a desacelerar ou constituir família quando acumular uma reserva multimilionária inatingível.'
+    },
+    lealdadePais: 'Tentativa urgente de compensar as feridas de escassez da infância ou de provar aos pais que superou as limitações de origem. Torna-se o "salvador financeiro" da família estendida, bancando parentes como forma de comprar pertencimento.',
     pontosCegos: [
       '<strong>A Síndrome do "Quando Eu Tiver":</strong> Adiar a felicidade presente e o convívio familiar para um momento idealizado no futuro que nunca chega.',
       '<strong>Anestesia pelo Consumo:</strong> Usar o ato de comprar ou contratar como calmante para ansiedade, tristeza ou esgotamento profissional.',
@@ -1314,12 +1405,15 @@ var PERFIS_CLINICOS = {
       'Geralmente nasce em lares onde o amor e a aprovação dos pais eram condicionados a desempenhos excepcionais, ou em famílias de primeira geração que ascenderam financeiramente e sentem necessidade imperativa de provar pertencimento aos círculos de alta renda. Para esse perfil, ficar para trás é morrer.'
     ],
     impactoGoverno: 'Gera um custo de vida inflacionado e artificial. O patrimônio é drenado por despesas de manutenção de imagem: veículos acima do ideal, residências caras e consumo ostensivo. Mesmo auferindo receitas expressivas (médicos, empresários, executivos), vive na corda bamba financeira para manter o cenário social.',
-    dinamicaFamiliarHTML:
-      '<div class="relacional-block">'
-      + '<div class="relacional-item"><strong>1. Dinâmica Conjugal (Casal & Intimidade):</strong><p>Terreno fértil para a <strong>Infidelidade Financeira e Omissão</strong>: compras escondidas, despesas maquiadas e contas secretas para não parecer frágil diante do parceiro. As finanças viram um jogo velado de poder e controle mútuo.</p></div>'
-      + '<div class="relacional-item"><strong>2. Relação com os Filhos (Transmissão de Crenças):</strong><p>Pressão por performance e imagem. Os filhos são incentivados a projetar status social desde cedo, correndo o risco de vincular seu afeto parental à capacidade de corresponder às expectativas de prestígio da família.</p></div>'
-      + '<div class="relacional-item"><strong>3. Lealdades Familiares e Pais (Herança Transgeracional):</strong><p>Necessidade de se afirmar como o "troféu" da família de origem. A pessoa assume um fardo asfixiante para manter parentes impressionados, sentindo pânico de admitir qualquer instabilidade ou rebaixamento socioeconômico.</p></div>'
-      + '</div>',
+    dinamicaConjugal: {
+      casado: 'Terreno fértil para a Infidelidade Financeira e Omissão: compras escondidas, despesas maquiadas e contas secretas para não parecer frágil diante do parceiro. As finanças viram um jogo velado de poder e controle mútuo.',
+      solteiro: 'Na conquista afetiva e na vida social, utiliza o consumo de alto padrão e símbolos visíveis de sucesso como cartão de visitas obrigatório. Teme visceralmente ser visto sem sua armadura de prestígio, o que dificulta conexões íntimas autênticas e gera um custo de vida asfixiante perante pretendentes.'
+    },
+    dinamicaFilhos: {
+      comFilhos: 'Pressão por performance e imagem. Os filhos são incentivados a projetar status social desde cedo, correndo o risco de vincular seu afeto parental à capacidade de corresponder às expectativas de prestígio da família.',
+      semFilhos: 'A necessidade de validação e destaque social canaliza-se primordialmente na carreira profissional, no ciclo social e em aquisições de vitrine. Há o receio inconsciente de que os custos de dependentes reduzam a liquidez necessária para manter o estilo de vida visível.'
+    },
+    lealdadePais: 'Necessidade de se afirmar como o "troféu" da família de origem. A pessoa assume um fardo asfixiante para manter parentes impressionados, sentindo pânico de admitir qualquer instabilidade ou rebaixamento socioeconômico.',
     pontosCegos: [
       '<strong>Riqueza Aparente vs. Riqueza Real:</strong> Alto padrão de vida sustentado por fluxo de caixa vulnerável, sem blindagem patrimonial líquida real.',
       '<strong>Compulsão por Trabalho (Workaholism):</strong> Trabalhar 14 a 16 horas por dia não por vocação, mas pelo pânico de perder a posição social e o respeito externo.',
@@ -1337,12 +1431,15 @@ var PERFIS_CLINICOS = {
       'Quase invariavelmente, este script tem raízes em traumas severos de desamparo na infância: pais que perderam tudo repentinamente, hiperinflação descontrolada, falecimentos prematuros de provedores ou períodos de privação real. A criança gravou a mensagem de sobrevivência: <em>"Nunca baixe a guarda; o mundo é imprevisível e ninguém virá nos salvar"</em>.'
     ],
     impactoGoverno: 'Cria o fenômeno do "rico financeiramente, miserável emocionalmente" (padrão de paralisia e escassez emocional). A pessoa possui patrimônio acumulado e reservas substanciais, mas não consegue usufruir de viagens de qualidade, cuidados de saúde preventivos ou conforto pessoal sem sentir aperto no peito e culpa avassaladora.',
-    dinamicaFamiliarHTML:
-      '<div class="relacional-block">'
-      + '<div class="relacional-item"><strong>1. Dinâmica Conjugal (Casal & Intimidade):</strong><p>Clima de inquisição doméstica. Cada gasto do parceiro — por mais rotineiro ou legítimo — é recebido com tensão, interrogatórios ou reprovação implícita. O parceiro se sente controlado e asfixiado, desgastando a cumplicidade do casal.</p></div>'
-      + '<div class="relacional-item"><strong>2. Relação com os Filhos (Transmissão de Crenças):</strong><p>Educação baseada no medo constante da escassez. A repetição exaustiva de que "o dinheiro vai acabar" ou "é perigoso gastar" transmite aos filhos um fardo de ansiedade precoce ou gera o efeito rebote (filhos hipergastadores no futuro).</p></div>'
-      + '<div class="relacional-item"><strong>3. Lealdades Familiares e Pais (Herança Transgeracional):</strong><p>Preso à guarda eterna do forte familiar. Frequentemente descende de pais que sofreram falências súbitas, confiscos ou traumas de desamparo. A pessoa jurou inconscientemente nunca baixar a guarda para honrar e proteger a linhagem.</p></div>'
-      + '</div>',
+    dinamicaConjugal: {
+      casado: 'Clima de inquisição doméstica. Cada gasto do parceiro — por mais rotineiro ou legítimo — é recebido com tensão, interrogatórios ou reprovação implícita. O parceiro se sente controlado e asfixiado, desgastando a cumplicidade do casal.',
+      solteiro: 'Na gestão pessoal independente, a hipervigilância isola o indivíduo. Abrir a intimidade ou compartilhar despesas com um novo parceiro é visto como uma ameaça intolerável à segurança. O paciente prefere a solidão ou a divisão milimétrica a correr o risco de ter seu patrimônio exposto.'
+    },
+    dinamicaFilhos: {
+      comFilhos: 'Educação baseada no medo constante da escassez. A repetição exaustiva de que "o dinheiro vai acabar" ou "é perigoso gastar" transmite aos filhos um fardo de ansiedade precoce ou gera o efeito rebote (filhos hipergastadores no futuro).',
+      semFilhos: 'Sem dependentes diretos para sustentar ou proteger, a acumulação obsessiva perde o propósito de amparo e converte-se em um fim em si mesma. O paciente acumula reservas apenas para aliviar o pânico interno de crises hipotéticas, privando-se de descanso e bem-estar legítimo.'
+    },
+    lealdadePais: 'Preso à guarda eterna do forte familiar. Frequentemente descende de pais que sofreram falências súbitas, confiscos ou traumas de desamparo. A pessoa jurou inconscientemente nunca baixar a guarda para honrar e proteger a linhagem.',
     pontosCegos: [
       '<strong>A Ilusão da Segurança Absoluta:</strong> Acreditar que mais R$500k ou R$1 milhão na conta trarão a paz que o coração procura, quando na verdade o medo é estrutural e não depende do saldo.',
       '<strong>Mão de Ferro com a Própria Vida:</strong> Postergar transições de carreira ou desfrutes legítimos hoje por terror injustificado de faltar no futuro distante.',
@@ -1351,6 +1448,29 @@ var PERFIS_CLINICOS = {
     principioOrdem: 'A Ordem Cura: Aprender a confiar e a transitar da acumulação por pânico para a governabilidade com paz. O dinheiro deve ser servo do seu propósito familiar, nunca um carcereiro das suas emoções.'
   }
 };
+
+function obterDinamicaFamiliarHTML(perfil, rel, filhos) {
+  var isCasado = (rel === 'casado' || rel === 'namorando');
+  var temFilhos = (filhos === 'sim_1' || filhos === 'sim_2' || filhos === 'sim_3plus');
+
+  var txtConjugal = (perfil.dinamicaConjugal && (isCasado ? perfil.dinamicaConjugal.casado : perfil.dinamicaConjugal.solteiro)) || '';
+  var rotuloConjugal = isCasado
+    ? '1. Dinâmica Conjugal (Casal & Intimidade)'
+    : '1. Dinâmica Afetiva e Intimidade (Fase Autônoma / Solteiro(a))';
+
+  var txtFilhos = (perfil.dinamicaFilhos && (temFilhos ? perfil.dinamicaFilhos.comFilhos : perfil.dinamicaFilhos.semFilhos)) || '';
+  var rotuloFilhos = temFilhos
+    ? '2. Relação com os Filhos (Transmissão de Crenças)'
+    : (filhos === 'pretendo' 
+        ? '2. Filhos & Linhagem Futura (Planejamento e Crenças de Herança)' 
+        : '2. Linhagem & Dependência (Sem Filhos / Foco em Autonomia e Legado)');
+
+  return '<div class="relacional-block">'
+    + '<div class="relacional-item"><strong>' + rotuloConjugal + ':</strong><p>' + txtConjugal + '</p></div>'
+    + '<div class="relacional-item"><strong>' + rotuloFilhos + ':</strong><p>' + txtFilhos + '</p></div>'
+    + '<div class="relacional-item"><strong>3. Lealdades Familiares e Pais (Herança Transgeracional):</strong><p>' + perfil.lealdadePais + '</p></div>'
+    + '</div>';
+}
 
 // ─── CONSTRUTOR DE RESULTADO CLÍNICO INTEGRAL ────────────────
 function construirResultadoPorMedias(medias) {
@@ -1408,7 +1528,12 @@ function calcularResultadoLocal(respostas) {
 }
 
 // ─── RENDERIZAÇÃO DA TELA DE RESULTADO (Aprofundada) ──────────
-function renderizarTelaResultado(res, nomePaciente) {
+function renderizarTelaResultado(res, nomePaciente, relValue, filhosValue) {
+  var rel = relValue || window.currentRelacionamento || 'casado';
+  var filhos = filhosValue || window.currentFilhos || 'nao';
+  window.currentRelacionamento = rel;
+  window.currentFilhos = filhos;
+
   var container = document.getElementById('result-content');
   var m = res.medias;
   var dom = res.dominante;
@@ -1456,7 +1581,7 @@ function renderizarTelaResultado(res, nomePaciente) {
       + '    </div>'
       + '    <div class="clinical-section">'
       + '      <h4>3. Dinâmica Familiar Integral (Casal, Filhos e Herança)</h4>'
-      +        sec.perfil.dinamicaFamiliarHTML
+      +        obterDinamicaFamiliarHTML(sec.perfil, rel, filhos)
       + '    </div>'
       + '    <div class="clinical-section">'
       + '      <h4>4. Pontos Cegos Deste Segundo Padrão</h4>'
@@ -1476,6 +1601,15 @@ function renderizarTelaResultado(res, nomePaciente) {
     + '  <h2 class="result-title">' + dom.nome + '</h2>'
     + '  <p style="font-size:.85rem;color:#B0B8C1;margin-bottom:1rem;font-weight:600;">' + dom.subtitulo + '</p>'
     + '  <div class="result-crenca">' + dom.crencaCentral + '</div>'
+    + '  <div class="clinical-disclaimer-card">'
+    + '    <span class="disclaimer-badge">⚠️ Nota de Enquadramento Clínico &bull; Triagem Preliminar</span>'
+    + '    <p>'
+    + '      Este relatório apresenta um <strong>rastreamento psicométrico quantitativo inicial</strong> baseado no seu autorrelato. Embora identifique tendências comportamentais com precisão estatística, <strong>trata-se de uma leitura preliminar e superficial da sua psique financeira</strong>.'
+    + '    </p>'
+    + '    <p>'
+    + '      Este instrumento <strong>não substitui, nem se compara, à anamnese profunda, à leitura do genograma familiar e ao diagnóstico clínico real conduzido diretamente por Phillip Souza</strong>. Feridas financeiras biográficas, traumas de infância e desprogramação de travas inconscientes exigem intervenção clínica individual especializada.'
+    + '    </p>'
+    + '  </div>'
     + '  <div class="clinical-section">'
     + '    <h4>1. Anatomia do Padrão Inconsciente</h4>'
     +      anatomiaHTML
@@ -1486,7 +1620,7 @@ function renderizarTelaResultado(res, nomePaciente) {
     + '  </div>'
     + '  <div class="clinical-section">'
     + '    <h4>3. Dinâmica Familiar Integral (Casal, Filhos e Herança)</h4>'
-    +      dom.dinamicaFamiliarHTML
+    +      obterDinamicaFamiliarHTML(dom, rel, filhos)
     + '  </div>'
     + '  <div class="clinical-section">'
     + '    <h4>4. Seus 3 Maiores Pontos Cegos de Autossabotagem</h4>'
@@ -1535,9 +1669,13 @@ function renderizarTelaResultado(res, nomePaciente) {
     + '  </p>'
     + '  <button class="share-btn" onclick="copiarLinkResultado()">📋 Copiar Meu Link de Acesso Exclusivo</button>'
     + '  <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.08);">'
-    + '    <p style="color:#E5E7EB;font-size:.92rem;margin-bottom:.75rem;"><strong>Deseja tratar a raiz emocional dos seus bloqueios em acompanhamento 1:1?</strong></p>'
+    + '    <div style="background:rgba(239,184,16,0.08);border:1px solid rgba(239,184,16,0.25);border-left:3px solid #EFB810;padding:12px 14px;border-radius:4px;margin-bottom:14px;text-align:left;">'
+    + '      <p style="color:#EFB810;font-size:.82rem;font-weight:700;text-transform:uppercase;margin:0 0 4px;letter-spacing:.5px;">Diagnóstico Algorítmico vs. Tratamento Clínico Real</p>'
+    + '      <p style="color:#D1D5DB;font-size:.84rem;line-height:1.5;margin:0;">O teste aponta <em>onde</em> o seu padrão trava, mas um algoritmo não cura feridas biográficas. A cirurgia emocional &mdash; o diagnóstico real e o protocolo de desprogramação &mdash; só acontece no processo clínico individual com Phillip Souza.</p>'
+    + '    </div>'
+    + '    <p style="color:#E5E7EB;font-size:.92rem;margin-bottom:.75rem;"><strong>Deseja avançar para o diagnóstico clínico real em acompanhamento 1:1?</strong></p>'
     + '    <a href="https://phillipsouza.com/#aplicar" class="btn-submit" style="display:inline-block;text-decoration:none;padding:.95rem 2rem;font-size:.88rem;">'
-    + '      Submeter Aplicação para Psicoterapia Financeira →'
+    + '      Submeter Aplicação para Psicoterapia Financeira (Atendimento 1:1) →'
     + '    </a>'
     + '  </div>'
     + '</div>'
@@ -1634,7 +1772,7 @@ function carregarResultadoWeb(id) {
         };
 
         var resObj = construirResultadoPorMedias(medias);
-        renderizarTelaResultado(resObj, data.nome || 'Paciente');
+        renderizarTelaResultado(resObj, data.nome || 'Paciente', data.relacionamento, data.filhos);
         goToScreen(12);
       } else {
         alert('Diagnóstico não localizado. Redirecionando para o teste...');
