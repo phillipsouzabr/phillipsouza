@@ -418,15 +418,39 @@
     .phone-row {
       display: flex;
       gap: 10px;
+      align-items: center;
+      width: 100%;
     }
-    .country-select {
-      width: 110px;
-      flex-shrink: 0;
+    .form-group .phone-row select.country-select,
+    .phone-row .country-select {
+      width: 125px !important;
+      min-width: 125px !important;
+      max-width: 125px !important;
+      flex: 0 0 125px !important;
       cursor: pointer;
+      padding: .85rem .4rem .85rem .65rem;
+      text-align: center;
+    }
+    .form-group .phone-row input,
+    .phone-row input[type="tel"] {
+      flex: 1 1 auto !important;
+      min-width: 0 !important;
+      width: 100% !important;
     }
     .country-select option {
       background: #0A0F1A;
       color: #FFFFFF;
+    }
+    @media (max-width: 400px) {
+      .form-group .phone-row select.country-select,
+      .phone-row .country-select {
+        width: 110px !important;
+        min-width: 110px !important;
+        max-width: 110px !important;
+        flex: 0 0 110px !important;
+        padding: .85rem .25rem;
+        font-size: .85rem;
+      }
     }
     .field-error {
       font-size: .75rem;
