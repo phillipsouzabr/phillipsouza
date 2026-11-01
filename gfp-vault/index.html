@@ -156,6 +156,32 @@
     window.addEventListener('online', checkConnectionState);
     window.addEventListener('offline', checkConnectionState);
     window.addEventListener('DOMContentLoaded', checkConnectionState);
+    // Ponte para disparar Notificação Nativa na barra do Android (Samsung S24)
+    window.addEventListener('message', async (ev) => {
+      if (!ev.data || ev.data.type !== 'GFP_ANDROID_NOTIFY') return;
+      const { title, body } = ev.data;
+
+      if (!('Notification' in window)) return;
+      if (Notification.permission === 'default') {
+        await Notification.requestPermission();
+      }
+      if (Notification.permission === 'granted') {
+        if ('serviceWorker' in navigator) {
+          const reg = await navigator.serviceWorker.ready;
+          if (reg && reg.showNotification) {
+            reg.showNotification(title, {
+              body: body,
+              icon: '/gfp-vault/icon.png',
+              badge: '/gfp-vault/icon.png',
+              vibrate: [200, 100, 200],
+              tag: 'gfp-alert-' + Date.now()
+            });
+            return;
+          }
+        }
+        new Notification(title, { body: body, icon: '/gfp-vault/icon.png' });
+      }
+    });
   </script>
 </body>
 </html>
