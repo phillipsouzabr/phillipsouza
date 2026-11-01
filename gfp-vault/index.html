@@ -11,9 +11,9 @@
   <meta name="application-name" content="Gestor Financeiro">
   <meta name="apple-mobile-web-app-title" content="Gestor Financeiro">
   <title>Gestor Financeiro</title>
-  <link rel="manifest" href="/gfp/manifest.json">
-  <link id="favIconPng" rel="icon" type="image/png" sizes="512x512" href="/gfp/icon.png">
-  <link id="appleIconPng" rel="apple-touch-icon" sizes="512x512" href="/gfp/icon.png">
+  <link rel="manifest" href="/gfp-vault/manifest.json">
+  <link id="favIconPng" rel="icon" type="image/png" sizes="512x512" href="/gfp-vault/icon.png">
+  <link id="appleIconPng" rel="apple-touch-icon" sizes="512x512" href="/gfp-vault/icon.png">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
@@ -32,38 +32,32 @@
   </style>
 </head>
 <body>
-  <!-- COLE SUA URL DO GOOGLE APPS SCRIPT ABAIXO -->
   <iframe 
     src="https://script.google.com/macros/s/AKfycbwhcGqu8MCRZSYiVppqlAEV6azjPsx6XfjKAIfQxV4S9cn6yBo04mlbTSKh_r6ntpPdpw/exec" 
     allow="camera; microphone; clipboard-read; clipboard-write">
   </iframe>
 
   <script>
-    // Força a barra de endereço a ter a barra "/" final (/gfp/) para o Android achar o manifest.json
-    if (window.location.pathname === '/gfp') {
-      window.location.replace('/gfp/' + window.location.search);
+    if (window.location.pathname === '/gfp-vault') {
+      window.location.replace('/gfp-vault/' + window.location.search);
     }
 
-    // Registra o Service Worker na pasta /gfp/
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/gfp/sw.js', { scope: '/gfp/' }).catch(() => {});
+        navigator.serviceWorker.register('/gfp-vault/sw.js', { scope: '/gfp-vault/' }).catch(() => {});
       });
     }
 
-    // Gerador automático do icon.png (512x512) com o logo "PS"
     (function generatePSIcon() {
       const c = document.createElement('canvas');
       c.width = 512; c.height = 512;
       const ctx = c.getContext('2d');
 
-      // Fundo Dark #0B0F19
       ctx.fillStyle = '#0B0F19';
       ctx.beginPath();
       ctx.roundRect(0, 0, 512, 512, 112);
       ctx.fill();
 
-      // Gradiente Azul -> Roxo
       const grad = ctx.createLinearGradient(36, 36, 476, 476);
       grad.addColorStop(0, '#2563EB');
       grad.addColorStop(1, '#7C3AED');
@@ -72,14 +66,12 @@
       ctx.roundRect(36, 36, 440, 440, 92);
       ctx.fill();
 
-      // Texto "PS"
       ctx.fillStyle = '#FFFFFF';
       ctx.font = '900 215px Inter, Arial, sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText('PS', 256, 268);
 
-      // Se você abrir phillipsouza.com/gfp/?icone no PC, ele baixa o arquivo icon.png pronto!
       if (window.location.search.includes('icone')) {
         const a = document.createElement('a');
         a.href = c.toDataURL('image/png');
