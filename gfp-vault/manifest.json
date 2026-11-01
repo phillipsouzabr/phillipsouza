@@ -1,18 +1,25 @@
-r {
-  "name": "Phillip Souza — Inteligência Financeira",
+{
+  "id": "/gfp/",
+  "name": "Gestor Financeiro",
   "short_name": "Gestor Financeiro",
-  "description": "Personal Finance Command Center",
-  "start_url": "./",
-  "scope": "./",
+  "description": "Phillip Souza — Inteligência Financeira",
+  "start_url": "/gfp/",
+  "scope": "/gfp/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0B0F19",
   "theme_color": "#0B0F19",
   "icons": [
     {
-      "src": "./icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "/gfp/icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/gfp/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ]
