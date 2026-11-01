@@ -1,7 +1,7 @@
 {
   "id": "/gfp-vault/",
-  "name": "Gestor Financeiro",
-  "short_name": "Gestor Financeiro",
+  "name": "GFP",
+  "short_name": "GFP",
   "description": "Phillip Souza — Inteligência Financeira",
   "start_url": "/gfp-vault/",
   "scope": "/gfp-vault/",
