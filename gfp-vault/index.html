@@ -12,32 +12,70 @@
   <meta name="apple-mobile-web-app-title" content="GFP">
   <title>GFP</title>
   <link rel="manifest" href="/gfp-vault/manifest.json">
-  <link id="favIconPng" rel="icon" type="image/png" sizes="512x512" href="/gfp-vault/icon.png">
-  <link id="appleIconPng" rel="apple-touch-icon" sizes="512x512" href="/gfp-vault/icon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/gfp-vault/icon.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="/gfp-vault/icon.png">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      width: 100%;
-      height: 100%;
-      height: 100dvh;
-      background-color: #0B0F19;
-      overflow: hidden;
-    }
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; }
+    html, body { width: 100%; height: 100%; height: 100dvh; background-color: #0B0F19; color: #F9FAFB; overflow: hidden; }
+    iframe { width: 100%; height: 100%; border: none; display: block; }
+    .hidden { display: none !important; }
+    #offlineBox { height: 100dvh; display: flex; flex-direction: column; justify-content: space-between; padding: 20px; max-width: 440px; margin: 0 auto; overflow-y: auto; }
+    .card { background: #111827; border: 1px solid #1F2937; border-radius: 18px; padding: 18px; margin-top: 12px; }
+    .inp { width: 100%; background: #0B0F19; border: 1px solid #374151; color: #fff; padding: 12px; border-radius: 12px; font-size: 14px; margin-top: 6px; margin-bottom: 12px; }
+    .btn { width: 100%; background: linear-gradient(135deg, #2563EB, #7C3AED); color: #fff; border: none; padding: 14px; border-radius: 12px; font-weight: 700; font-size: 14px; cursor: pointer; }
   </style>
 </head>
 <body>
-  <iframe 
+
+  <!-- IFRAME PRINCIPAL (ONLINE) -->
+  <iframe id="gasFrame"
     src="https://script.google.com/macros/s/AKfycbwhcGqu8MCRZSYiVppqlAEV6azjPsx6XfjKAIfQxV4S9cn6yBo04mlbTSKh_r6ntpPdpw/exec" 
     allow="camera; microphone; clipboard-read; clipboard-write">
   </iframe>
 
+  <!-- TELA DE EMERGÊNCIA EM MODO AVIÃO (QUANDO ABRE O APP SEM SINAL NENHUM) -->
+  <div id="offlineBox" class="hidden">
+    <div>
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:38px; height:38px; border-radius:10px; background:linear-gradient(135deg,#2563EB,#7C3AED); display:flex; align-items:center; justify-content:center; font-weight:800;">PS</div>
+          <div>
+            <div style="font-weight:700; font-size:14px;">GFP — Modo Offline ✈️</div>
+            <div style="font-size:11px; color:#F59E0B;">Sem internet • Lançamentos serão sincronizados</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-size:13px; font-weight:700; margin-bottom:10px;">✏️ Registrar Gasto / Receita Offline</div>
+        <label style="font-size:11px; color:#9CA3AF;">TIPO</label>
+        <select id="offTipo" class="inp">
+          <option value="DESPESA">📉 Despesa</option>
+          <option value="RECEITA">📈 Receita</option>
+        </select>
+
+        <label style="font-size:11px; color:#9CA3AF;">VALOR (R$)</label>
+        <input type="number" id="offValor" step="0.01" placeholder="Ex: 45.90" class="inp" style="font-size:20px; font-weight:800;">
+
+        <label style="font-size:11px; color:#9CA3AF;">DESCRIÇÃO</label>
+        <input type="text" id="offDesc" placeholder="Ex: Uber, Almoço, Padaria..." class="inp">
+
+        <label style="font-size:11px; color:#9CA3AF;">CONTA / CARTÃO (OPCIONAL)</label>
+        <input type="text" id="offConta" placeholder="Ex: Cartão Méliuz PF, Inter MEI..." class="inp">
+
+        <button onclick="saveOfflineEmergency()" class="btn">💾 Salvar no Celular (Sincronizar Depois)</button>
+      </div>
+
+      <div class="card">
+        <div style="font-size:12px; font-weight:700; color:#9CA3AF; margin-bottom:8px;">📋 Fila Offline Aguardando Internet:</div>
+        <div id="offList" style="font-size:12px; color:#E5E7EB;"></div>
+      </div>
+    </div>
+  </div>
+
   <script>
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbwhcGqu8MCRZSYiVppqlAEV6azjPsx6XfjKAIfQxV4S9cn6yBo04mlbTSKh_r6ntpPdpw/exec";
+
     if (window.location.pathname === '/gfp-vault') {
       window.location.replace('/gfp-vault/' + window.location.search);
     }
@@ -48,37 +86,76 @@
       });
     }
 
-    (function generatePSIcon() {
-      const c = document.createElement('canvas');
-      c.width = 512; c.height = 512;
-      const ctx = c.getContext('2d');
+    function getVaultQueue() {
+      try { return JSON.parse(localStorage.getItem('gfp_vault_offline_q') || '[]'); } catch (e) { return []; }
+    }
+    function setVaultQueue(q) {
+      try { localStorage.setItem('gfp_vault_offline_q', JSON.stringify(q)); } catch (e) {}
+      renderOfflineList();
+    }
 
-      ctx.fillStyle = '#0B0F19';
-      ctx.beginPath();
-      ctx.roundRect(0, 0, 512, 512, 112);
-      ctx.fill();
+    function renderOfflineList() {
+      const q = getVaultQueue();
+      const el = document.getElementById('offList');
+      if (!el) return;
+      el.innerHTML = q.length
+        ? q.map(it => `<div style="padding:6px 0; border-bottom:1px solid #1F2937; display:flex; justify-content:space-between;"><span>${it.descricao}</span><strong style="color:${it.valor < 0 ? '#F87171' : '#34D399'}">R$ ${Math.abs(it.valor).toFixed(2).replace('.',',')}</strong></div>`).join('')
+        : '<div style="color:#6B7280;">Nenhum lançamento pendente.</div>';
+    }
 
-      const grad = ctx.createLinearGradient(36, 36, 476, 476);
-      grad.addColorStop(0, '#2563EB');
-      grad.addColorStop(1, '#7C3AED');
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.roundRect(36, 36, 440, 440, 92);
-      ctx.fill();
+    function saveOfflineEmergency() {
+      const val = parseFloat(document.getElementById('offValor').value);
+      if (!val) { alert('Informe o valor.'); return; }
+      const tipo = document.getElementById('offTipo').value;
+      const d = new Date();
+      const todayISO = new Date(d.getTime() - (d.getTimezoneOffset() * 60000)).toISOString().slice(0, 10);
 
-      ctx.fillStyle = '#FFFFFF';
-      ctx.font = '900 215px Inter, Arial, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('PS', 256, 268);
+      const item = {
+        tipo: tipo,
+        valor: tipo === 'DESPESA' ? -Math.abs(val) : Math.abs(val),
+        descricao: document.getElementById('offDesc').value || 'Lançamento Offline',
+        id_conta: document.getElementById('offConta').value || 'A_DEFINIR',
+        id_categoria: 'Sem Categoria',
+        categoria_nome: 'Sem Categoria',
+        data_ocorrencia: todayISO,
+        status: 'CONCLUIDO',
+        repeticao: 'UNICA',
+        total_parcelas: 1,
+        finalidade: 'GASTOS'
+      };
 
-      if (window.location.search.includes('icone')) {
-        const a = document.createElement('a');
-        a.href = c.toDataURL('image/png');
-        a.download = 'icon.png';
-        a.click();
+      const q = getVaultQueue();
+      q.push(item);
+      setVaultQueue(q);
+      document.getElementById('offValor').value = '';
+      document.getElementById('offDesc').value = '';
+      alert('✅ Salvo na memória do celular! Assim que a internet voltar, será enviado à planilha.');
+    }
+
+    function checkConnectionState() {
+      const frame = document.getElementById('gasFrame');
+      const offBox = document.getElementById('offlineBox');
+      if (!navigator.onLine) {
+        frame.classList.add('hidden');
+        offBox.classList.remove('hidden');
+        renderOfflineList();
+      } else {
+        offBox.classList.add('hidden');
+        frame.classList.remove('hidden');
+        if (!frame.src || frame.src === 'about:blank') frame.src = GAS_URL;
+        const q = getVaultQueue();
+        if (q.length > 0) {
+          setTimeout(() => {
+            frame.contentWindow.postMessage({ type: 'GFP_OFFLINE_ITEMS', items: q }, '*');
+            setVaultQueue([]);
+          }, 4000);
+        }
       }
-    })();
+    }
+
+    window.addEventListener('online', checkConnectionState);
+    window.addEventListener('offline', checkConnectionState);
+    window.addEventListener('DOMContentLoaded', checkConnectionState);
   </script>
 </body>
 </html>
