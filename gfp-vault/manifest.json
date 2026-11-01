@@ -1,0 +1,19 @@
+{
+  "name": "Phillip Souza — Inteligência Financeira",
+  "short_name": "GFP PS",
+  "description": "Personal Finance Command Center",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0B0F19",
+  "theme_color": "#0B0F19",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
