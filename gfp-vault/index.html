@@ -19,62 +19,75 @@
     html, body { width: 100%; height: 100%; height: 100dvh; background-color: #0B0F19; color: #F9FAFB; overflow: hidden; }
     iframe { width: 100%; height: 100%; border: none; display: block; }
     .hidden { display: none !important; }
-    #offlineBox { height: 100dvh; display: flex; flex-direction: column; justify-content: space-between; padding: 20px; max-width: 440px; margin: 0 auto; overflow-y: auto; }
-    .card { background: #111827; border: 1px solid #1F2937; border-radius: 18px; padding: 18px; margin-top: 12px; }
-    .inp { width: 100%; background: #0B0F19; border: 1px solid #374151; color: #fff; padding: 12px; border-radius: 12px; font-size: 14px; margin-top: 6px; margin-bottom: 12px; }
-    .btn { width: 100%; background: linear-gradient(135deg, #2563EB, #7C3AED); color: #fff; border: none; padding: 14px; border-radius: 12px; font-weight: 700; font-size: 14px; cursor: pointer; }
+    #offlineBox { height: 100dvh; display: flex; flex-direction: column; padding: 18px; max-width: 460px; margin: 0 auto; overflow-y: auto; }
+    .card { background: #111827; border: 1px solid #1F2937; border-radius: 18px; padding: 16px; margin-top: 12px; }
+    .inp { width: 100%; background: #0B0F19; border: 1px solid #374151; color: #fff; padding: 11px; border-radius: 12px; font-size: 14px; margin-top: 5px; margin-bottom: 10px; }
+    .btn { width: 100%; background: linear-gradient(135deg, #2563EB, #7C3AED); color: #fff; border: none; padding: 13px; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; }
+    .btn-sec { flex: 1; background: #1E293B; border: 1px solid #374151; color: #fff; padding: 11px; border-radius: 12px; font-weight: 700; font-size: 12px; cursor: pointer; text-align: center; }
   </style>
 </head>
 <body>
 
-  <!-- IFRAME PRINCIPAL (ONLINE) -->
-  <iframe id="gasFrame"
-    src="https://script.google.com/macros/s/AKfycbwhcGqu8MCRZSYiVppqlAEV6azjPsx6XfjKAIfQxV4S9cn6yBo04mlbTSKh_r6ntpPdpw/exec" 
-    allow="camera; microphone; clipboard-read; clipboard-write">
-  </iframe>
+  <!-- IFRAME PRINCIPAL (CARREGADO SOMENTE QUANDO HÁ INTERNET ATIVA PARA NUNCA DAR TELA CINZA) -->
+  <iframe id="gasFrame" src="about:blank" allow="camera; microphone; clipboard-read; clipboard-write"></iframe>
 
-  <!-- TELA DE EMERGÊNCIA EM MODO AVIÃO (QUANDO ABRE O APP SEM SINAL NENHUM) -->
+  <!-- TELA DE OPERAÇÃO EM MODO AVIÃO (LANÇAMENTOS + FOTOS DE NOTAS OFFLINE) -->
   <div id="offlineBox" class="hidden">
-    <div>
-      <div style="display:flex; align-items:center; justify-content:space-between;">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <div style="width:38px; height:38px; border-radius:10px; background:linear-gradient(135deg,#2563EB,#7C3AED); display:flex; align-items:center; justify-content:center; font-weight:800;">PS</div>
-          <div>
-            <div style="font-weight:700; font-size:14px;">GFP — Modo Offline ✈️</div>
-            <div style="font-size:11px; color:#F59E0B;">Sem internet • Lançamentos serão sincronizados</div>
-          </div>
+    <div style="display:flex; align-items:center; justify-content:space-between;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="width:38px; height:38px; border-radius:10px; background:linear-gradient(135deg,#2563EB,#7C3AED); display:flex; align-items:center; justify-content:center; font-weight:800;">PS</div>
+        <div>
+          <div style="font-weight:700; font-size:14px;">GFP — Modo Offline ✈️</div>
+          <div id="offSubStatus" style="font-size:11px; color:#F59E0B;">Sem internet • Tudo será sincronizado ao conectar</div>
         </div>
       </div>
+    </div>
 
-      <div class="card">
-        <div style="font-size:13px; font-weight:700; margin-bottom:10px;">✏️ Registrar Gasto / Receita Offline</div>
-        <label style="font-size:11px; color:#9CA3AF;">TIPO</label>
-        <select id="offTipo" class="inp">
-          <option value="DESPESA">📉 Despesa</option>
-          <option value="RECEITA">📈 Receita</option>
-        </select>
-
-        <label style="font-size:11px; color:#9CA3AF;">VALOR (R$)</label>
-        <input type="number" id="offValor" step="0.01" placeholder="Ex: 45.90" class="inp" style="font-size:20px; font-weight:800;">
-
-        <label style="font-size:11px; color:#9CA3AF;">DESCRIÇÃO</label>
-        <input type="text" id="offDesc" placeholder="Ex: Uber, Almoço, Padaria..." class="inp">
-
-        <label style="font-size:11px; color:#9CA3AF;">CONTA / CARTÃO (OPCIONAL)</label>
-        <input type="text" id="offConta" placeholder="Ex: Cartão Méliuz PF, Inter MEI..." class="inp">
-
-        <button onclick="saveOfflineEmergency()" class="btn">💾 Salvar no Celular (Sincronizar Depois)</button>
+    <!-- CAPTURA DE FOTOS DE NOTAS FISCAIS OFFLINE (CÂMERA DIRETA OU GALERIA) -->
+    <div class="card">
+      <div style="font-size:13px; font-weight:700; margin-bottom:6px;">📷 Guardar Foto de Nota Fiscal (Para IA)</div>
+      <p style="font-size:11px; color:#9CA3AF; margin-bottom:10px;">Tire quantas fotos quiser agora. Quando a internet voltar, elas irão para a sua aba de IA para análise e conferência!</p>
+      <input type="file" id="offCamInp" accept="image/*" capture="environment" class="hidden" onchange="saveOfflinePhotos(this)">
+      <input type="file" id="offGalInp" accept="image/*" multiple class="hidden" onchange="saveOfflinePhotos(this)">
+      <div style="display:flex; gap:8px;">
+        <button type="button" onclick="document.getElementById('offCamInp').click()" class="btn-sec" style="background:#2563EB; border-color:#3B82F6;">📸 Usar Câmera</button>
+        <button type="button" onclick="document.getElementById('offGalInp').click()" class="btn-sec">🖼️ Galeria</button>
       </div>
+      <div id="offPhotosList" style="margin-top:10px; font-size:11px; color:#34D399;"></div>
+    </div>
 
-      <div class="card">
-        <div style="font-size:12px; font-weight:700; color:#9CA3AF; margin-bottom:8px;">📋 Fila Offline Aguardando Internet:</div>
-        <div id="offList" style="font-size:12px; color:#E5E7EB;"></div>
+    <!-- LANÇAMENTO MANUAL RÁPIDO OFFLINE -->
+    <div class="card">
+      <div style="font-size:13px; font-weight:700; margin-bottom:8px;">✏️ Registrar Gasto / Receita Offline</div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+        <div>
+          <label style="font-size:10px; color:#9CA3AF;">TIPO</label>
+          <select id="offTipo" class="inp">
+            <option value="DESPESA">📉 Despesa</option>
+            <option value="RECEITA">📈 Receita</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:10px; color:#9CA3AF;">VALOR (R$)</label>
+          <input type="number" id="offValor" step="0.01" placeholder="0,00" class="inp" style="font-weight:800;">
+        </div>
       </div>
+      <label style="font-size:10px; color:#9CA3AF;">DESCRIÇÃO</label>
+      <input type="text" id="offDesc" placeholder="Ex: Uber, Almoço, Padaria..." class="inp">
+      <label style="font-size:10px; color:#9CA3AF;">CONTA / CARTÃO (OPCIONAL)</label>
+      <input type="text" id="offConta" placeholder="Ex: Cartão Méliuz PF, Inter MEI..." class="inp">
+      <button onclick="saveOfflineEmergency()" class="btn">💾 Salvar Lançamento no Celular</button>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div style="font-size:12px; font-weight:700; color:#9CA3AF; margin-bottom:8px;">📋 Fila Offline Aguardando Internet:</div>
+      <div id="offList" style="font-size:12px; color:#E5E7EB;"></div>
     </div>
   </div>
 
   <script>
     const GAS_URL = "https://script.google.com/macros/s/AKfycbwhcGqu8MCRZSYiVppqlAEV6azjPsx6XfjKAIfQxV4S9cn6yBo04mlbTSKh_r6ntpPdpw/exec";
+    let frameLoadedOk = false;
 
     if (window.location.pathname === '/gfp-vault') {
       window.location.replace('/gfp-vault/' + window.location.search);
@@ -86,21 +99,59 @@
       });
     }
 
-    function getVaultQueue() {
-      try { return JSON.parse(localStorage.getItem('gfp_vault_offline_q') || '[]'); } catch (e) { return []; }
-    }
-    function setVaultQueue(q) {
-      try { localStorage.setItem('gfp_vault_offline_q', JSON.stringify(q)); } catch (e) {}
-      renderOfflineList();
-    }
+    function getVaultQueue() { try { return JSON.parse(localStorage.getItem('gfp_vault_offline_q') || '[]'); } catch (e) { return []; } }
+    function setVaultQueue(q) { try { localStorage.setItem('gfp_vault_offline_q', JSON.stringify(q)); } catch (e) {} renderOfflineList(); }
+
+    function getVaultPhotos() { try { return JSON.parse(localStorage.getItem('gfp_vault_offline_photos') || '[]'); } catch (e) { return []; } }
+    function setVaultPhotos(p) { try { localStorage.setItem('gfp_vault_offline_photos', JSON.stringify(p)); } catch (e) {} renderOfflineList(); }
 
     function renderOfflineList() {
       const q = getVaultQueue();
+      const p = getVaultPhotos();
       const el = document.getElementById('offList');
+      const pEl = document.getElementById('offPhotosList');
+      if (pEl) pEl.innerHTML = p.length ? `✅ ${p.length} foto(s) de nota guardada(s) para envio automático!` : '';
       if (!el) return;
       el.innerHTML = q.length
         ? q.map(it => `<div style="padding:6px 0; border-bottom:1px solid #1F2937; display:flex; justify-content:space-between;"><span>${it.descricao}</span><strong style="color:${it.valor < 0 ? '#F87171' : '#34D399'}">R$ ${Math.abs(it.valor).toFixed(2).replace('.',',')}</strong></div>`).join('')
-        : '<div style="color:#6B7280;">Nenhum lançamento pendente.</div>';
+        : '<div style="color:#6B7280;">Nenhum lançamento manual na fila.</div>';
+    }
+
+    function saveOfflinePhotos(inputEl) {
+      if (!inputEl.files || !inputEl.files.length) return;
+      Array.from(inputEl.files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const maxDim = 1100;
+            let w = img.width, h = img.height;
+            if (w > maxDim || h > maxDim) {
+              if (w > h) { h = Math.round((h * maxDim) / w); w = maxDim; }
+              else { w = Math.round((w * maxDim) / h); h = maxDim; }
+            }
+            canvas.width = w; canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.72);
+            const d = new Date();
+            const todayISO = new Date(d.getTime() - (d.getTimezoneOffset() * 60000)).toISOString().slice(0, 10);
+
+            const photos = getVaultPhotos();
+            photos.unshift({
+              id: 'rec_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+              stage: 'PHOTO_SAVED',
+              createdAt: todayISO,
+              fileName: file.name || 'Nota Offline',
+              base64: dataUrl.split(',')[1],
+              mimeType: 'image/jpeg'
+            });
+            setVaultPhotos(photos);
+          };
+          img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
     }
 
     function saveOfflineEmergency() {
@@ -110,7 +161,8 @@
       const d = new Date();
       const todayISO = new Date(d.getTime() - (d.getTimezoneOffset() * 60000)).toISOString().slice(0, 10);
 
-      const item = {
+      const q = getVaultQueue();
+      q.push({
         tipo: tipo,
         valor: tipo === 'DESPESA' ? -Math.abs(val) : Math.abs(val),
         descricao: document.getElementById('offDesc').value || 'Lançamento Offline',
@@ -122,64 +174,90 @@
         repeticao: 'UNICA',
         total_parcelas: 1,
         finalidade: 'GASTOS'
-      };
-
-      const q = getVaultQueue();
-      q.push(item);
+      });
       setVaultQueue(q);
       document.getElementById('offValor').value = '';
       document.getElementById('offDesc').value = '';
-      alert('✅ Salvo na memória do celular! Assim que a internet voltar, será enviado à planilha.');
+    }
+
+    function flushQueuesToIframe() {
+      const frame = document.getElementById('gasFrame');
+      if (!frame || !frame.contentWindow) return;
+      const q = getVaultQueue();
+      if (q.length > 0) {
+        frame.contentWindow.postMessage({ type: 'GFP_OFFLINE_ITEMS', items: q }, '*');
+        setVaultQueue([]);
+      }
+      const p = getVaultPhotos();
+      if (p.length > 0) {
+        frame.contentWindow.postMessage({ type: 'GFP_OFFLINE_PHOTOS', photos: p }, '*');
+        setVaultPhotos([]);
+      }
+    }
+
+    function handleOnlineTransition() {
+      const frame = document.getElementById('gasFrame');
+      const offBox = document.getElementById('offlineBox');
+      const sub = document.getElementById('offSubStatus');
+      if (sub) sub.textContent = '🟢 Internet detectada! Reconectando ao painel...';
+
+      // Aguarda 2s para o DNS do Android estabilizar após sair do Modo Avião antes de carregar o iframe (evita a tela cinza!)
+      setTimeout(() => {
+        if (!navigator.onLine) return;
+        frame.onload = () => {
+          frameLoadedOk = true;
+          offBox.classList.add('hidden');
+          frame.classList.remove('hidden');
+          setTimeout(flushQueuesToIframe, 3000);
+        };
+        frame.src = GAS_URL + '?t=' + Date.now();
+      }, 2000);
     }
 
     function checkConnectionState() {
       const frame = document.getElementById('gasFrame');
       const offBox = document.getElementById('offlineBox');
       if (!navigator.onLine) {
+        frameLoadedOk = false;
         frame.classList.add('hidden');
         offBox.classList.remove('hidden');
+        const sub = document.getElementById('offSubStatus');
+        if (sub) sub.textContent = 'Sem internet • Tudo será sincronizado ao conectar';
         renderOfflineList();
       } else {
-        offBox.classList.add('hidden');
-        frame.classList.remove('hidden');
-        if (!frame.src || frame.src === 'about:blank') frame.src = GAS_URL;
-        const q = getVaultQueue();
-        if (q.length > 0) {
-          setTimeout(() => {
-            frame.contentWindow.postMessage({ type: 'GFP_OFFLINE_ITEMS', items: q }, '*');
-            setVaultQueue([]);
-          }, 4000);
+        if (!frameLoadedOk) {
+          if (offBox.classList.contains('hidden')) {
+            frame.onload = () => { frameLoadedOk = true; setTimeout(flushQueuesToIframe, 2500); };
+            frame.src = GAS_URL;
+          } else {
+            handleOnlineTransition();
+          }
+        } else {
+          offBox.classList.add('hidden');
+          frame.classList.remove('hidden');
+          flushQueuesToIframe();
         }
       }
     }
 
-    window.addEventListener('online', checkConnectionState);
+    window.addEventListener('online', handleOnlineTransition);
     window.addEventListener('offline', checkConnectionState);
     window.addEventListener('DOMContentLoaded', checkConnectionState);
-    // Ponte para disparar Notificação Nativa na barra do Android (Samsung S24)
+
     window.addEventListener('message', async (ev) => {
       if (!ev.data || ev.data.type !== 'GFP_ANDROID_NOTIFY') return;
       const { title, body } = ev.data;
-
       if (!('Notification' in window)) return;
-      if (Notification.permission === 'default') {
-        await Notification.requestPermission();
-      }
+      if (Notification.permission === 'default') await Notification.requestPermission();
       if (Notification.permission === 'granted') {
         if ('serviceWorker' in navigator) {
           const reg = await navigator.serviceWorker.ready;
           if (reg && reg.showNotification) {
-            reg.showNotification(title, {
-              body: body,
-              icon: '/gfp-vault/icon.png',
-              badge: '/gfp-vault/icon.png',
-              vibrate: [200, 100, 200],
-              tag: 'gfp-alert-' + Date.now()
-            });
+            reg.showNotification(title, { body, icon: '/gfp-vault/icon.png', badge: '/gfp-vault/icon.png', vibrate: [200, 100, 200], tag: 'gfp-' + Date.now() });
             return;
           }
         }
-        new Notification(title, { body: body, icon: '/gfp-vault/icon.png' });
+        new Notification(title, { body, icon: '/gfp-vault/icon.png' });
       }
     });
   </script>
