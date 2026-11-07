@@ -28,6 +28,18 @@
 </head>
 <body>
 
+  <!-- BANNER DE ATIVAÇÃO DE NOTIFICAÇÃO NATIVA ANDROID (EXIGE TOQUE DIRETO NO DOMÍNIO TOP-LEVEL) -->
+  <div id="nativeNotifyPermBanner" class="hidden" style="position:fixed; top:10px; left:10px; right:10px; z-index:99999; background:linear-gradient(135deg,#1E293B,#0F172A); border:1px solid #F59E0B; border-radius:16px; padding:12px 14px; box-shadow:0 12px 30px rgba(0,0,0,0.75); display:flex; align-items:center; justify-content:space-between; gap:10px;">
+    <div style="min-width:0;">
+      <div style="font-size:12px; font-weight:800; color:#FBBF24;">🔔 Ativar Alertas Nativos no Celular</div>
+      <div style="font-size:11px; color:#D1D5DB; margin-top:2px;">Toque em Permitir para receber avisos de contas na barra do Android.</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
+      <button type="button" onclick="requestTopLevelNotificationPermission()" style="background:#F59E0B; color:#000; border:none; padding:8px 12px; border-radius:10px; font-weight:800; font-size:11px; cursor:pointer;">Permitir</button>
+      <button type="button" onclick="document.getElementById('nativeNotifyPermBanner').classList.add('hidden')" style="background:transparent; color:#9CA3AF; border:none; padding:6px; font-size:13px; cursor:pointer;">✕</button>
+    </div>
+  </div>
+
   <!-- IFRAME PRINCIPAL (CARREGADO SOMENTE QUANDO HÁ INTERNET ATIVA PARA NUNCA DAR TELA CINZA) -->
   <iframe id="gasFrame" src="about:blank" allow="camera; microphone; clipboard-read; clipboard-write"></iframe>
 
@@ -180,19 +192,63 @@
       document.getElementById('offDesc').value = '';
     }
 
+    let gasInnerWindow = null;
+    let pendingNotificationPayload = null;
+
     function flushQueuesToIframe() {
       const frame = document.getElementById('gasFrame');
-      if (!frame || !frame.contentWindow) return;
+      const targetWin = gasInnerWindow || (frame && frame.contentWindow ? frame.contentWindow : null);
+      if (!targetWin) return;
       const q = getVaultQueue();
       if (q.length > 0) {
-        frame.contentWindow.postMessage({ type: 'GFP_OFFLINE_ITEMS', items: q }, '*');
+        targetWin.postMessage({ type: 'GFP_OFFLINE_ITEMS', items: q }, '*');
         setVaultQueue([]);
       }
       const p = getVaultPhotos();
       if (p.length > 0) {
-        frame.contentWindow.postMessage({ type: 'GFP_OFFLINE_PHOTOS', photos: p }, '*');
+        targetWin.postMessage({ type: 'GFP_OFFLINE_PHOTOS', photos: p }, '*');
         setVaultPhotos([]);
       }
+    }
+
+    async function showNativeNotificationNow(title, body) {
+      if (!('Notification' in window) || Notification.permission !== 'granted') return false;
+      try {
+        if ('serviceWorker' in navigator) {
+          const reg = await navigator.serviceWorker.ready;
+          if (reg && reg.showNotification) {
+            await reg.showNotification(title, {
+              body,
+              icon: '/gfp-vault/icon.png',
+              badge: '/gfp-vault/icon.png',
+              vibrate: [200, 100, 200],
+              tag: 'gfp-' + Date.now()
+            });
+            return true;
+          }
+        }
+        new Notification(title, { body, icon: '/gfp-vault/icon.png' });
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    async function requestTopLevelNotificationPermission() {
+      const banner = document.getElementById('nativeNotifyPermBanner');
+      if (banner) banner.classList.add('hidden');
+      if (!('Notification' in window)) return;
+      try {
+        const perm = await Notification.requestPermission();
+        if (perm === 'granted') {
+          const payload = pendingNotificationPayload || {
+            title: '🔔 GFP — Notificações Ativadas!',
+            body: 'Pronto! Seus alertas de vencimentos aparecerão aqui na barra do Android.'
+          };
+          pendingNotificationPayload = null;
+          await showNativeNotificationNow(payload.title, payload.body);
+        }
+      } catch (e) {}
     }
 
     function handleOnlineTransition() {
@@ -242,10 +298,19 @@
 
     window.addEventListener('online', handleOnlineTransition);
     window.addEventListener('offline', checkConnectionState);
-    window.addEventListener('DOMContentLoaded', checkConnectionState);
+    window.addEventListener('DOMContentLoaded', () => {
+      checkConnectionState();
+      if ('Notification' in window && Notification.permission === 'default') {
+        const banner = document.getElementById('nativeNotifyPermBanner');
+        if (banner) banner.classList.remove('hidden');
+      }
+    });
 
     window.addEventListener('message', async (ev) => {
       if (!ev.data) return;
+      if (ev.source && ev.source !== window) {
+        gasInnerWindow = ev.source;
+      }
 
       if (ev.data.type === 'GFP_DOWNLOAD_FILE' && ev.data.bytes && ev.data.fileName) {
         try {
@@ -265,6 +330,7 @@
 
       if (ev.data.type === 'GFP_SYNC_SCHEDULE' && Array.isArray(ev.data.schedule)) {
         try {
+          flushQueuesToIframe();
           localStorage.setItem('gfp_vault_schedule_v1', JSON.stringify(ev.data.schedule));
           if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
             navigator.serviceWorker.controller.postMessage({ type: 'GFP_SW_SAVE_SCHEDULE', schedule: ev.data.schedule });
@@ -282,16 +348,12 @@
       if (ev.data.type !== 'GFP_ANDROID_NOTIFY') return;
       const { title, body } = ev.data;
       if (!('Notification' in window)) return;
-      if (Notification.permission === 'default') await Notification.requestPermission();
       if (Notification.permission === 'granted') {
-        if ('serviceWorker' in navigator) {
-          const reg = await navigator.serviceWorker.ready;
-          if (reg && reg.showNotification) {
-            reg.showNotification(title, { body, icon: '/gfp-vault/icon.png', badge: '/gfp-vault/icon.png', vibrate: [200, 100, 200], tag: 'gfp-' + Date.now() });
-            return;
-          }
-        }
-        new Notification(title, { body, icon: '/gfp-vault/icon.png' });
+        await showNativeNotificationNow(title, body);
+      } else {
+        pendingNotificationPayload = { title, body };
+        const banner = document.getElementById('nativeNotifyPermBanner');
+        if (banner) banner.classList.remove('hidden');
       }
     });
   </script>
