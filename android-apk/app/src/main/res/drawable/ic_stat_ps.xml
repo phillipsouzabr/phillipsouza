@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Fundo 100% transparente exigido pelo Android Status Bar (apenas canal Alpha das letras PS) -->
+    <!-- Letra P -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M14,22 L38,22 C49,22 56,29 56,40 C56,51 49,58 38,58 L26,58 L26,86 L14,86 Z M26,33 L26,47 L36.5,47 C41.5,47 44,44.2 44,40 C44,35.8 41.5,33 36.5,33 Z" />
+    <!-- Letra S -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M58,74 L66,64.5 C70,69.5 75.5,72.5 81,72.5 C86.5,72.5 89.5,69.8 89.5,66.2 C89.5,62.2 85.5,60.8 77.5,58 C66.5,54.5 60,49.8 60,39.5 C60,29 68.8,21.5 81,21.5 C89,21.5 95.8,24.2 100.5,29.5 L93,38.5 C89,34.5 85,32.5 80.2,32.5 C75.5,32.5 72,34.8 72,38.5 C72,42.2 76,43.8 84,46.5 C94.8,50 101.5,54.8 101.5,65.5 C101.5,77 92.8,84 80.5,84 C71,84 63,80 58,74 Z" />
+</vector>
+

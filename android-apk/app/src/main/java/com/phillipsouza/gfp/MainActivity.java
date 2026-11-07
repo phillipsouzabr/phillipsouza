@@ -205,7 +205,8 @@ public class MainActivity extends AppCompatActivity {
             );
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx, CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_gfp_logo)
+                    .setSmallIcon(R.drawable.ic_stat_ps)
+                    .setColor(0xFF2563EB)
                     .setContentTitle(title != null ? title : "GFP")
                     .setContentText(body != null ? body : "")
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(body != null ? body : ""))
