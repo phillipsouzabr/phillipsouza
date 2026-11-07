@@ -1,14 +1,19 @@
 {
   "id": "/gfp-vault/",
-  "name": "GFP",
+  "name": "GFP — Inteligência Financeira",
   "short_name": "GFP",
-  "description": "Phillip Souza — Inteligência Financeira",
+  "description": "Phillip Souza — Gestão Financeira Pessoal e Patrimonial",
+  "lang": "pt-BR",
+  "dir": "ltr",
   "start_url": "/gfp-vault/",
   "scope": "/gfp-vault/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "orientation": "portrait",
   "background_color": "#0B0F19",
   "theme_color": "#0B0F19",
+  "categories": ["finance", "productivity", "business"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/gfp-vault/icon.png",
@@ -20,7 +25,13 @@
       "src": "/gfp-vault/icon.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/gfp-vault/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
