@@ -52,15 +52,60 @@ self.addEventListener('push', (e) => {
   );
 });
 
+self.addEventListener('message', (e) => {
+  if (e.data && e.data.type === 'GFP_SW_SAVE_SCHEDULE' && Array.isArray(e.data.schedule)) {
+    e.waitUntil(
+      caches.open(CACHE_NAME).then((cache) =>
+        cache.put('/gfp-vault/__schedule.json', new Response(JSON.stringify(e.data.schedule)))
+      )
+    );
+  }
+});
+
+async function evaluateCachedScheduleAndNotify() {
+  try {
+    const cache = await caches.open(CACHE_NAME);
+    const res = await cache.match('/gfp-vault/__schedule.json');
+    if (!res) return;
+    const schedule = await res.json();
+    if (!Array.isArray(schedule) || !schedule.length) return;
+
+    const now = new Date();
+    const todayISO = new Date(now.getTime() - (now.getTimezoneOffset() * 60000)).toISOString().slice(0, 10);
+    const todayMs = new Date(todayISO + 'T12:00:00Z').getTime();
+
+    const hits = [];
+    schedule.forEach((t) => {
+      const txMs = new Date(t.data_ocorrencia + 'T12:00:00Z').getTime();
+      const diffDays = Math.round((txMs - todayMs) / (1000 * 60 * 60 * 24));
+      const customDays = Array.isArray(t.customDays) ? t.customDays : [];
+      if (customDays.includes(diffDays) || (t.status === 'PENDENTE' && (diffDays === 0 || diffDays < 0 || (t.isAutoDebit && diffDays === 1)))) {
+        const tagQuando = diffDays === 0 ? 'HOJE' : (diffDays === 1 ? 'AMANHÃ' : (diffDays < 0 ? `ATRASADO (${Math.abs(diffDays)}d)` : `em ${diffDays}d`));
+        hits.push(`${t.descricao} (${tagQuando})`);
+      }
+    });
+
+    if (hits.length > 0) {
+      await self.registration.showNotification(`🔔 GFP — ${hits.length} Lembrete(s) Hoje`, {
+        body: hits.slice(0, 4).join(' • '),
+        icon: '/gfp-vault/icon.png',
+        badge: '/gfp-vault/icon.png',
+        vibrate: [200, 100, 200],
+        tag: 'gfp-daily-' + todayISO
+      });
+    }
+  } catch (err) {}
+}
+
 self.addEventListener('sync', (e) => {
   if (e.tag === 'gfp-sync-queue') {
-    e.waitUntil(Promise.resolve());
+    e.waitUntil(evaluateCachedScheduleAndNotify());
   }
 });
 
 self.addEventListener('periodicsync', (e) => {
   if (e.tag === 'gfp-daily-check') {
-    e.waitUntil(Promise.resolve());
+    e.waitUntil(evaluateCachedScheduleAndNotify());
   }
 });
 
