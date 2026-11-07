@@ -245,7 +245,25 @@
     window.addEventListener('DOMContentLoaded', checkConnectionState);
 
     window.addEventListener('message', async (ev) => {
-      if (!ev.data || ev.data.type !== 'GFP_ANDROID_NOTIFY') return;
+      if (!ev.data) return;
+
+      if (ev.data.type === 'GFP_DOWNLOAD_FILE' && ev.data.bytes && ev.data.fileName) {
+        try {
+          const blob = new Blob([new Uint8Array(ev.data.bytes)], {
+            type: ev.data.mimeType || 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+          });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = ev.data.fileName;
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 800);
+        } catch (e) {}
+        return;
+      }
+
+      if (ev.data.type !== 'GFP_ANDROID_NOTIFY') return;
       const { title, body } = ev.data;
       if (!('Notification' in window)) return;
       if (Notification.permission === 'default') await Notification.requestPermission();
