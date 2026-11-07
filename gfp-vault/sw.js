@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gfp-ps-v2';
+const CACHE_NAME = 'gfp-ps-v3';
 const ASSETS = [
   '/gfp-vault/',
   '/gfp-vault/index.html',
@@ -23,15 +23,32 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
+  if (e.request.method !== 'GET') return;
   e.respondWith(
     fetch(e.request)
       .then((res) => {
-        if (e.request.method === 'GET' && e.request.url.startsWith(self.location.origin)) {
+        if (e.request.url.startsWith(self.location.origin)) {
           const clone = res.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
         }
         return res;
       })
       .catch(() => caches.match(e.request))
+  );
+});
+
+self.addEventListener('notificationclick', (e) => {
+  e.notification.close();
+  e.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+      for (const client of clientList) {
+        if (client.url.includes('/gfp-vault') && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      if (self.clients.openWindow) {
+        return self.clients.openWindow('/gfp-vault/');
+      }
+    })
   );
 });
