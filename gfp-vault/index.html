@@ -263,6 +263,22 @@
         return;
       }
 
+      if (ev.data.type === 'GFP_SYNC_SCHEDULE' && Array.isArray(ev.data.schedule)) {
+        try {
+          localStorage.setItem('gfp_vault_schedule_v1', JSON.stringify(ev.data.schedule));
+          if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+            navigator.serviceWorker.controller.postMessage({ type: 'GFP_SW_SAVE_SCHEDULE', schedule: ev.data.schedule });
+          }
+          if ('serviceWorker' in navigator) {
+            const reg = await navigator.serviceWorker.ready;
+            if (reg && 'periodicSync' in reg) {
+              try { await reg.periodicSync.register('gfp-daily-check', { minInterval: 12 * 60 * 60 * 1000 }); } catch (e) {}
+            }
+          }
+        } catch (e) {}
+        return;
+      }
+
       if (ev.data.type !== 'GFP_ANDROID_NOTIFY') return;
       const { title, body } = ev.data;
       if (!('Notification' in window)) return;
