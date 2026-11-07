@@ -24,9 +24,6 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Configurar Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Configurar Gradle 8.5
         uses: gradle/actions/setup-gradle@v4
         with:
@@ -35,6 +32,7 @@ jobs:
       - name: Compilar GFP-Nativo.apk
         working-directory: android-apk
         run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null || true
           gradle assembleRelease --no-daemon
           cp app/build/outputs/apk/release/app-release.apk ../GFP-Nativo.apk
 
