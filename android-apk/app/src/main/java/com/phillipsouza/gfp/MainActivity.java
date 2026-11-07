@@ -43,8 +43,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 
@@ -52,13 +50,15 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String CHANNEL_ID = "gfp_native_alerts";
     private static final String PREFS_NAME = "gfp_native_prefs";
-    private static final String REMOTE_APP_URL = "https://phillipsouza.com/gfp-vault/index.html";
+    private static final String BOOTSTRAP_CACHE_FILE = "gfp_bootstrap_v3.json";
     private static final String BASE_ORIGIN_URL = "https://phillipsouza.com/gfp-vault/";
     private static final int FILE_CHOOSER_REQ = 1001;
     private static final int NOTIFY_PERM_REQ = 1002;
 
     private WebView webView;
     private ValueCallback<Uri[]> filePathCallback;
+    private String pendingNotifyTitle = null;
+    private String pendingNotifyBody = null;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -118,51 +118,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 1. Abre o sistema completo instantaneamente (0.1s) usando a base local sob a origem https://phillipsouza.com
+        // 1. Limpa qualquer cache HTML antigo para garantir que o APK sempre rode 100% a versão nativa autônoma embutida em assets/index.html (inclusive offline!)
+        try {
+            File oldCached = new File(getFilesDir(), "gfp_cached_index.html");
+            if (oldCached.exists()) oldCached.delete();
+        } catch (Exception ignored) {}
+
         String htmlContent = loadBestAvailableHtml();
         webView.loadDataWithBaseURL(BASE_ORIGIN_URL, htmlContent, "text/html", "UTF-8", BASE_ORIGIN_URL);
-
-        // 2. Em segundo plano, se houver internet, verifica se há atualização do index.html no GitHub para manter o APK sempre atualizado sem precisar reinstalar
-        syncLatestHtmlFromGitHubAsync();
     }
 
     private String loadBestAvailableHtml() {
-        try {
-            File cachedFile = new File(getFilesDir(), "gfp_cached_index.html");
-            if (cachedFile.exists() && cachedFile.length() > 10000) {
-                return readStreamToString(new FileInputStream(cachedFile));
-            }
-        } catch (Exception ignored) {}
-
         try {
             InputStream assetStream = getAssets().open("index.html");
             return readStreamToString(assetStream);
         } catch (Exception e) {
             return "<html><body style='background:#0B0F19;color:#fff;font-family:sans-serif;padding:24px;'>Erro ao carregar GFP.</body></html>";
         }
-    }
-
-    private void syncLatestHtmlFromGitHubAsync() {
-        if (!isNetworkAvailable()) return;
-        new Thread(() -> {
-            try {
-                URL url = new URL(REMOTE_APP_URL + "?t=" + System.currentTimeMillis());
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setConnectTimeout(7000);
-                conn.setReadTimeout(7000);
-                conn.setRequestProperty("Cache-Control", "no-cache");
-                if (conn.getResponseCode() == 200) {
-                    String remoteHtml = readStreamToString(conn.getInputStream());
-                    if (remoteHtml != null && remoteHtml.length() > 50000 && remoteHtml.contains("GFP_GAS_API_URL")) {
-                        File cachedFile = new File(getFilesDir(), "gfp_cached_index.html");
-                        try (FileOutputStream fos = new FileOutputStream(cachedFile, false)) {
-                            fos.write(remoteHtml.getBytes(StandardCharsets.UTF_8));
-                        }
-                    }
-                }
-                conn.disconnect();
-            } catch (Exception ignored) {}
-        }).start();
     }
 
     private String readStreamToString(InputStream is) throws Exception {
@@ -250,6 +222,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == NOTIFY_PERM_REQ) {
+            if (grantResults != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (pendingNotifyTitle != null) {
+                    dispatchNativeNotification(this, pendingNotifyTitle, pendingNotifyBody != null ? pendingNotifyBody : "");
+                    pendingNotifyTitle = null;
+                    pendingNotifyBody = null;
+                }
+            } else {
+                Toast.makeText(this, "⚠️ Ative as notificações do GFP nas configurações do Android.", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == FILE_CHOOSER_REQ) {
@@ -289,7 +277,38 @@ public class MainActivity extends AppCompatActivity {
 
         @JavascriptInterface
         public void showNotification(String title, String body) {
+            if (Build.VERSION.SDK_INT >= 33) {
+                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    pendingNotifyTitle = title != null ? title : "GFP";
+                    pendingNotifyBody = body != null ? body : "";
+                    runOnUiThread(() -> ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, NOTIFY_PERM_REQ));
+                    return;
+                }
+            }
             dispatchNativeNotification(context, title, body);
+            runOnUiThread(() -> Toast.makeText(context, "🔔 Alerta Nativo GFP enviado!", Toast.LENGTH_SHORT).show());
+        }
+
+        @JavascriptInterface
+        public void saveBootstrapCache(String jsonPayload) {
+            try {
+                if (jsonPayload == null || jsonPayload.length() < 10) return;
+                File cacheFile = new File(context.getFilesDir(), BOOTSTRAP_CACHE_FILE);
+                try (FileOutputStream fos = new FileOutputStream(cacheFile, false)) {
+                    fos.write(jsonPayload.getBytes(StandardCharsets.UTF_8));
+                }
+            } catch (Exception ignored) {}
+        }
+
+        @JavascriptInterface
+        public String loadBootstrapCache() {
+            try {
+                File cacheFile = new File(context.getFilesDir(), BOOTSTRAP_CACHE_FILE);
+                if (cacheFile.exists() && cacheFile.length() > 10) {
+                    return readStreamToString(new FileInputStream(cacheFile));
+                }
+            } catch (Exception ignored) {}
+            return "";
         }
 
         @JavascriptInterface

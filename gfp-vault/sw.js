@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gfp-ps-v3';
+const CACHE_NAME = 'gfp-ps-v6';
 const ASSETS = [
   '/gfp-vault/',
   '/gfp-vault/index.html',

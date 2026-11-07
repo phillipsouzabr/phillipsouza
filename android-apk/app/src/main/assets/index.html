@@ -252,8 +252,8 @@
           </div>
 
           <!-- Termômetro 60/20/20 e Radars -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-            <div class="lg:col-span-5 glass-card p-5 rounded-2xl space-y-4">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+            <div class="lg:col-span-5 glass-card p-5 rounded-2xl space-y-4 h-fit self-start">
               <div class="flex items-center justify-between gap-2">
                 <div>
                   <h2 class="text-sm font-bold text-white">🎯 Termômetro de Finalidades (Quanto é para:)</h2>
@@ -306,8 +306,8 @@
               </div>
             </div>
 
-            <div class="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="glass-card p-4 rounded-2xl border border-rose-500/20 flex flex-col">
+            <div class="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+              <div class="glass-card p-4 rounded-2xl border border-rose-500/20 flex flex-col h-fit">
                 <div class="flex items-center justify-between mb-3">
                   <h3 class="text-xs font-bold uppercase tracking-wider text-rose-400">🚨 Anteriores Não-Concluídas</h3>
                   <div class="flex items-center gap-1.5">
@@ -315,10 +315,10 @@
                     <button type="button" onclick="toggleSectionBlock('listAnterioresPendentes', this)" class="px-2 py-0.5 rounded bg-bgElevated text-[10px] text-gray-300">▼</button>
                   </div>
                 </div>
-                <div id="listAnterioresPendentes" class="space-y-2 overflow-y-auto max-h-48 flex-1 text-xs"></div>
+                <div id="listAnterioresPendentes" class="space-y-2 overflow-y-auto max-h-48 text-xs"></div>
               </div>
 
-              <div class="glass-card p-4 rounded-2xl border border-blue-500/20 flex flex-col">
+              <div class="glass-card p-4 rounded-2xl border border-blue-500/20 flex flex-col h-fit">
                 <div class="flex items-center justify-between mb-3">
                   <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400">📅 Próximas Transações (30d)</h3>
                   <div class="flex items-center gap-1.5">
@@ -326,7 +326,7 @@
                     <button type="button" onclick="toggleSectionBlock('listProximasPendentes', this)" class="px-2 py-0.5 rounded bg-bgElevated text-[10px] text-gray-300">▼</button>
                   </div>
                 </div>
-                <div id="listProximasPendentes" class="space-y-2 overflow-y-auto max-h-48 flex-1 text-xs"></div>
+                <div id="listProximasPendentes" class="space-y-2 overflow-y-auto max-h-48 text-xs"></div>
               </div>
             </div>
           </div>
@@ -543,11 +543,10 @@
               <div class="flex flex-wrap items-center gap-2">
                 <button onclick="openPayFaturaModal('NORMAL')" class="px-3.5 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold">💸 Pagar Fatura</button>
                 <button onclick="openPayFaturaModal('ANTECIPADO')" class="px-3.5 py-2 rounded-xl bg-purple-600/30 border border-purple-500/40 text-purple-200 text-xs font-bold">⚡ Antecipar / Liberar Limite</button>
-                <button type="button" onclick="toggleSectionBlock('cardsChartsSectionBody', this)" class="px-2.5 py-2 rounded-xl bg-bgElevated hover:bg-gray-700 text-xs font-bold text-gray-300">▼ Recolher Gráficos</button>
               </div>
             </div>
 
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-5">
               <div class="p-3.5 rounded-xl bg-bgMain border border-borderSubtle">
                 <p class="text-[11px] text-gray-400">Limite Total</p>
                 <p id="ccLimiteTotal" class="text-base font-extrabold text-white mt-0.5 blur-val">R$ 0,00</p>
@@ -572,6 +571,11 @@
                 <p class="text-[11px] text-gray-400">Fatura do Ciclo</p>
                 <p id="ccFinaisCartao" class="text-xs font-bold text-gray-300 mt-1 blur-val">--</p>
               </div>
+            </div>
+
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="text-xs font-bold uppercase text-gray-400">📊 Painel Gráfico dos Cartões</h4>
+              <button type="button" onclick="toggleSectionBlock('cardsChartsSectionBody', this)" class="px-2.5 py-1 rounded-lg bg-bgElevated hover:bg-gray-700 text-[11px] font-bold text-gray-300">▼ Recolher Gráficos</button>
             </div>
 
             <!-- PAINEL GRÁFICO DE CARTÕES: COLUNA EMPILHADA POR CARTÃO + PIZZA DE COMPROMETIMENTO -->
@@ -690,10 +694,10 @@
 
         <!-- 5. ANÁLISES & RELATÓRIOS -->
         <section id="view-analises" class="hidden space-y-6">
-          <div class="glass-card p-5 rounded-2xl space-y-4">
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <div class="flex flex-wrap items-center gap-2">
-                <select id="anChartType" onchange="renderAnalysisChart()" class="bg-bgElevated border border-borderSubtle rounded-xl px-3 py-2 text-xs font-bold text-white">
+          <div class="glass-card p-5 rounded-2xl space-y-4 min-w-0 overflow-hidden">
+            <div class="flex flex-wrap items-center justify-between gap-3 min-w-0">
+              <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto min-w-0">
+                <select id="anChartType" onchange="renderAnalysisChart()" class="w-full sm:w-auto max-w-full min-w-0 truncate bg-bgElevated border border-borderSubtle rounded-xl px-3 py-2 text-xs font-bold text-white">
                   <option value="DESP_PIZZA">1. Despesas por Categoria (Pizza)</option>
                   <option value="REC_PIZZA">2. Receitas por Categoria (Pizza)</option>
                   <option value="REC_X_DESP_LINHA">3. Receitas x Despesas Diário (Linha)</option>
@@ -712,7 +716,7 @@
                 </div>
               </div>
 
-              <div class="flex items-center gap-2 text-xs">
+              <div class="flex flex-wrap items-center gap-2 text-xs w-full sm:w-auto">
                 <input type="date" id="anStartDate" onchange="renderAnalysisChart(); renderMultilevelReport();" class="bg-bgElevated border border-borderSubtle rounded-lg px-2.5 py-1.5 text-white">
                 <span>até</span>
                 <input type="date" id="anEndDate" onchange="renderAnalysisChart(); renderMultilevelReport();" class="bg-bgElevated border border-borderSubtle rounded-lg px-2.5 py-1.5 text-white">
@@ -1831,10 +1835,22 @@
     // Ponte universal: quando roda fora do iframe da Google (APK Nativo Autônomo ou PWA standalone),
     // emula google.script.run conectando-se diretamente à API JSON da Planilha Google Sheets!
     (function installAutonomousGoogleScriptBridge() {
-      if ('serviceWorker' in navigator && window.location.protocol === 'https:' && window.location.hostname.includes('phillipsouza.com')) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/gfp-vault/sw.js', { scope: '/gfp-vault/' }).catch(() => {});
-        });
+      const isNativeAndroidApk = typeof window.GFPNative !== 'undefined';
+      if ('serviceWorker' in navigator) {
+        if (isNativeAndroidApk) {
+          // No APK Nativo Autônomo, remove qualquer Service Worker ou cache antigo do navegador para nunca exibir a tela legada "Modo Offline"
+          navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister())).catch(() => {});
+          if (typeof caches !== 'undefined') {
+            caches.keys().then(ks => ks.forEach(k => caches.delete(k))).catch(() => {});
+          }
+        } else if (window.location.protocol === 'https:' && window.location.hostname.includes('phillipsouza.com')) {
+          window.addEventListener('load', () => {
+            if (typeof caches !== 'undefined') {
+              caches.keys().then(ks => ks.forEach(k => { if (k !== 'gfp-ps-v6') caches.delete(k); })).catch(() => {});
+            }
+            navigator.serviceWorker.register('/gfp-vault/sw.js?v=6', { scope: '/gfp-vault/' }).catch(() => {});
+          });
+        }
       }
 
       if (typeof window.google !== 'undefined' && window.google && window.google.script && window.google.script.run) {
@@ -2675,57 +2691,176 @@
 
     function saveLocalBootstrapSnapshot() {
       try {
+        try {
+          localStorage.removeItem('if_bootstrap_cache');
+          localStorage.removeItem('if_bootstrap_cache_v2');
+        } catch (e) {}
+
+        // Compressão por dicionário de strings: reduz 18.400 lançamentos de ~6.5 MB para ~1.1 MB (abaixo do limite de 5 MB do localStorage!)
+        const dict = [];
+        const dictMap = new Map();
+        const sym = (val) => {
+          const s = String(val || '');
+          if (!s) return 0;
+          let idx = dictMap.get(s);
+          if (idx === undefined) {
+            idx = dict.length + 1;
+            dict.push(s);
+            dictMap.set(s, idx);
+          }
+          return idx;
+        };
+
         const compactTx = STATE.transactions.map(t => [
-          t.id_transacao, t.id_grupo_cartao, t.data_ocorrencia, t.descricao, t.valor,
-          t.tipo, t.id_categoria, t.categoria_nome, t.id_conta, t.id_conta_par,
-          t.finalidade, t.status, t.total_parcelas, t.ciclo_fatura, t.flag_interna_fatura ? 1 : 0, t.anotacao, t.origem || '',
-          t.recorrencia_id || '', t.parcela_atual || 1
+          t.id_transacao,
+          sym(t.id_grupo_cartao),
+          sym(t.data_ocorrencia),
+          sym(t.descricao),
+          Math.round((Number(t.valor) || 0) * 100) / 100,
+          sym(t.tipo),
+          sym(t.id_categoria),
+          sym(t.categoria_nome),
+          sym(t.id_conta),
+          sym(t.id_conta_par),
+          sym(t.finalidade),
+          sym(t.status),
+          t.total_parcelas || 1,
+          sym(t.ciclo_fatura),
+          t.flag_interna_fatura ? 1 : 0,
+          sym(t.anotacao),
+          sym(t.origem || ''),
+          sym(t.recorrencia_id || ''),
+          t.parcela_atual || 1
         ]);
-        localStorage.setItem('if_bootstrap_cache_v2', JSON.stringify({
-          v: 2, params: STATE.params, accounts: STATE.accounts, categories: STATE.categories,
-          txCompact: compactTx, pdg: STATE.pdg, dreams: STATE.dreams,
-          investments: STATE.investments, investmentOps: STATE.investmentOps
-        }));
+
+        const nowTs = Date.now();
+        STATE.lastCacheSyncTs = nowTs;
+        const jsonPayload = JSON.stringify({
+          v: 3,
+          lastSyncTs: nowTs,
+          dict: dict,
+          params: STATE.params,
+          accounts: STATE.accounts,
+          categories: STATE.categories,
+          txCompact: compactTx,
+          pdg: STATE.pdg,
+          dreams: STATE.dreams,
+          investments: STATE.investments,
+          investmentOps: STATE.investmentOps
+        });
+
+        try {
+          localStorage.setItem('if_bootstrap_cache_v3', jsonPayload);
+        } catch (e) {}
+
+        try {
+          if (window.GFPNative && typeof window.GFPNative.saveBootstrapCache === 'function') {
+            window.GFPNative.saveBootstrapCache(jsonPayload);
+          }
+        } catch (e) {}
       } catch (e) {}
     }
 
     function restoreFromCompactCache() {
       try {
-        const raw = localStorage.getItem('if_bootstrap_cache_v2');
+        let raw = '';
+        try {
+          raw = localStorage.getItem('if_bootstrap_cache_v3') || '';
+        } catch (e) {}
+        if (!raw && window.GFPNative && typeof window.GFPNative.loadBootstrapCache === 'function') {
+          try {
+            raw = window.GFPNative.loadBootstrapCache() || '';
+          } catch (e) {}
+        }
+        if (!raw) {
+          try { raw = localStorage.getItem('if_bootstrap_cache_v2') || ''; } catch (e) {}
+        }
         if (!raw) return false;
+
         const snap = JSON.parse(raw);
-        if (!snap || snap.v !== 2) return false;
-        const expandedTx = (snap.txCompact || []).map(r => ({
-          id_transacao: r[0], id_grupo_cartao: r[1], data_ocorrencia: r[2], competencia: String(r[2] || '').slice(0, 7),
-          descricao: r[3], valor: Number(r[4]) || 0, tipo: r[5], id_categoria: r[6], categoria_nome: r[7],
-          id_conta: r[8], conta_nome: '', id_conta_par: r[9], finalidade: r[10], status: r[11],
-          parcela_atual: r[18] || 1, total_parcelas: r[12] || 1, ciclo_fatura: r[13] || '', flag_interna_fatura: r[14] === 1, anotacao: r[15] || '', origem: r[16] || '', recorrencia_id: r[17] || ''
-        }));
+        if (!snap || (snap.v !== 3 && snap.v !== 2)) return false;
+
+        STATE.lastCacheSyncTs = Number(snap.lastSyncTs) || 0;
+        const dict = Array.isArray(snap.dict) ? snap.dict : [];
+        const unsym = (idx) => (typeof idx === 'number' ? (idx > 0 ? (dict[idx - 1] || '') : '') : String(idx || ''));
+
+        const expandedTx = (snap.txCompact || []).map(r => {
+          const dISO = snap.v === 3 ? unsym(r[2]) : String(r[2] || '');
+          return {
+            id_transacao: String(r[0] || ''),
+            id_grupo_cartao: snap.v === 3 ? unsym(r[1]) : String(r[1] || ''),
+            data_ocorrencia: dISO,
+            competencia: dISO.slice(0, 7),
+            descricao: snap.v === 3 ? unsym(r[3]) : String(r[3] || ''),
+            valor: Number(r[4]) || 0,
+            tipo: snap.v === 3 ? unsym(r[5]) : String(r[5] || ''),
+            id_categoria: snap.v === 3 ? unsym(r[6]) : String(r[6] || ''),
+            categoria_nome: snap.v === 3 ? unsym(r[7]) : String(r[7] || ''),
+            id_conta: snap.v === 3 ? unsym(r[8]) : String(r[8] || ''),
+            conta_nome: '',
+            id_conta_par: snap.v === 3 ? unsym(r[9]) : String(r[9] || ''),
+            finalidade: snap.v === 3 ? unsym(r[10]) : String(r[10] || ''),
+            status: snap.v === 3 ? unsym(r[11]) : String(r[11] || ''),
+            parcela_atual: r[18] || 1,
+            total_parcelas: r[12] || 1,
+            ciclo_fatura: snap.v === 3 ? unsym(r[13]) : String(r[13] || ''),
+            flag_interna_fatura: r[14] === 1,
+            anotacao: snap.v === 3 ? unsym(r[15]) : String(r[15] || ''),
+            origem: snap.v === 3 ? unsym(r[16]) : String(r[16] || ''),
+            recorrencia_id: snap.v === 3 ? unsym(r[17]) : String(r[17] || '')
+          };
+        });
+
         normalizeBootstrap({
-          params: snap.params, accounts: snap.accounts, categories: snap.categories,
-          transactions: expandedTx, pdg: snap.pdg, dreams: snap.dreams,
-          investments: snap.investments || [], investmentOps: snap.investmentOps || []
+          params: snap.params,
+          accounts: snap.accounts,
+          categories: snap.categories,
+          transactions: expandedTx,
+          pdg: snap.pdg,
+          dreams: snap.dreams,
+          investments: snap.investments || [],
+          investmentOps: snap.investmentOps || []
         });
         return true;
-      } catch (e) { return false; }
+      } catch (e) {
+        return false;
+      }
     }
 
-    function loadBootstrapData(skipCacheRender = false) {
+    function loadBootstrapData(skipCacheRender = false, forceNetworkSync = false) {
       if (safeGetOfflineHash() && !STATE.sessionUnlocked) {
         document.getElementById('pinLockScreen').classList.remove('hidden');
       }
+      let restoredFromCache = false;
       if (!skipCacheRender && restoreFromCompactCache()) {
+        restoredFromCache = true;
         checkPinLockOnBoot();
         populateSelects();
         recalculateAll();
         renderAccountsConfigList();
         renderCategoriesConfigList();
         runStrategicNotificationsEngine();
-        setSyncStatus('Atualizando em segundo plano...', true);
       }
-      if (!navigator.onLine) { updateOfflineStatusBadge(); return; }
+      if (!navigator.onLine) {
+        if (restoredFromCache) setSyncStatus('Modo Offline Ativo (Base Local Completa)', false);
+        updateOfflineStatusBadge();
+        return;
+      }
       const token = getAuthToken();
       if (getOfflineQueue().length > 0 && token) { flushOfflineQueue(); return; }
+
+      // Se abriu a partir do cache instantâneo (< 30 min) e não foi solicitado refresh manual, evita recarregar os 18.400 itens do zero!
+      const cacheAgeMs = Date.now() - (STATE.lastCacheSyncTs || 0);
+      if (restoredFromCache && !forceNetworkSync && cacheAgeMs >= 0 && cacheAgeMs < 30 * 60 * 1000) {
+        setSyncStatus('Sincronizado em Nuvem', false);
+        return;
+      }
+
+      if (restoredFromCache) {
+        setSyncStatus('Sincronizando em segundo plano...', true);
+      } else {
+        setSyncStatus('Carregando base da planilha...', true);
+      }
 
       if (typeof google !== 'undefined' && google.script && google.script.run) {
         google.script.run
@@ -2949,7 +3084,7 @@
       const btn = document.getElementById('btnManualRefresh');
       if (btn) btn.classList.add('animate-spin');
       setSyncStatus('Atualizando base da planilha...', true);
-      loadBootstrapData(true);
+      loadBootstrapData(true, true);
       setTimeout(() => {
         if (btn) btn.classList.remove('animate-spin');
       }, 1500);
@@ -4224,6 +4359,63 @@
       document.getElementById('lblValorParcela').textContent = `${n}x de ${fmtBRL(total / n)}`;
     }
 
+    function addMonthsISOClient(dateISO, monthsDelta, isAnnual = false) {
+      const [y, m, d] = String(dateISO || getLocalTodayISO()).split('-').map(Number);
+      const targetY = isAnnual ? (y + monthsDelta) : y;
+      const targetM = isAnnual ? (m - 1) : ((m - 1) + monthsDelta);
+      const dt = new Date(Date.UTC(targetY, targetM, 1, 12, 0, 0));
+      const maxD = new Date(Date.UTC(dt.getUTCFullYear(), dt.getUTCMonth() + 1, 0)).getUTCDate();
+      dt.setUTCDate(Math.min(d || 1, maxD));
+      return dt.toISOString().slice(0, 10);
+    }
+
+    function calcClientCardBillCycleYM(txDateISO, closeDay, dueDay) {
+      const [y, m, d] = String(txDateISO || getLocalTodayISO()).split('-').map(Number);
+      const cDay = Number(closeDay) || 5;
+      const vDay = Number(dueDay) || 12;
+      let monthOffset = d >= cDay ? 1 : 0;
+      if (vDay < cDay) monthOffset += 1;
+      const dt = new Date(Date.UTC(y, (m - 1) + monthOffset, 1, 12, 0, 0));
+      return dt.toISOString().slice(0, 7);
+    }
+
+    function applyServerCreatedRowsToState(res, batchTag) {
+      if (!res || !Array.isArray(res.createdRows) || !res.createdRows.length) return false;
+      STATE.transactions = STATE.transactions.filter(t => t._tempBatchId !== batchTag);
+      res.createdRows.forEach(r => {
+        const dISO = String(r[2] || '').slice(0, 10);
+        const val = Number(r[5]) || 0;
+        STATE.transactions.push({
+          id_transacao: String(r[0] || ''),
+          id_grupo_cartao: String(r[1] || ''),
+          data_ocorrencia: dISO,
+          competencia: String(r[3] || dISO.slice(0, 7)),
+          descricao: String(r[4] || 'Sem descrição'),
+          valor: val,
+          tipo: String(r[6] || (val >= 0 ? 'RECEITA' : 'DESPESA')).toUpperCase(),
+          id_categoria: String(r[7] || 'Sem Categoria'),
+          categoria_nome: cleanLegacySymbols(r[8] || r[7] || 'Sem Categoria'),
+          id_conta: String(r[9] || ''),
+          conta_nome: cleanLegacySymbols(r[10] || r[9] || ''),
+          id_conta_par: String(r[11] || ''),
+          finalidade: String(r[12] || 'GASTOS').toUpperCase(),
+          status: String(r[13] || 'CONCLUIDO').toUpperCase(),
+          parcela_atual: Number(r[14]) || 1,
+          total_parcelas: Number(r[15]) || 1,
+          ciclo_fatura: String(r[16] || ''),
+          flag_interna_fatura: r[17] === true || String(r[17]).toUpperCase() === 'TRUE' || String(r[20]) === 'AUTO_FATURA',
+          recorrencia_id: String(r[18] || ''),
+          anotacao: String(r[19] || ''),
+          origem: String(r[20] || 'APP')
+        });
+      });
+      saveLocalBootstrapSnapshot();
+      recalculateAll();
+      runStrategicNotificationsEngine();
+      if (!document.getElementById('view-cartoes').classList.contains('hidden')) renderCreditCardCenter();
+      return true;
+    }
+
     function submitTransaction() {
       const rawVal = Math.abs(parseBRL(document.getElementById('txValor').value));
       if (!rawVal) { alert('Informe um valor válido.'); return; }
@@ -4232,6 +4424,7 @@
       const signedVal = STATE.formType === 'DESPESA' ? -rawVal : rawVal;
       const dataISO = document.getElementById('txData').value;
       const contaId = document.getElementById('txConta').value;
+      const contaDestId = document.getElementById('txContaDestino').value;
       const repMode = document.getElementById('txRepeticao').value;
       const numParc = repMode === 'PARCELADO' ? Math.max(2, Number(document.getElementById('txNumParcelas').value) || 2) : 1;
 
@@ -4240,7 +4433,7 @@
         valor: signedVal,
         descricao: document.getElementById('txDescricao').value || 'Sem descrição',
         id_conta: contaId,
-        id_conta_destino: document.getElementById('txContaDestino').value,
+        id_conta_destino: contaDestId,
         id_categoria: STATE.formType === 'TRANSFERENCIA' ? 'cat_1' : (catObj ? catObj.id_cat : subVal),
         categoria_nome: STATE.formType === 'TRANSFERENCIA' ? 'Transferência' : subVal,
         data_ocorrencia: dataISO,
@@ -4259,23 +4452,99 @@
       setSyncStatus('Gravando em segundo plano...', true);
       try { renderNotifyPillsForInput('txObs'); } catch(e) {}
 
-      if (repMode === 'UNICA' && numParc === 1 && STATE.formType !== 'TRANSFERENCIA') {
-        STATE.transactions.push({
-          id_transacao: 'temp_' + Date.now(), data_ocorrencia: dataISO, competencia: dataISO.slice(0, 7),
-          descricao: payload.descricao, valor: signedVal, tipo: payload.tipo, id_categoria: payload.id_categoria,
-          categoria_nome: payload.categoria_nome, id_conta: contaId, conta_nome: getAccountDisplayName(contaId),
-          finalidade: payload.finalidade, status: payload.status, total_parcelas: 1, flag_interna_fatura: false, anotacao: payload.anotacao, origem: 'APP'
-        });
-        recalculateAll();
-        runStrategicNotificationsEngine();
-      }
-
+      // Atualização otimista instantânea (0.01s) em memória e no cache local para TODOS os tipos de lançamento (inclusive Cartão, Parcelado, Fixo e Transferência)!
+      const batchTag = 'batch_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6);
+      const todayISO = getLocalTodayISO();
       const accSel = STATE.accounts.find(a => a.id_conta === contaId);
       const isCardLaunch = accSel && (accSel.grupo === 'CARTAO_LIMITE' || accSel.nome_exibicao.toLowerCase().startsWith('cartão '));
-      runOrQueueOffline('saveTransaction', [payload], () => {
-        if (isCardLaunch || repMode !== 'UNICA' || numParc > 1 || STATE.formType === 'TRANSFERENCIA') {
-          if (navigator.onLine) loadBootstrapData(true);
+      const isIndef = repMode === 'FIXO_MENSAL' || repMode === 'FIXO_ANUAL';
+      const isAnnual = repMode === 'FIXO_ANUAL';
+      const occCount = isIndef ? (isAnnual ? 5 : 24) : 1;
+      const recId = isIndef ? ('rec_temp_' + Date.now()) : '';
+
+      for (let occ = 0; occ < occCount; occ++) {
+        const occDate = addMonthsISOClient(dataISO, occ, isAnnual);
+        const occComp = occDate.slice(0, 7);
+        const occSt = (occ === 0 && occDate <= todayISO) ? payload.status : (occDate <= todayISO ? 'CONCLUIDO' : 'PENDENTE');
+        const grpId = 'grp_temp_' + Date.now() + '_' + occ;
+
+        if (payload.tipo === 'TRANSFERENCIA') {
+          STATE.transactions.push({
+            _tempBatchId: batchTag, id_transacao: 'temp_tr1_' + Date.now() + '_' + occ, id_grupo_cartao: grpId, recorrencia_id: recId,
+            data_ocorrencia: occDate, competencia: occComp, descricao: payload.descricao, valor: -rawVal, tipo: 'TRANSFERENCIA',
+            id_categoria: 'cat_1', categoria_nome: 'Transferência', id_conta: contaId, conta_nome: getAccountDisplayName(contaId),
+            id_conta_par: contaDestId, finalidade: 'TRANSFERENCIA', status: occSt, parcela_atual: 1, total_parcelas: 1,
+            ciclo_fatura: occComp, flag_interna_fatura: false, anotacao: payload.anotacao, origem: 'APP'
+          });
+          STATE.transactions.push({
+            _tempBatchId: batchTag, id_transacao: 'temp_tr2_' + Date.now() + '_' + occ, id_grupo_cartao: grpId, recorrencia_id: recId,
+            data_ocorrencia: occDate, competencia: occComp, descricao: payload.descricao, valor: rawVal, tipo: 'TRANSFERENCIA',
+            id_categoria: 'cat_1', categoria_nome: 'Transferência', id_conta: contaDestId, conta_nome: getAccountDisplayName(contaDestId),
+            id_conta_par: contaId, finalidade: 'TRANSFERENCIA', status: occSt, parcela_atual: 1, total_parcelas: 1,
+            ciclo_fatura: occComp, flag_interna_fatura: false, anotacao: payload.anotacao, origem: 'APP'
+          });
+        } else if (isCardLaunch) {
+          const sinal = payload.tipo === 'RECEITA' ? 1 : -1;
+          const cClose = Number(accSel.dia_fechamento) || 5;
+          const cDue = Number(accSel.dia_vencimento) || 12;
+          const firstCycle = calcClientCardBillCycleYM(occDate, cClose, cDue);
+          STATE.transactions.push({
+            _tempBatchId: batchTag, id_transacao: 'temp_cm_' + Date.now() + '_' + occ, id_grupo_cartao: grpId, recorrencia_id: recId,
+            data_ocorrencia: occDate, competencia: occComp, descricao: payload.descricao, valor: sinal * rawVal, tipo: payload.tipo,
+            id_categoria: payload.id_categoria, categoria_nome: payload.categoria_nome, id_conta: contaId, conta_nome: getAccountDisplayName(contaId),
+            id_conta_par: '', finalidade: payload.finalidade, status: occDate <= todayISO ? 'CONCLUIDO' : 'PENDENTE',
+            parcela_atual: 1, total_parcelas: numParc, ciclo_fatura: firstCycle, flag_interna_fatura: false, anotacao: payload.anotacao, origem: 'APP'
+          });
+          const fId = accSel.id_conta_vinculada || accSel.id_conta.replace('card_', 'fat_');
+          const baseParc = Math.floor((rawVal / numParc) * 100) / 100;
+          const diffCent = Math.round((rawVal - (baseParc * numParc)) * 100) / 100;
+          for (let p = 1; p <= numParc; p++) {
+            const vParc = p === 1 ? Math.round((baseParc + diffCent) * 100) / 100 : baseParc;
+            const pDate = addMonthsISOClient(occDate, p - 1, false);
+            const pCycle = calcClientCardBillCycleYM(pDate, cClose, cDue);
+            const descP = numParc > 1 ? `${payload.descricao} (${p} / ${numParc})` : `${occDate.slice(8, 10)}/${occDate.slice(5, 7)}* ${payload.descricao}`;
+            const stP = pDate <= todayISO ? 'CONCLUIDO' : 'PENDENTE';
+            STATE.transactions.push({
+              _tempBatchId: batchTag, id_transacao: `temp_cf_${Date.now()}_${occ}_${p}`, id_grupo_cartao: grpId, recorrencia_id: recId,
+              data_ocorrencia: pDate, competencia: pDate.slice(0, 7), descricao: descP, valor: sinal * vParc, tipo: 'TRANSFERENCIA',
+              id_categoria: 'cat_1', categoria_nome: 'Transferência', id_conta: fId, conta_nome: getAccountDisplayName(fId),
+              id_conta_par: contaId, finalidade: 'TRANSFERENCIA', status: stP, parcela_atual: p, total_parcelas: numParc,
+              ciclo_fatura: pCycle, flag_interna_fatura: true, anotacao: '', origem: 'AUTO_FATURA'
+            });
+            STATE.transactions.push({
+              _tempBatchId: batchTag, id_transacao: `temp_cl_${Date.now()}_${occ}_${p}`, id_grupo_cartao: grpId, recorrencia_id: recId,
+              data_ocorrencia: pDate, competencia: pDate.slice(0, 7), descricao: descP, valor: -sinal * vParc, tipo: 'TRANSFERENCIA',
+              id_categoria: 'cat_1', categoria_nome: 'Transferência', id_conta: contaId, conta_nome: getAccountDisplayName(contaId),
+              id_conta_par: fId, finalidade: 'TRANSFERENCIA', status: stP, parcela_atual: p, total_parcelas: numParc,
+              ciclo_fatura: pCycle, flag_interna_fatura: true, anotacao: '', origem: 'AUTO_FATURA'
+            });
+          }
+        } else {
+          const sinalC = payload.tipo === 'RECEITA' ? 1 : -1;
+          const vParcC = Math.round((rawVal / numParc) * 100) / 100;
+          for (let p = 1; p <= numParc; p++) {
+            const pDate = addMonthsISOClient(occDate, p - 1, false);
+            const pComp = pDate.slice(0, 7);
+            const pSt = (p === 1 && occ === 0) ? occSt : (pDate <= todayISO ? 'CONCLUIDO' : 'PENDENTE');
+            const descC = numParc > 1 ? `${payload.descricao} (${p} / ${numParc})` : payload.descricao;
+            STATE.transactions.push({
+              _tempBatchId: batchTag, id_transacao: `temp_tx_${Date.now()}_${occ}_${p}`, id_grupo_cartao: grpId, recorrencia_id: recId,
+              data_ocorrencia: pDate, competencia: pComp, descricao: descC, valor: sinalC * vParcC, tipo: payload.tipo,
+              id_categoria: payload.id_categoria, categoria_nome: payload.categoria_nome, id_conta: contaId, conta_nome: getAccountDisplayName(contaId),
+              id_conta_par: '', finalidade: payload.finalidade, status: pSt, parcela_atual: p, total_parcelas: numParc,
+              ciclo_fatura: pComp, flag_interna_fatura: false, anotacao: payload.anotacao, origem: 'APP'
+            });
+          }
         }
+      }
+
+      saveLocalBootstrapSnapshot();
+      recalculateAll();
+      runStrategicNotificationsEngine();
+      if (!document.getElementById('view-cartoes').classList.contains('hidden')) renderCreditCardCenter();
+
+      runOrQueueOffline('saveTransaction', [payload], (res) => {
+        applyServerCreatedRowsToState(res, batchTag);
       });
     }
 
@@ -4473,9 +4742,12 @@
       }
 
       setSyncStatus('Salvando edição e sincronizando vínculos...', true);
-      runOrQueueOffline('saveTransaction', [payload], () => {
-        if (oldGrp || newParc > 1) {
-          if (navigator.onLine) loadBootstrapData(true);
+      runOrQueueOffline('saveTransaction', [payload], (res) => {
+        if (res && Array.isArray(res.createdRows) && res.createdRows.length > 0) {
+          STATE.transactions = STATE.transactions.filter(t => t.id_transacao !== idTx);
+          applyServerCreatedRowsToState(res, '__edit_replace__');
+        } else {
+          saveLocalBootstrapSnapshot();
         }
       });
     }
@@ -5158,8 +5430,43 @@
         ids_parcelas_antecipadas: checkedIds
       };
       closeModal('modalPayFatura');
-      setSyncStatus('Registrando pagamento de fatura e sincronizando limite...', true);
-      google.script.run.withSuccessHandler(() => loadBootstrapData(true)).payOrAdvanceCardBill(payload);
+      const cardId = payload.id_cartao;
+      const cardObj = STATE.accounts.find(a => a.id_conta === cardId);
+      const fId = cardObj ? (cardObj.id_conta_vinculada || cardObj.id_conta.replace('card_', 'fat_')) : '';
+      const payDate = payload.data_pagamento || getLocalTodayISO();
+      const payCycle = payload.ciclo_fatura || payDate.slice(0, 7);
+      const payGrp = 'grp_pay_' + Date.now();
+      const payDesc = payload.is_antecipacao ? `Antecipação Fatura ${cardObj ? cardObj.nome_exibicao : ''}` : `Pagamento Fatura ${cardObj ? cardObj.nome_exibicao : ''}`;
+
+      STATE.transactions.push({
+        id_transacao: 'temp_pay_out_' + Date.now(), id_grupo_cartao: payGrp, data_ocorrencia: payDate, competencia: payDate.slice(0, 7),
+        descricao: payDesc, valor: -val, tipo: 'TRANSFERENCIA', id_categoria: 'cat_1', categoria_nome: 'Transferência',
+        id_conta: origAcc, conta_nome: getAccountDisplayName(origAcc), id_conta_par: fId, finalidade: 'TRANSFERENCIA',
+        status: 'CONCLUIDO', parcela_atual: 1, total_parcelas: 1, ciclo_fatura: payCycle, flag_interna_fatura: false, anotacao: '', origem: 'APP'
+      });
+      if (fId) {
+        STATE.transactions.push({
+          id_transacao: 'temp_pay_in_' + Date.now(), id_grupo_cartao: payGrp, data_ocorrencia: payDate, competencia: payDate.slice(0, 7),
+          descricao: payDesc, valor: val, tipo: 'TRANSFERENCIA', id_categoria: 'cat_1', categoria_nome: 'Transferência',
+          id_conta: fId, conta_nome: getAccountDisplayName(fId), id_conta_par: origAcc, finalidade: 'TRANSFERENCIA',
+          status: 'CONCLUIDO', parcela_atual: 1, total_parcelas: 1, ciclo_fatura: payCycle, flag_interna_fatura: true, anotacao: '', origem: 'APP'
+        });
+      }
+      if (payload.is_antecipacao && checkedIds.length > 0) {
+        STATE.transactions.forEach(t => {
+          if (checkedIds.includes(t.id_transacao)) {
+            t.data_ocorrencia = payDate;
+            t.competencia = payDate.slice(0, 7);
+            t.ciclo_fatura = payCycle;
+            t.status = 'CONCLUIDO';
+          }
+        });
+      }
+      saveLocalBootstrapSnapshot();
+      renderCreditCardCenter();
+      recalculateAll();
+      setSyncStatus('Registrando pagamento de fatura na nuvem...', true);
+      runOrQueueOffline('payOrAdvanceCardBill', [payload]);
     }
 
     function openBalanceAdjustModal() {
@@ -7756,6 +8063,7 @@ function openSaldoLivreBreakdown() {
               openPieSliceDrilldown(clickedLabel, d1, d2, wantRec, true);
             },
             plugins: {
+              legend: { display: false },
               tooltip: { callbacks: { label: c => `${c.label}: ${fmtBRL(c.raw)} (Clique para abrir)` } }
             }
           }
