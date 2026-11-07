@@ -37,6 +37,33 @@ self.addEventListener('fetch', (e) => {
   );
 });
 
+self.addEventListener('push', (e) => {
+  let data = { title: 'GFP — Alerta Financeiro', body: 'Você tem lembretes financeiros pendentes.' };
+  try {
+    if (e.data) data = Object.assign(data, e.data.json());
+  } catch (err) {}
+  e.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: '/gfp-vault/icon.png',
+      badge: '/gfp-vault/icon.png',
+      vibrate: [200, 100, 200]
+    })
+  );
+});
+
+self.addEventListener('sync', (e) => {
+  if (e.tag === 'gfp-sync-queue') {
+    e.waitUntil(Promise.resolve());
+  }
+});
+
+self.addEventListener('periodicsync', (e) => {
+  if (e.tag === 'gfp-daily-check') {
+    e.waitUntil(Promise.resolve());
+  }
+});
+
 self.addEventListener('notificationclick', (e) => {
   e.notification.close();
   e.waitUntil(
