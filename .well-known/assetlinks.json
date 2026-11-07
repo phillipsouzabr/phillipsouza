@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.phillipsouza.twa",
+        "sha256_cert_fingerprints": ["0A:06:D0:BC:70:DF:7D:F4:97:2C:32:06:85:6F:78:5C:00:4F:85:87:D2:15:F0:2D:EC:91:3E:1B:DB:C3:A9:71"]
+      }
+    }]
