@@ -2,18 +2,21 @@
   "id": "/gfp-vault/",
   "name": "GFP — Inteligência Financeira",
   "short_name": "GFP",
-  "description": "Phillip Souza — Gestão Financeira Pessoal e Patrimonial",
+  "description": "Phillip Souza — Gestão Financeira Pessoal, Cartões, Investimentos (IGA/IGFII) e Patrimônio",
   "lang": "pt-BR",
   "dir": "ltr",
   "start_url": "/gfp-vault/",
   "scope": "/gfp-vault/",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui"],
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "orientation": "portrait",
   "background_color": "#0B0F19",
   "theme_color": "#0B0F19",
   "categories": ["finance", "productivity", "business"],
   "prefer_related_applications": false,
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  },
   "icons": [
     {
       "src": "/gfp-vault/icon.png",
@@ -32,6 +35,38 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/gfp-vault/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "GFP Mobile"
+    },
+    {
+      "src": "/gfp-vault/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "GFP Desktop"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Painel & Lançamentos",
+      "short_name": "Dashboard",
+      "description": "Abrir painel principal e lançamentos rápidos",
+      "url": "/gfp-vault/",
+      "icons": [{ "src": "/gfp-vault/icon.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Modo Offline & Notas",
+      "short_name": "Notas IA",
+      "description": "Capturar foto de nota fiscal ou despesa rápida",
+      "url": "/gfp-vault/?mode=offline",
+      "icons": [{ "src": "/gfp-vault/icon.png", "sizes": "192x192", "type": "image/png" }]
     }
   ]
 }
