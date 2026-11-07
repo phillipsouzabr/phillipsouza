@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gfp-ps-v6';
+const CACHE_NAME = 'gfp-ps-v7';
 const ASSETS = [
   '/gfp-vault/',
   '/gfp-vault/index.html',
@@ -25,7 +25,7 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
   e.respondWith(
-    fetch(e.request)
+    fetch(e.request, { cache: 'no-store' })
       .then((res) => {
         if (e.request.url.startsWith(self.location.origin)) {
           const clone = res.clone();

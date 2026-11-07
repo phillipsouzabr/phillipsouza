@@ -47,8 +47,13 @@
     .glass-card { background: rgba(17, 24, 39, 0.90); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.07); }
     .tab-active { background: linear-gradient(135deg, #2563EB, #7C3AED); color: #fff; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35); }
     /* Alinhamento automático de campos em grids mesmo quando um título tem 2 linhas no mobile */
-    .grid > div { display: flex; flex-direction: column; min-width: 0; }
+    .grid > div:has(> label:first-child):not(.hidden) { display: flex; flex-direction: column; min-width: 0; }
     .grid > div > label:first-child { margin-bottom: auto; padding-bottom: 2px; line-height: 1.2; }
+    #dashThreeColsGrid { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; align-items: start !important; width: 100% !important; max-width: 100% !important; }
+    #dashThreeColsGrid > div { width: 100% !important; max-width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; overflow: hidden !important; }
+    @media (min-width: 960px) {
+      #dashThreeColsGrid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+    }
     td, th, .blur-val { font-variant-numeric: tabular-nums; }
     @media (max-width: 768px) { .desktop-only { display: none !important; } .main-content { padding-bottom: 84px !important; } }
     @media (min-width: 769px) { .mobile-only { display: none !important; } }
@@ -184,10 +189,10 @@
       </header>
 
       <!-- VISÕES PRINCIPAIS -->
-      <main class="p-4 md:p-6 space-y-6 flex-1">
+      <main class="p-4 md:p-6 space-y-6 flex-1 min-w-0 w-full max-w-full overflow-x-hidden">
 
         <!-- 1. DASHBOARD -->
-        <section id="view-dashboard" class="space-y-6">
+        <section id="view-dashboard" class="space-y-6 min-w-0 w-full max-w-full overflow-x-hidden">
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             <div onclick="openSaldoLivreBreakdown()" class="glass-card p-3.5 rounded-2xl border-l-4 border-l-blue-500 cursor-pointer hover:bg-bgElevated/60 transition">
               <p class="text-[10px] text-gray-400 uppercase font-semibold">Saldo Livre (Caixa)</p>
@@ -251,22 +256,22 @@
             </div>
           </div>
 
-          <!-- Termômetro 60/20/20 e Radars -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-            <div class="lg:col-span-5 glass-card p-5 rounded-2xl space-y-4 h-fit self-start">
-              <div class="flex items-center justify-between gap-2">
-                <div>
+          <!-- Termômetro 60/20/20 e Radars em 3 Colunas Lado a Lado no Desktop -->
+          <div id="dashThreeColsGrid" class="grid grid-cols-1 lg:grid-cols-3 gap-5 items-start min-w-0 w-full max-w-full">
+            <div class="glass-card p-5 rounded-2xl space-y-4 h-fit min-w-0 w-full max-w-full overflow-hidden">
+              <div class="flex items-center justify-between gap-2 min-w-0">
+                <div class="min-w-0">
                   <h2 class="text-sm font-bold text-white">🎯 Termômetro de Finalidades (Quanto é para:)</h2>
                   <p class="text-xs text-gray-400">Calibragem de limites desejáveis no mês</p>
                 </div>
-                <div class="flex items-center gap-1.5">
+                <div class="flex items-center gap-1.5 shrink-0">
                   <button onclick="savePurposeAllocation()" class="text-xs text-blue-400 hover:underline font-semibold">Salvar %</button>
                   <button type="button" onclick="toggleSectionBlock('dashThermometerBody', this)" class="px-2 py-1 rounded-lg bg-bgElevated hover:bg-gray-700 text-[11px] font-bold text-gray-300">▼ Recolher</button>
                 </div>
               </div>
 
-              <div id="dashThermometerBody" class="space-y-3">
-                <div class="overflow-x-auto">
+              <div id="dashThermometerBody" class="space-y-3 min-w-0 w-full max-w-full overflow-hidden">
+                <div class="overflow-x-auto w-full max-w-full">
                   <table class="w-full text-xs">
                     <thead>
                       <tr class="text-gray-400 border-b border-borderSubtle text-left">
@@ -306,28 +311,26 @@
               </div>
             </div>
 
-            <div class="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
-              <div class="glass-card p-4 rounded-2xl border border-rose-500/20 flex flex-col h-fit">
-                <div class="flex items-center justify-between mb-3">
-                  <h3 class="text-xs font-bold uppercase tracking-wider text-rose-400">🚨 Anteriores Não-Concluídas</h3>
-                  <div class="flex items-center gap-1.5">
-                    <span id="badgeAtrasadas" class="px-2 py-0.5 text-[10px] rounded-full bg-rose-500/20 text-rose-300 font-bold">0</span>
-                    <button type="button" onclick="toggleSectionBlock('listAnterioresPendentes', this)" class="px-2 py-0.5 rounded bg-bgElevated text-[10px] text-gray-300">▼</button>
-                  </div>
+            <div class="glass-card p-4 rounded-2xl border border-rose-500/20 flex flex-col h-fit min-w-0 w-full max-w-full overflow-hidden">
+              <div class="flex items-center justify-between mb-3 min-w-0 w-full">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-rose-400 truncate">🚨 Anteriores Não-Concluídas</h3>
+                <div class="flex items-center gap-1.5 shrink-0">
+                  <span id="badgeAtrasadas" class="px-2 py-0.5 text-[10px] rounded-full bg-rose-500/20 text-rose-300 font-bold">0</span>
+                  <button type="button" onclick="toggleSectionBlock('listAnterioresPendentes', this)" class="px-2 py-0.5 rounded bg-bgElevated text-[10px] text-gray-300">▼</button>
                 </div>
-                <div id="listAnterioresPendentes" class="space-y-2 overflow-y-auto max-h-48 text-xs"></div>
               </div>
+              <div id="listAnterioresPendentes" class="space-y-2 overflow-y-auto overflow-x-hidden max-h-56 text-xs min-w-0 w-full max-w-full"></div>
+            </div>
 
-              <div class="glass-card p-4 rounded-2xl border border-blue-500/20 flex flex-col h-fit">
-                <div class="flex items-center justify-between mb-3">
-                  <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400">📅 Próximas Transações (30d)</h3>
-                  <div class="flex items-center gap-1.5">
-                    <span id="badgeProximas" class="px-2 py-0.5 text-[10px] rounded-full bg-blue-500/20 text-blue-300 font-bold">0</span>
-                    <button type="button" onclick="toggleSectionBlock('listProximasPendentes', this)" class="px-2 py-0.5 rounded bg-bgElevated text-[10px] text-gray-300">▼</button>
-                  </div>
+            <div class="glass-card p-4 rounded-2xl border border-blue-500/20 flex flex-col h-fit min-w-0 w-full max-w-full overflow-hidden">
+              <div class="flex items-center justify-between mb-3 min-w-0 w-full">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400 truncate">📅 Próximas Transações (30d)</h3>
+                <div class="flex items-center gap-1.5 shrink-0">
+                  <span id="badgeProximas" class="px-2 py-0.5 text-[10px] rounded-full bg-blue-500/20 text-blue-300 font-bold">0</span>
+                  <button type="button" onclick="toggleSectionBlock('listProximasPendentes', this)" class="px-2 py-0.5 rounded bg-bgElevated text-[10px] text-gray-300">▼</button>
                 </div>
-                <div id="listProximasPendentes" class="space-y-2 overflow-y-auto max-h-48 text-xs"></div>
               </div>
+              <div id="listProximasPendentes" class="space-y-2 overflow-y-auto overflow-x-hidden max-h-56 text-xs min-w-0 w-full max-w-full"></div>
             </div>
           </div>
 
@@ -808,14 +811,14 @@
           </div>
 
           <!-- SEÇÃO DE GRÁFICOS DE INVESTIMENTOS (TOTAL, SOMENTE RF, SOMENTE RV) COM RECOLHER/EXPANDIR -->
-          <div class="glass-card p-5 rounded-2xl space-y-4">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <div onclick="toggleSectionBlock('invChartsBlockBody', document.getElementById('btnToggleInvCharts'))" class="cursor-pointer select-none">
+          <div class="glass-card p-5 rounded-2xl space-y-4 min-w-0 overflow-hidden">
+            <div class="flex flex-wrap items-center justify-between gap-2 min-w-0">
+              <div onclick="toggleSectionBlock('invChartsBlockBody', document.getElementById('btnToggleInvCharts'))" class="cursor-pointer select-none min-w-0">
                 <h3 class="text-sm font-bold text-white hover:text-blue-400 transition">📊 Gráficos da Carteira de Investimentos (Total, Renda Fixa & Renda Variável)</h3>
                 <p class="text-xs text-gray-400">Visualize a distribuição global do seu patrimônio, títulos de Renda Fixa e classes/ativos de Renda Variável</p>
               </div>
-              <div class="flex flex-wrap items-center gap-2">
-                <select id="invChartModeSelect" onchange="renderInvestmentCharts()" class="bg-bgElevated border border-borderSubtle rounded-xl px-3 py-1.5 text-xs font-bold text-white">
+              <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto min-w-0">
+                <select id="invChartModeSelect" onchange="renderInvestmentCharts()" class="w-full sm:w-auto max-w-full min-w-0 truncate bg-bgElevated border border-borderSubtle rounded-xl px-3 py-1.5 text-xs font-bold text-white">
                   <option value="TOTAL">1. Carteira Total (Renda Fixa vs Renda Variável)</option>
                   <option value="RF_ONLY">2. Somente Renda Fixa (Por Título / Reserva)</option>
                   <option value="RV_ONLY">3. Somente Renda Variável (Real vs Meta RV e Top Ativos)</option>
@@ -1118,8 +1121,8 @@
             </div>
           </div>
 
-          <!-- NOTIFICAÇÕES EM NUVEM COM APP FECHADO (TELEGRAM BOT + E-MAIL PUSH DIÁRIO ÀS 07H) -->
-          <div class="glass-card p-5 rounded-2xl space-y-3 border border-amber-500/30">
+          <!-- NOTIFICAÇÕES EM NUVEM OCULTADAS (AGORA NATIVO NO APK ANDROID) -->
+          <div class="hidden glass-card p-5 rounded-2xl space-y-3 border border-amber-500/30">
             <div class="flex flex-wrap items-center justify-between gap-2">
               <div>
                 <h3 class="text-sm font-bold text-white">📲 Alertas Push com App Fechado (Gatilho Diário Google + Bot Telegram / E-mail)</h3>
@@ -1846,9 +1849,9 @@
         } else if (window.location.protocol === 'https:' && window.location.hostname.includes('phillipsouza.com')) {
           window.addEventListener('load', () => {
             if (typeof caches !== 'undefined') {
-              caches.keys().then(ks => ks.forEach(k => { if (k !== 'gfp-ps-v6') caches.delete(k); })).catch(() => {});
+              caches.keys().then(ks => ks.forEach(k => { if (k !== 'gfp-ps-v7') caches.delete(k); })).catch(() => {});
             }
-            navigator.serviceWorker.register('/gfp-vault/sw.js?v=6', { scope: '/gfp-vault/' }).catch(() => {});
+            navigator.serviceWorker.register('/gfp-vault/sw.js?v=7', { scope: '/gfp-vault/' }).catch(() => {});
           });
         }
       }
@@ -3854,25 +3857,25 @@
       const renderRow = (t, isOverdue) => {
         if (t.is_virtual_bill) {
           return `
-          <div class="flex items-center justify-between p-2 rounded-xl bg-bgMain border border-indigo-500/40">
-            <div class="truncate pr-2">
+          <div class="flex items-center justify-between gap-2 p-2 rounded-xl bg-bgMain border border-indigo-500/40 min-w-0 w-full overflow-hidden">
+            <div class="min-w-0 flex-1 truncate pr-1">
               <p class="font-bold text-indigo-300 truncate">💳 ${t.descricao}</p>
-              <p class="text-[10px] text-gray-400">Vence ${fmtDateBR(t.data_ocorrencia)} • Fatura em Aberto</p>
+              <p class="text-[10px] text-gray-400 truncate">Vence ${fmtDateBR(t.data_ocorrencia)} • Fatura em Aberto</p>
             </div>
             <div class="flex items-center gap-1.5 shrink-0">
-              <span class="font-bold text-rose-400">${fmtBRL(t.valor)}</span>
-              <button onclick="openPayFaturaFromRadar('${t.id_cartao}')" class="px-2 py-1 rounded-lg bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600 hover:text-white font-bold text-[11px]" title="Pagar Fatura">💸 Pagar</button>
+              <span class="font-bold text-rose-400 whitespace-nowrap">${fmtBRL(t.valor)}</span>
+              <button onclick="openPayFaturaFromRadar('${t.id_cartao}')" class="px-2 py-1 rounded-lg bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600 hover:text-white font-bold text-[11px] whitespace-nowrap" title="Pagar Fatura">💸 Pagar</button>
             </div>
           </div>`;
         }
         return `
-        <div class="flex items-center justify-between p-2 rounded-xl bg-bgMain border ${isOverdue ? 'border-rose-500/30' : 'border-borderSubtle'}">
-          <div class="truncate pr-2">
+        <div class="flex items-center justify-between gap-2 p-2 rounded-xl bg-bgMain border ${isOverdue ? 'border-rose-500/30' : 'border-borderSubtle'} min-w-0 w-full overflow-hidden">
+          <div class="min-w-0 flex-1 truncate pr-1">
             <p class="font-semibold text-white truncate">${t.descricao.replace(/\s*\[🔔(:[\d,]+)?\]\s*/g, '')}</p>
-            <p class="text-[10px] text-gray-400">${fmtDateBR(t.data_ocorrencia)} • ${getAccountDisplayName(t.id_conta)}</p>
+            <p class="text-[10px] text-gray-400 truncate">${fmtDateBR(t.data_ocorrencia)} • ${getAccountDisplayName(t.id_conta)}</p>
           </div>
           <div class="flex items-center gap-1.5 shrink-0">
-            <span class="font-bold ${t.valor >= 0 ? 'text-emerald-400' : 'text-rose-400'}">${fmtBRL(t.valor)}</span>
+            <span class="font-bold whitespace-nowrap ${t.valor >= 0 ? 'text-emerald-400' : 'text-rose-400'}">${fmtBRL(t.valor)}</span>
             <button onclick="openEditTxModal('${t.id_transacao}')" class="px-1.5 py-1 rounded bg-bgElevated text-gray-300 hover:text-white" title="Editar">✏️</button>
             <button onclick="quickEffectivate('${t.id_transacao}')" class="px-2 py-1 rounded-lg bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600 hover:text-white font-bold" title="Efetivar agora">✓</button>
           </div>
@@ -6701,14 +6704,14 @@ function openSaldoLivreBreakdown() {
         const isRec = grp.tipo === 'RECEITA';
         return `
           <div class="rounded-xl border border-borderSubtle overflow-hidden bg-bgMain/60">
-            <div onclick="toggleCatConfigParent('${safePKey}')" class="flex justify-between items-center p-2.5 bg-bgElevated/80 cursor-pointer hover:bg-bgElevated select-none">
-              <div class="flex items-center gap-2 truncate">
-                <span class="text-[10px] text-gray-400">${isCollapsed ? '▶' : '▼'}</span>
-                <span class="text-[10px] px-1.5 py-0.5 rounded font-bold ${isRec ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}">${isRec ? 'RECEITA' : 'DESPESA'}</span>
+            <div onclick="toggleCatConfigParent('${safePKey}')" class="flex justify-between items-center gap-2 p-2.5 bg-bgElevated/80 cursor-pointer hover:bg-bgElevated select-none">
+              <div class="flex items-center gap-2 min-w-0 flex-1 truncate">
+                <span class="text-[10px] text-gray-400 shrink-0">${isCollapsed ? '▶' : '▼'}</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded font-bold shrink-0 ${isRec ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}">${isRec ? 'RECEITA' : 'DESPESA'}</span>
                 <span class="font-extrabold text-white text-xs truncate">${grp.nivel_1}</span>
-                <span class="text-[10px] text-gray-400">(${grp.items.length})</span>
+                <span class="text-[10px] text-gray-400 shrink-0">(${grp.items.length})</span>
               </div>
-              <button type="button" onclick="event.stopPropagation(); openCategoryModal(''); document.getElementById('catTipo').value='${grp.tipo}'; populateParentCategoryDropdown('${grp.nivel_1.replace(/'/g, "\\'")}');" class="px-2 py-0.5 rounded bg-purple-600/20 border border-purple-500/40 text-purple-300 hover:bg-purple-600 hover:text-white text-[10px] font-bold">+ Sub</button>
+              <button type="button" onclick="event.stopPropagation(); openCategoryModal(''); document.getElementById('catTipo').value='${grp.tipo}'; populateParentCategoryDropdown('${grp.nivel_1.replace(/'/g, "\\'")}');" class="px-2 py-0.5 rounded bg-purple-600/20 border border-purple-500/40 text-purple-300 hover:bg-purple-600 hover:text-white text-[10px] font-bold whitespace-nowrap shrink-0">+ Sub</button>
             </div>
             ${!isCollapsed ? `<div class="divide-y divide-borderSubtle/40 p-1.5 space-y-1">
               ${grp.items.map(({ c, fullLabel }) => {
