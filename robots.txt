@@ -1,10 +1,4 @@
 User-agent: *
 Allow: /
 
-# Não indexar páginas legais e de confirmação
-Disallow: /privacidade.html
-Disallow: /termos.html
-Disallow: /obrigado.html
-Disallow: /obrigado-ebook.html
-
-Sitemap: https://www.phillipsouza.com/sitemap.xml
+Sitemap: https://phillipsouza.com/sitemap.xml
