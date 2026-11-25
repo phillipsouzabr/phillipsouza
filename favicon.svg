@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgB" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E1525"/>
+      <stop offset="55%" stop-color="#080B12"/>
+      <stop offset="100%" stop-color="#040508"/>
+    </linearGradient>
+    <linearGradient id="goldB" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F7E7AE"/>
+      <stop offset="48%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#A17B1C"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="108" fill="url(#bgB)"/>
+  <rect x="20" y="20" width="472" height="472" rx="92" fill="none" stroke="url(#goldB)" stroke-width="5"/>
+  <!-- P geometrico branco (x: 92..246, y: 128..366) -->
+  <path fill="#FFFFFF" d="M92 128 H186 C226 128 250 154 250 196 C250 238 226 264 186 264 H136 V366 H92 V128 Z M136 164 V228 H180 C200 228 212 216 212 196 C212 176 200 164 180 164 H136 Z"/>
+  <!-- S geometrico dourado com espacamento limpo (x: 266..420, y: 124..370) -->
+  <path fill="url(#goldB)" d="M408 174 C394 142 368 124 334 124 C290 124 264 150 264 186 C264 222 290 240 330 250 L352 256 C374 262 384 272 384 290 C384 312 364 328 334 328 C306 328 286 314 278 292 L244 312 C258 348 292 368 336 368 C388 368 424 336 424 288 C424 248 398 228 352 216 L328 210 C308 205 302 196 302 184 C302 170 314 160 334 160 C352 160 366 170 374 188 Z"/>
+  <!-- Barra inferior dourada alinhada ao conjunto P+S -->
+  <rect x="92" y="392" width="328" height="10" rx="5" fill="url(#goldB)" fill-opacity="0.9"/>
+</svg>
